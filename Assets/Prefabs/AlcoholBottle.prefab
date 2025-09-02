@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 9135055174367349636}
   - component: {fileID: 1678499636494636261}
   - component: {fileID: 8325426513823199251}
+  - component: {fileID: 133443135826022377}
+  - component: {fileID: 1436134781095635971}
   m_Layer: 0
   m_Name: alcoholbot
   m_TagString: Untagged
@@ -357,5 +359,43 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9166257131569266225, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 133443135826022377}
+    - targetCorrespondingSourceObject: {fileID: 9166257131569266225, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1436134781095635971}
   m_SourcePrefab: {fileID: 100100000, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
+--- !u!114 &133443135826022377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2429628482725024022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.754717, g: 0.12459949, b: 0.55921143, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &1436134781095635971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2429628482725024022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 986ae63fb662d8a4c82bd79820609a36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  highlightWidth: 5
