@@ -1,9 +1,14 @@
-using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit; // Required for XR-specific components
 
+using UnityEngine;
+using System.Collections.Generic;
+
+/// <summary>
+/// This script defines a piece of trash. It should be attached to each
+/// individual trash object that needs to be disposed of.
+/// </summary>
 public class TrashItem : MonoBehaviour
 {
-    // Public enum to define the different types of trash
+    // The type of trash this is, must match the BinType enum.
     public enum TrashType
     {
         Red,
@@ -12,7 +17,25 @@ public class TrashItem : MonoBehaviour
         YellowWithBlackBand,
         Yellow
     }
-
-    // Public variable to set the trash type in the Inspector
     public TrashType trashType;
+
+    // A reference to the parent TaskController, set by the TaskController itself.
+    [HideInInspector]
+    public TaskController parentTaskController;
+
+    /// <summary>
+    /// This method is called by the Bin script when the trash is placed in the correct bin.
+    /// </summary>
+    public void OnCorrectlyDisposed()
+    {
+        // This is the crucial part. It tells the parent task to increment the counter.
+        if (parentTaskController != null)
+        {
+            parentTaskController.ItemDisposedOf();
+        }
+        else
+        {
+            Debug.LogError("TrashItem has no parent TaskController assigned. The task counter will not be updated.");
+        }
+    }
 }

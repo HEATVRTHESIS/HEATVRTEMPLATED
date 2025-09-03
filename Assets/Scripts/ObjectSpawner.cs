@@ -1,6 +1,10 @@
+
 using UnityEngine;
 using System.Collections.Generic; // Required for List
 
+/// <summary>
+/// This script handles the spawning of a list of prefabs within a defined area.
+/// </summary>
 public class ObjectSpawner : MonoBehaviour
 {
     // A list of the trash prefabs you want to spawn
@@ -11,17 +15,15 @@ public class ObjectSpawner : MonoBehaviour
 
     // The area where objects will be spawned, represented by a Box Collider
     public BoxCollider spawnArea;
+    
+    // A reference to the transform of the TaskController, which is the parent of this spawner.
+    private Transform parentTaskTransform;
 
-    // Whether to spawn objects automatically when the scene starts
-    public bool spawnOnStart = true;
-
-    // Called when the script starts
-    void Start()
+    void Awake()
     {
-        if (spawnOnStart)
-        {
-            SpawnObjects();
-        }
+        // Get a reference to the parent TaskController's transform
+        // This script is a child of the TaskController.
+        parentTaskTransform = this.transform.parent;
     }
 
     // Public method to manually trigger the spawning process
@@ -49,8 +51,11 @@ public class ObjectSpawner : MonoBehaviour
             // Select a random prefab from the list
             GameObject prefabToSpawn = spawnPrefabs[Random.Range(0, spawnPrefabs.Count)];
 
-            // Instantiate the prefab at the random position with no rotation
-            Instantiate(prefabToSpawn, randomPos, Quaternion.identity);
+            // Instantiate the prefab and set the TaskController as its parent.
+            GameObject spawnedObject = Instantiate(prefabToSpawn, randomPos, Quaternion.identity, parentTaskTransform);
+            
+            // Note: The previous line 'Instantiate(..., parentTaskTransform)' automatically handles setting the parent.
+            // This is the more correct and clean way to do it.
         }
     }
 

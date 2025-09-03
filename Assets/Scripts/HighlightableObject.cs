@@ -37,7 +37,6 @@ public class HighlightableObject : MonoBehaviour
             outlineComponent.OutlineColor = highlightColor;
             outlineComponent.OutlineWidth = highlightWidth;
             // The Outline component's own OnEnable handles turning the highlight on.
-            // We just need to ensure our component is enabled for it to work.
         }
     }
 
@@ -47,7 +46,10 @@ public class HighlightableObject : MonoBehaviour
     /// <param name="isHighlighted">True to turn on the highlight, false to turn it off.</param>
     public void SetHighlight(bool isHighlighted)
     {
-        // Simply enable or disable this component, which in turn will enable/disable the Outline component.
-        enabled = isHighlighted;
+        if (outlineComponent != null)
+        {
+            // The fix is here. We now directly enable or disable the Outline component.
+            outlineComponent.enabled = isHighlighted;
+        }
     }
 }
