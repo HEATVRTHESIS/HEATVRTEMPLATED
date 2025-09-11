@@ -18,6 +18,8 @@ public class TaskEntryUI : MonoBehaviour
     private TaskController associatedTask;
     // A reference for the maintenance task
     private MaintenanceTaskController associatedMaintenanceTask;
+    // A reference for the new storage task
+    private StorageTaskController associatedStorageTask;
 
 
     /// <summary>
@@ -92,6 +94,41 @@ public class TaskEntryUI : MonoBehaviour
     }
 
     /// <summary>
+    /// This method is called by the StorageTaskListManager to set up the UI entry for a storage task.
+    /// </summary>
+    public void SetStorageTask(StorageTaskController task)
+    {
+        if (task == null)
+        {
+            Debug.LogError("SetStorageTask was called with a null StorageTaskController.");
+            return;
+        }
+        associatedStorageTask = task;
+
+        // Populate the UI with data from the task controller
+        taskDescriptionText.text = task.taskDescription;
+        if (completedCheckmark != null)
+        {
+            completedCheckmark.gameObject.SetActive(false);
+            completedCheckmark.enabled = false;
+        }
+
+        // Register for events from the task controller
+        associatedStorageTask.OnProgressUpdated.AddListener(UpdateProgress);
+        associatedStorageTask.OnTaskCompleted.AddListener(MarkTaskAsCompleted);
+        
+        // Subscribe to the button click event
+        if (selectTaskButton != null)
+        {
+            selectTaskButton.onClick.AddListener(OnTaskEntryClicked);
+        }
+        else
+        {
+            Debug.LogError("Select Task Button is not assigned on the TaskEntryUI prefab!");
+        }
+    }
+
+    /// <summary>
     /// This is called when the task's progress changes.
     /// </summary>
     private void UpdateProgress(int completed, int total)
@@ -136,6 +173,10 @@ public class TaskEntryUI : MonoBehaviour
         {
             associatedMaintenanceTask.EndTask();
         }
+        else if (associatedStorageTask != null)
+        {
+            associatedStorageTask.EndTask();
+        }
     }
 
     /// <summary>
@@ -153,6 +194,11 @@ public class TaskEntryUI : MonoBehaviour
         {
             // Use the maintenance manager if it's that type of task
             MaintenanceTaskListManager.Instance.SelectTask(associatedMaintenanceTask);
+        }
+        else if (associatedStorageTask != null)
+        {
+            // Use the storage manager if it's that type of task
+            StorageTaskListManager.Instance.SelectTask(associatedStorageTask);
         }
     }
 }

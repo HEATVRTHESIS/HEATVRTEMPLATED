@@ -144,6 +144,18 @@ MonoBehaviour:
   targetObject: {fileID: 8509832438122510364}
   magnifyingGlassIcon: {fileID: 3352945788529007890}
   popupManager: {fileID: 0}
+  playerAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Player
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: be9db840-a065-47d5-9a5a-e92f7cf56646
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
 --- !u!1001 &416897774303603385
 PrefabInstance:
   m_ObjectHideFlags: 0
