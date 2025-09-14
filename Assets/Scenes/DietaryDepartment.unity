@@ -609,6 +609,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8922344473866678056, guid: 7cd803661fc3dde4d9e95f84e2dc2f2e, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8922344473866678056, guid: 7cd803661fc3dde4d9e95f84e2dc2f2e, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -801,6 +809,14 @@ PrefabInstance:
     - target: {fileID: 3278978763702259388, guid: 54e446743c3164a4cb9fcd4e3350fe49, type: 3}
       propertyPath: m_Name
       value: StorageTask
+      objectReference: {fileID: 0}
+    - target: {fileID: 3333246189193680483, guid: 54e446743c3164a4cb9fcd4e3350fe49, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3333246189193680483, guid: 54e446743c3164a4cb9fcd4e3350fe49, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7843246358793230158, guid: 54e446743c3164a4cb9fcd4e3350fe49, type: 3}
       propertyPath: popupManager
@@ -998,7 +1014,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: feea2cb4b0a7d3c4aa0a655275fe4c14, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.13211922
+      value: 0.789
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: feea2cb4b0a7d3c4aa0a655275fe4c14, type: 3}
       propertyPath: m_LocalRotation.w

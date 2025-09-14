@@ -3368,6 +3368,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerRig
       objectReference: {fileID: 0}
+    - target: {fileID: 9095766939937595490, guid: 5562b7195846040408c129dfc9eff9f4, type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095766939937595490, guid: 5562b7195846040408c129dfc9eff9f4, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095766939937595490, guid: 5562b7195846040408c129dfc9eff9f4, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9095766939937595490, guid: 5562b7195846040408c129dfc9eff9f4, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

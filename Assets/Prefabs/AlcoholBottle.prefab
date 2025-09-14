@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8325426513823199251}
   - component: {fileID: 133443135826022377}
   - component: {fileID: 1436134781095635971}
+  - component: {fileID: 4868602341258685070}
   m_Layer: 0
   m_Name: alcoholbot
   m_TagString: Untagged
@@ -133,10 +134,10 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &1678499636494636261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,18 +218,18 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 2
+  m_MovementType: 0
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
   m_TrackPosition: 1
   m_SmoothPosition: 0
-  m_SmoothPositionAmount: 8
+  m_SmoothPositionAmount: 0.3
   m_TightenPosition: 0.1
   m_TrackRotation: 1
   m_SmoothRotation: 0
-  m_SmoothRotationAmount: 8
+  m_SmoothRotationAmount: 0.3
   m_TightenRotation: 0.1
   m_TrackScale: 1
   m_SmoothScale: 0
@@ -254,7 +255,7 @@ MonoBehaviour:
   m_ThrowVelocityScale: 1.5
   m_ThrowAngularVelocityScale: 1
   m_ForceGravityOnDetach: 0
-  m_RetainTransformParent: 1
+  m_RetainTransformParent: 0
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
@@ -272,6 +273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trashType: 3
+  parentTaskController: {fileID: 0}
 --- !u!1 &6986418479339866841
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,6 +314,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 718774407294802980}
     m_Modifications:
+    - target: {fileID: 3149959812040140876, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
+      propertyPath: m_MovementType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3149959812040140876, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
+      propertyPath: m_SmoothPosition
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3149959812040140876, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
+      propertyPath: m_SmoothRotation
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3149959812040140876, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
+      propertyPath: m_UseDynamicAttach
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3149959812040140876, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
+      propertyPath: m_SmoothPositionAmount
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3149959812040140876, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
+      propertyPath: m_SmoothRotationAmount
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3149959812040140876, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
+      propertyPath: m_RetainTransformParent
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8394365452207514763, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.1484573e-10
@@ -352,6 +382,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 182.422
       objectReference: {fileID: 0}
+    - target: {fileID: 8561645135164820211, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8561645135164820211, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8561645135164820211, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9166257131569266225, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
       propertyPath: m_Name
       value: alcoholbot
@@ -366,6 +408,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9166257131569266225, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1436134781095635971}
+    - targetCorrespondingSourceObject: {fileID: 9166257131569266225, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4868602341258685070}
   m_SourcePrefab: {fileID: 100100000, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
 --- !u!114 &133443135826022377
 MonoBehaviour:
@@ -399,3 +444,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   highlightWidth: 5
+--- !u!114 &4868602341258685070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2429628482725024022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b0caf9b7cb53fb46bf0a49f10148d39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
