@@ -50,7 +50,13 @@ public class StorageTaskListManager : MonoBehaviour
             RegisterTask(task);
         }
 
-        // Select the first task by default
+        // Start all tasks to highlight everything initially
+        foreach (var task in activeTasks)
+        {
+            task.StartTask();
+        }
+
+        // Select the first task by default (this will turn off others and keep only the first highlighted)
         if (activeTasks.Count > 0)
         {
             SelectTask(activeTasks[0]);
@@ -93,17 +99,77 @@ public class StorageTaskListManager : MonoBehaviour
 
     /// <summary>
     /// Selects a new task, highlighting its objects and un-highlighting others.
+    /// This also communicates with other managers to turn off their highlights.
     /// </summary>
     public void SelectTask(StorageTaskController task)
     {
-        // Stop highlighting the previous task
-        if (currentSelectedTask != null)
+        // First, tell all other managers to turn off their highlights
+        if (TaskListManager.Instance != null)
         {
-            currentSelectedTask.EndTask();
+            TaskListManager.Instance.TurnOffAllHighlights();
+        }
+        if (MaintenanceTaskListManager.Instance != null)
+        {
+            MaintenanceTaskListManager.Instance.TurnOffAllHighlights();
         }
 
-        // Start highlighting the new task
+        // Turn off highlights for ALL tasks in this manager
+        foreach (var activeTask in activeTasks)
+        {
+            activeTask.EndTask();
+        }
+
+        // Start highlighting only the selected task
         currentSelectedTask = task;
         currentSelectedTask.StartTask();
+    }
+
+    /// <summary>
+    /// Turns off all highlights in this manager. Called by other managers.
+    /// </summary>
+    public void TurnOffAllHighlights()
+    {
+        foreach (var activeTask in activeTasks)
+        {
+            activeTask.EndTask();
+        }
+        currentSelectedTask = null;
+    }
+
+    /// <summary>
+    /// Deselects the current task and shows all highlights again.
+    /// This also tells other managers to restore their highlights.
+    /// </summary>
+    public void DeselectTask()
+    {
+        currentSelectedTask = null;
+        
+        // Turn on highlights for ALL tasks in this manager
+        foreach (var activeTask in activeTasks)
+        {
+            activeTask.StartTask();
+        }
+
+        // Tell other managers to restore their highlights too
+        if (TaskListManager.Instance != null)
+        {
+            TaskListManager.Instance.RestoreAllHighlights();
+        }
+        if (MaintenanceTaskListManager.Instance != null)
+        {
+            MaintenanceTaskListManager.Instance.RestoreAllHighlights();
+        }
+    }
+
+    /// <summary>
+    /// Restores all highlights in this manager. Called by other managers.
+    /// </summary>
+    public void RestoreAllHighlights()
+    {
+        foreach (var activeTask in activeTasks)
+        {
+            activeTask.StartTask();
+        }
+        currentSelectedTask = null;
     }
 }
