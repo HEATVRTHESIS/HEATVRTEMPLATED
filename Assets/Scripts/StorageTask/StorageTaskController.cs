@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
+using System.Collections.Generic;
 
 /// <summary>
 /// Manages the highlighting and progress for a "storage" task.
@@ -10,6 +11,18 @@ public class StorageTaskController : MonoBehaviour
 {
     public string taskName;
     public string taskDescription;
+
+    // A public array for the dialogue lines to display on task completion.
+    // This allows you to set the dialogue directly in the Unity Inspector.
+    [Tooltip("The dialogue lines to display when this task is completed.")]
+    public string[] taskCompletionDialogue;
+
+    // Public fields for the success sound clip.
+    [Header("Audio")]
+    [Tooltip("The AudioSource component that will play the sound.")]
+    public AudioSource audioSource;
+    [Tooltip("The audio clip to play when the task is completed.")]
+    public AudioClip successSound;
 
     private int completedItems = 0;
     private int totalItems = 0;
@@ -44,26 +57,20 @@ public class StorageTaskController : MonoBehaviour
     {
         // Find all StorableItem components under this object.
         taskTargets = GetComponentsInChildren<StorableItem>();
-
-        if (taskTargets.Length > 0)
+        
+        // Set the parent task controller for each storable item.
+        foreach (var storableItem in taskTargets)
         {
-            // Set the parent task controller for each storable item.
-            foreach (var item in taskTargets)
-            {
-                item.parentTaskController = this;
-            }
-        }
-        else
-        {
-            Debug.LogError("Storage task '" + taskName + "' was initialized but no storable items were found!");
+            storableItem.parentTaskController = this;
         }
 
+        // Set the total items
         totalItems = taskTargets.Length;
         OnProgressUpdated.Invoke(completedItems, totalItems);
     }
 
     /// <summary>
-    /// Called by a StorableItem when it's correctly stored.
+    /// Called by a StorableItem when it's correctly placed in the container.
     /// </summary>
     public void ItemStored()
     {
@@ -73,13 +80,29 @@ public class StorageTaskController : MonoBehaviour
         
         Debug.Log($"Task '{taskName}': Item stored. Progress: {completedItems}/{totalItems}");
         
+        // Notify the UI to update the progress text.
         OnProgressUpdated.Invoke(completedItems, totalItems);
 
+        // Check if the task is complete.
         if (completedItems >= totalItems)
         {
             Debug.Log($"Task '{taskName}' is fully completed! Invoking event.");
             isTaskCompleted = true;
             OnTaskCompleted.Invoke();
+            EndTask();
+
+            // Play the success sound
+            if (audioSource != null && successSound != null)
+            {
+                audioSource.PlayOneShot(successSound);
+            }
+
+            // Get the VRDialogueSystem instance and display the completion dialogue
+            VRDialogueSystem dialogueSystem = FindObjectOfType<VRDialogueSystem>();
+            if (dialogueSystem != null && taskCompletionDialogue != null && taskCompletionDialogue.Length > 0)
+            {
+                dialogueSystem.StartDialog(taskCompletionDialogue);
+            }
         }
     }
 

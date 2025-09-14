@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 
 /// <summary>
 /// Manages the highlighting, progress, and question-answering for a specific maintenance task.
@@ -11,6 +12,18 @@ public class MaintenanceTaskController : MonoBehaviour
     // Public fields to define the task
     public string taskName;
     public string taskDescription;
+
+    // A public array for the dialogue lines to display on task completion.
+    // This allows you to set the dialogue directly in the Unity Inspector.
+    [Tooltip("The dialogue lines to display when this task is completed.")]
+    public string[] taskCompletionDialogue;
+    
+    // Public fields for the success sound clip.
+    [Header("Audio")]
+    [Tooltip("The AudioSource component that will play the sound.")]
+    public AudioSource audioSource;
+    [Tooltip("The audio clip to play when the task is completed.")]
+    public AudioClip successSound;
 
     // Events to notify other scripts of progress and completion
     public UnityEvent<int, int> OnProgressUpdated;
@@ -38,7 +51,7 @@ public class MaintenanceTaskController : MonoBehaviour
     // Add a public InputAction reference for the button you want to map.
     [Header("Input Mapping")]
     public InputActionProperty playerAction;
-
+    
     void Awake()
     {
         // Initially hide the magnifying glass icon
@@ -112,6 +125,21 @@ public class MaintenanceTaskController : MonoBehaviour
             OnProgressUpdated.Invoke(completedItems, totalItems);
             OnTaskCompleted.Invoke();
             EndTask();
+
+            // Play the success sound
+            if (audioSource != null && successSound != null)
+            {
+                audioSource.PlayOneShot(successSound);
+            }
+
+            // Get the VRDialogueSystem instance and display the completion dialogue
+            // We find the object in the scene, assuming there's only one.
+            VRDialogueSystem dialogueSystem = FindObjectOfType<VRDialogueSystem>();
+            if (dialogueSystem != null && taskCompletionDialogue != null && taskCompletionDialogue.Length > 0)
+            {
+                // The correct method to call is StartDialog.
+                dialogueSystem.StartDialog(taskCompletionDialogue);
+            }
         }
         else
         {
