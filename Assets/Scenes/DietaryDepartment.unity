@@ -806,6 +806,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 309891862633230035, guid: 54e446743c3164a4cb9fcd4e3350fe49, type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3278978763702259388, guid: 54e446743c3164a4cb9fcd4e3350fe49, type: 3}
       propertyPath: m_Name
       value: StorageTask
@@ -822,6 +826,14 @@ PrefabInstance:
       propertyPath: popupManager
       value: 
       objectReference: {fileID: 6485955071100808956}
+    - target: {fileID: 8176148524726707401, guid: 54e446743c3164a4cb9fcd4e3350fe49, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0912
+      objectReference: {fileID: 0}
+    - target: {fileID: 8176148524726707401, guid: 54e446743c3164a4cb9fcd4e3350fe49, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1013
+      objectReference: {fileID: 0}
     - target: {fileID: 8513217082713066894, guid: 54e446743c3164a4cb9fcd4e3350fe49, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.11739383

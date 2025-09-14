@@ -1,48 +1,63 @@
 using UnityEngine;
-
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class StorageContainer : MonoBehaviour
 {
     public string containerType;
     public PopupManager popupManager;
     public Transform snapPoint;
-
-    // This method is called by the XR Grab Interactable's OnSelectExited event
-    public void HandleItemDropped(UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable droppedInteractable)
+    
+    // REMOVE the HandleItemDropped method completely!
+    // Use trigger detection instead:
+    
+    private void OnTriggerStay(Collider other)
     {
-        // Get the StorableItem component from the dropped object
-        StorableItem storableItem = droppedInteractable.GetComponent<StorableItem>();
-
-        // Check if the dropped object is a StorableItem and if its type matches the container
-        if (storableItem != null && storableItem.storableType == containerType)
+        StorableItem storableItem = other.GetComponent<StorableItem>();
+        
+        if (storableItem != null && !storableItem.hasBeenProcessed)
+        {
+            XRGrabInteractable grabInteractable = other.GetComponent<XRGrabInteractable>();
+            
+            // Only process when item is released inside the trigger zone
+            if (grabInteractable != null && !grabInteractable.isSelected)
+            {
+                ProcessDroppedItem(storableItem, other.gameObject);
+            }
+        }
+    }
+    
+    private void ProcessDroppedItem(StorableItem storableItem, GameObject droppedObject)
+    {
+        // Check if the dropped object's type matches the container
+        if (storableItem.storableType == containerType)
         {
             // Correct item has been dropped.
             popupManager.ShowMessage("Correct! Item has been stored.");
-
-            // 🌟 CRITICAL FIX: Tell the StorableItem that it has been correctly stored.
-            // This is the call that updates your TaskController and task list UI.
+            
+            // Tell the StorableItem that it has been correctly stored.
             storableItem.OnCorrectlyStored();
-
+            
             // Snap the item to the position of the designated snapPoint
             if (snapPoint != null)
             {
-                droppedInteractable.transform.position = snapPoint.position;
-                droppedInteractable.transform.rotation = snapPoint.rotation;
+                droppedObject.transform.position = snapPoint.position;
+                droppedObject.transform.rotation = snapPoint.rotation;
             }
             else
             {
                 Debug.LogWarning("Snap point is not assigned! Item will be snapped to the container's origin.");
-                droppedInteractable.transform.position = transform.position;
+                droppedObject.transform.position = transform.position;
             }
-
+            
             // After snapping, disable the item's physics and collider
-            Rigidbody rb = droppedInteractable.GetComponent<Rigidbody>();
+            Rigidbody rb = droppedObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
                 rb.isKinematic = true;
             }
-            
-            Collider col = droppedInteractable.GetComponent<Collider>();
+           
+            Collider col = droppedObject.GetComponent<Collider>();
             if (col != null)
             {
                 col.enabled = false;
