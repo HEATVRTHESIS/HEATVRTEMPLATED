@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 8802231401290404152}
   - component: {fileID: 8875130680372984236}
   - component: {fileID: 4602661944112378095}
+  - component: {fileID: 8796576193040962874}
   m_Layer: 0
   m_Name: Clipboard
   m_TagString: Untagged
@@ -108,10 +109,10 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &4633223610767419820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,18 +193,18 @@ MonoBehaviour:
   m_SnapToColliderVolume: 1
   m_ReinitializeDynamicAttachEverySingleGrab: 1
   m_AttachEaseInTime: 0.15
-  m_MovementType: 2
+  m_MovementType: 0
   m_VelocityDamping: 1
   m_VelocityScale: 1
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
   m_TrackPosition: 1
   m_SmoothPosition: 0
-  m_SmoothPositionAmount: 8
+  m_SmoothPositionAmount: 0.3
   m_TightenPosition: 0.1
   m_TrackRotation: 1
   m_SmoothRotation: 0
-  m_SmoothRotationAmount: 8
+  m_SmoothRotationAmount: 0.3
   m_TightenRotation: 0.1
   m_TrackScale: 1
   m_SmoothScale: 0
@@ -229,7 +230,7 @@ MonoBehaviour:
   m_ThrowVelocityScale: 1.5
   m_ThrowAngularVelocityScale: 1
   m_ForceGravityOnDetach: 0
-  m_RetainTransformParent: 1
+  m_RetainTransformParent: 0
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
@@ -314,7 +315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 986ae63fb662d8a4c82bd79820609a36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlightColor: {r: 0.5283019, g: 0.5269119, b: 0.51085794, a: 1}
+  highlightColor: {r: 0.41438237, g: 0.9056604, b: 0.83103395, a: 1}
   highlightWidth: 5
 --- !u!65 &4602661944112378095
 BoxCollider:
@@ -337,3 +338,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.0066, y: 0.00048815997, z: 0.009779999}
   m_Center: {x: 0, y: 0.00024407999, z: -0.00008999999}
+--- !u!114 &8796576193040962874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6901216374423292350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b0caf9b7cb53fb46bf0a49f10148d39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
