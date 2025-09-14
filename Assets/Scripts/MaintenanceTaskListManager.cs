@@ -55,12 +55,6 @@ public class MaintenanceTaskListManager : MonoBehaviour
         {
             task.StartTask();
         }
-
-        // Select the first task by default (this will turn off others and keep only the first highlighted)
-        if (activeTasks.Count > 0)
-        {
-            SelectTask(activeTasks[0]);
-        }
     }
 
     /// <summary>
