@@ -6,10 +6,9 @@ public class StorageContainer : MonoBehaviour
 {
     public string containerType;
     public PopupManager popupManager;
-    public Transform snapPoint;
+    public Transform[] snapPoints; // Use an array for multiple snap points
     
-    // REMOVE the HandleItemDropped method completely!
-    // Use trigger detection instead:
+    private int nextSnapPointIndex = 0; // Tracks the next available slot
     
     private void OnTriggerStay(Collider other)
     {
@@ -32,35 +31,42 @@ public class StorageContainer : MonoBehaviour
         // Check if the dropped object's type matches the container
         if (storableItem.storableType == containerType)
         {
-            // Correct item has been dropped.
-            popupManager.ShowMessage("Correct! Item has been stored.");
-            
-            // Tell the StorableItem that it has been correctly stored.
-            storableItem.OnCorrectlyStored();
-            
-            // Snap the item to the position of the designated snapPoint
-            if (snapPoint != null)
+            // Check if there are still available snap points
+            if (nextSnapPointIndex < snapPoints.Length)
             {
-                droppedObject.transform.position = snapPoint.position;
-                droppedObject.transform.rotation = snapPoint.rotation;
+                // Correct item has been dropped.
+                popupManager.ShowMessage("Correct! Item has been stored.");
+                
+                // Tell the StorableItem that it has been correctly stored.
+                storableItem.OnCorrectlyStored();
+                
+                // Get the current snap point from the array
+                Transform currentSnapPoint = snapPoints[nextSnapPointIndex];
+
+                // Snap the item to the position of the designated snapPoint
+                droppedObject.transform.position = currentSnapPoint.position;
+                droppedObject.transform.rotation = currentSnapPoint.rotation;
+
+                // After snapping, disable the item's physics and collider
+                Rigidbody rb = droppedObject.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.isKinematic = true;
+                }
+                
+                Collider col = droppedObject.GetComponent<Collider>();
+                if (col != null)
+                {
+                    col.enabled = false;
+                }
+
+                // Increment the index to move to the next snap point
+                nextSnapPointIndex++;
             }
             else
             {
-                Debug.LogWarning("Snap point is not assigned! Item will be snapped to the container's origin.");
-                droppedObject.transform.position = transform.position;
-            }
-            
-            // After snapping, disable the item's physics and collider
-            Rigidbody rb = droppedObject.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = true;
-            }
-           
-            Collider col = droppedObject.GetComponent<Collider>();
-            if (col != null)
-            {
-                col.enabled = false;
+                // Container is full
+                popupManager.ShowMessage("Container is full!");
             }
         }
         else

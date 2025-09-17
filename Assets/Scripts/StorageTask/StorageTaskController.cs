@@ -11,6 +11,8 @@ public class StorageTaskController : MonoBehaviour
 {
     public string taskName;
     public string taskDescription;
+        // The spawner is now a child of this prefab.
+    private ObjectSpawner objectSpawner;
 
     // A public array for the dialogue lines to display on task completion.
     // This allows you to set the dialogue directly in the Unity Inspector.
@@ -48,6 +50,13 @@ public class StorageTaskController : MonoBehaviour
         {
             Debug.LogError("StorageTaskController requires a child StorageContainer component.");
         }
+
+         // Find the Object Spawner that is a child of this same prefab.
+        objectSpawner = GetComponentInChildren<ObjectSpawner>();
+        if (objectSpawner == null)
+        {
+            Debug.LogError("TaskController requires a child ObjectSpawner component.");
+        }
     }
 
     /// <summary>
@@ -55,6 +64,9 @@ public class StorageTaskController : MonoBehaviour
     /// </summary>
     public void InitializeTask()
     {
+        // Tell the spawner to spawn the objects for this task.
+        objectSpawner.SpawnObjects();
+
         // Find all StorableItem components under this object.
         taskTargets = GetComponentsInChildren<StorableItem>();
         

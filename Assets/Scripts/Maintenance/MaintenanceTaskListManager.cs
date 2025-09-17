@@ -95,12 +95,16 @@ public class MaintenanceTaskListManager : MonoBehaviour
     /// Selects a new task, highlighting its objects and un-highlighting others.
     /// This also communicates with other managers to turn off their highlights.
     /// </summary>
+     /// <summary>
+    /// Selects a new task, highlighting its objects and un-highlighting others.
+    /// This also communicates with other managers to turn off their highlights.
+    /// </summary>
     public void SelectTask(MaintenanceTaskController task)
     {
         // First, tell all other managers to turn off their highlights
         if (TaskListManager.Instance != null)
         {
-            TaskListManager.Instance.TurnOffAllHighlights();
+            
         }
         if (StorageTaskListManager.Instance != null)
         {
@@ -119,6 +123,15 @@ public class MaintenanceTaskListManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Checks if the given task is the currently selected task.
+    /// </summary>
+    public bool IsThisTaskSelected(MaintenanceTaskController task)
+    {
+        return currentSelectedTask == task;
+    }
+
+
+    /// <summary>
     /// Turns off all highlights in this manager. Called by other managers.
     /// </summary>
     public void TurnOffAllHighlights()
@@ -131,29 +144,17 @@ public class MaintenanceTaskListManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Deselects the current task and shows all highlights again.
-    /// This also tells other managers to restore their highlights.
+    /// Deselects the current task.
     /// </summary>
-    public void DeselectTask()
+    public void DeselectTask(MaintenanceTaskController task)
     {
-        currentSelectedTask = null;
-        
-        // Turn on highlights for ALL tasks in this manager
-        foreach (var activeTask in activeTasks)
+        if (currentSelectedTask == task)
         {
-            activeTask.StartTask();
-        }
-
-        // Tell other managers to restore their highlights too
-        if (TaskListManager.Instance != null)
-        {
-            TaskListManager.Instance.RestoreAllHighlights();
-        }
-        if (StorageTaskListManager.Instance != null)
-        {
-            StorageTaskListManager.Instance.RestoreAllHighlights();
+            // Simply clear the reference without restoring highlights
+            currentSelectedTask = null;
         }
     }
+
 
     /// <summary>
     /// Restores all highlights in this manager. Called by other managers.
@@ -165,5 +166,15 @@ public class MaintenanceTaskListManager : MonoBehaviour
             activeTask.StartTask();
         }
         currentSelectedTask = null;
+
+        // Tell other managers to restore their highlights too
+        if (TaskListManager.Instance != null)
+        {
+            TaskListManager.Instance.RestoreAllHighlights();
+        }
+        if (StorageTaskListManager.Instance != null)
+        {
+            StorageTaskListManager.Instance.RestoreAllHighlights();
+        }
     }
 }
