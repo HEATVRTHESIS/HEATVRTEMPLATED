@@ -4,7 +4,7 @@ using UnityEngine.Events;
 public class PullDownTrigger : TaskController
 {
     // Original PullDownTrigger fields
-    private HingeJoint hingeJoint; 
+    private HingeJoint myHingeJoint; 
     public float successAngle = 92f; 
     public UnityEvent onPullSuccess;
     private bool _isPulled = false;
@@ -18,17 +18,12 @@ public class PullDownTrigger : TaskController
     public PopupManager popupManager;
 
     // Override the Awake to prevent base class errors
-    new void Awake()
-    {
-        // Don't call base.Awake() since it expects ObjectSpawner and Bin components
-        // which we don't have for the fire alarm task
-    }
 
     private void Start()
     {
         // Original functionality
-        hingeJoint = GetComponent<HingeJoint>();
-        if (hingeJoint == null)
+        myHingeJoint = GetComponent<HingeJoint>();
+        if (myHingeJoint == null)
         {
             Debug.LogError("Hinge Joint not found on this GameObject. The script will not work.");
         }
@@ -73,7 +68,7 @@ public class PullDownTrigger : TaskController
         if (!_isPulled && !IsTaskCompleted())
         {
             // Check if the current angle has reached the success threshold.
-            if (hingeJoint.angle >= successAngle - 5.0f)
+            if (myHingeJoint.angle >= successAngle - 5.0f)
             {
                 // Original functionality
                 onPullSuccess?.Invoke();
@@ -90,7 +85,7 @@ public class PullDownTrigger : TaskController
     /// </summary>
     private void CompleteFireAlarmTask()
     {
-        Debug.Log($"Fire alarm task '{taskName}' completed! Lever pulled to {hingeJoint.angle:F1}°");
+        Debug.Log($"Fire alarm task '{taskName}' completed! Lever pulled to {myHingeJoint.angle:F1}°");
         
         // Mark as completed (using private field access)
         SetTaskCompleted();
@@ -119,7 +114,7 @@ public class PullDownTrigger : TaskController
         // Optional: Show completion message
         if (popupManager != null)
         {
-            popupManager.ShowMessage($"Fire alarm activated! Lever pulled to {hingeJoint.angle:F1}°");
+            popupManager.ShowMessage($"Fire alarm activated! Lever pulled to {myHingeJoint.angle:F1}°");
         }
     }
 
@@ -196,7 +191,7 @@ public class PullDownTrigger : TaskController
             targetObject.SetHighlight(true);
         }
         
-        Debug.Log($"Started fire alarm task '{taskName}'. Current angle: {hingeJoint.angle:F1}°");
+        Debug.Log($"Started fire alarm task '{taskName}'. Current angle: {myHingeJoint.angle:F1}°");
     }
 
     /// <summary>
@@ -219,8 +214,8 @@ public class PullDownTrigger : TaskController
     /// </summary>
     public float GetPullProgress()
     {
-        if (hingeJoint == null) return 0f;
-        return Mathf.Clamp01(hingeJoint.angle / successAngle);
+        if (myHingeJoint == null) return 0f;
+        return Mathf.Clamp01(myHingeJoint.angle / successAngle);
     }
 
     /// <summary>
@@ -228,7 +223,7 @@ public class PullDownTrigger : TaskController
     /// </summary>
     public float GetCurrentAngle()
     {
-        return hingeJoint != null ? hingeJoint.angle : 0f;
+        return myHingeJoint != null ? myHingeJoint.angle : 0f;
     }
 
     /// <summary>
@@ -252,7 +247,7 @@ public class PullDownTrigger : TaskController
     // Visual debugging in Scene view
     void OnDrawGizmosSelected()
     {
-        if (hingeJoint != null)
+        if (myHingeJoint != null)
         {
             // Draw pull progress visualization
             Gizmos.color = IsTaskCompleted() ? Color.green : (_isPulled ? Color.red : Color.yellow);
