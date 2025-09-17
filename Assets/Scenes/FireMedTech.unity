@@ -311,6 +311,38 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 4729672016330338943, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
   m_PrefabInstance: {fileID: 1528083954}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &578363228
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 578363229}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &578363229
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578363228}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1900590539}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &743630146
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -760,6 +792,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  taskName: Pull Fire Alarm
+  taskDescription: Pull down the fire alarm lever to activate it
+  taskCompletionDialogue: []
+  successSound: {fileID: 0}
+  targetObject: {fileID: 0}
+  popupManager: {fileID: 0}
+  OnProgressUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTaskCompleted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1113932226 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8882628012649841645, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
@@ -1183,6 +1227,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+--- !u!225 &1528083955 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 5273514132882365442, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+  m_PrefabInstance: {fileID: 1528083954}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1528083956 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8578263828411799830, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+  m_PrefabInstance: {fileID: 1528083954}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1695224595 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 335362756293112081, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
@@ -1230,6 +1284,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1900590538
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1900590539}
+  - component: {fileID: 1900590540}
+  m_Layer: 0
+  m_Name: TaskListStuff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1900590539
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900590538}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 578363229}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1900590540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900590538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43283a6aade412446a6650c20bd5afd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taskEntryUIPrefab: {fileID: 1611475941344092440, guid: 639496e306233624992097e16912c225, type: 3}
+  taskEntryParentTransform: {fileID: 1528083956}
+  taskListCanvasGroup: {fileID: 1528083955}
 --- !u!1 &1909096065 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8010291863138898851, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
@@ -1512,3 +1613,4 @@ SceneRoots:
   - {fileID: 1528083954}
   - {fileID: 1714872589}
   - {fileID: 1109092723}
+  - {fileID: 578363229}

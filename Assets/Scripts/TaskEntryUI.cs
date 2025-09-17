@@ -27,36 +27,44 @@ public class TaskEntryUI : MonoBehaviour
     /// It's the most important method in this script.
     /// </summary>
     public void SetTask(TaskController task)
+{
+    if (task == null)
     {
-        if (task == null)
-        {
-            Debug.LogError("SetTask was called with a null TaskController. Check your TaskListManager instantiation logic.");
-            return;
-        }
-        associatedTask = task;
-
-        // Populate the UI with data from the task controller
-        taskDescriptionText.text = task.taskDescription;
-        if (completedCheckmark != null)
-        {
-            completedCheckmark.gameObject.SetActive(false);
-            completedCheckmark.enabled = false;
-        }
-
-        // Register for events from the task controller
-        associatedTask.OnProgressUpdated.AddListener(UpdateProgress);
-        associatedTask.OnTaskCompleted.AddListener(MarkTaskAsCompleted);
-        
-        // Subscribe to the button click event
-        if (selectTaskButton != null)
-        {
-            selectTaskButton.onClick.AddListener(OnTaskEntryClicked);
-        }
-        else
-        {
-            Debug.LogError("Select Task Button is not assigned on the TaskEntryUI prefab!");
-        }
+        Debug.LogError("SetTask was called with a null TaskController. Check your TaskListManager instantiation logic.");
+        return;
     }
+    associatedTask = task;
+
+    // Populate the UI with data from the task controller
+    taskDescriptionText.text = task.taskDescription;
+    if (completedCheckmark != null)
+    {
+        completedCheckmark.gameObject.SetActive(false);
+        completedCheckmark.enabled = false;
+    }
+
+    // Register for events from the task controller
+    associatedTask.OnProgressUpdated.AddListener(UpdateProgress);
+    associatedTask.OnTaskCompleted.AddListener(MarkTaskAsCompleted);
+    
+    // Subscribe to the button click event
+    if (selectTaskButton != null)
+    {
+        selectTaskButton.onClick.AddListener(OnTaskEntryClicked);
+    }
+    else
+    {
+        Debug.LogError("Select Task Button is not assigned on the TaskEntryUI prefab!");
+    }
+
+    // NEW: Update initial progress after events are subscribed
+    // Check if this is a PullDownTrigger and call its special method
+    PullDownTrigger pullDownTask = task as PullDownTrigger;
+    if (pullDownTask != null)
+    {
+        pullDownTask.UpdateInitialProgress();
+    }
+}
 
     /// <summary>
     /// This method is called by the MaintenanceTaskListManager to set up the UI entry for a maintenance task.
