@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro; // Make sure you have the Text Mesh Pro package imported
 using UnityEngine.InputSystem;
 using UnityEngine.UI; // Required for the ContentSizeFitter component
+using UnityEngine.Events; // Needed for UnityEvent
 
 /// <summary>
 /// A text display system for VR that shows dialogue lines and progresses with user input.
@@ -23,6 +24,9 @@ public class VRDialogueSystem : MonoBehaviour
     public Vector3 dialogueOffset = new Vector3(0, -0.5f, 1.5f);
     [Tooltip("The speed at which characters are typed out. A smaller value is faster.")]
     public float typingSpeed = 0.05f;
+
+    // A public event that other scripts can listen to
+    public UnityEvent OnDialogueEnd;
 
     // --- Private Fields ---
     private Queue<string> _dialogLines = new Queue<string>();
@@ -191,5 +195,8 @@ public class VRDialogueSystem : MonoBehaviour
         {
             dialogText.text = string.Empty; // Clear the text
         }
+        
+        // Call the event to notify other scripts that the dialogue is finished
+        OnDialogueEnd?.Invoke();
     }
 }
