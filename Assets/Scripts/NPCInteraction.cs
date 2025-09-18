@@ -20,8 +20,8 @@ public class NPCInteraction : TaskController
     
     // Dialogue Content
     private string initialDialogue = "Ah there is a fire what should we do?";
-    private string correctDialogue = "Thank you! I will evacuate immediately.";
-    private string wrongDialogue = "That's not what I'm looking for. Try again.";
+    private string correctDialogue = "Ok! I will evacuate and alert the others immediately.";
+    private string wrongDialogue = "That doesn't sound right... Try again.";
     
     // Player and NPC
     public Transform rightControllerTransform;
