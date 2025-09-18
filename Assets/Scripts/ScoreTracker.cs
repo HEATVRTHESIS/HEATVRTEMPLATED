@@ -15,6 +15,11 @@ public class ScoreTracker : MonoBehaviour
     [Header("UI References")]
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI scoreValueText; // New: separate text object for the numerical score
+    
+    [Header("Summary Screen")]
+    public GameObject summaryCanvas; // Canvas to show when level is complete
+    public TextMeshProUGUI summaryCompletedTasksText; // Shows completed tasks count
+    public TextMeshProUGUI summaryMistakesText; // Shows mistakes count
 
     [Header("Scoring Settings")]
     [SerializeField] private int pointsPerCompletion = 10;
@@ -25,6 +30,7 @@ public class ScoreTracker : MonoBehaviour
     private int totalTasks = 0;
     private int currentScore = 0;
     private int perfectScore = 0; // Will be calculated as totalTasks * pointsPerCompletion
+    private int mistakeCount = 0; // Track number of mistakes made
 
     void Awake()
     {
@@ -49,6 +55,12 @@ public class ScoreTracker : MonoBehaviour
 
         // Initialize the score display
         UpdateScoreDisplay();
+        
+        // Ensure summary canvas is hidden at start
+        if (summaryCanvas != null)
+        {
+            summaryCanvas.SetActive(false);
+        }
     }
 
     /// <summary>
@@ -98,6 +110,12 @@ public class ScoreTracker : MonoBehaviour
         
         Debug.Log($"Task completed! +{pointsPerCompletion} points. Current score: {currentScore} ({completedTasks}/{totalTasks} tasks)");
         UpdateScoreDisplay();
+        
+        // Check if all tasks are completed
+        if (completedTasks >= totalTasks)
+        {
+            ShowSummaryScreen();
+        }
     }
 
     /// <summary>
@@ -106,12 +124,13 @@ public class ScoreTracker : MonoBehaviour
     /// </summary>
     public void OnTaskError()
     {
+        mistakeCount++; // Increment mistake counter
         currentScore += pointsPerError; // pointsPerError is already negative (-5)
         
         // Ensure score doesn't go below 0
         currentScore = Mathf.Max(0, currentScore);
         
-        Debug.Log($"Task error! {pointsPerError} points. Current score: {currentScore}");
+        Debug.Log($"Task error! {pointsPerError} points. Mistakes: {mistakeCount}. Current score: {currentScore}");
         UpdateScoreDisplay();
     }
 
@@ -130,6 +149,31 @@ public class ScoreTracker : MonoBehaviour
         if (scoreValueText != null)
         {
             scoreValueText.text = $"Score: {currentScore}";
+        }
+    }
+
+    /// <summary>
+    /// Shows the summary screen when all tasks are completed.
+    /// </summary>
+    private void ShowSummaryScreen()
+    {
+        if (summaryCanvas != null)
+        {
+            // Update summary text elements
+            if (summaryCompletedTasksText != null)
+            {
+                summaryCompletedTasksText.text = $"Tasks Completed: {completedTasks}/{totalTasks}";
+            }
+            
+            if (summaryMistakesText != null)
+            {
+                summaryMistakesText.text = $"Mistakes: {mistakeCount}";
+            }
+            
+            // Show the summary canvas
+            summaryCanvas.SetActive(true);
+            
+            Debug.Log($"Level Complete! Tasks: {completedTasks}/{totalTasks}, Mistakes: {mistakeCount}, Final Score: {currentScore}/{perfectScore}");
         }
     }
 
@@ -165,5 +209,13 @@ public class ScoreTracker : MonoBehaviour
     {
         if (perfectScore == 0) return 100f;
         return (float)currentScore / perfectScore * 100f;
+    }
+
+    /// <summary>
+    /// Get the total number of mistakes made
+    /// </summary>
+    public int GetMistakeCount()
+    {
+        return mistakeCount;
     }
 }
