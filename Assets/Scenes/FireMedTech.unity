@@ -889,6 +889,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6eed37f52235d347b56049b33172b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskName: Help the Civilian
+  taskDescription: Talk to the Civilian
+  taskCompletionDialogue: []
+  audioSource: {fileID: 0}
+  successSound: {fileID: 0}
+  totalItems: 0
+  OnProgressUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTaskCompleted:
+    m_PersistentCalls:
+      m_Calls: []
   dialoguePanel: {fileID: 1408732262}
   dialogueText: {fileID: 1035976435}
   replyOption1: {fileID: 1847338593}
@@ -898,6 +910,8 @@ MonoBehaviour:
   npcAnimator: {fileID: 1977994031}
   evacuationSpeed: 2
   evacuationPoint: {fileID: 1714872589}
+  targetObject: {fileID: 0}
+  popupManager: {fileID: 0}
   talkAction:
     m_UseReference: 0
     m_Action:

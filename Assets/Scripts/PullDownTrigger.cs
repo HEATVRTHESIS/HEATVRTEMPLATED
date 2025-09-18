@@ -17,7 +17,6 @@ public class PullDownTrigger : TaskController
     [Header("UI")]
     public PopupManager popupManager;
 
-    // Override the Awake to prevent base class errors
 
     private void Start()
     {
