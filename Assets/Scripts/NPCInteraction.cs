@@ -19,7 +19,7 @@ public class NPCInteraction : TaskController
     private bool isCompleting = false;
     
     // Dialogue Content
-    private string initialDialogue = "Hello, traveler. Can you help me?";
+    private string initialDialogue = "Ah there is a fire what should we do?";
     private string correctDialogue = "Thank you! I will evacuate immediately.";
     private string wrongDialogue = "That's not what I'm looking for. Try again.";
     
