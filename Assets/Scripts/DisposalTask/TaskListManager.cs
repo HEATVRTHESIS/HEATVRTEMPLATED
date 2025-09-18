@@ -42,20 +42,31 @@ public class TaskListManager : MonoBehaviour
     }
 
     void Start()
+{
+    // Find all TaskControllers that are already in the scene at the start
+    TaskController[] tasksInScene = FindObjectsOfType<TaskController>();
+    Debug.Log($"Found {tasksInScene.Length} TaskController(s) in scene:");
+    
+    foreach (var task in tasksInScene)
     {
-        // Find all TaskControllers that are already in the scene at the start
-        TaskController[] tasksInScene = FindObjectsOfType<TaskController>();
-        foreach (var task in tasksInScene)
+        try
         {
+            Debug.Log($"- Found: {task.GetType().Name} named '{task.taskName}' on GameObject '{task.gameObject.name}'");
             RegisterTask(task);
         }
-
-        // Start all tasks to highlight everything initially
-        foreach (var task in activeTasks)
+        catch (System.Exception e)
         {
-            task.StartTask();
+            Debug.LogError($"Error processing task {task.GetType().Name}: {e.Message}");
+            Debug.LogError($"Stack trace: {e.StackTrace}");
         }
     }
+
+    // Start all tasks to highlight everything initially
+    foreach (var task in activeTasks)
+    {
+        task.StartTask();
+    }
+}
 
     /// <summary>
     /// Registers a new task and creates its corresponding UI entry.

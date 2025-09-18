@@ -3732,11 +3732,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1110626103452133060, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1110626103452133060, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 1510286404181290691, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: m_Size
+      value: 0.9491267
+      objectReference: {fileID: 0}
+    - target: {fileID: 1510286404181290691, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: m_Value
+      value: 0.0000031112377
       objectReference: {fileID: 0}
     - target: {fileID: 2778646476653650701, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3754,6 +3762,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 0b05b33c09df643409fbb0dad25ed9e9, type: 3}
+    - target: {fileID: 5452617802574453767, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: m_Horizontal
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452617802574453767, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: m_HorizontalScrollbar
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5693216909725274436, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
       propertyPath: dialogText
       value: 
@@ -3867,7 +3883,8 @@ PrefabInstance:
       value: 151.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 915617780227497196, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
