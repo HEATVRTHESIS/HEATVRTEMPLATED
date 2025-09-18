@@ -776,6 +776,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53993e042ed75674e812aad8cd88437c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  taskName: Pull Fire Alarm
+  taskDescription: Pull down the fire alarm lever to activate it
+  taskCompletionDialogue: []
+  audioSource: {fileID: 0}
+  successSound: {fileID: 0}
+  totalItems: 0
+  OnProgressUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTaskCompleted:
+    m_PersistentCalls:
+      m_Calls: []
   successAngle: 92
   onPullSuccess:
     m_PersistentCalls:
@@ -792,18 +804,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  taskName: Pull Fire Alarm
-  taskDescription: Pull down the fire alarm lever to activate it
-  taskCompletionDialogue: []
-  successSound: {fileID: 0}
   targetObject: {fileID: 0}
   popupManager: {fileID: 0}
-  OnProgressUpdated:
-    m_PersistentCalls:
-      m_Calls: []
-  OnTaskCompleted:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1113932226 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8882628012649841645, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
@@ -1549,6 +1551,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 155727033756756845, guid: 9ff9de46724d00b4ba152de38c7207f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1368422704731291033, guid: 9ff9de46724d00b4ba152de38c7207f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1427155203362950748, guid: 9ff9de46724d00b4ba152de38c7207f8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1592,6 +1602,46 @@ PrefabInstance:
     - target: {fileID: 1434784927322501840, guid: 9ff9de46724d00b4ba152de38c7207f8, type: 3}
       propertyPath: m_Name
       value: FireExtinguisher
+      objectReference: {fileID: 0}
+    - target: {fileID: 1579305393453012118, guid: 9ff9de46724d00b4ba152de38c7207f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902686098532285751, guid: 9ff9de46724d00b4ba152de38c7207f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346258006287652924, guid: 9ff9de46724d00b4ba152de38c7207f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760214626039801558, guid: 9ff9de46724d00b4ba152de38c7207f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5851808749837473874, guid: 9ff9de46724d00b4ba152de38c7207f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6393021641340107976, guid: 9ff9de46724d00b4ba152de38c7207f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6640959783525828151, guid: 9ff9de46724d00b4ba152de38c7207f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8018040008174201032, guid: 9ff9de46724d00b4ba152de38c7207f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8246350962628161255, guid: 9ff9de46724d00b4ba152de38c7207f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8329127872387974526, guid: 9ff9de46724d00b4ba152de38c7207f8, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
