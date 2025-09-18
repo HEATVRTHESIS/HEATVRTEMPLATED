@@ -15,6 +15,8 @@ public class NPCInteraction : TaskController
 
     // VR Interaction UI
     public GameObject interactionIndicator;
+
+    private bool isCompleting = false;
     
     // Dialogue Content
     private string initialDialogue = "Hello, traveler. Can you help me?";
@@ -146,63 +148,89 @@ public class NPCInteraction : TaskController
     }
 
     IEnumerator EvacuateNPC()
+{
+    // Immediately start the walk animation
+    npcAnimator.SetTrigger("Walk");
+    
+    while (Vector3.Distance(transform.position, evacuationPoint.position) > 0.1f)
     {
-        // Immediately start the walk animation
-        npcAnimator.SetTrigger("Walk");
-        
-        while (Vector3.Distance(transform.position, evacuationPoint.position) > 0.1f)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, evacuationPoint.position, evacuationSpeed * Time.deltaTime);
-            transform.LookAt(evacuationPoint);
-            yield return null;
-        }
-
-        // NPC has reached evacuation point - complete the task!
-        CompleteNPCTask();
-
-        Destroy(gameObject);
-        dialoguePanel.SetActive(false);
+        transform.position = Vector3.MoveTowards(transform.position, evacuationPoint.position, evacuationSpeed * Time.deltaTime);
+        transform.LookAt(evacuationPoint);
+        yield return null;
     }
+
+    Debug.Log("NPC reached evacuation point");
+    
+    // Hide dialogue first
+    dialoguePanel.SetActive(false);
+    
+    // Complete the task
+    CompleteNPCTask();
+    
+    // Wait for events to finish, then destroy
+    yield return new WaitForSeconds(0.5f);
+    
+    Debug.Log("Destroying NPC now");
+    Destroy(gameObject);
+}
 
     /// <summary>
     /// Completes the NPC evacuation task
     /// </summary>
     private void CompleteNPCTask()
+{
+    if (isCompleting || IsTaskCompleted())
     {
-        if (!IsTaskCompleted())
-        {
-            Debug.Log($"NPC evacuation task '{taskName}' completed! NPC reached evacuation point.");
-            
-            // Mark as completed using reflection (same as PullDownTrigger)
-            SetTaskCompleted();
-            
-            // Update progress to completed
-            OnProgressUpdated.Invoke(1, totalItems);
-            OnTaskCompleted.Invoke();
-            
-            // End highlighting
-            EndTask();
-
-            // Play the success sound
-            if (audioSource != null && successSound != null)
-            {
-                audioSource.PlayOneShot(successSound);
-            }
-            else if (successSound != null)
-            {
-                PlaySuccessSoundFallback();
-            }
-
-            // Show completion dialogue
-            ShowCompletionDialogue();
-            
-            // Optional: Show completion message
-            if (popupManager != null)
-            {
-                popupManager.ShowMessage("NPC successfully evacuated!");
-            }
-        }
+        Debug.Log("Task already completing or completed, skipping");
+        return;
     }
+    
+    isCompleting = true;
+    Debug.Log("CompleteNPCTask() started");
+    
+    try
+    {
+        Debug.Log($"NPC evacuation task '{taskName}' completed! NPC reached evacuation point.");
+        
+        Debug.Log("About to SetTaskCompleted...");
+        SetTaskCompleted();
+        
+        Debug.Log("About to invoke progress update...");
+        OnProgressUpdated.Invoke(1, totalItems);
+        
+        Debug.Log("About to invoke task completed...");
+        OnTaskCompleted.Invoke();
+        
+        Debug.Log("About to call EndTask...");
+        EndTask();
+
+        Debug.Log("About to handle audio...");
+        if (audioSource != null && successSound != null)
+        {
+            audioSource.PlayOneShot(successSound);
+        }
+        else if (successSound != null)
+        {
+            PlaySuccessSoundFallback();
+        }
+
+        Debug.Log("About to show completion dialogue...");
+        ShowCompletionDialogue();
+        
+        Debug.Log("About to show popup...");
+        if (popupManager != null)
+        {
+            popupManager.ShowMessage("NPC successfully evacuated!");
+        }
+        
+        Debug.Log("CompleteNPCTask() finished");
+    }
+    catch (System.Exception e)
+    {
+        Debug.LogError($"Exception in CompleteNPCTask: {e.Message}");
+        Debug.LogError($"Stack trace: {e.StackTrace}");
+    }
+}
 
     /// <summary>
     /// Sets the task as completed using reflection since isTaskCompleted is private
