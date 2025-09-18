@@ -3858,6 +3858,14 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8578263828411799830, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8578263828411799830, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 151.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
