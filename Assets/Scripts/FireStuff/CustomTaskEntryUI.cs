@@ -54,6 +54,7 @@ public class CustomTaskEntryUI : MonoBehaviour
         }
 
         // Update initial progress
+        Debug.Log($"CustomTaskEntryUI calling UpdateInitialProgress on task: {task.taskName}");
         associatedTask.UpdateInitialProgress();
     }
 

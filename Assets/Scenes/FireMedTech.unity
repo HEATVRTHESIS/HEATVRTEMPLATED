@@ -2994,7 +2994,7 @@ GameObject:
   - component: {fileID: 6684058335795942939}
   - component: {fileID: 6684058335795942938}
   - component: {fileID: 6684058335795942937}
-  - component: {fileID: 6684058335795942936}
+  - component: {fileID: 6684058335795942941}
   m_Layer: 0
   m_Name: Lever
   m_TagString: Untagged
@@ -3687,6 +3687,9 @@ GameObject:
   - component: {fileID: 2634207205782014509}
   - component: {fileID: 8698594627023913843}
   - component: {fileID: 8698594627023913844}
+  - component: {fileID: 8698594627023913847}
+  - component: {fileID: 8698594627023913846}
+  - component: {fileID: 8698594627023913845}
   m_Layer: 0
   m_Name: FireExtinguisher
   m_TagString: Untagged
@@ -4449,50 +4452,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6684058335795942936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 431136114109626793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53993e042ed75674e812aad8cd88437c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  taskName: Close Smoke Door
-  taskDescription: Pull down the fire shutter lever
-  taskCompletionDialogue:
-  - Fire shutters can help contain the fire
-  - This would slow down the spread of the fire
-  audioSource: {fileID: 1122702603}
-  successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
-  totalItems: 0
-  OnProgressUpdated:
-    m_PersistentCalls:
-      m_Calls: []
-  OnTaskCompleted:
-    m_PersistentCalls:
-      m_Calls: []
-  successAngle: 92
-  onPullSuccess:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1066667990}
-        m_TargetAssemblyTypeName: GarageDoorController, Assembly-CSharp
-        m_MethodName: CloseDoor
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  targetObject: {fileID: 3210234054247406529}
-  popupManager: {fileID: 1557387017}
 --- !u!59 &6684058335795942937
 HingeJoint:
   m_ObjectHideFlags: 0
@@ -4702,6 +4661,39 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.10816848, y: 0.019999994, z: 0.07986108}
   m_Center: {x: 0.0012313015, y: -2.1266938e-16, z: 0.029930547}
+--- !u!114 &6684058335795942941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431136114109626793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea6bce096269cfc4e974ec24f2bb9400, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taskName: Close Smoke Door
+  taskDescription: Pull down the fire shutter lever
+  taskCompletionDialogue:
+  - Fire shutters can help contain the fire
+  - This would slow down the spread of the fire
+  audioSource: {fileID: 1122702603}
+  successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  totalItems: 1
+  OnProgressUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTaskCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  successAngle: 92
+  onPullSuccess:
+    m_PersistentCalls:
+      m_Calls: []
+  targetObject: {fileID: 3210234054247406529}
+  requiredItems: 2
+  popupManager: {fileID: 1557387017}
 --- !u!1001 &6964983623725206198
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5067,6 +5059,80 @@ MonoBehaviour:
   safetyPin: {fileID: 1775975331}
   handle: {fileID: 1040051442}
   checkInterval: 0.1
+--- !u!114 &8698594627023913845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2641838565062981281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 986ae63fb662d8a4c82bd79820609a36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 1, g: 0.015686398, b: 0.015686274, a: 1}
+  highlightWidth: 5
+--- !u!114 &8698594627023913846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2641838565062981281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.015686275, b: 0.015686275, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &8698594627023913847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2641838565062981281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ccfc1a177e6e5c47af0a57e751780ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taskName: Extinguish the Fire
+  taskDescription: Use the Fire Extinguisher
+  taskCompletionDialogue: []
+  audioSource: {fileID: 0}
+  successSound: {fileID: 0}
+  totalItems: 1
+  OnProgressUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTaskCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  targetObject: {fileID: 8698594627023913845}
+  completionType: 0
+  requiredHoldTime: 3
+  targetLocation: {fileID: 0}
+  requiredDistance: 5
+  useAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Use
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 0efa0329-180a-4bf0-af9e-90cc4a26f1db
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  popupManager: {fileID: 0}
 --- !u!1001 &9151551785512971031
 PrefabInstance:
   m_ObjectHideFlags: 0
