@@ -1152,6 +1152,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 646166798910886386, guid: 99b3f968f2e041f41b351112ef6d0590, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 562fe1d5cc5d49747928a01768293f42, type: 2}
     - target: {fileID: 1650435534238022308, guid: 99b3f968f2e041f41b351112ef6d0590, type: 3}
       propertyPath: m_TeleportationProvider
       value: 
@@ -1200,6 +1204,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: MedtechLab 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5626778535154067321, guid: 99b3f968f2e041f41b351112ef6d0590, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: be324ffdf0a145141803073b0e276e66, type: 2}
+    - target: {fileID: 6014696653226894144, guid: 99b3f968f2e041f41b351112ef6d0590, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f6cdbc32fbcfa1547a2ce64bb00130fc, type: 2}
+    - target: {fileID: 6598707343793575184, guid: 99b3f968f2e041f41b351112ef6d0590, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 81e5e11f437149e4aa77c3f58ea5a553, type: 2}
+    - target: {fileID: 7339505428073816879, guid: 99b3f968f2e041f41b351112ef6d0590, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 09ef0e20602605a4f901ef265dcee3e5, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
