@@ -404,6 +404,43 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5fd4582c0be9864abc3fc6884b88db9, type: 3}
+--- !u!1 &944529693 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a075c3692b6ec64bbe314151335033c, type: 3}
+  m_PrefabInstance: {fileID: 1109092723}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &944529694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944529693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &944529695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944529693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 986ae63fb662d8a4c82bd79820609a36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 1, g: 0.10128907, b: 0.015686274, a: 1}
+  highlightWidth: 5
 --- !u!114 &1035976435 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1076646827211222976, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
@@ -499,6 +536,12 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a075c3692b6ec64bbe314151335033c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 944529695}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a075c3692b6ec64bbe314151335033c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 944529694}
     - targetCorrespondingSourceObject: {fileID: -6505494680676671688, guid: 7a075c3692b6ec64bbe314151335033c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1109092730}
@@ -804,7 +847,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  targetObject: {fileID: 0}
+  targetObject: {fileID: 944529695}
   popupManager: {fileID: 0}
 --- !u!114 &1113932226 stripped
 MonoBehaviour:
@@ -828,6 +871,8 @@ GameObject:
   - component: {fileID: 1389705351}
   - component: {fileID: 1389705350}
   - component: {fileID: 1389705352}
+  - component: {fileID: 1389705354}
+  - component: {fileID: 1389705353}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -910,7 +955,7 @@ MonoBehaviour:
   npcAnimator: {fileID: 1977994031}
   evacuationSpeed: 2
   evacuationPoint: {fileID: 1714872589}
-  targetObject: {fileID: 0}
+  targetObject: {fileID: 1389705354}
   popupManager: {fileID: 0}
   talkAction:
     m_UseReference: 0
@@ -932,6 +977,38 @@ MonoBehaviour:
         m_Flags: 0
       m_Flags: 0
     m_Reference: {fileID: 0}
+--- !u!114 &1389705353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389705347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.23584908, g: 0.23584908, b: 0.23584908, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &1389705354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389705347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 986ae63fb662d8a4c82bd79820609a36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 1}
+  highlightWidth: 5
 --- !u!1 &1408732262 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6193388442622559394, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
