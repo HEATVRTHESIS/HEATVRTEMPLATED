@@ -16,9 +16,9 @@ public class NPCInteraction : CustomTaskController
     public GameObject interactionIndicator;
 
     // Dialogue Content
-    private string initialDialogue = "Hello, traveler. Can you help me?";
-    private string correctDialogue = "Thank you! I will evacuate immediately.";
-    private string wrongDialogue = "That's not what I'm looking for. Try again.";
+    private string initialDialogue = "There's a fire, what should we do?";
+    private string correctDialogue = "Alright! I will evacuate and call for help.";
+    private string wrongDialogue = "That doesn't sound right. Try again.";
 
     // Player and NPC
     public Transform rightControllerTransform;
