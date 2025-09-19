@@ -1386,7 +1386,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1900590539}
-  - component: {fileID: 1900590540}
+  - component: {fileID: 1900590541}
   m_Layer: 0
   m_Name: TaskListStuff
   m_TagString: Untagged
@@ -1409,7 +1409,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 578363229}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1900590540
+--- !u!114 &1900590541
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1418,10 +1418,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1900590538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43283a6aade412446a6650c20bd5afd0, type: 3}
+  m_Script: {fileID: 11500000, guid: 5134d96e6d112014c93b1415e4bd3654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taskEntryUIPrefab: {fileID: 1611475941344092440, guid: 639496e306233624992097e16912c225, type: 3}
+  taskEntryUIPrefab: {fileID: 3106261645697395145, guid: 6d40d97f103c8674c9271c33133c84ec, type: 3}
   taskEntryParentTransform: {fileID: 1528083956}
   taskListCanvasGroup: {fileID: 1528083955}
 --- !u!1 &1909096065 stripped

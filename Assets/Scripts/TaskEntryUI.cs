@@ -56,20 +56,6 @@ public class TaskEntryUI : MonoBehaviour
         {
             Debug.LogError("Select Task Button is not assigned on the TaskEntryUI prefab!");
         }
-
-        // NEW: Update initial progress after events are subscribed
-        // Check if this is a PullDownTrigger and call its special method
-        PullDownTrigger pullDownTask = task as PullDownTrigger;
-        NPCInteraction npcTask = task as NPCInteraction;
-
-        if (pullDownTask != null)
-        {
-            pullDownTask.UpdateInitialProgress();
-        }
-        else if (npcTask != null)
-        {
-            npcTask.UpdateInitialProgress();
-        }
 }
 
     /// <summary>

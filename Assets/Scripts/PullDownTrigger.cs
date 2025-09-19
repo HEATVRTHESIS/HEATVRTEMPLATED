@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PullDownTrigger : TaskController
+public class PullDownTrigger : CustomTaskController
 {
     // Original PullDownTrigger fields
     private HingeJoint myHingeJoint; 
@@ -41,15 +41,9 @@ public class PullDownTrigger : TaskController
     /// <summary>
     /// Override the InitializeTask method from TaskController
     /// </summary>
-    public new void InitializeTask()
+    public override void InitializeTask()
     {
-        // Don't call base.InitializeTask() since it tries to spawn objects
-        // Instead, do fire alarm specific initialization
-        
-        // Set totalItems but DON'T invoke progress update yet
-        // The UI will call UpdateInitialProgress after subscribing to events
-        totalItems = 1;
-        
+        base.InitializeTask();
         Debug.Log($"Fire alarm task '{taskName}' initialized. Required angle: {successAngle}°");
     }
 
@@ -74,107 +68,8 @@ public class PullDownTrigger : TaskController
                 _isPulled = true;
 
                 // Complete the task
-                CompleteFireAlarmTask();
+                CompleteTask();
             }
-        }
-    }
-
-    /// <summary>
-    /// Custom completion method for fire alarm task
-    /// </summary>
-    private void CompleteFireAlarmTask()
-    {
-        Debug.Log($"Fire alarm task '{taskName}' completed! Lever pulled to {myHingeJoint.angle:F1}°");
-        
-        // Mark as completed (using private field access)
-        SetTaskCompleted();
-        
-        // Update progress to completed
-        OnProgressUpdated.Invoke(1, totalItems);
-        OnTaskCompleted.Invoke();
-        
-        // End highlighting
-        EndTask();
-
-        // Play the success sound
-        if (audioSource != null && successSound != null)
-        {
-            audioSource.PlayOneShot(successSound);
-        }
-        else if (successSound != null)
-        {
-            // Fallback audio playback
-            PlaySuccessSoundFallback();
-        }
-
-        // Show completion dialogue
-        ShowCompletionDialogue();
-        
-        // Optional: Show completion message
-        if (popupManager != null)
-        {
-            popupManager.ShowMessage($"Fire alarm activated! Lever pulled to {myHingeJoint.angle:F1}°");
-        }
-    }
-
-    /// <summary>
-    /// Sets the task as completed using reflection since isTaskCompleted is private
-    /// </summary>
-    private void SetTaskCompleted()
-    {
-        // Use reflection to set the private isTaskCompleted field
-        var field = typeof(TaskController).GetField("isTaskCompleted", 
-            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        if (field != null)
-        {
-            field.SetValue(this, true);
-        }
-    }
-
-    /// <summary>
-    /// Check if task is completed using reflection since isTaskCompleted is private
-    /// </summary>
-    private bool IsTaskCompleted()
-    {
-        var field = typeof(TaskController).GetField("isTaskCompleted", 
-            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        if (field != null)
-        {
-            return (bool)field.GetValue(this);
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// Fallback method to play success sound without AudioSource component
-    /// </summary>
-    private void PlaySuccessSoundFallback()
-    {
-        // Try to find an AudioSource on this GameObject or its children
-        AudioSource foundAudioSource = GetComponentInChildren<AudioSource>();
-        if (foundAudioSource != null)
-        {
-            foundAudioSource.PlayOneShot(successSound);
-        }
-        else
-        {
-            // Create a temporary AudioSource if none exists
-            GameObject tempAudio = new GameObject("TempAudioSource");
-            AudioSource tempSource = tempAudio.AddComponent<AudioSource>();
-            tempSource.PlayOneShot(successSound);
-            Destroy(tempAudio, successSound.length);
-        }
-    }
-
-    /// <summary>
-    /// Shows the completion dialogue using VRDialogueSystem
-    /// </summary>
-    private void ShowCompletionDialogue()
-    {
-        VRDialogueSystem dialogueSystem = FindObjectOfType<VRDialogueSystem>();
-        if (dialogueSystem != null && taskCompletionDialogue != null && taskCompletionDialogue.Length > 0)
-        {
-            dialogueSystem.StartDialog(taskCompletionDialogue);
         }
     }
 
@@ -241,7 +136,7 @@ public class PullDownTrigger : TaskController
     public void ForceCompleteTask()
     {
         _isPulled = true;
-        CompleteFireAlarmTask();
+        CompleteTask();
     }
 
     // Visual debugging in Scene view
