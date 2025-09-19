@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro; // Make sure you have the Text Mesh Pro package imported
 using UnityEngine.InputSystem;
-using UnityEngine.UI; // Required for the ContentSizeFitter component
+using UnityEngine.UI; // Required for the Image component
 
 /// <summary>
 /// A text display system for VR that shows dialogue lines and progresses with user input.
@@ -19,10 +19,6 @@ public class VRDialogueSystem : MonoBehaviour
     public TextMeshProUGUI dialogText;
     [Tooltip("The Input Action for the button to progress the dialogue (e.g., right XR Controller's secondary button).")]
     public InputActionProperty nextLineAction;
-    [Tooltip("The ContentSizeFitter on the parent of the TextMeshPro element. This will scale the background.")]
-    public ContentSizeFitter canvasSizeFitter;
-    [Tooltip("The local position of the dialogue canvas relative to the player's camera.")]
-    public Vector3 dialogueOffset = new Vector3(0, -0.5f, 1.5f);
     [Tooltip("The speed at which characters are typed out. A smaller value is faster.")]
     public float typingSpeed = 0.05f;
 
@@ -45,16 +41,12 @@ public class VRDialogueSystem : MonoBehaviour
     private bool _isDisplaying = false;
     private bool _isTyping = false;
     private string _currentLine;
-    private Transform _playerTransform;
     private Coroutine _typingCoroutine;
     private Coroutine _mouthAnimationCoroutine;
     private float _originalTimeScale = 1f;
 
     void Awake()
     {
-        // Get a reference to the player's camera transform.
-        _playerTransform = Camera.main.transform;
-
         // Store the original time scale
         _originalTimeScale = Time.timeScale;
 
@@ -126,11 +118,6 @@ public class VRDialogueSystem : MonoBehaviour
         // Show the canvas and display the first line
         if (dialogCanvas != null)
         {
-            // Parent the canvas to the player's camera and set its local position.
-            dialogCanvas.transform.SetParent(_playerTransform, false);
-            dialogCanvas.transform.localPosition = dialogueOffset;
-            dialogCanvas.transform.localRotation = Quaternion.identity;
-            
             dialogCanvas.SetActive(true);
             DisplayNextLine();
         }
@@ -328,8 +315,6 @@ public class VRDialogueSystem : MonoBehaviour
 
         if (dialogCanvas != null)
         {
-            // Unparent the canvas to prevent it from following the player
-            dialogCanvas.transform.SetParent(null);
             dialogCanvas.SetActive(false);
         }
         if (dialogText != null)
