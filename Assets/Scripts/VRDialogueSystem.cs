@@ -7,6 +7,7 @@ using UnityEngine.UI; // Required for the ContentSizeFitter component
 
 /// <summary>
 /// A text display system for VR that shows dialogue lines and progresses with user input.
+/// Includes animated mascot that "talks" during text typing.
 /// </summary>
 public class VRDialogueSystem : MonoBehaviour
 {
@@ -24,6 +25,16 @@ public class VRDialogueSystem : MonoBehaviour
     [Tooltip("The speed at which characters are typed out. A smaller value is faster.")]
     public float typingSpeed = 0.05f;
 
+    [Header("Mascot Animation")]
+    [Tooltip("The Image component that displays the mascot sprite.")]
+    public Image mascotImage;
+    [Tooltip("The sprite for when the mascot's mouth is closed.")]
+    public Sprite mouthClosedSprite;
+    [Tooltip("The sprite for when the mascot's mouth is open.")]
+    public Sprite mouthOpenSprite;
+    [Tooltip("How fast the mascot's mouth animates (seconds between sprite changes).")]
+    public float mouthAnimationSpeed = 0.15f;
+
     // --- Private Fields ---
     private Queue<string> _dialogLines = new Queue<string>();
     private bool _isDisplaying = false;
@@ -31,6 +42,7 @@ public class VRDialogueSystem : MonoBehaviour
     private string _currentLine;
     private Transform _playerTransform;
     private Coroutine _typingCoroutine;
+    private Coroutine _mouthAnimationCoroutine;
 
     void Awake()
     {
@@ -41,6 +53,12 @@ public class VRDialogueSystem : MonoBehaviour
         if (dialogCanvas != null)
         {
             dialogCanvas.SetActive(false);
+        }
+
+        // Set initial mascot sprite to mouth closed
+        if (mascotImage != null && mouthClosedSprite != null)
+        {
+            mascotImage.sprite = mouthClosedSprite;
         }
 
         // Listen for the next line action button press
@@ -152,12 +170,20 @@ public class VRDialogueSystem : MonoBehaviour
     {
         _isTyping = true;
         dialogText.text = ""; // Clear the text field before typing
+
+        // Start the mouth animation
+        StartMouthAnimation();
+
         foreach (char character in line.ToCharArray())
         {
             dialogText.text += character;
             yield return new WaitForSeconds(typingSpeed);
         }
+        
         _isTyping = false; // Typing is complete
+
+        // Stop the mouth animation and set to closed mouth
+        StopMouthAnimation();
     }
 
     /// <summary>
@@ -173,6 +199,71 @@ public class VRDialogueSystem : MonoBehaviour
         
         _isTyping = false;
         dialogText.text = _currentLine;
+
+        // Stop the mouth animation and set to closed mouth
+        StopMouthAnimation();
+    }
+
+    /// <summary>
+    /// Starts the mascot mouth animation coroutine.
+    /// </summary>
+    private void StartMouthAnimation()
+    {
+        if (mascotImage != null && mouthClosedSprite != null && mouthOpenSprite != null)
+        {
+            // Stop any existing animation first
+            if (_mouthAnimationCoroutine != null)
+            {
+                StopCoroutine(_mouthAnimationCoroutine);
+            }
+            
+            _mouthAnimationCoroutine = StartCoroutine(AnimateMouth());
+        }
+    }
+
+    /// <summary>
+    /// Stops the mascot mouth animation and sets sprite to closed mouth.
+    /// </summary>
+    private void StopMouthAnimation()
+    {
+        if (_mouthAnimationCoroutine != null)
+        {
+            StopCoroutine(_mouthAnimationCoroutine);
+            _mouthAnimationCoroutine = null;
+        }
+
+        // Set mascot to closed mouth when not talking
+        if (mascotImage != null && mouthClosedSprite != null)
+        {
+            mascotImage.sprite = mouthClosedSprite;
+        }
+    }
+
+    /// <summary>
+    /// Coroutine that cycles between mouth open and closed sprites.
+    /// </summary>
+    private IEnumerator AnimateMouth()
+    {
+        bool mouthOpen = false;
+
+        while (_isTyping)
+        {
+            // Toggle between mouth open and closed
+            if (mouthOpen)
+            {
+                mascotImage.sprite = mouthClosedSprite;
+            }
+            else
+            {
+                mascotImage.sprite = mouthOpenSprite;
+            }
+
+            mouthOpen = !mouthOpen;
+            yield return new WaitForSeconds(mouthAnimationSpeed);
+        }
+
+        // Ensure we end with mouth closed
+        mascotImage.sprite = mouthClosedSprite;
     }
 
     /// <summary>
@@ -181,6 +272,10 @@ public class VRDialogueSystem : MonoBehaviour
     private void EndDialog()
     {
         _isDisplaying = false;
+
+        // Stop any mouth animation
+        StopMouthAnimation();
+
         if (dialogCanvas != null)
         {
             // Unparent the canvas to prevent it from following the player
