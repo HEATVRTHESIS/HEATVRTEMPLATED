@@ -137,11 +137,13 @@ public class TaskController : MonoBehaviour
     /// <summary>
     /// Starts the highlighting for this task.
     /// </summary>
-    public void StartTask()
-    {
-        if (isTaskCompleted) return;
+    public virtual void StartTask()
+{
+    if (isTaskCompleted) return;
 
-        // Highlight the items
+    // Highlight the items (only if taskTargets exists)
+    if (taskTargets != null)
+    {
         foreach (var item in taskTargets)
         {
             if (item != null)
@@ -153,22 +155,25 @@ public class TaskController : MonoBehaviour
                 }
             }
         }
-        
-        // Highlight the associated bin
-        if (associatedBin != null)
-        {
-            associatedBin.SetHighlight(true);
-        }
     }
+    
+    // Highlight the associated bin (only if it exists)
+    if (associatedBin != null)
+    {
+        associatedBin.SetHighlight(true);
+    }
+}
 
     /// <summary>
     /// Ends the highlighting for this task.
     /// </summary>
-    public void EndTask()
-    {
-        Debug.Log($"Ending task '{taskName}' and turning off highlights.");
+    public virtual void EndTask()
+{
+    Debug.Log($"Ending task '{taskName}' and turning off highlights.");
 
-        // Un-highlight the items
+    // Un-highlight the items (only if taskTargets exists)
+    if (taskTargets != null)
+    {
         foreach (var item in taskTargets)
         {
             if (item != null)
@@ -180,11 +185,12 @@ public class TaskController : MonoBehaviour
                 }
             }
         }
-
-        // Un-highlight the associated bin
-        if (associatedBin != null)
-        {
-            associatedBin.SetHighlight(false);
-        }
     }
+
+    // Un-highlight the associated bin (only if it exists)
+    if (associatedBin != null)
+    {
+        associatedBin.SetHighlight(false);
+    }
+}
 }

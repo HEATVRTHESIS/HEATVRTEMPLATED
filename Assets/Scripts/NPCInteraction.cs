@@ -293,35 +293,35 @@ public class NPCInteraction : TaskController
     /// <summary>
     /// Override the StartTask method from TaskController
     /// </summary>
-    public new void StartTask()
-    {
-        if (IsTaskCompleted()) return;
+    public override void StartTask()
+{
+    if (IsTaskCompleted()) return;
 
-        if (targetObject != null)
-        {
-            targetObject.SetHighlight(true);
-        }
-        
-        Debug.Log($"Started NPC evacuation task '{taskName}'.");
+    if (targetObject != null)
+    {
+        targetObject.SetHighlight(true);
     }
+    
+    Debug.Log($"Started NPC evacuation task '{taskName}'.");
+}
 
     /// <summary>
     /// Override the EndTask method from TaskController
     /// </summary>
-    public new void EndTask()
+    public override void EndTask()
+{
+    Debug.Log($"Ending NPC evacuation task '{taskName}' and turning off highlights.");
+    
+    if (targetObject != null)
     {
-        Debug.Log($"Ending NPC evacuation task '{taskName}' and turning off highlights.");
-        
-        if (targetObject != null)
-        {
-            targetObject.SetHighlight(false);
-        }
-        
-        if (interactionIndicator != null)
-        {
-            interactionIndicator.SetActive(false);
-        }
+        targetObject.SetHighlight(false);
     }
+    
+    if (interactionIndicator != null)
+    {
+        interactionIndicator.SetActive(false);
+    }
+}
 
     /// <summary>
     /// Force complete the task (for testing)

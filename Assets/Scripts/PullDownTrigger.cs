@@ -181,30 +181,31 @@ public class PullDownTrigger : TaskController
     /// <summary>
     /// Override the StartTask method from TaskController
     /// </summary>
-    public new void StartTask()
-    {
-        if (IsTaskCompleted()) return;
+    public override void StartTask()
+{
+    if (IsTaskCompleted()) return;
 
-        if (targetObject != null)
-        {
-            targetObject.SetHighlight(true);
-        }
-        
-        Debug.Log($"Started fire alarm task '{taskName}'. Current angle: {myHingeJoint.angle:F1}°");
+    if (targetObject != null)
+    {
+        targetObject.SetHighlight(true);
     }
+    
+    Debug.Log($"Started fire alarm task '{taskName}'. Current angle: {myHingeJoint.angle:F1}°");
+}
+
 
     /// <summary>
     /// Override the EndTask method from TaskController
     /// </summary>
-    public new void EndTask()
+    public override void EndTask()
+{
+    Debug.Log($"Ending fire alarm task '{taskName}' and turning off highlights.");
+    
+    if (targetObject != null)
     {
-        Debug.Log($"Ending fire alarm task '{taskName}' and turning off highlights.");
-        
-        if (targetObject != null)
-        {
-            targetObject.SetHighlight(false);
-        }
+        targetObject.SetHighlight(false);
     }
+}
 
     // Utility methods specific to PullDownTrigger
     
