@@ -90,20 +90,25 @@ public class CustomTaskListManager : MonoBehaviour
     /// Select a task for highlighting
     /// </summary>
     public void SelectTask(CustomTaskController task)
+{
+    Debug.Log($"CustomTaskListManager.SelectTask() called for: {task.taskName}");
+    
+    // Tell other managers to turn off their highlights
+    TurnOffOtherManagerHighlights();
+
+    // Turn off highlights for all tasks in this manager
+    Debug.Log("Turning off highlights for all custom tasks...");
+    foreach (var activeTask in activeTasks)
     {
-        // Tell other managers to turn off their highlights
-        TurnOffOtherManagerHighlights();
-
-        // Turn off highlights for all tasks in this manager
-        foreach (var activeTask in activeTasks)
-        {
-            activeTask.EndTask();
-        }
-
-        // Highlight only the selected task
-        currentSelectedTask = task;
-        currentSelectedTask.StartTask();
+        Debug.Log($"Calling EndTask() on: {activeTask.taskName}");
+        activeTask.EndTask();
     }
+
+    // Highlight only the selected task
+    currentSelectedTask = task;
+    Debug.Log($"Now highlighting selected task: {task.taskName}");
+    currentSelectedTask.StartTask();
+}
 
     /// <summary>
     /// Turn off highlights in other task managers

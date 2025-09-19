@@ -72,19 +72,26 @@ public class PullDownTrigger : CustomTaskController
             }
         }
     }
-
+    
     /// <summary>
     /// Override the StartTask method from TaskController
     /// </summary>
     public override void StartTask()
 {
-    if (IsTaskCompleted()) return;
+    Debug.Log($"PullDownTrigger.StartTask() called. IsCompleted: {IsTaskCompleted()}");
+    Debug.Log($"Lever targetObject is: {(targetObject != null ? targetObject.name : "null")}");
+    
+    if (IsTaskCompleted()) 
+    {
+        Debug.Log("Lever task already completed, returning without highlighting");
+        return;
+    }
 
     if (targetObject != null)
     {
         targetObject.SetHighlight(true);
     }
-    
+
     Debug.Log($"Started fire alarm task '{taskName}'. Current angle: {myHingeJoint.angle:F1}°");
 }
 
@@ -93,14 +100,17 @@ public class PullDownTrigger : CustomTaskController
     /// Override the EndTask method from TaskController
     /// </summary>
     public override void EndTask()
-{
-    Debug.Log($"Ending fire alarm task '{taskName}' and turning off highlights.");
-    
-    if (targetObject != null)
     {
-        targetObject.SetHighlight(false);
+        Debug.Log($"PullDownTrigger.EndTask() called for '{taskName}'");
+        Debug.Log($"targetObject is: {(targetObject != null ? targetObject.name : "null")}");
+
+        if (targetObject != null)
+        {
+            Debug.Log($"Calling SetHighlight(false) on {targetObject.name}");
+            targetObject.SetHighlight(false);
+        }
     }
-}
+
 
     // Utility methods specific to PullDownTrigger
     

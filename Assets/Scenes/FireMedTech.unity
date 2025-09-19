@@ -542,6 +542,43 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5fd4582c0be9864abc3fc6884b88db9, type: 3}
+--- !u!1 &826505473 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a075c3692b6ec64bbe314151335033c, type: 3}
+  m_PrefabInstance: {fileID: 1109092723}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &826505476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826505473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 986ae63fb662d8a4c82bd79820609a36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 1, g: 0.1064989, b: 0.015686274, a: 1}
+  highlightWidth: 5
+--- !u!114 &826505478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826505473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0.105882354, b: 0.015686275, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &855722089 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6905609870639353253, guid: c3b94798a3102064094a5e45cdb3d6fd, type: 3}
@@ -1082,6 +1119,12 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a075c3692b6ec64bbe314151335033c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 826505476}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a075c3692b6ec64bbe314151335033c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 826505478}
     - targetCorrespondingSourceObject: {fileID: -6505494680676671688, guid: 7a075c3692b6ec64bbe314151335033c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1109092730}
@@ -2077,7 +2120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1900590539}
-  - component: {fileID: 1900590540}
+  - component: {fileID: 1900590541}
   m_Layer: 0
   m_Name: TaskListStuff
   m_TagString: Untagged
@@ -2100,7 +2143,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 578363229}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1900590540
+--- !u!114 &1900590541
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2109,10 +2152,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1900590538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43283a6aade412446a6650c20bd5afd0, type: 3}
+  m_Script: {fileID: 11500000, guid: 5134d96e6d112014c93b1415e4bd3654, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taskEntryUIPrefab: {fileID: 1611475941344092440, guid: 639496e306233624992097e16912c225, type: 3}
+  taskEntryUIPrefab: {fileID: 3106261645697395145, guid: 6d40d97f103c8674c9271c33133c84ec, type: 3}
   taskEntryParentTransform: {fileID: 1098377604}
   taskListCanvasGroup: {fileID: 1406556721}
 --- !u!1 &1929339443 stripped
@@ -4044,15 +4087,15 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 174425470}
+  - {fileID: 3862927002968570885}
   - {fileID: 1413973489}
   - {fileID: 199084525}
   - {fileID: 1972813016}
   - {fileID: 2634207205782014509}
   - {fileID: 1389705351}
-  - {fileID: 3862927002968570885}
   - {fileID: 1714872589}
   - {fileID: 1109092723}
-  - {fileID: 578363229}
   - {fileID: 582346328468037203}
   - {fileID: 322188347}
   - {fileID: 1098377603}
+  - {fileID: 578363229}
