@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using System.Reflection;
 
 /// <summary>
@@ -14,6 +15,14 @@ public class FireExtinguishSuccessMonitor : MonoBehaviour
     
     [Tooltip("Audio source to play the success sound (optional - will create one if not assigned)")]
     public AudioSource audioSource;
+    
+    [Header("Task Controller Integration")]
+    [Tooltip("Fire extinguisher controller to notify when task is complete")]
+    public FireExtinguisherController fireExtinguisherController;
+    
+    [Header("Success Events")]
+    [Tooltip("Unity event triggered when all fires are extinguished")]
+    public UnityEvent OnAllFiresExtinguishedEvent;
     
     [Header("Monitoring Settings")]
     [Tooltip("How often to check fire status (seconds)")]
@@ -38,6 +47,12 @@ public class FireExtinguishSuccessMonitor : MonoBehaviour
         {
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;
+        }
+        
+        // Find fire extinguisher controller if not assigned
+        if (fireExtinguisherController == null)
+        {
+            fireExtinguisherController = FindObjectOfType<FireExtinguisherController>();
         }
         
         // Start monitoring
@@ -191,7 +206,7 @@ public class FireExtinguishSuccessMonitor : MonoBehaviour
             Debug.Log("Fire Monitor: All fires extinguished! (No success sound configured)");
         }
 
-        // Optionally trigger other success events here
+        // Trigger success events
         OnAllFiresExtinguished();
     }
 
@@ -203,6 +218,19 @@ public class FireExtinguishSuccessMonitor : MonoBehaviour
     {
         // Add any additional success logic here
         Debug.Log("Fire extinguishing task completed successfully!");
+        
+        // Notify the fire extinguisher controller
+        if (fireExtinguisherController != null)
+        {
+            fireExtinguisherController.OnAllFiresExtinguished();
+        }
+        else
+        {
+            Debug.LogWarning("Fire Monitor: No FireExtinguisherController assigned to notify of completion!");
+        }
+        
+        // Trigger Unity Event
+        OnAllFiresExtinguishedEvent?.Invoke();
     }
 
     /// <summary>
@@ -221,6 +249,48 @@ public class FireExtinguishSuccessMonitor : MonoBehaviour
     }
 
     /// <summary>
+    /// Check if all fires are currently extinguished
+    /// </summary>
+    public bool AreAllFiresExtinguished()
+    {
+        if (childFlammables.Count == 0) return false;
+        
+        foreach (var flammable in childFlammables)
+        {
+            if (flammable != null && IsObjectOnFire(flammable))
+            {
+                return false;
+            }
+        }
+        
+        return wasAnyObjectOnFire; // Only true if there were fires at some point
+    }
+
+    /// <summary>
+    /// Get the current status of the fire extinguishing task
+    /// </summary>
+    public string GetCurrentStatus()
+    {
+        if (childFlammables.Count == 0)
+            return "No flammable objects found";
+            
+        if (!wasAnyObjectOnFire)
+            return "Waiting for fires to start...";
+            
+        if (successSoundPlayed)
+            return "All fires extinguished - Task completed!";
+            
+        int fireCount = 0;
+        foreach (var flammable in childFlammables)
+        {
+            if (flammable != null && IsObjectOnFire(flammable))
+                fireCount++;
+        }
+        
+        return $"{fireCount} fires still burning";
+    }
+
+    /// <summary>
     /// Manual test method - call this from inspector or another script
     /// </summary>
     [ContextMenu("Test Success Sound")]
@@ -229,6 +299,18 @@ public class FireExtinguishSuccessMonitor : MonoBehaviour
         Debug.Log("Testing success sound manually...");
         wasAnyObjectOnFire = true; // Simulate that there was fire
         successSoundPlayed = false; // Reset flag
+        PlaySuccessSound();
+    }
+
+    /// <summary>
+    /// Force complete the task (for testing)
+    /// </summary>
+    [ContextMenu("Force Complete Task")]
+    public void ForceCompleteTask()
+    {
+        Debug.Log("Forcing task completion...");
+        wasAnyObjectOnFire = true;
+        successSoundPlayed = false;
         PlaySuccessSound();
     }
 
@@ -253,6 +335,8 @@ public class FireExtinguishSuccessMonitor : MonoBehaviour
         
         Debug.Log($"Was Any On Fire: {wasAnyObjectOnFire}");
         Debug.Log($"Success Sound Played: {successSoundPlayed}");
+        Debug.Log($"Fire Controller Assigned: {fireExtinguisherController != null}");
+        Debug.Log($"Current Status: {GetCurrentStatus()}");
         Debug.Log("=== END DEBUG ===");
     }
 
@@ -275,5 +359,16 @@ public class FireExtinguishSuccessMonitor : MonoBehaviour
                 }
             }
         }
+        
+        // Draw connection to fire extinguisher controller
+        if (fireExtinguisherController != null)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(transform.position, fireExtinguisherController.transform.position);
+        }
+        
+        // Show overall status
+        Gizmos.color = successSoundPlayed ? Color.green : (wasAnyObjectOnFire ? Color.yellow : Color.gray);
+        Gizmos.DrawWireSphere(transform.position, 1f);
     }
 }
