@@ -7,9 +7,18 @@ public class FireExtinguisherController : CustomTaskController
     [Tooltip("The fire extinguisher object to highlight")]
     public HighlightableObject targetObject;
     
-    [Header("Success Monitor")]
-    [Tooltip("Reference to the FireExtinguishSuccessMonitor that will determine when task is complete")]
-    public FireExtinguishSuccessMonitor successMonitor;
+    [Tooltip("How the task gets completed")]
+    public CompletionType completionType = CompletionType.Manual;
+    
+    [Header("Completion Conditions")]
+    [Tooltip("Time required to hold trigger (for TimeBased completion)")]
+    public float requiredHoldTime = 3f;
+    
+    [Tooltip("Target object to aim at (for TargetBased completion)")]
+    public Transform targetLocation;
+    
+    [Tooltip("Distance required to target (for TargetBased completion)")]
+    public float requiredDistance = 5f;
     
     [Header("Input")]
     [Tooltip("Input action for interacting with fire extinguisher")]
@@ -19,8 +28,18 @@ public class FireExtinguisherController : CustomTaskController
     public PopupManager popupManager;
     
     // Private variables
+    private float currentHoldTime = 0f;
     private bool isBeingUsed = false;
-    private bool hasSubscribedToSuccessMonitor = false;
+    private bool taskStarted = false;
+    
+    // Completion types
+    public enum CompletionType
+    {
+        Manual,        // Complete via script call or context menu
+        TimeBased,     // Hold input for X seconds
+        TargetBased,   // Get close to target location
+        Activation     // Simple one-time activation
+    }
     
     void Start()
     {
@@ -38,66 +57,109 @@ public class FireExtinguisherController : CustomTaskController
         {
             useAction.action.Enable();
         }
-        
-        // Find success monitor if not assigned
-        if (successMonitor == null)
-        {
-            successMonitor = FindObjectOfType<FireExtinguishSuccessMonitor>();
-        }
-        
-        // Subscribe to success monitor
-        SubscribeToSuccessMonitor();
     }
     
     void Update()
     {
         if (IsTaskCompleted()) return;
         
-        // Handle fire extinguisher usage
-        HandleFireExtinguisherUsage();
-        
-        // Ensure we're subscribed to success monitor
-        if (!hasSubscribedToSuccessMonitor)
+        // Handle different completion types
+        switch (completionType)
         {
-            SubscribeToSuccessMonitor();
+            case CompletionType.TimeBased:
+                HandleTimeBasedCompletion();
+                break;
+            case CompletionType.TargetBased:
+                HandleTargetBasedCompletion();
+                break;
+            case CompletionType.Activation:
+                HandleActivationCompletion();
+                break;
+            // Manual completion is handled via public methods
         }
     }
     
     /// <summary>
-    /// Subscribe to the success monitor's completion event
+    /// Handle time-based completion (hold input for X seconds)
     /// </summary>
-    private void SubscribeToSuccessMonitor()
-    {
-        if (successMonitor != null && !hasSubscribedToSuccessMonitor)
-        {
-            // We'll override the OnAllFiresExtinguished method in the success monitor
-            // or we can use reflection to hook into it, but the cleaner approach is to
-            // modify the success monitor to have a UnityEvent or delegate
-            hasSubscribedToSuccessMonitor = true;
-            Debug.Log("Subscribed to FireExtinguishSuccessMonitor");
-        }
-        else if (successMonitor == null)
-        {
-            Debug.LogWarning("FireExtinguishSuccessMonitor not found! Task completion will not work properly.");
-        }
-    }
-    
-    /// <summary>
-    /// Handle fire extinguisher input and usage
-    /// </summary>
-    private void HandleFireExtinguisherUsage()
+    private void HandleTimeBasedCompletion()
     {
         bool isPressed = useAction.action != null && useAction.action.IsPressed();
         
-        if (isPressed && !isBeingUsed)
+        if (isPressed)
         {
-            isBeingUsed = true;
-            OnExtinguisherActivated();
+            if (!isBeingUsed)
+            {
+                isBeingUsed = true;
+                OnExtinguisherActivated();
+            }
+            
+            currentHoldTime += Time.deltaTime;
+            
+            if (currentHoldTime >= requiredHoldTime)
+            {
+                CompleteTask();
+                OnExtinguisherCompleted();
+            }
         }
-        else if (!isPressed && isBeingUsed)
+        else
         {
-            isBeingUsed = false;
-            OnExtinguisherDeactivated();
+            if (isBeingUsed)
+            {
+                isBeingUsed = false;
+                OnExtinguisherDeactivated();
+            }
+            // Optionally reset timer if not held continuously
+            // currentHoldTime = 0f; // Uncomment if you want to reset on release
+        }
+    }
+    
+    /// <summary>
+    /// Handle target-based completion (get close to target)
+    /// </summary>
+    private void HandleTargetBasedCompletion()
+    {
+        if (targetLocation == null) return;
+        
+        float distance = Vector3.Distance(transform.position, targetLocation.position);
+        
+        if (distance <= requiredDistance)
+        {
+            if (!taskStarted)
+            {
+                taskStarted = true;
+                OnTargetReached();
+            }
+            
+            // Check if using extinguisher at target
+            bool isPressed = useAction.action != null && useAction.action.IsPressed();
+            if (isPressed)
+            {
+                CompleteTask();
+                OnExtinguisherCompleted();
+            }
+        }
+        else
+        {
+            if (taskStarted)
+            {
+                taskStarted = false;
+                OnTargetLeft();
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Handle simple activation completion
+    /// </summary>
+    private void HandleActivationCompletion()
+    {
+        bool wasPressed = useAction.action != null && useAction.action.WasPressedThisFrame();
+        
+        if (wasPressed)
+        {
+            CompleteTask();
+            OnExtinguisherCompleted();
         }
     }
     
@@ -107,13 +169,7 @@ public class FireExtinguisherController : CustomTaskController
     public override void InitializeTask()
     {
         base.InitializeTask();
-        Debug.Log($"Fire extinguisher task '{taskName}' initialized.");
-        
-        // Ensure we have a success monitor reference
-        if (successMonitor == null)
-        {
-            successMonitor = FindObjectOfType<FireExtinguishSuccessMonitor>();
-        }
+        Debug.Log($"Fire extinguisher task '{taskName}' initialized. Completion type: {completionType}");
     }
     
     /// <summary>
@@ -129,11 +185,6 @@ public class FireExtinguisherController : CustomTaskController
         }
 
         Debug.Log($"Started fire extinguisher task '{taskName}'.");
-        
-        if (popupManager != null)
-        {
-            popupManager.ShowMessage("Use the fire extinguisher to put out all fires!");
-        }
     }
 
     /// <summary>
@@ -149,19 +200,7 @@ public class FireExtinguisherController : CustomTaskController
         }
     }
     
-    /// <summary>
-    /// This method should be called by the FireExtinguishSuccessMonitor when all fires are extinguished
-    /// </summary>
-    public void OnAllFiresExtinguished()
-    {
-        if (!IsTaskCompleted())
-        {
-            CompleteTask();
-            OnExtinguisherCompleted();
-        }
-    }
-    
-    // Event methods
+    // Event methods - override these or use them for custom behavior
     protected virtual void OnExtinguisherActivated()
     {
         Debug.Log("Fire extinguisher activated");
@@ -178,11 +217,59 @@ public class FireExtinguisherController : CustomTaskController
     
     protected virtual void OnExtinguisherCompleted()
     {
-        Debug.Log("Fire extinguisher task completed - all fires extinguished!");
+        Debug.Log("Fire extinguisher task completed");
         if (popupManager != null)
         {
-            popupManager.ShowMessage("All fires extinguished! Task completed!");
+            popupManager.ShowMessage("Fire extinguisher task completed!");
         }
+    }
+    
+    protected virtual void OnTargetReached()
+    {
+        Debug.Log("Target location reached");
+        if (popupManager != null)
+        {
+            popupManager.ShowMessage("Target reached! Use the fire extinguisher.");
+        }
+    }
+    
+    protected virtual void OnTargetLeft()
+    {
+        Debug.Log("Target location left");
+    }
+    
+    // Public methods for manual completion or external triggers
+    
+    /// <summary>
+    /// Manually complete the fire extinguisher task
+    /// </summary>
+    public void ManuallyCompleteTask()
+    {
+        if (!IsTaskCompleted())
+        {
+            CompleteTask();
+            OnExtinguisherCompleted();
+        }
+    }
+    
+    /// <summary>
+    /// Get current progress for time-based tasks
+    /// </summary>
+    public float GetProgress()
+    {
+        switch (completionType)
+        {
+            case CompletionType.TimeBased:
+                return Mathf.Clamp01(currentHoldTime / requiredHoldTime);
+            case CompletionType.TargetBased:
+                if (targetLocation != null)
+                {
+                    float distance = Vector3.Distance(transform.position, targetLocation.position);
+                    return Mathf.Clamp01(1f - (distance / requiredDistance));
+                }
+                break;
+        }
+        return 0f;
     }
     
     /// <summary>
@@ -194,60 +281,12 @@ public class FireExtinguisherController : CustomTaskController
     }
     
     /// <summary>
-    /// Manually complete the task (for testing)
+    /// Force complete the task (for testing)
     /// </summary>
     [ContextMenu("Force Complete Task")]
     public void ForceCompleteTask()
     {
-        if (!IsTaskCompleted())
-        {
-            CompleteTask();
-            OnExtinguisherCompleted();
-            FireScoreTracker.Instance.OnCorrectAction("Correct extinguisher selected");
-        }
-    }
-    
-    /// <summary>
-    /// Reset the task (useful for testing or restarting scenarios)
-    /// </summary>
-    [ContextMenu("Reset Task")]
-    public void ResetTask()
-    {
-        // Reset base task - use the proper public method if available
-        // If CustomTaskController has a Reset method, use it, otherwise we'll need to work around this
-        try
-        {
-            // Try to call a public reset method if it exists
-            var resetMethod = GetType().BaseType.GetMethod("ResetTask", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
-            if (resetMethod != null)
-            {
-                resetMethod.Invoke(this, null);
-            }
-            else
-            {
-                // Fallback: Re-initialize the task which should reset it
-                InitializeTask();
-            }
-        }
-        catch
-        {
-            // If reflection fails, just reinitialize
-            InitializeTask();
-        }
-        
-        // Reset success monitor if available
-        if (successMonitor != null)
-        {
-            successMonitor.ResetMonitor();
-        }
-        
-        // Restart highlighting if this was the active task
-        if (targetObject != null && !IsTaskCompleted())
-        {
-            targetObject.SetHighlight(true);
-        }
-        
-        Debug.Log($"Fire extinguisher task '{taskName}' reset.");
+        ManuallyCompleteTask();
     }
     
     void OnDisable()
@@ -258,31 +297,27 @@ public class FireExtinguisherController : CustomTaskController
         }
     }
     
-    void OnDestroy()
-    {
-        // Clean up any subscriptions if needed
-        hasSubscribedToSuccessMonitor = false;
-    }
-    
     // Visual debugging in Scene view
     void OnDrawGizmosSelected()
     {
-        // Draw task state
+        // Draw completion progress
         Gizmos.color = IsTaskCompleted() ? Color.green : Color.yellow;
         Gizmos.DrawWireSphere(transform.position, 0.5f);
         
-        // Draw connection to success monitor
-        if (successMonitor != null)
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawLine(transform.position, successMonitor.transform.position);
-        }
-        
-        // Show extinguisher usage state
-        if (isBeingUsed)
+        // Draw target location for target-based completion
+        if (completionType == CompletionType.TargetBased && targetLocation != null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(transform.position + Vector3.up * 1f, Vector3.one * 0.5f);
+            Gizmos.DrawWireSphere(targetLocation.position, requiredDistance);
+            Gizmos.DrawLine(transform.position, targetLocation.position);
+        }
+        
+        // Show progress for time-based completion
+        if (completionType == CompletionType.TimeBased)
+        {
+            float progress = GetProgress();
+            Gizmos.color = Color.Lerp(Color.red, Color.green, progress);
+            Gizmos.DrawWireCube(transform.position + Vector3.up * 1f, Vector3.one * 0.5f * progress);
         }
     }
 }

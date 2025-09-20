@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro; // Make sure you have the Text Mesh Pro package imported
 using UnityEngine.InputSystem;
-using UnityEngine.UI; // Required for the Image component
+using UnityEngine.UI; // Required for the ContentSizeFitter component
 
 /// <summary>
 /// A text display system for VR that shows dialogue lines and progresses with user input.
 /// Includes animated mascot that "talks" during text typing.
-/// Pauses the game time scale during dialogue display.
 /// </summary>
 public class VRDialogueSystem : MonoBehaviour
 {
@@ -19,12 +18,12 @@ public class VRDialogueSystem : MonoBehaviour
     public TextMeshProUGUI dialogText;
     [Tooltip("The Input Action for the button to progress the dialogue (e.g., right XR Controller's secondary button).")]
     public InputActionProperty nextLineAction;
+    [Tooltip("The ContentSizeFitter on the parent of the TextMeshPro element. This will scale the background.")]
+    public ContentSizeFitter canvasSizeFitter;
+    [Tooltip("The local position of the dialogue canvas relative to the player's camera.")]
+    public Vector3 dialogueOffset = new Vector3(0, -0.5f, 1.5f);
     [Tooltip("The speed at which characters are typed out. A smaller value is faster.")]
     public float typingSpeed = 0.05f;
-
-    [Header("Time Control")]
-    [Tooltip("Should the game time be paused while dialogue is displayed?")]
-    public bool pauseTimeScale = true;
 
     [Header("Mascot Animation")]
     [Tooltip("The Image component that displays the mascot sprite.")]
@@ -41,14 +40,14 @@ public class VRDialogueSystem : MonoBehaviour
     private bool _isDisplaying = false;
     private bool _isTyping = false;
     private string _currentLine;
+    private Transform _playerTransform;
     private Coroutine _typingCoroutine;
     private Coroutine _mouthAnimationCoroutine;
-    private float _originalTimeScale = 1f;
 
     void Awake()
     {
-        // Store the original time scale
-        _originalTimeScale = Time.timeScale;
+        // Get a reference to the player's camera transform.
+        _playerTransform = Camera.main.transform;
 
         // Ensure the initial state is hidden
         if (dialogCanvas != null)
@@ -83,12 +82,6 @@ public class VRDialogueSystem : MonoBehaviour
         {
             nextLineAction.action.Disable();
         }
-        
-        // Restore time scale if dialogue is disabled while active
-        if (_isDisplaying && pauseTimeScale)
-        {
-            RestoreTimeScale();
-        }
     }
 
     /// <summary>
@@ -103,12 +96,6 @@ public class VRDialogueSystem : MonoBehaviour
         _isDisplaying = true;
         _isTyping = false; // Reset typing state
 
-        // Pause time if enabled
-        if (pauseTimeScale)
-        {
-            PauseTimeScale();
-        }
-
         // Add all new lines to the queue
         foreach (string line in lines)
         {
@@ -118,6 +105,11 @@ public class VRDialogueSystem : MonoBehaviour
         // Show the canvas and display the first line
         if (dialogCanvas != null)
         {
+            // Parent the canvas to the player's camera and set its local position.
+            dialogCanvas.transform.SetParent(_playerTransform, false);
+            dialogCanvas.transform.localPosition = dialogueOffset;
+            dialogCanvas.transform.localRotation = Quaternion.identity;
+            
             dialogCanvas.SetActive(true);
             DisplayNextLine();
         }
@@ -173,7 +165,6 @@ public class VRDialogueSystem : MonoBehaviour
 
     /// <summary>
     /// A coroutine that "types" out a string character by character.
-    /// Uses unscaled time so it works even when Time.timeScale is 0.
     /// </summary>
     private IEnumerator TypeLine(string line)
     {
@@ -186,8 +177,7 @@ public class VRDialogueSystem : MonoBehaviour
         foreach (char character in line.ToCharArray())
         {
             dialogText.text += character;
-            // Use unscaled time so typing continues even when time is paused
-            yield return new WaitForSecondsRealtime(typingSpeed);
+            yield return new WaitForSeconds(typingSpeed);
         }
         
         _isTyping = false; // Typing is complete
@@ -251,7 +241,6 @@ public class VRDialogueSystem : MonoBehaviour
 
     /// <summary>
     /// Coroutine that cycles between mouth open and closed sprites.
-    /// Uses unscaled time so animation continues when time is paused.
     /// </summary>
     private IEnumerator AnimateMouth()
     {
@@ -270,31 +259,11 @@ public class VRDialogueSystem : MonoBehaviour
             }
 
             mouthOpen = !mouthOpen;
-            // Use unscaled time so animation continues when time is paused
-            yield return new WaitForSecondsRealtime(mouthAnimationSpeed);
+            yield return new WaitForSeconds(mouthAnimationSpeed);
         }
 
         // Ensure we end with mouth closed
         mascotImage.sprite = mouthClosedSprite;
-    }
-
-    /// <summary>
-    /// Pauses the game time scale.
-    /// </summary>
-    private void PauseTimeScale()
-    {
-        _originalTimeScale = Time.timeScale;
-        Time.timeScale = 0f;
-        Debug.Log("VRDialogueSystem: Time paused for dialogue");
-    }
-
-    /// <summary>
-    /// Restores the original time scale.
-    /// </summary>
-    private void RestoreTimeScale()
-    {
-        Time.timeScale = _originalTimeScale;
-        Debug.Log("VRDialogueSystem: Time restored after dialogue");
     }
 
     /// <summary>
@@ -307,56 +276,15 @@ public class VRDialogueSystem : MonoBehaviour
         // Stop any mouth animation
         StopMouthAnimation();
 
-        // Restore time scale if it was paused
-        if (pauseTimeScale)
-        {
-            RestoreTimeScale();
-        }
-
         if (dialogCanvas != null)
         {
+            // Unparent the canvas to prevent it from following the player
+            dialogCanvas.transform.SetParent(null);
             dialogCanvas.SetActive(false);
         }
         if (dialogText != null)
         {
             dialogText.text = string.Empty; // Clear the text
-        }
-    }
-
-    /// <summary>
-    /// Manual method to end dialogue early if needed.
-    /// </summary>
-    public void ForceEndDialog()
-    {
-        // Stop any ongoing coroutines
-        if (_typingCoroutine != null)
-        {
-            StopCoroutine(_typingCoroutine);
-        }
-        if (_mouthAnimationCoroutine != null)
-        {
-            StopCoroutine(_mouthAnimationCoroutine);
-        }
-
-        // Clear the queue and end dialogue
-        _dialogLines.Clear();
-        EndDialog();
-    }
-
-    /// <summary>
-    /// Check if dialogue is currently active.
-    /// </summary>
-    public bool IsDialogueActive()
-    {
-        return _isDisplaying;
-    }
-
-    void OnDestroy()
-    {
-        // Ensure time scale is restored if this object is destroyed while dialogue is active
-        if (_isDisplaying && pauseTimeScale)
-        {
-            RestoreTimeScale();
         }
     }
 }

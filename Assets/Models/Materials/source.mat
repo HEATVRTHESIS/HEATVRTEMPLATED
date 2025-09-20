@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: source
-  m_Shader: {fileID: -6465566751694194690, guid: 9ef6bcacc48faf04ca9eaef455e9381e, type: 3}
+  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -17,24 +17,13 @@ Material:
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Charred_wood_normal:
-        m_Texture: {fileID: 2800000, guid: 61f900fef30504b4cb8b01421af4ad75, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Charred_wood_tex:
-        m_Texture: {fileID: 2800000, guid: df6f118720ebc464e81a84967524c445, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Fire_map:
-        m_Texture: {fileID: 2800000, guid: 3f90940f545202042bfe585a031bda77, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -67,10 +56,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _NormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -97,17 +82,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - AlphaClipThreshold: 0.1
-    - Charred_wood_blend: 0
-    - Charred_wood_normal_strength: 4
-    - Fire_bright: 0
-    - Fire_max_brightness: 10
-    - Fire_min_brightness: 0
-    - Fire_side_multiplier: 0.3
-    - Fire_softness: 0.5
-    - Fire_spread: 0
-    - Mat_Alpha: 1
-    - Voronoi_move: 10
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Blend: 0
@@ -127,10 +101,8 @@ Material:
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
-    - _NormalStrength: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
@@ -143,18 +115,10 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Charred_tiling: {r: 0.2, g: 0.2, b: 0, a: 0}
-    - Fire_color: {r: 0.9433962, g: 0.4731304, b: 0.044499785, a: 0}
-    - Fire_dir: {r: 0, g: 1, b: 0, a: 0}
-    - Fire_move_dir: {r: 0, g: -0.01, b: 0, a: 0}
-    - Fire_origin: {r: 0, g: 0, b: 0, a: 0}
-    - Fire_tile: {r: 1, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 0.9063317, g: 0.9063317, b: 0.9063317, a: 1}
     - _Color: {r: 0.9063317, g: 0.9063317, b: 0.9063317, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _Offset: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &3037196656165962195
 MonoBehaviour:

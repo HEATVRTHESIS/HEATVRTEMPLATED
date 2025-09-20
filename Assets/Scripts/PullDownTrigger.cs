@@ -69,7 +69,6 @@ public class PullDownTrigger : CustomTaskController
 
                 // Complete the task
                 CompleteTask();
-                FireScoreTracker.Instance.OnSafetyCompliance("Fire alarm activated");
             }
         }
     }
@@ -148,7 +147,6 @@ public class PullDownTrigger : CustomTaskController
     {
         _isPulled = true;
         CompleteTask();
-
     }
 
     // Visual debugging in Scene view
