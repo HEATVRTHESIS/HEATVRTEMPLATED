@@ -165,6 +165,7 @@ public class MaintenanceTaskController : MonoBehaviour
             if (popupManager != null)
             {
                 popupManager.ShowMessage("That's not the right answer. Try again!");
+                 ScoreTracker.Instance.OnTaskError();
             }
         }
     }

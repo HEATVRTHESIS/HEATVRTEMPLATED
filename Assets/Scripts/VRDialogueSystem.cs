@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro; // Make sure you have the Text Mesh Pro package imported
 using UnityEngine.InputSystem;
-using UnityEngine.UI; // Required for the ContentSizeFitter component
+using UnityEngine.UI; // Required for UI elements
 using UnityEngine.Events; // Needed for UnityEvent
 
 /// <summary>
 /// A text display system for VR that shows dialogue lines and progresses with user input.
+/// Includes animated mascot that "talks" during text typing.
+/// Pauses the game time scale during dialogue display.
 /// </summary>
 public class VRDialogueSystem : MonoBehaviour
 {
@@ -18,33 +20,50 @@ public class VRDialogueSystem : MonoBehaviour
     public TextMeshProUGUI dialogText;
     [Tooltip("The Input Action for the button to progress the dialogue (e.g., right XR Controller's secondary button).")]
     public InputActionProperty nextLineAction;
-    [Tooltip("The ContentSizeFitter on the parent of the TextMeshPro element. This will scale the background.")]
-    public ContentSizeFitter canvasSizeFitter;
-    [Tooltip("The local position of the dialogue canvas relative to the player's camera.")]
-    public Vector3 dialogueOffset = new Vector3(0, -0.5f, 1.5f);
     [Tooltip("The speed at which characters are typed out. A smaller value is faster.")]
     public float typingSpeed = 0.05f;
 
     // A public event that other scripts can listen to
     public UnityEvent OnDialogueEnd;
 
+    [Header("Time Control")]
+    [Tooltip("Should the game time be paused while dialogue is displayed?")]
+    public bool pauseTimeScale = true;
+
+    [Header("Mascot Animation")]
+    [Tooltip("The Image component that displays the mascot sprite.")]
+    public Image mascotImage;
+    [Tooltip("The sprite for when the mascot's mouth is closed.")]
+    public Sprite mouthClosedSprite;
+    [Tooltip("The sprite for when the mascot's mouth is open.")]
+    public Sprite mouthOpenSprite;
+    [Tooltip("How fast the mascot's mouth animates (seconds between sprite changes).")]
+    public float mouthAnimationSpeed = 0.15f;
+
     // --- Private Fields ---
     private Queue<string> _dialogLines = new Queue<string>();
     private bool _isDisplaying = false;
     private bool _isTyping = false;
     private string _currentLine;
-    private Transform _playerTransform;
     private Coroutine _typingCoroutine;
+    private Coroutine _mouthAnimationCoroutine;
+    private float _originalTimeScale = 1f;
 
     void Awake()
     {
-        // Get a reference to the player's camera transform.
-        _playerTransform = Camera.main.transform;
+        // Store the original time scale
+        _originalTimeScale = Time.timeScale;
 
         // Ensure the initial state is hidden
         if (dialogCanvas != null)
         {
             dialogCanvas.SetActive(false);
+        }
+
+        // Set initial mascot sprite to mouth closed
+        if (mascotImage != null && mouthClosedSprite != null)
+        {
+            mascotImage.sprite = mouthClosedSprite;
         }
 
         // Listen for the next line action button press
@@ -68,6 +87,12 @@ public class VRDialogueSystem : MonoBehaviour
         {
             nextLineAction.action.Disable();
         }
+        
+        // Restore time scale if dialogue is disabled while active
+        if (_isDisplaying && pauseTimeScale)
+        {
+            RestoreTimeScale();
+        }
     }
 
     /// <summary>
@@ -82,6 +107,12 @@ public class VRDialogueSystem : MonoBehaviour
         _isDisplaying = true;
         _isTyping = false; // Reset typing state
 
+        // Pause time if enabled
+        if (pauseTimeScale)
+        {
+            PauseTimeScale();
+        }
+
         // Add all new lines to the queue
         foreach (string line in lines)
         {
@@ -91,11 +122,6 @@ public class VRDialogueSystem : MonoBehaviour
         // Show the canvas and display the first line
         if (dialogCanvas != null)
         {
-            // Parent the canvas to the player's camera and set its local position.
-            dialogCanvas.transform.SetParent(_playerTransform, false);
-            dialogCanvas.transform.localPosition = dialogueOffset;
-            dialogCanvas.transform.localRotation = Quaternion.identity;
-            
             dialogCanvas.SetActive(true);
             DisplayNextLine();
         }
@@ -151,17 +177,27 @@ public class VRDialogueSystem : MonoBehaviour
 
     /// <summary>
     /// A coroutine that "types" out a string character by character.
+    /// Uses unscaled time so it works even when Time.timeScale is 0.
     /// </summary>
     private IEnumerator TypeLine(string line)
     {
         _isTyping = true;
         dialogText.text = ""; // Clear the text field before typing
+
+        // Start the mouth animation
+        StartMouthAnimation();
+
         foreach (char character in line.ToCharArray())
         {
             dialogText.text += character;
-            yield return new WaitForSeconds(typingSpeed);
+            // Use unscaled time so typing continues even when time is paused
+            yield return new WaitForSecondsRealtime(typingSpeed);
         }
+        
         _isTyping = false; // Typing is complete
+
+        // Stop the mouth animation and set to closed mouth
+        StopMouthAnimation();
     }
 
     /// <summary>
@@ -177,6 +213,92 @@ public class VRDialogueSystem : MonoBehaviour
         
         _isTyping = false;
         dialogText.text = _currentLine;
+
+        // Stop the mouth animation and set to closed mouth
+        StopMouthAnimation();
+    }
+
+    /// <summary>
+    /// Starts the mascot mouth animation coroutine.
+    /// </summary>
+    private void StartMouthAnimation()
+    {
+        if (mascotImage != null && mouthClosedSprite != null && mouthOpenSprite != null)
+        {
+            // Stop any existing animation first
+            if (_mouthAnimationCoroutine != null)
+            {
+                StopCoroutine(_mouthAnimationCoroutine);
+            }
+            
+            _mouthAnimationCoroutine = StartCoroutine(AnimateMouth());
+        }
+    }
+
+    /// <summary>
+    /// Stops the mascot mouth animation and sets sprite to closed mouth.
+    /// </summary>
+    private void StopMouthAnimation()
+    {
+        if (_mouthAnimationCoroutine != null)
+        {
+            StopCoroutine(_mouthAnimationCoroutine);
+            _mouthAnimationCoroutine = null;
+        }
+
+        // Set mascot to closed mouth when not talking
+        if (mascotImage != null && mouthClosedSprite != null)
+        {
+            mascotImage.sprite = mouthClosedSprite;
+        }
+    }
+
+    /// <summary>
+    /// Coroutine that cycles between mouth open and closed sprites.
+    /// Uses unscaled time so animation continues when time is paused.
+    /// </summary>
+    private IEnumerator AnimateMouth()
+    {
+        bool mouthOpen = false;
+
+        while (_isTyping)
+        {
+            // Toggle between mouth open and closed
+            if (mouthOpen)
+            {
+                mascotImage.sprite = mouthClosedSprite;
+            }
+            else
+            {
+                mascotImage.sprite = mouthOpenSprite;
+            }
+
+            mouthOpen = !mouthOpen;
+            // Use unscaled time so animation continues when time is paused
+            yield return new WaitForSecondsRealtime(mouthAnimationSpeed);
+        }
+
+        // Ensure we end with mouth closed
+        mascotImage.sprite = mouthClosedSprite;
+    }
+
+    /// <summary>
+    /// Pauses the game time scale.
+    /// </summary>
+    private void PauseTimeScale()
+    {
+        _originalTimeScale = Time.timeScale;
+        Time.timeScale = 0f;
+        Debug.Log("VRDialogueSystem: Time paused for dialogue");
+    }
+
+    /// <summary>
+    /// Restores the original time scale.
+    /// </summary>
+    private void RestoreTimeScale()
+    {
+        Time.timeScale = _originalTimeScale;
+        Debug.Log("VRDialogueSystem: Time restored after dialogue");
     }
 
     /// <summary>
@@ -185,10 +307,18 @@ public class VRDialogueSystem : MonoBehaviour
     private void EndDialog()
     {
         _isDisplaying = false;
+
+        // Stop any mouth animation
+        StopMouthAnimation();
+
+        // Restore time scale if it was paused
+        if (pauseTimeScale)
+        {
+            RestoreTimeScale();
+        }
+
         if (dialogCanvas != null)
         {
-            // Unparent the canvas to prevent it from following the player
-            dialogCanvas.transform.SetParent(null);
             dialogCanvas.SetActive(false);
         }
         if (dialogText != null)
@@ -198,5 +328,42 @@ public class VRDialogueSystem : MonoBehaviour
         
         // Call the event to notify other scripts that the dialogue is finished
         OnDialogueEnd?.Invoke();
+    }
+
+    /// <summary>
+    /// Manual method to end dialogue early if needed.
+    /// </summary>
+    public void ForceEndDialog()
+    {
+        // Stop any ongoing coroutines
+        if (_typingCoroutine != null)
+        {
+            StopCoroutine(_typingCoroutine);
+        }
+        if (_mouthAnimationCoroutine != null)
+        {
+            StopCoroutine(_mouthAnimationCoroutine);
+        }
+
+        // Clear the queue and end dialogue
+        _dialogLines.Clear();
+        EndDialog();
+    }
+
+    /// <summary>
+    /// Check if dialogue is currently active.
+    /// </summary>
+    public bool IsDialogueActive()
+    {
+        return _isDisplaying;
+    }
+
+    void OnDestroy()
+    {
+        // Ensure time scale is restored if this object is destroyed while dialogue is active
+        if (_isDisplaying && pauseTimeScale)
+        {
+            RestoreTimeScale();
+        }
     }
 }

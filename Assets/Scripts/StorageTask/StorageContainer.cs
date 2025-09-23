@@ -36,10 +36,10 @@ public class StorageContainer : MonoBehaviour
             {
                 // Correct item has been dropped.
                 popupManager.ShowMessage("Correct! Item has been stored.");
-                
+
                 // Tell the StorableItem that it has been correctly stored.
                 storableItem.OnCorrectlyStored();
-                
+
                 // Get the current snap point from the array
                 Transform currentSnapPoint = snapPoints[nextSnapPointIndex];
 
@@ -53,7 +53,7 @@ public class StorageContainer : MonoBehaviour
                 {
                     rb.isKinematic = true;
                 }
-                
+
                 Collider col = droppedObject.GetComponent<Collider>();
                 if (col != null)
                 {
@@ -73,6 +73,7 @@ public class StorageContainer : MonoBehaviour
         {
             // Wrong item has been dropped in the container's zone.
             popupManager.ShowMessage($"Wrong container! That doesn't go in the '{containerType}' box.");
+             ScoreTracker.Instance.OnTaskError();
         }
     }
 }
