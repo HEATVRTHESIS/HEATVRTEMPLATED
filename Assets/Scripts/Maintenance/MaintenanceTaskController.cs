@@ -53,13 +53,6 @@ public class MaintenanceTaskController : MonoBehaviour
     // Add a public InputAction reference for the button you want to map.
     [Header("Input Mapping")]
     public InputActionProperty playerAction;
-    
-    // REMOVE DUPLICATE UI REFERENCES AND METHODS
-    // private GameObject questionCanvas;
-    // private Image questionImage;
-    // private TextMeshProUGUI questionTextUI;
-    // private Button yesButton;
-    // private Button noButton;
 
     void Awake()
     {
@@ -99,10 +92,10 @@ public class MaintenanceTaskController : MonoBehaviour
         if (!isTaskCompleted && magnifyingGlassIcon != null)
         {
             magnifyingGlassIcon.SetActive(true);
-            // Inform the manager that this task is now being looked at.
-            if (MaintenanceTaskListManager.Instance != null)
+            // Use the unified TaskListManager instead of MaintenanceTaskListManager
+            if (TaskListManager.Instance != null)
             {
-                MaintenanceTaskListManager.Instance.SelectTask(this);
+                TaskListManager.Instance.SelectMaintenanceTask(this);
             }
         }
     }
@@ -113,7 +106,6 @@ public class MaintenanceTaskController : MonoBehaviour
         {
             magnifyingGlassIcon.SetActive(false);
         }
-       
     }
 
     /// <summary>
@@ -123,7 +115,8 @@ public class MaintenanceTaskController : MonoBehaviour
     {
         // Only show the question if the player is currently gazing at the object
         // and if this is the currently selected task by the manager.
-        if (magnifyingGlassIcon != null && magnifyingGlassIcon.activeSelf && MaintenanceTaskListManager.Instance.IsThisTaskSelected(this))
+        if (magnifyingGlassIcon != null && magnifyingGlassIcon.activeSelf && 
+            TaskListManager.Instance != null && TaskListManager.Instance.IsThisMaintenanceTaskSelected(this))
         {
             // Tell the central QuestionUIManager to show the question for THIS task.
             QuestionUIManager.Instance.ShowQuestion(this);
@@ -165,7 +158,7 @@ public class MaintenanceTaskController : MonoBehaviour
             if (popupManager != null)
             {
                 popupManager.ShowMessage("That's not the right answer. Try again!");
-                 ScoreTracker.Instance.OnTaskError();
+                ScoreTracker.Instance.OnTaskError();
             }
         }
     }
