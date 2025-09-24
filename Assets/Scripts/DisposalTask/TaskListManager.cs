@@ -6,9 +6,19 @@ using System.Linq;
 /// <summary>
 /// Unified TaskListManager that manages all types of tasks (TaskController, MaintenanceTaskController, StorageTaskController).
 /// This is a Singleton, meaning there is only one instance of it in the scene.
+/// Now includes filtering functionality for different task types.
 /// </summary>
 public class TaskListManager : MonoBehaviour
 {
+    // Enum for different filter types
+    public enum TaskFilter
+    {
+        All,
+        Disposal,
+        Maintenance,
+        Storage
+    }
+
     // Singleton pattern
     public static TaskListManager Instance { get; private set; }
 
@@ -20,6 +30,13 @@ public class TaskListManager : MonoBehaviour
 
     // The Canvas Group to control the visibility of the whole UI
     public CanvasGroup taskListCanvasGroup;
+
+    [Header("Filter Buttons")]
+    // Filter buttons
+    public Button allTasksButton;
+    public Button disposalTasksButton;
+    public Button maintenanceTasksButton;
+    public Button storageTasksButton;
 
     // Lists to hold all the active tasks in the scene by type
     private List<TaskController> activeTasks = new List<TaskController>();
@@ -36,6 +53,9 @@ public class TaskListManager : MonoBehaviour
     private MaintenanceTaskController currentSelectedMaintenanceTask;
     private StorageTaskController currentSelectedStorageTask;
 
+    // Current filter state
+    private TaskFilter currentFilter = TaskFilter.All;
+
     void Awake()
     {
         if (Instance == null)
@@ -50,6 +70,9 @@ public class TaskListManager : MonoBehaviour
 
     void Start()
     {
+        // Setup filter button listeners
+        SetupFilterButtons();
+
         // Find all task controllers that are already in the scene at the start
         TaskController[] tasksInScene = FindObjectsOfType<TaskController>();
         MaintenanceTaskController[] maintenanceTasksInScene = FindObjectsOfType<MaintenanceTaskController>();
@@ -88,7 +111,197 @@ public class TaskListManager : MonoBehaviour
 
         // Start all tasks to highlight everything initially
         StartAllTasks();
+        
+        // Apply initial filter (show all by default)
+        ApplyFilter(TaskFilter.All);
     }
+
+    #region Filter Management
+
+    /// <summary>
+    /// Sets up the filter button listeners.
+    /// </summary>
+    private void SetupFilterButtons()
+    {
+        if (allTasksButton != null)
+            allTasksButton.onClick.AddListener(() => ApplyFilter(TaskFilter.All));
+            
+        if (disposalTasksButton != null)
+            disposalTasksButton.onClick.AddListener(() => ApplyFilter(TaskFilter.Disposal));
+            
+        if (maintenanceTasksButton != null)
+            maintenanceTasksButton.onClick.AddListener(() => ApplyFilter(TaskFilter.Maintenance));
+            
+        if (storageTasksButton != null)
+            storageTasksButton.onClick.AddListener(() => ApplyFilter(TaskFilter.Storage));
+    }
+
+    /// <summary>
+    /// Applies the specified filter to show only tasks of that type.
+    /// </summary>
+    public void ApplyFilter(TaskFilter filter)
+    {
+        currentFilter = filter;
+        
+        // Update button visual states
+        UpdateFilterButtonStates();
+        
+        // Show/hide UI entries based on filter
+        switch (filter)
+        {
+            case TaskFilter.All:
+                ShowAllTaskEntries();
+                break;
+            case TaskFilter.Disposal:
+                ShowOnlyDisposalTaskEntries();
+                break;
+            case TaskFilter.Maintenance:
+                ShowOnlyMaintenanceTaskEntries();
+                break;
+            case TaskFilter.Storage:
+                ShowOnlyStorageTaskEntries();
+                break;
+        }
+        
+        Debug.Log($"Applied filter: {filter}");
+    }
+
+    /// <summary>
+    /// Updates the visual states of filter buttons to show which one is active.
+    /// </summary>
+    private void UpdateFilterButtonStates()
+    {
+        // Reset all buttons to normal state
+        if (allTasksButton != null)
+            allTasksButton.interactable = currentFilter != TaskFilter.All;
+            
+        if (disposalTasksButton != null)
+            disposalTasksButton.interactable = currentFilter != TaskFilter.Disposal;
+            
+        if (maintenanceTasksButton != null)
+            maintenanceTasksButton.interactable = currentFilter != TaskFilter.Maintenance;
+            
+        if (storageTasksButton != null)
+            storageTasksButton.interactable = currentFilter != TaskFilter.Storage;
+    }
+
+    /// <summary>
+    /// Shows all task entries.
+    /// </summary>
+    private void ShowAllTaskEntries()
+    {
+        // Show all regular task entries
+        foreach (var kvp in taskUIMap)
+        {
+            if (kvp.Value != null && kvp.Value.gameObject != null)
+                kvp.Value.gameObject.SetActive(true);
+        }
+
+        // Show all maintenance task entries
+        foreach (var kvp in maintenanceTaskUIMap)
+        {
+            if (kvp.Value != null && kvp.Value.gameObject != null)
+                kvp.Value.gameObject.SetActive(true);
+        }
+
+        // Show all storage task entries
+        foreach (var kvp in storageTaskUIMap)
+        {
+            if (kvp.Value != null && kvp.Value.gameObject != null)
+                kvp.Value.gameObject.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// Shows only disposal task entries (regular TaskController tasks).
+    /// </summary>
+    private void ShowOnlyDisposalTaskEntries()
+    {
+        // Show regular task entries (disposal tasks)
+        foreach (var kvp in taskUIMap)
+        {
+            if (kvp.Value != null && kvp.Value.gameObject != null)
+                kvp.Value.gameObject.SetActive(true);
+        }
+
+        // Hide maintenance task entries
+        foreach (var kvp in maintenanceTaskUIMap)
+        {
+            if (kvp.Value != null && kvp.Value.gameObject != null)
+                kvp.Value.gameObject.SetActive(false);
+        }
+
+        // Hide storage task entries
+        foreach (var kvp in storageTaskUIMap)
+        {
+            if (kvp.Value != null && kvp.Value.gameObject != null)
+                kvp.Value.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Shows only maintenance task entries.
+    /// </summary>
+    private void ShowOnlyMaintenanceTaskEntries()
+    {
+        // Hide regular task entries
+        foreach (var kvp in taskUIMap)
+        {
+            if (kvp.Value != null && kvp.Value.gameObject != null)
+                kvp.Value.gameObject.SetActive(false);
+        }
+
+        // Show maintenance task entries
+        foreach (var kvp in maintenanceTaskUIMap)
+        {
+            if (kvp.Value != null && kvp.Value.gameObject != null)
+                kvp.Value.gameObject.SetActive(true);
+        }
+
+        // Hide storage task entries
+        foreach (var kvp in storageTaskUIMap)
+        {
+            if (kvp.Value != null && kvp.Value.gameObject != null)
+                kvp.Value.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Shows only storage task entries.
+    /// </summary>
+    private void ShowOnlyStorageTaskEntries()
+    {
+        // Hide regular task entries
+        foreach (var kvp in taskUIMap)
+        {
+            if (kvp.Value != null && kvp.Value.gameObject != null)
+                kvp.Value.gameObject.SetActive(false);
+        }
+
+        // Hide maintenance task entries
+        foreach (var kvp in maintenanceTaskUIMap)
+        {
+            if (kvp.Value != null && kvp.Value.gameObject != null)
+                kvp.Value.gameObject.SetActive(false);
+        }
+
+        // Show storage task entries
+        foreach (var kvp in storageTaskUIMap)
+        {
+            if (kvp.Value != null && kvp.Value.gameObject != null)
+                kvp.Value.gameObject.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// Gets the current active filter.
+    /// </summary>
+    public TaskFilter GetCurrentFilter()
+    {
+        return currentFilter;
+    }
+
+    #endregion
 
     #region Regular Task Management
 
@@ -124,6 +337,9 @@ public class TaskListManager : MonoBehaviour
 
         // Initialize the task controller, which will in turn spawn its objects.
         task.InitializeTask();
+        
+        // Apply current filter to the new entry
+        ApplyCurrentFilterToNewEntry(newEntry, TaskFilter.Disposal);
     }
 
     /// <summary>
@@ -175,6 +391,9 @@ public class TaskListManager : MonoBehaviour
 
         // Initialize the task controller.
         task.InitializeTask();
+        
+        // Apply current filter to the new entry
+        ApplyCurrentFilterToNewEntry(newEntry, TaskFilter.Maintenance);
     }
 
     /// <summary>
@@ -246,6 +465,9 @@ public class TaskListManager : MonoBehaviour
 
         // Initialize the task controller.
         task.InitializeTask();
+        
+        // Apply current filter to the new entry
+        ApplyCurrentFilterToNewEntry(newEntry, TaskFilter.Storage);
     }
 
     /// <summary>
@@ -259,6 +481,21 @@ public class TaskListManager : MonoBehaviour
         // Start highlighting only the selected storage task
         currentSelectedStorageTask = task;
         currentSelectedStorageTask.StartTask();
+    }
+
+    #endregion
+
+    #region Helper Methods
+
+    /// <summary>
+    /// Applies the current filter state to a newly created entry.
+    /// </summary>
+    private void ApplyCurrentFilterToNewEntry(GameObject newEntry, TaskFilter entryType)
+    {
+        if (newEntry == null) return;
+
+        bool shouldShow = currentFilter == TaskFilter.All || currentFilter == entryType;
+        newEntry.SetActive(shouldShow);
     }
 
     #endregion
