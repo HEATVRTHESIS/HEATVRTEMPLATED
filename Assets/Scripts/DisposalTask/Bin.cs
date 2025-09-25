@@ -36,6 +36,7 @@ public class Bin : MonoBehaviour
             else
             {
                 popupManager.ShowMessage("Wrong bin! That doesn't go there.");
+                 ScoreTracker.Instance.OnTaskError();
             }
         }
     }

@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// Manages the highlighting, progress, and question-answering for a specific maintenance task.
@@ -51,7 +53,7 @@ public class MaintenanceTaskController : MonoBehaviour
     // Add a public InputAction reference for the button you want to map.
     [Header("Input Mapping")]
     public InputActionProperty playerAction;
-    
+
     void Awake()
     {
         // Initially hide the magnifying glass icon
@@ -90,6 +92,11 @@ public class MaintenanceTaskController : MonoBehaviour
         if (!isTaskCompleted && magnifyingGlassIcon != null)
         {
             magnifyingGlassIcon.SetActive(true);
+            // Use the unified TaskListManager instead of MaintenanceTaskListManager
+            if (TaskListManager.Instance != null)
+            {
+                TaskListManager.Instance.SelectMaintenanceTask(this);
+            }
         }
     }
     
@@ -106,17 +113,21 @@ public class MaintenanceTaskController : MonoBehaviour
     /// </summary>
     private void OnPlayerActionPerformed(InputAction.CallbackContext context)
     {
-        // Only show the question if the player is currently gazing at the object.
-        if (magnifyingGlassIcon != null && magnifyingGlassIcon.activeSelf)
+        // Only show the question if the player is currently gazing at the object
+        // and if this is the currently selected task by the manager.
+        if (magnifyingGlassIcon != null && magnifyingGlassIcon.activeSelf && 
+            TaskListManager.Instance != null && TaskListManager.Instance.IsThisMaintenanceTaskSelected(this))
         {
-            MaintenanceUIManager.Instance.ShowQuestion(this);
+            // Tell the central QuestionUIManager to show the question for THIS task.
+            QuestionUIManager.Instance.ShowQuestion(this);
         }
     }
 
-    public void AnswerQuestion(bool isYesAnswer)
+    /// <summary>
+    /// Called by the QuestionUIManager after the user has answered the question.
+    /// </summary>
+    public void AnswerQuestion(bool isCorrect)
     {
-        bool isCorrect = (isYesAnswer == isYesTheCorrectAnswer);
-
         if (isCorrect)
         {
             Debug.Log($"Task '{taskName}': Answered correctly!");
@@ -147,6 +158,7 @@ public class MaintenanceTaskController : MonoBehaviour
             if (popupManager != null)
             {
                 popupManager.ShowMessage("That's not the right answer. Try again!");
+                ScoreTracker.Instance.OnTaskError();
             }
         }
     }
@@ -173,10 +185,6 @@ public class MaintenanceTaskController : MonoBehaviour
         if (targetObject != null)
         {
             targetObject.SetHighlight(false);
-        }
-        if (magnifyingGlassIcon != null)
-        {
-            magnifyingGlassIcon.SetActive(false);
         }
     }
 }
