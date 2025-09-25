@@ -1751,6 +1751,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 986060051}
   m_CullTransparentMesh: 1
+--- !u!1 &1025889402
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1025889403}
+  - component: {fileID: 1025889404}
+  m_Layer: 0
+  m_Name: ToolTipManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1025889403
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025889402}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1113032068}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1025889404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025889402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a273c96d3fdb449428a9303fe8d1572c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipPrefab: {fileID: 4828560702101013700, guid: 6d4d4d9262df726469869621adbd99b9, type: 3}
+  buttonImageObjectName: ButtonIcon
+  textObjectName: DescriptionText
+  cameraTransform: {fileID: 3426376843359089893}
+  distanceFromObject: 0.5
+  heightOffset: 0.3
+  followSpeed: 5
+  smoothFollow: 1
+  creationCooldown: 0.2
 --- !u!1 &1113032067
 GameObject:
   m_ObjectHideFlags: 0
@@ -1788,6 +1841,7 @@ Transform:
   - {fileID: 6553051742120217990}
   - {fileID: 504421135}
   - {fileID: 1369232555}
+  - {fileID: 1025889403}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1113032069
