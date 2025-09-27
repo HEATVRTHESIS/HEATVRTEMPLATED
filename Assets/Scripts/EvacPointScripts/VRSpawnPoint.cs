@@ -264,12 +264,10 @@ public class VRSpawnPoint : MonoBehaviour
     
     void TriggerHapticFeedback()
     {
-        // Skip haptics in editor to avoid warnings
         #if UNITY_EDITOR
+        // Skip haptics in editor to avoid warnings
         Debug.Log("Haptic feedback triggered (disabled in editor)");
-        return;
-        #endif
-        
+        #else
         // Enhanced haptic feedback for XR Interaction Toolkit
         try
         {
@@ -301,6 +299,7 @@ public class VRSpawnPoint : MonoBehaviour
         {
             Debug.Log("Haptic feedback not available: " + e.Message);
         }
+        #endif
     }
     
     IEnumerator InitiateTeleport()
