@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// Fire safety training dialogue for the MedTech Laboratory.
@@ -12,6 +13,15 @@ public class FirePhaseLevelStartDialogue : MonoBehaviour
 
     void Start()
     {
+        // Start the dialogue after a small delay to ensure everything is initialized
+        StartCoroutine(StartDialogueAfterDelay());
+    }
+
+    private IEnumerator StartDialogueAfterDelay()
+    {
+        // Wait a frame to ensure all GameObjects are properly initialized
+        yield return null;
+        
         // Check if the dialogue system reference is set to avoid errors.
         if (dialogueSystem != null)
         {
