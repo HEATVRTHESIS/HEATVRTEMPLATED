@@ -359,7 +359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -367,7 +367,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 602192927}
+      addedObject: {fileID: 602192930}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 602192931}
   m_SourcePrefab: {fileID: 100100000, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
 --- !u!1 &357761798 stripped
 GameObject:
@@ -433,7 +436,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
   m_PrefabInstance: {fileID: 247195331}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &602192927
+--- !u!114 &602192930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -478,16 +481,16 @@ MonoBehaviour:
   fireSpread: 0
   onFireTimer: 0
   isEffectOnForever: 0
-  burnOutStart_s: 30
-  burnOutLength_s: 30
+  burnOutStart_s: 180
+  burnOutLength_s: 10
   isReignitable: 0
   deleteAfterBurnout: 0
-  useMeshFire: 1
+  useMeshFire: 0
   meshFireCount: 10
   meshFireMeshFilters: []
   calculateFlammationAreaFromMesh: 0
   affectedByWind: 1
-  ignitionTime: 200
+  ignitionTime: 0
   enableFlameVFX: 1
   flameEnvironmentalSpeed: 1
   flameLiveliness: 1
@@ -511,6 +514,27 @@ MonoBehaviour:
     m_Bits: 4294967295
   openTabUpper: 0
   openTabLower: 4
+--- !u!65 &602192931
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602192925}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.00579619, y: 0.0031035026, z: 0.0029070876}
+  m_Center: {x: 0.00011401088, y: -0.000013096663, z: 0.0009759254}
 --- !u!1 &635777594 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2480909740878747892, guid: c3b94798a3102064094a5e45cdb3d6fd, type: 3}
@@ -1477,9 +1501,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Help the Civilian
   taskDescription: Talk to the Civilian
-  taskCompletionDialogue:
-  - Horray
-  audioSource: {fileID: 0}
+  taskCompletionDialogue: []
+  audioSource: {fileID: 7038948556515909229}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
   OnProgressUpdated:
@@ -1995,7 +2018,6 @@ GameObject:
   - component: {fileID: 1900590541}
   - component: {fileID: 1900590543}
   - component: {fileID: 1900590542}
-  - component: {fileID: 1900590544}
   m_Layer: 0
   m_Name: TaskListStuff
   m_TagString: Untagged
@@ -2078,19 +2100,6 @@ MonoBehaviour:
   normalColor: {r: 0, g: 0, b: 0, a: 1}
   warningColor: {r: 1, g: 0.4710714, b: 0.015686274, a: 1}
   criticalColor: {r: 1, g: 0, b: 0, a: 1}
---- !u!114 &1900590544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1900590538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a63b4ac30f8e1b746b3a66a1e6fea394, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueSystem: {fileID: 252048140871992789}
 --- !u!1001 &1977994029
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2456,17 +2465,6 @@ MonoBehaviour:
     m_Duration: 0.1
     m_Frequency: 0
   m_AllowHoverHapticsWhileSelecting: 1
---- !u!114 &252048140871992789 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6402032355436464013, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-  m_PrefabInstance: {fileID: 2421130556189299951}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d50fe7ef78e1ff488e4cd72a1ab476b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &287165711752348661
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13399,9 +13397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Close Smoke Door
   taskDescription: Pull down the fire shutter lever
-  taskCompletionDialogue:
-  - Fire shutters can help contain the fire
-  - This would slow down the spread of the fire
+  taskCompletionDialogue: []
   audioSource: {fileID: 7038948556515909229}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 1
@@ -17366,7 +17362,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4311920737055140376, guid: 4b784be03cd5ada47ad35818f3f60fb2, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4311920737055140377, guid: 4b784be03cd5ada47ad35818f3f60fb2, type: 3}
+      propertyPath: incrementalPower
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4311920737055140380, guid: 4b784be03cd5ada47ad35818f3f60fb2, type: 3}
       propertyPath: m_LocalPosition.x
