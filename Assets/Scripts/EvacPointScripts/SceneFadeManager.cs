@@ -5,7 +5,8 @@ public class SceneFadeManager : MonoBehaviour
 {
     [Header("Fade Settings")]
     public float fadeInTime = 1f;
-    public bool fadeInOnStart = false; // CHANGED: Default to false to prevent double fade
+    public bool fadeInOnStart = true; // Re-enabled, but with smart detection
+    public bool alwaysFadeInWhenTesting = true; // NEW: Always fade when testing scene directly
     
     private CanvasGroup fadeCanvas;
     
@@ -68,7 +69,9 @@ public class SceneFadeManager : MonoBehaviour
     IEnumerator FadeInOnSceneStart()
     {
         // Check if we just teleported (to prevent double fade)
-        if (PlayerPrefs.GetInt("JustTeleported", 0) == 1)
+        bool justTeleported = PlayerPrefs.GetInt("JustTeleported", 0) == 1;
+        
+        if (justTeleported)
         {
             PlayerPrefs.DeleteKey("JustTeleported");
             Debug.Log("Skipping scene fade-in because we just teleported");
@@ -81,30 +84,36 @@ public class SceneFadeManager : MonoBehaviour
             yield break;
         }
         
-        // Wait a brief moment for everything to initialize
-        yield return new WaitForSeconds(0.1f);
-        
-        if (fadeCanvas == null)
+        // If we're testing the scene directly (no teleportation), always fade in
+        if (alwaysFadeInWhenTesting || !justTeleported)
         {
-            Debug.LogWarning("No fade canvas found for scene fade in!");
-            yield break;
+            Debug.Log("Fading in scene (direct scene test or non-teleport entry)");
+            
+            // Wait a brief moment for everything to initialize
+            yield return new WaitForSecondsRealtime(0.1f);
+            
+            if (fadeCanvas == null)
+            {
+                Debug.LogWarning("No fade canvas found for scene fade in!");
+                yield break;
+            }
+            
+            Debug.Log("Starting scene fade in");
+            
+            float elapsedTime = 0f;
+            float startAlpha = fadeCanvas.alpha;
+            
+            while (elapsedTime < fadeInTime)
+            {
+                elapsedTime += Time.unscaledDeltaTime; // Use unscaled time
+                float alpha = Mathf.Lerp(startAlpha, 0f, elapsedTime / fadeInTime);
+                fadeCanvas.alpha = alpha;
+                yield return null;
+            }
+            
+            fadeCanvas.alpha = 0f;
+            Debug.Log("Scene fade in complete");
         }
-        
-        Debug.Log("Starting scene fade in");
-        
-        float elapsedTime = 0f;
-        float startAlpha = fadeCanvas.alpha;
-        
-        while (elapsedTime < fadeInTime)
-        {
-            elapsedTime += Time.deltaTime;
-            float alpha = Mathf.Lerp(startAlpha, 0f, elapsedTime / fadeInTime);
-            fadeCanvas.alpha = alpha;
-            yield return null;
-        }
-        
-        fadeCanvas.alpha = 0f;
-        Debug.Log("Scene fade in complete");
     }
     
     // Public method to manually trigger fade out (useful for testing)
