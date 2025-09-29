@@ -67,6 +67,20 @@ public class SceneFadeManager : MonoBehaviour
     
     IEnumerator FadeInOnSceneStart()
     {
+        // Check if we just teleported (to prevent double fade)
+        if (PlayerPrefs.GetInt("JustTeleported", 0) == 1)
+        {
+            PlayerPrefs.DeleteKey("JustTeleported");
+            Debug.Log("Skipping scene fade-in because we just teleported");
+            
+            // Just ensure canvas is transparent
+            if (fadeCanvas != null)
+            {
+                fadeCanvas.alpha = 0f;
+            }
+            yield break;
+        }
+        
         // Wait a brief moment for everything to initialize
         yield return new WaitForSeconds(0.1f);
         
@@ -119,7 +133,7 @@ public class SceneFadeManager : MonoBehaviour
         
         while (elapsedTime < duration)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime; // USE UNSCALED TIME
             float alpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / duration);
             fadeCanvas.alpha = alpha;
             yield return null;

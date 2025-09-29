@@ -436,7 +436,7 @@ public class VRSpawnPoint : MonoBehaviour
         
         while (elapsedTime < duration)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime; // USE UNSCALED TIME
             float alpha = Mathf.Lerp(startAlpha, endAlpha, elapsedTime / duration);
             fadeCanvas.alpha = alpha;
             yield return null;

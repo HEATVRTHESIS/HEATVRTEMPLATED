@@ -1480,6 +1480,7 @@ GameObject:
   - component: {fileID: 1113032069}
   - component: {fileID: 1113032070}
   - component: {fileID: 1113032071}
+  - component: {fileID: 1113032072}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1593,6 +1594,20 @@ MonoBehaviour:
   waitForSpeech: 1
   showTextImmediatelyWithSpeech: 0
   useNativeSpeech: 1
+--- !u!114 &1113032072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113032067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4d8fb5d66f0a3a4bb533bbdb93972e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeInTime: 1
+  fadeInOnStart: 1
 --- !u!4 &1264660058 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5293413233763613120, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
