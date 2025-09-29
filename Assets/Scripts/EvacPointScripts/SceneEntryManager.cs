@@ -10,14 +10,55 @@ public class SceneEntryManager : MonoBehaviour
     
     [Header("Player Settings")]
     public bool autoPositionPlayer = true;
-    public float delayBeforePositioning = 0.1f;
+    public float delayBeforePositioning = 0.05f; // Reduced delay
+    public bool instantPosition = true; // NEW: Position before first frame renders
+    
+    private void Awake()
+    {
+        // Position player immediately if instant positioning is enabled
+        if (autoPositionPlayer && instantPosition)
+        {
+            PositionPlayerImmediate();
+        }
+    }
     
     private void Start()
     {
-        if (autoPositionPlayer)
+        // Only position on Start if not using instant positioning
+        if (autoPositionPlayer && !instantPosition)
         {
             Invoke(nameof(PositionPlayer), delayBeforePositioning);
         }
+    }
+    
+    void PositionPlayerImmediate()
+    {
+        GameObject player = FindVRPlayer();
+        if (player == null)
+        {
+            Debug.LogWarning("Player not found for instant positioning");
+            return;
+        }
+        
+        Transform targetEntry = GetEntryPoint();
+        if (targetEntry == null)
+        {
+            Debug.LogWarning("No entry point found for instant positioning");
+            return;
+        }
+        
+        // Disable character controller if present
+        CharacterController cc = player.GetComponent<CharacterController>();
+        if (cc != null) cc.enabled = false;
+        
+        // Position player immediately
+        player.transform.position = targetEntry.position;
+        player.transform.rotation = targetEntry.rotation;
+        
+        Debug.Log($"Player instantly positioned at entry point: {targetEntry.name}");
+        
+        // Re-enable character controller
+        if (cc != null) cc.enabled = true;
     }
     
     void PositionPlayer()

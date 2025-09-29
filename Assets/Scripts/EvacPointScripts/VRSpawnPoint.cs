@@ -387,6 +387,11 @@ public class VRSpawnPoint : MonoBehaviour
         // Set flag to prevent double fade
         PlayerPrefs.SetInt("JustTeleported", 1);
         
+        // Store target position before scene load
+        Vector3 storedTargetPosition = spawnData.targetPosition;
+        Vector3 storedTargetRotation = spawnData.targetRotation;
+        bool hasTargetPosition = storedTargetPosition != Vector3.zero;
+        
         // Load new scene
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(spawnData.targetSceneName);
         
@@ -399,6 +404,7 @@ public class VRSpawnPoint : MonoBehaviour
         
         // IMPORTANT: Re-find the fade canvas in the new scene
         yield return new WaitForEndOfFrame();
+        yield return new WaitForEndOfFrame(); // Extra frame for stability
         
         // Re-establish fade canvas reference
         GameObject fadeCanvasGO = GameObject.Find("FadeCanvas");
@@ -422,9 +428,31 @@ public class VRSpawnPoint : MonoBehaviour
         FindVRComponents();
         
         // Position player in new scene if target position is specified AND no entry point name
-        if (spawnData.targetPosition != Vector3.zero && player != null && string.IsNullOrEmpty(spawnData.targetEntryPointName))
+        if (hasTargetPosition && player != null && string.IsNullOrEmpty(spawnData.targetEntryPointName))
         {
-            TeleportInSameScene();
+            Debug.Log($"Positioning player at target position: {storedTargetPosition}");
+            
+            // Disable character controller if present
+            if (playerController != null)
+            {
+                playerController.enabled = false;
+            }
+            
+            // Move player to target position
+            player.transform.position = storedTargetPosition;
+            player.transform.rotation = Quaternion.Euler(storedTargetRotation);
+            
+            Debug.Log($"Player positioned at: {player.transform.position}");
+            
+            // Re-enable character controller
+            if (playerController != null)
+            {
+                playerController.enabled = true;
+            }
+        }
+        else
+        {
+            Debug.Log($"Using default spawn position. HasTargetPos: {hasTargetPosition}, HasPlayer: {player != null}, EntryPoint: {spawnData.targetEntryPointName}");
         }
     }
     
