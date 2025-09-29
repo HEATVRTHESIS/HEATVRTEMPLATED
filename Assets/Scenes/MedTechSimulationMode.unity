@@ -270,7 +270,7 @@ Transform:
   m_GameObject: {fileID: 118368342}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.3420201, z: 0, w: 0.9396927}
-  m_LocalPosition: {x: -8.84, y: 0, z: 0}
+  m_LocalPosition: {x: -9.011, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1538,7 +1538,6 @@ Transform:
   - {fileID: 504421135}
   - {fileID: 1369232555}
   - {fileID: 1025889403}
-  - {fileID: 1914934343}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1113032069
@@ -2001,7 +2000,6 @@ MonoBehaviour:
   - FromEvac
   autoPositionPlayer: 1
   delayBeforePositioning: 0.1
-  instantPosition: 1
 --- !u!4 &1914934343
 Transform:
   m_ObjectHideFlags: 0
@@ -2010,12 +2008,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1914934341}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.03713454, y: -1.540627, z: -0.011520673}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1113032068}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1926908203 stripped
 Transform:
@@ -6881,14 +6879,6 @@ PrefabInstance:
     - target: {fileID: 3675965850302881260, guid: 900a7b9583edd914db894778aa3f2cff, type: 3}
       propertyPath: audioSource
       value: 
-      objectReference: {fileID: 374208006074615410}
-    - target: {fileID: 3675965850302881260, guid: 900a7b9583edd914db894778aa3f2cff, type: 3}
-      propertyPath: taskCompletionDialogue.Array.data[0]
-      value: You can crush the bottles before throwing them away
-      objectReference: {fileID: 0}
-    - target: {fileID: 3675965850302881260, guid: 900a7b9583edd914db894778aa3f2cff, type: 3}
-      propertyPath: taskCompletionDialogue.Array.data[1]
-      value: This ensures that the bottle cannot be reused
       objectReference: {fileID: 0}
     - target: {fileID: 5713260504478304848, guid: 900a7b9583edd914db894778aa3f2cff, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7352,7 +7342,7 @@ PrefabInstance:
     - target: {fileID: 5599157070200658929, guid: 35e76eec589ec2149b246e69bda43714, type: 3}
       propertyPath: audioSource
       value: 
-      objectReference: {fileID: 374208006074615410}
+      objectReference: {fileID: 0}
     - target: {fileID: 9211203595280462145, guid: 35e76eec589ec2149b246e69bda43714, type: 3}
       propertyPath: popupManager
       value: 
@@ -9330,7 +9320,7 @@ PrefabInstance:
     - target: {fileID: 8750927660838627274, guid: 4e914f7174e0fe245826178698e99794, type: 3}
       propertyPath: audioSource
       value: 
-      objectReference: {fileID: 374208006074615410}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10760,7 +10750,7 @@ PrefabInstance:
     - target: {fileID: 7900027310455678042, guid: 921cc256057e7ad489e46a1e60723001, type: 3}
       propertyPath: audioSource
       value: 
-      objectReference: {fileID: 374208006074615410}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13392,7 +13382,7 @@ PrefabInstance:
     - target: {fileID: 233047086883666176, guid: ed41c4040ff2af642a81a67c4a73dd68, type: 3}
       propertyPath: audioSource
       value: 
-      objectReference: {fileID: 374208006074615410}
+      objectReference: {fileID: 0}
     - target: {fileID: 233047086883666176, guid: ed41c4040ff2af642a81a67c4a73dd68, type: 3}
       propertyPath: taskDescription
       value: Throw away the used gloves
@@ -14105,7 +14095,7 @@ PrefabInstance:
     - target: {fileID: 2850071237514630861, guid: f329a10a15c7d3b44b3387306e62c62d, type: 3}
       propertyPath: audioSource
       value: 
-      objectReference: {fileID: 374208006074615410}
+      objectReference: {fileID: 0}
     - target: {fileID: 6123754638965617785, guid: f329a10a15c7d3b44b3387306e62c62d, type: 3}
       propertyPath: popupManager
       value: 
@@ -14242,7 +14232,7 @@ PrefabInstance:
     - target: {fileID: 3844453523848452519, guid: 79e746d997cca1b448f56e4f201365ef, type: 3}
       propertyPath: audioSource
       value: 
-      objectReference: {fileID: 374208006074615410}
+      objectReference: {fileID: 0}
     - target: {fileID: 8223090563200127176, guid: 79e746d997cca1b448f56e4f201365ef, type: 3}
       propertyPath: popupManager
       value: 
@@ -16058,4 +16048,5 @@ SceneRoots:
   - {fileID: 57626308}
   - {fileID: 1177489007351504161}
   - {fileID: 1113032068}
+  - {fileID: 1914934343}
   - {fileID: 118368343}
