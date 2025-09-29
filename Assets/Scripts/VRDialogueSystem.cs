@@ -59,6 +59,8 @@ public class VRDialogueSystem : MonoBehaviour
     public bool waitForSpeech = true;
     [Tooltip("Show text immediately when speech starts (disable typewriter for speech)")]
     public bool showTextImmediatelyWithSpeech = false;
+    [Tooltip("Use native speech (no file generation) to avoid file system issues")]
+    public bool useNativeSpeech = true;
 
     // --- Private Fields ---
     private Queue<string> _dialogLines = new Queue<string>();
@@ -223,25 +225,34 @@ public class VRDialogueSystem : MonoBehaviour
             Speaker.Instance.Silence();
         }
 
-        // Pause time if enabled
-        if (pauseTimeScale)
-        {
-            PauseTimeScale();
-        }
-
         // Add all new lines to the queue
         foreach (string line in lines)
         {
             _dialogLines.Enqueue(line);
         }
 
-        // Show the canvas FIRST, then display the first line
+        // Show the canvas and start dialogue after a frame delay
         if (dialogCanvas != null)
         {
             dialogCanvas.SetActive(true);
         }
+
+        // Pause time if enabled (after canvas is active)
+        if (pauseTimeScale)
+        {
+            PauseTimeScale();
+        }
         
-        // Now display the first line (canvas is active so coroutines can start)
+        // Start dialogue with a frame delay to ensure canvas is properly activated
+        StartCoroutine(StartDialogueAfterFrame());
+    }
+
+    /// <summary>
+    /// Waits one frame after canvas activation before starting dialogue to ensure GameObject is active
+    /// </summary>
+    private IEnumerator StartDialogueAfterFrame()
+    {
+        yield return null; // Wait one frame
         DisplayNextLine();
     }
 
@@ -280,6 +291,13 @@ public class VRDialogueSystem : MonoBehaviour
     /// </summary>
     private void DisplayNextLine()
     {
+        // Ensure the canvas is active before trying to start coroutines
+        if (dialogCanvas != null && !dialogCanvas.activeInHierarchy)
+        {
+            Debug.LogWarning("VRDialogueSystem: Trying to display dialogue when canvas is inactive!");
+            return;
+        }
+
         // Stop any ongoing typing coroutine just in case
         if (_typingCoroutine != null)
         {
@@ -297,6 +315,13 @@ public class VRDialogueSystem : MonoBehaviour
         {
             // Dequeue and store the line before starting the coroutine.
             _currentLine = _dialogLines.Dequeue();
+            
+            // Skip empty lines
+            if (string.IsNullOrEmpty(_currentLine.Trim()))
+            {
+                DisplayNextLine(); // Recursively call to get the next non-empty line
+                return;
+            }
             
             if (enableTTS && showTextImmediatelyWithSpeech)
             {
@@ -317,15 +342,12 @@ public class VRDialogueSystem : MonoBehaviour
         }
     }
 
-    [Tooltip("Use native speech (no file generation) to avoid file system issues")]
-    public bool useNativeSpeech = true;
-
     /// <summary>
     /// Starts speech using RT-Voice
     /// </summary>
     private void StartSpeech(string text)
     {
-        if (!enableTTS || Speaker.Instance == null)
+        if (!enableTTS || Speaker.Instance == null || string.IsNullOrEmpty(text.Trim()))
             return;
 
         // Generate unique ID for this speech
