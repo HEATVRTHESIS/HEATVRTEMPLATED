@@ -40,8 +40,12 @@ public class EvacuationLevelManager : MonoBehaviour
     public GameObject roadblockPrefab;
     
     [Header("Player Settings")]
-    public GameObject playerPrefab;
-    public bool spawnPlayer = true;
+    [Tooltip("Reference to the player GameObject already in the scene")]
+    public GameObject playerObject;
+    
+    [Header("Department Selection")]
+    [Tooltip("Set this to determine which spawn point to use (e.g., 'ER', 'MedTech', 'Dietary')")]
+    public string selectedDepartment = "";
     
     [Header("Generation Settings")]
     public int randomSeed = -1;
@@ -55,12 +59,13 @@ public class EvacuationLevelManager : MonoBehaviour
     private System.Random rng;
     private List<GameObject> spawnedObjects = new List<GameObject>();
     private Dictionary<int, PathPlane> pathLookup = new Dictionary<int, PathPlane>();
-    private GameObject spawnedPlayer;
+    private Dictionary<string, SpawnPointConfig> departmentLookup = new Dictionary<string, SpawnPointConfig>();
     private SpawnPointConfig currentConfig;
     
     void Start()
     {
         CalculatePathBounds();
+        BuildDepartmentLookup();
         GenerateLevel();
     }
     
@@ -95,15 +100,29 @@ public class EvacuationLevelManager : MonoBehaviour
         }
     }
     
-    void SpawnPlayer(SpawnPointConfig config)
+    void BuildDepartmentLookup()
     {
-        if (spawnedPlayer != null)
+        departmentLookup.Clear();
+        foreach (SpawnPointConfig config in spawnConfigs)
         {
-            Destroy(spawnedPlayer);
+            if (!string.IsNullOrEmpty(config.departmentName))
+            {
+                departmentLookup[config.departmentName] = config;
+            }
+        }
+    }
+    
+    void PositionPlayer(SpawnPointConfig config)
+    {
+        if (playerObject == null)
+        {
+            Debug.LogWarning("Player object not assigned!");
+            return;
         }
         
-        spawnedPlayer = Instantiate(playerPrefab, config.spawnPoint.position, config.spawnPoint.rotation);
-        Debug.Log($"Player spawned at {config.departmentName}");
+        playerObject.transform.position = config.spawnPoint.position;
+        playerObject.transform.rotation = config.spawnPoint.rotation;
+        Debug.Log($"Player positioned at {config.departmentName}");
     }
     
     public Transform GetCurrentSpawnPoint()
@@ -111,26 +130,53 @@ public class EvacuationLevelManager : MonoBehaviour
         return currentConfig?.spawnPoint;
     }
     
+    /// <summary>
+    /// Sets which department configuration to use for the evacuation level.
+    /// Call this before GenerateLevel() if you want to change departments.
+    /// </summary>
+    public void SetDepartment(string departmentName)
+    {
+        selectedDepartment = departmentName;
+    }
+    
     public void GenerateLevel()
     {
         ClearLevel();
         BuildPathLookup();
+        BuildDepartmentLookup();
         
         if (randomSeed == -1)
             rng = new System.Random();
         else
             rng = new System.Random(randomSeed);
         
-        // Randomly select one spawn point
-        SpawnPointConfig selectedConfig = spawnConfigs[rng.Next(spawnConfigs.Count)];
+        // Find the selected spawn point configuration
+        SpawnPointConfig selectedConfig = null;
+        
+        if (!string.IsNullOrEmpty(selectedDepartment) && departmentLookup.ContainsKey(selectedDepartment))
+        {
+            selectedConfig = departmentLookup[selectedDepartment];
+        }
+        else if (spawnConfigs.Count > 0)
+        {
+            // Fallback to first config if no valid department selected
+            selectedConfig = spawnConfigs[0];
+            Debug.LogWarning($"Department '{selectedDepartment}' not found. Using default: {selectedConfig.departmentName}");
+        }
+        else
+        {
+            Debug.LogError("No spawn point configurations available!");
+            return;
+        }
+        
         currentConfig = selectedConfig;
         Debug.Log($"Selected spawn point: {selectedConfig.departmentName}");
         Debug.Log($"Using paths: {string.Join(", ", selectedConfig.assignedPathNumbers)}");
         
-        // Spawn player at selected spawn point
-        if (spawnPlayer && playerPrefab != null)
+        // Position player at selected spawn point
+        if (playerObject != null)
         {
-            SpawnPlayer(selectedConfig);
+            PositionPlayer(selectedConfig);
         }
         
         // Generate obstacles
@@ -288,11 +334,6 @@ public class EvacuationLevelManager : MonoBehaviour
                 Destroy(obj);
         }
         spawnedObjects.Clear();
-        
-        if (spawnedPlayer != null)
-        {
-            Destroy(spawnedPlayer);
-        }
     }
     
     [ContextMenu("Recalculate Path Bounds")]
