@@ -637,6 +637,7 @@ GameObject:
   - component: {fileID: 1113032070}
   - component: {fileID: 1113032071}
   - component: {fileID: 1113032072}
+  - component: {fileID: 1113032073}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -765,6 +766,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeInTime: 1
   fadeInOnStart: 1
+  alwaysFadeInWhenTesting: 1
+--- !u!114 &1113032073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113032067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6158dc665843d6498f0bfa8a8617d64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueSystem: {fileID: 1113032071}
 --- !u!4 &1264660058 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5293413233763613120, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
@@ -1432,6 +1447,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1773299945512574013, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773299945512574013, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773299945512574013, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6292095195536636262, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
       propertyPath: m_Name
       value: Checklistplayer
