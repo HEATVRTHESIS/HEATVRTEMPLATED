@@ -503,6 +503,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5229108232746711076, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6292095195536636262, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
       propertyPath: m_Name
       value: Checklistplayer
@@ -524,6 +528,10 @@ PrefabInstance:
       value: 0.64
       objectReference: {fileID: 0}
     - target: {fileID: 8519608192922251625, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052932657491719172, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}

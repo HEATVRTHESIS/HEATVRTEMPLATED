@@ -1459,6 +1459,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5229108232746711076, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6292095195536636262, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
       propertyPath: m_Name
       value: Checklistplayer
@@ -1473,6 +1477,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7421651067768445273, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
       propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9052932657491719172, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9218719975207106601, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
