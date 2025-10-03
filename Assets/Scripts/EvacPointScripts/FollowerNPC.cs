@@ -3,6 +3,7 @@ using TMPro;
 using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class FollowerNPC : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class FollowerNPC : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public Button followButton;
     public Button cancelButton;
+
+    [Header("Navigation")]
+    public NavMeshAgent navAgent;
     
     [Header("VR Interaction")]
     public GameObject interactionIndicator;
@@ -26,16 +30,10 @@ public class FollowerNPC : MonoBehaviour
     [Header("NPC Settings")]
     public Animator npcAnimator;
     public Transform playerTransform;
-    public float followSpeed = 3f;
-    public float followDistance = 2f; // How close to stay to player
-    public float stoppingDistance = 1.5f; // Stop moving when this close
-    public float rotationSpeed = 5f;
-    public bool lockYPosition = true; // Keep NPC at ground level
     
     private bool isPlayerPointingAtNPC = false;
     private bool isDialogueActive = false;
     private bool isFollowing = false;
-    private float initialYPosition;
 
     void Start()
     {
@@ -46,9 +44,6 @@ public class FollowerNPC : MonoBehaviour
         cancelButton.onClick.AddListener(OnCancelButtonClicked);
         
         talkAction.action.Enable();
-        
-        // Store initial Y position to keep NPC on ground
-        initialYPosition = transform.position.y;
     }
 
     void Update()
@@ -135,55 +130,29 @@ public class FollowerNPC : MonoBehaviour
             Debug.LogWarning("Player transform not assigned!");
             return;
         }
-        
-        // Calculate distance on XZ plane only (ignore Y)
-        Vector3 npcPosFlat = new Vector3(transform.position.x, 0, transform.position.z);
-        Vector3 playerPosFlat = new Vector3(playerTransform.position.x, 0, playerTransform.position.z);
-        float distanceToPlayer = Vector3.Distance(npcPosFlat, playerPosFlat);
-        
-        // Only move if beyond stopping distance
-        if (distanceToPlayer > stoppingDistance)
+
+        if (navAgent != null)
         {
-            // Move directly towards player (on XZ plane)
-            Vector3 directionToPlayer = (playerPosFlat - npcPosFlat).normalized;
+            // Set destination to player
+            navAgent.SetDestination(playerTransform.position);
             
-            // Calculate new position
-            Vector3 newPosition = transform.position + directionToPlayer * followSpeed * Time.deltaTime;
-            
-            // Lock Y position to stay on ground
-            if (lockYPosition)
+            // Check if agent has reached the destination (within stopping distance)
+            if (!navAgent.pathPending && navAgent.remainingDistance <= navAgent.stoppingDistance)
             {
-                newPosition.y = initialYPosition;
+                // Reached destination - idle
+                if (npcAnimator != null)
+                {
+                    npcAnimator.SetTrigger("Idle");
+                }
             }
-            
-            transform.position = newPosition;
-            
-            // Trigger walk animation
-            if (npcAnimator != null)
+            else
             {
-                npcAnimator.SetTrigger("Walk");
+                // Still moving - walk
+                if (npcAnimator != null)
+                {
+                    npcAnimator.SetTrigger("Walk");
+                }
             }
-        }
-        else
-        {
-            // Close enough - trigger idle
-            if (npcAnimator != null)
-            {
-                npcAnimator.SetTrigger("Idle");
-            }
-        }
-        
-        // Rotate to face player (only on Y axis)
-        Vector3 lookDirection = playerPosFlat - npcPosFlat;
-        
-        if (lookDirection.magnitude > 0.1f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
-            transform.rotation = Quaternion.Slerp(
-                transform.rotation, 
-                targetRotation, 
-                rotationSpeed * Time.deltaTime
-            );
         }
     }
 
@@ -193,6 +162,11 @@ public class FollowerNPC : MonoBehaviour
     public void StopFollowing()
     {
         isFollowing = false;
+        
+        if (navAgent != null)
+        {
+            navAgent.isStopped = true;
+        }
         
         if (npcAnimator != null)
         {
@@ -214,26 +188,6 @@ public class FollowerNPC : MonoBehaviour
             {
                 playerTransform = player.transform;
             }
-        }
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        if (playerTransform != null && isFollowing)
-        {
-            // Draw stopping distance
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(transform.position, stoppingDistance);
-            
-            // Draw follow distance (for reference)
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, followDistance);
-            
-            // Draw line to player (flat on ground)
-            Gizmos.color = Color.cyan;
-            Vector3 npcFlat = new Vector3(transform.position.x, 0, transform.position.z);
-            Vector3 playerFlat = new Vector3(playerTransform.position.x, 0, playerTransform.position.z);
-            Gizmos.DrawLine(npcFlat, playerFlat);
         }
     }
 }
