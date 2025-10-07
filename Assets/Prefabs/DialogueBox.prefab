@@ -327,7 +327,7 @@ Transform:
   m_GameObject: {fileID: 5091672698383021475}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.052, y: 0.30243993, z: -0.353}
+  m_LocalPosition: {x: 0.174, y: 0.30243993, z: -0.353}
   m_LocalScale: {x: 0.54873997, y: 1.17819, z: 0.35476}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -407,6 +407,15 @@ MonoBehaviour:
   mouthClosedSprite: {fileID: 21300000, guid: a704f4d3a97c2b84eb6c4e9754e91d6f, type: 3}
   mouthOpenSprite: {fileID: 21300000, guid: d3f1adbcd2ee57241bd63fbd4e245347, type: 3}
   mouthAnimationSpeed: 0.15
+  enableTTS: 1
+  speechAudioSource: {fileID: 0}
+  voiceName: 
+  speechRate: 1
+  speechPitch: 1
+  speechVolume: 1
+  waitForSpeech: 1
+  showTextImmediatelyWithSpeech: 0
+  useNativeSpeech: 1
 --- !u!1 &7651257807878894543
 GameObject:
   m_ObjectHideFlags: 0

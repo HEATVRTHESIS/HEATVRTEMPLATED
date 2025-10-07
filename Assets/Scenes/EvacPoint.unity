@@ -487,6 +487,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 23279939133570887, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: gripAction
+      value: 
+      objectReference: {fileID: -3742484312079769484, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    - target: {fileID: 23279939133570887, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: pinchAction
+      value: 
+      objectReference: {fileID: -2706128282752906596, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     - target: {fileID: 1773299945512574013, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1
@@ -499,6 +507,14 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: -17
       objectReference: {fileID: 0}
+    - target: {fileID: 1909646731489396430, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: gripAction
+      value: 
+      objectReference: {fileID: 15759602096507913, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    - target: {fileID: 1909646731489396430, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: pinchAction
+      value: 
+      objectReference: {fileID: -7813013294023911475, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     - target: {fileID: 3513339795791056962, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
       propertyPath: m_IsActive
       value: 0
