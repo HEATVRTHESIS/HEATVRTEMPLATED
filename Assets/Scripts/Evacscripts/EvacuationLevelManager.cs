@@ -14,12 +14,23 @@ public class PathPlane
 }
 
 [System.Serializable]
+public class EvacuationDoor
+{
+    public string doorName; // e.g., "Exit A", "Emergency Exit 1"
+    public BoxCollider doorCollider; // The box collider for this door
+}
+
+[System.Serializable]
 public class SpawnPointConfig
 {
     public string departmentName; // e.g., "ER", "MedTech", "Dietary"
     public Transform spawnPoint;
     public List<int> assignedPathNumbers = new List<int>(); // e.g., {1, 2, 3, 4}
     public List<Transform> roadblockPoints = new List<Transform>();
+    
+    [Header("Evacuation Doors")]
+    [Tooltip("Which evacuation doors should be enabled for this department")]
+    public List<string> enabledDoorNames = new List<string>(); // e.g., {"Exit A", "Exit C"}
     
     [Range(1, 50)]
     public int totalObstaclesToSpawn = 8;
@@ -30,6 +41,10 @@ public class EvacuationLevelManager : MonoBehaviour
     [Header("Path Setup")]
     [Tooltip("Define all your paths (1-7) here")]
     public List<PathPlane> allPaths = new List<PathPlane>();
+    
+    [Header("Evacuation Doors")]
+    [Tooltip("Define all evacuation doors in your scene")]
+    public List<EvacuationDoor> allEvacuationDoors = new List<EvacuationDoor>();
     
     [Header("Spawn Point Configurations")]
     [Tooltip("Define which paths each spawn point uses")]
@@ -60,12 +75,14 @@ public class EvacuationLevelManager : MonoBehaviour
     private List<GameObject> spawnedObjects = new List<GameObject>();
     private Dictionary<int, PathPlane> pathLookup = new Dictionary<int, PathPlane>();
     private Dictionary<string, SpawnPointConfig> departmentLookup = new Dictionary<string, SpawnPointConfig>();
+    private Dictionary<string, EvacuationDoor> doorLookup = new Dictionary<string, EvacuationDoor>();
     private SpawnPointConfig currentConfig;
     
     void Start()
     {
         CalculatePathBounds();
         BuildDepartmentLookup();
+        BuildDoorLookup();
         GenerateLevel();
     }
     
@@ -112,6 +129,55 @@ public class EvacuationLevelManager : MonoBehaviour
         }
     }
     
+    void BuildDoorLookup()
+    {
+        doorLookup.Clear();
+        foreach (EvacuationDoor door in allEvacuationDoors)
+        {
+            if (!string.IsNullOrEmpty(door.doorName))
+            {
+                doorLookup[door.doorName] = door;
+            }
+        }
+    }
+    
+    void ConfigureEvacuationDoors(SpawnPointConfig config)
+    {
+        // First, disable all door colliders (meshes stay visible)
+        foreach (EvacuationDoor door in allEvacuationDoors)
+        {
+            if (door.doorCollider != null)
+            {
+                door.doorCollider.enabled = false;
+            }
+        }
+        
+        // Then enable only the colliders specified for this department
+        int doorsEnabled = 0;
+        foreach (string doorName in config.enabledDoorNames)
+        {
+            if (doorLookup.ContainsKey(doorName))
+            {
+                EvacuationDoor door = doorLookup[doorName];
+                if (door.doorCollider != null)
+                {
+                    door.doorCollider.enabled = true;
+                    doorsEnabled++;
+                }
+                else
+                {
+                    Debug.LogWarning($"Door '{doorName}' has no collider assigned!");
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"Door '{doorName}' not found in evacuation doors list!");
+            }
+        }
+        
+        Debug.Log($"Enabled {doorsEnabled} evacuation door colliders for {config.departmentName}");
+    }
+    
     void PositionPlayer(SpawnPointConfig config)
     {
         if (playerObject == null)
@@ -144,6 +210,7 @@ public class EvacuationLevelManager : MonoBehaviour
         ClearLevel();
         BuildPathLookup();
         BuildDepartmentLookup();
+        BuildDoorLookup();
         
         if (randomSeed == -1)
             rng = new System.Random();
@@ -172,6 +239,9 @@ public class EvacuationLevelManager : MonoBehaviour
         currentConfig = selectedConfig;
         Debug.Log($"Selected spawn point: {selectedConfig.departmentName}");
         Debug.Log($"Using paths: {string.Join(", ", selectedConfig.assignedPathNumbers)}");
+        
+        // Configure evacuation doors for this department
+        ConfigureEvacuationDoors(selectedConfig);
         
         // Position player at selected spawn point
         if (playerObject != null)
@@ -368,6 +438,18 @@ public class EvacuationLevelManager : MonoBehaviour
             if (obj != null)
             {
                 Gizmos.DrawWireSphere(obj.transform.position, minObstacleSpacing / 2);
+            }
+        }
+        
+        // Show evacuation door positions
+        Gizmos.color = Color.green;
+        foreach (EvacuationDoor door in allEvacuationDoors)
+        {
+            if (door.doorCollider != null)
+            {
+                Bounds doorBounds = door.doorCollider.bounds;
+                Gizmos.color = door.doorCollider.enabled ? Color.green : Color.gray;
+                Gizmos.DrawWireCube(doorBounds.center, doorBounds.size);
             }
         }
     }
