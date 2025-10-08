@@ -109,6 +109,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cba6e9bef99e2f64985f4c4af226430f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6927284498907120138}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cba6e9bef99e2f64985f4c4af226430f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8007699773682748605}
   m_SourcePrefab: {fileID: 100100000, guid: cba6e9bef99e2f64985f4c4af226430f, type: 3}
 --- !u!1 &7028531067968006109 stripped
 GameObject:
@@ -223,10 +226,34 @@ MonoBehaviour:
       m_Calls: []
   m_HoverEntered:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8007699773682748605}
+        m_TargetAssemblyTypeName: TooltipTrigger, Assembly-CSharp
+        m_MethodName: CreateTooltip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_HoverExited:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8007699773682748605}
+        m_TargetAssemblyTypeName: TooltipTrigger, Assembly-CSharp
+        m_MethodName: DestroyTooltip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FirstSelectEntered:
     m_PersistentCalls:
       m_Calls: []
@@ -343,6 +370,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b0caf9b7cb53fb46bf0a49f10148d39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8007699773682748605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7028531067968006109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bcb408f6a71a8b43aa0a367deb1740c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controllerButtonImage: {fileID: 21300000, guid: c9af42a5c7f74b24489fa5f633bf03f4, type: 3}
+  tooltipDescription: Grab!
+  actionCooldown: 0.15
+  hideWhenGrabbed: 1
 --- !u!4 &7692582921172417895 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cba6e9bef99e2f64985f4c4af226430f, type: 3}

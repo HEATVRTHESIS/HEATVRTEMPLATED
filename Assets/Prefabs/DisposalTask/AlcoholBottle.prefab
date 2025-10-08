@@ -528,5 +528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bcb408f6a71a8b43aa0a367deb1740c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controllerButtonImage: {fileID: 21300000, guid: f94b8afccc9be994e98f16208f0a3d82, type: 3}
+  controllerButtonImage: {fileID: 21300000, guid: c9af42a5c7f74b24489fa5f633bf03f4, type: 3}
   tooltipDescription: Grab!
+  actionCooldown: 0.15
+  hideWhenGrabbed: 1
