@@ -49,7 +49,10 @@ public class NPCCutsceneController : MonoBehaviour
     private CharacterController characterController;
     private bool characterControllerWasEnabled;
     private Quaternion checklistOriginalRotation;
-    
+
+    private bool isHovering = false;
+    private Coroutine hoverCoroutine;
+
     void Awake()
     {
         // Initially hide the hover indicator
@@ -203,26 +206,54 @@ public class NPCCutsceneController : MonoBehaviour
         float duration = Mathf.Max(2f, line.Length * 0.05f);
         return duration;
     }
-    
+
     // PUBLIC METHOD: Call this from XR Grab Interactable's Hover Entered event
     public void OnChecklistHovered()
     {
         if (!waitingForChecklistPickup) return;
-        
-        if (hoverIndicator != null)
+
+        // Cancel any pending hover exit
+        if (hoverCoroutine != null)
+        {
+            StopCoroutine(hoverCoroutine);
+            hoverCoroutine = null;
+        }
+
+        if (hoverIndicator != null && !isHovering)
         {
             hoverIndicator.SetActive(true);
+            isHovering = true;
         }
     }
-    
+
+
+
     // PUBLIC METHOD: Call this from XR Grab Interactable's Hover Exited event
     public void OnChecklistHoverExit()
     {
-        if (hoverIndicator != null)
+        // Delay the exit to prevent flickering from rapid hover enter/exit
+        if (hoverCoroutine != null)
+        {
+            StopCoroutine(hoverCoroutine);
+        }
+        hoverCoroutine = StartCoroutine(DelayedHoverExit());
+    }
+
+    private IEnumerator DelayedHoverExit()
+    {
+        // Wait one frame to see if we immediately re-enter
+        yield return new WaitForEndOfFrame();
+
+        if (hoverIndicator != null && isHovering)
         {
             hoverIndicator.SetActive(false);
+            isHovering = false;
         }
+        hoverCoroutine = null;
     }
+
+
+
     
     private void PickupChecklist()
     {
