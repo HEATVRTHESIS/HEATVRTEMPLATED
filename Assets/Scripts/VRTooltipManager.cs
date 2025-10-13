@@ -4,6 +4,10 @@ using TMPro;
 
 public class VRTooltipManager : MonoBehaviour
 {
+    [Header("System Control")]
+    [Tooltip("When disabled, no tooltips will be created or shown")]
+    public bool tooltipsEnabled = true;
+    
     [Header("Tooltip Prefab")]
     public GameObject tooltipPrefab;
     
@@ -67,6 +71,13 @@ public class VRTooltipManager : MonoBehaviour
     
     private void Update()
     {
+        // Destroy tooltip if system is disabled
+        if (!tooltipsEnabled && activeTooltip != null)
+        {
+            DestroyTooltip();
+            return;
+        }
+        
         if (activeTooltip != null && targetObject != null && cameraTransform != null)
         {
             UpdateTooltipPosition();
@@ -75,6 +86,12 @@ public class VRTooltipManager : MonoBehaviour
     
     public void CreateTooltip(Transform target, Sprite controlImage, string description)
     {
+        // Don't create tooltips if system is disabled
+        if (!tooltipsEnabled)
+        {
+            return;
+        }
+        
         // Prevent rapid creation/destruction
         if (Time.time - lastCreationTime < creationCooldown)
         {
@@ -209,6 +226,20 @@ public class VRTooltipManager : MonoBehaviour
             targetObject = null;
             tooltipImage = null;
             tooltipText = null;
+        }
+    }
+    
+    /// <summary>
+    /// Enable or disable the tooltip system at runtime
+    /// </summary>
+    public void SetTooltipsEnabled(bool enabled)
+    {
+        tooltipsEnabled = enabled;
+        
+        // Immediately destroy active tooltip if disabling
+        if (!enabled && activeTooltip != null)
+        {
+            DestroyTooltip();
         }
     }
     
