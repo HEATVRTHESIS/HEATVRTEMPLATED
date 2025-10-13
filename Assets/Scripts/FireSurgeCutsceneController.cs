@@ -46,8 +46,10 @@ public class FireSurgeCutsceneController : MonoBehaviour
     [Header("Spark Effects")]
     [Tooltip("Particle systems for sparks from electronic devices")]
     public List<ParticleSystem> sparkParticleSystems = new List<ParticleSystem>();
-    [Tooltip("Duration to play spark particles")]
-    public float sparkDuration = 2f;
+    [Tooltip("How long each individual spark burst lasts")]
+    public float sparkBurstDuration = 0.5f;
+    [Tooltip("Time between spark bursts")]
+    public float sparkInterval = 1f;
     
     [Header("Dialogue System")]
     [TextArea(3, 10)]
@@ -73,6 +75,7 @@ public class FireSurgeCutsceneController : MonoBehaviour
     public float delayBeforeDialogue = 0.5f;
     
     private bool cutsceneActive = false;
+    private bool sparksRunning = false;
     private Transform playerCamera;
     private CharacterController characterController;
     private bool characterControllerWasEnabled;
@@ -212,39 +215,50 @@ public class FireSurgeCutsceneController : MonoBehaviour
     
     private IEnumerator PlaySparkParticles()
     {
-        // Ensure all particle systems are configured and play them
-        foreach (ParticleSystem ps in sparkParticleSystems)
+        int burstCount = 0;
+        sparksRunning = true;
+        
+        Debug.Log($"Starting continuous spark loop with {sparkInterval}s intervals");
+        
+        // Keep sparking forever until manually stopped
+        while (sparksRunning)
         {
-            if (ps != null)
+            burstCount++;
+            
+            // Play spark burst
+            foreach (ParticleSystem ps in sparkParticleSystems)
             {
-                // Double-check unscaled time is set (safety check)
-                var main = ps.main;
-                main.useUnscaledTime = true;
-                
-                // Clear any existing particles and play fresh
-                ps.Clear();
-                ps.Play();
-                
-                Debug.Log($"Playing spark particles on: {ps.gameObject.name}");
+                if (ps != null)
+                {
+                    // Double-check unscaled time is set (safety check)
+                    var main = ps.main;
+                    main.useUnscaledTime = true;
+                    
+                    // Clear any existing particles and play fresh
+                    ps.Clear();
+                    ps.Play();
+                    
+                    Debug.Log($"Spark burst #{burstCount} on: {ps.gameObject.name}");
+                }
             }
+            
+            // Wait for burst to finish
+            yield return new WaitForSecondsRealtime(sparkBurstDuration);
+            
+            // Stop emitting (let existing particles fade out)
+            foreach (ParticleSystem ps in sparkParticleSystems)
+            {
+                if (ps != null)
+                {
+                    ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+                }
+            }
+            
+            // Wait for interval before next burst
+            yield return new WaitForSecondsRealtime(sparkInterval);
         }
         
-        Debug.Log($"Playing {sparkParticleSystems.Count} spark particle systems!");
-        
-        // Let particles play for the specified duration
-        yield return new WaitForSecondsRealtime(sparkDuration);
-        
-        // Stop all spark particle systems
-        foreach (ParticleSystem ps in sparkParticleSystems)
-        {
-            if (ps != null)
-            {
-                ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-                Debug.Log($"Stopped spark particles on: {ps.gameObject.name}");
-            }
-        }
-        
-        Debug.Log("Spark particles stopped!");
+        Debug.Log($"Spark loop stopped! Total bursts: {burstCount}");
     }
     
     private IEnumerator PlayDialogue()

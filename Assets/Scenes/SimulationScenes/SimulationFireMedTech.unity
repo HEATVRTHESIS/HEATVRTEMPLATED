@@ -1168,7 +1168,8 @@ MonoBehaviour:
   lightsOnAfterFlicker: 1
   sparkParticleSystems:
   - {fileID: 308272186}
-  sparkDuration: 2
+  sparkBurstDuration: 0.9
+  sparkInterval: 2
   dialogueLines:
   - Oh no! A lightning strike has caused a power surge!
   - The sparks has ignited some of the flammable objects in our department!
@@ -6808,6 +6809,14 @@ PrefabInstance:
     - target: {fileID: 1033401586810029659, guid: 8bb3483af1088804aa0972edb8ee4ebc, type: 3}
       propertyPath: m_Name
       value: Sparks
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492234704656947174, guid: 8bb3483af1088804aa0972edb8ee4ebc, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4492234704656947174, guid: 8bb3483af1088804aa0972edb8ee4ebc, type: 3}
+      propertyPath: lengthInSec
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4492234704656947174, guid: 8bb3483af1088804aa0972edb8ee4ebc, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
