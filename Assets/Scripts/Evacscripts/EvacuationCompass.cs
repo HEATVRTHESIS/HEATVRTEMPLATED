@@ -234,7 +234,7 @@ public class EvacuationCompass : MonoBehaviour
                                               Time.deltaTime * rotationSmoothSpeed);
         
         // Apply rotation to compass image (negative because UI rotates clockwise)
-        compassImage.rectTransform.localRotation = Quaternion.Euler(0, 0, -currentCompassAngle);
+        compassImage.rectTransform.localRotation = Quaternion.Euler(0, 0, currentCompassAngle + 180);
     }
     
     void UpdateUIText()
