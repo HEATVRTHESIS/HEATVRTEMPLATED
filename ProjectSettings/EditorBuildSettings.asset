@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/TrainingScenes/FireMedTech.unity
     guid: 728c8933d7dcad947bfaf41234a6d21e
   - enabled: 1
-    path: Assets/Scenes/EvacPoint.unity
+    path: Assets/Scenes/TrainingScenes/EvacPoint.unity
     guid: 994ebf4d7e04f5744aa7caa8f42af270
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260, type: 2}

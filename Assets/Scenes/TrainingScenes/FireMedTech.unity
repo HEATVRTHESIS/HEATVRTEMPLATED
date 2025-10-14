@@ -445,15 +445,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0033044
+      value: -0.632
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.69629
+      value: 0.698
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.00037956
+      value: -0.503
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
       propertyPath: m_LocalRotation.w
@@ -494,6 +494,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2337,7 +2341,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900590538}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a63b4ac30f8e1b746b3a66a1e6fea394, type: 3}
   m_Name: 
@@ -6151,9 +6155,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3467165051091059484}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadNewLevel
+      - m_Target: {fileID: 5802271233254399769}
+        m_TargetAssemblyTypeName: DepartmentSceneLoader, Assembly-CSharp
+        m_MethodName: LoadLevelWithDepartment
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15150,19 +15154,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &3467165051091059484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5802271233254399768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92354beeabc56244bd80c9197d1bc8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneToLoad: FireMedTech
 --- !u!114 &3477785424196415662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23180,7 +23171,7 @@ GameObject:
   - component: {fileID: 5037581256341006251}
   - component: {fileID: 2543333175912122558}
   - component: {fileID: 813913858664661965}
-  - component: {fileID: 3467165051091059484}
+  - component: {fileID: 5802271233254399769}
   m_Layer: 0
   m_Name: NextPhaseButt
   m_TagString: Untagged
@@ -23188,6 +23179,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5802271233254399769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5802271233254399768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b81bf848ccce7864998700f33795290d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: EvacPoint
+  departmentName: MedTech
 --- !u!4 &5815458925409045358
 Transform:
   m_ObjectHideFlags: 0
@@ -24032,6 +24037,7 @@ GameObject:
   - component: {fileID: 5989477650878959347}
   - component: {fileID: 8264163571253166507}
   - component: {fileID: 8322273851797767636}
+  - component: {fileID: 8322273851797767637}
   m_Layer: 0
   m_Name: RedoPhaseButt
   m_TagString: Untagged
@@ -31333,7 +31339,32 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8264163571253166507}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8322273851797767637}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: LoadNewLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8322273851797767637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6118138973982731443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b92354beeabc56244bd80c9197d1bc8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: FireMedTech
 --- !u!23 &8334736382260003888
 MeshRenderer:
   m_ObjectHideFlags: 0

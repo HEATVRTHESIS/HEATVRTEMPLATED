@@ -207,6 +207,17 @@ public class EvacuationLevelManager : MonoBehaviour
     
     public void GenerateLevel()
     {
+        // Check if a department was passed from the previous scene
+        if (!string.IsNullOrEmpty(DepartmentData.selectedDepartment))
+        {
+            selectedDepartment = DepartmentData.selectedDepartment;
+            Debug.Log($"Received department from previous scene: {selectedDepartment}");
+
+            // Clear the static data after using it
+            DepartmentData.selectedDepartment = "";
+        }
+    
+    
         ClearLevel();
         BuildPathLookup();
         BuildDepartmentLookup();
