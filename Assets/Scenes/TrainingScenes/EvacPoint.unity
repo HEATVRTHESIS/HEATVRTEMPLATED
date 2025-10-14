@@ -4703,7 +4703,7 @@ GameObject:
   - component: {fileID: 622474865}
   - component: {fileID: 622474864}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Roof
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27619,8 +27619,8 @@ MonoBehaviour:
   compassImage: {fileID: 2070128204}
   compassCanvas: {fileID: 749659423}
   followCamera: 1
-  distanceFromCamera: 1
-  canvasOffset: {x: 0.4, y: -0.3, z: 0}
+  distanceFromCamera: 1.5
+  canvasOffset: {x: 0.3, y: -0.2, z: 0}
   lockCanvasUpright: 1
   updateInterval: 0.1
   rotationSmoothSpeed: 10
