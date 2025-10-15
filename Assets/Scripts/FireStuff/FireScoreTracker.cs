@@ -320,6 +320,12 @@ public class FireScoreTracker : MonoBehaviour
                 fireTimer.PauseTimer();
             }
             
+            // Automatically save fire level data when level is complete
+            if (ScoreDataManager.Instance != null)
+            {
+                ScoreDataManager.Instance.SaveFireLevelData();
+            }
+            
             Debug.Log($"Fire Training Complete! Final Score: {currentScore}, " +
                      $"Tasks: {completedTasks}/{totalTasks}, Errors: {errorCount + safetyViolations}");
         }

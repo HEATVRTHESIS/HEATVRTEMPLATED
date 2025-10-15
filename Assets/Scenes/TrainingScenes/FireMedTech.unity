@@ -1570,6 +1570,17 @@ MonoBehaviour:
   tooltipDescription: Pull!
   actionCooldown: 0.15
   hideWhenGrabbed: 0
+--- !u!114 &1197433113 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8544066915533953005, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
+  m_PrefabInstance: {fileID: 2663898887365342231}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1205240430 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9389968479ab6664db87426f12d21d85, type: 3}
@@ -1740,7 +1751,7 @@ PrefabInstance:
     - target: {fileID: 2008971635339555393, guid: 0987d4c71ec75b442b5f09e9d519df63, type: 3}
       propertyPath: textElement
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1197433113}
     - target: {fileID: 4248496847388952874, guid: 0987d4c71ec75b442b5f09e9d519df63, type: 3}
       propertyPath: m_Name
       value: PopupManager
@@ -2341,7 +2352,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900590538}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a63b4ac30f8e1b746b3a66a1e6fea394, type: 3}
   m_Name: 

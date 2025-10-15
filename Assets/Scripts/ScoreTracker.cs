@@ -173,6 +173,12 @@ public class ScoreTracker : MonoBehaviour
             // Show the summary canvas
             summaryCanvas.SetActive(true);
             
+            // Automatically save score data when level is complete
+            if (ScoreDataManager.Instance != null)
+            {
+                ScoreDataManager.Instance.SaveCurrentLevelData();
+            }
+            
             Debug.Log($"Level Complete! Tasks: {completedTasks}/{totalTasks}, Mistakes: {mistakeCount}, Final Score: {currentScore}/{perfectScore}");
         }
     }

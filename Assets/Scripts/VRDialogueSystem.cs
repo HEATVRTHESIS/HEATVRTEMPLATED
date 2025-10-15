@@ -67,6 +67,7 @@ public class VRDialogueSystem : MonoBehaviour
     private bool _isDisplaying = false;
     private bool _isTyping = false;
     private bool _isSpeaking = false;
+    private bool _speechStartedForCurrentLine = false; // NEW: Track if speech already started for this line
     private string _currentLine;
     private Coroutine _typingCoroutine;
     private Coroutine _mouthAnimationCoroutine;
@@ -310,6 +311,9 @@ public class VRDialogueSystem : MonoBehaviour
             Speaker.Instance.Silence();
         }
 
+        // Reset speech flag for new line
+        _speechStartedForCurrentLine = false;
+
         // Check if there are lines left to display
         if (_dialogLines.Count > 0)
         {
@@ -349,6 +353,9 @@ public class VRDialogueSystem : MonoBehaviour
     {
         if (!enableTTS || Speaker.Instance == null || string.IsNullOrEmpty(text.Trim()))
             return;
+
+        // Mark that speech has started for this line
+        _speechStartedForCurrentLine = true;
 
         // Generate unique ID for this speech
         _currentSpeechId = System.Guid.NewGuid().ToString();
@@ -440,8 +447,8 @@ public class VRDialogueSystem : MonoBehaviour
             StopMouthAnimation();
         }
 
-        // Start speech if enabled and not already playing
-        if (enableTTS && !_isSpeaking)
+        // FIXED: Only start speech if it hasn't been started yet for this line
+        if (enableTTS && !_speechStartedForCurrentLine && !_isSpeaking)
         {
             StartSpeech(_currentLine);
         }
