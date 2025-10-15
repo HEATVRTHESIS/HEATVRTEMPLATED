@@ -18,17 +18,11 @@ public class EvacuationCompass : MonoBehaviour
     public Canvas compassCanvas;
     
     [Header("Canvas Positioning (World Space)")]
-    [Tooltip("Keep canvas at fixed distance in front of camera")]
-    public bool followCamera = true;
-    
     [Tooltip("Distance from camera")]
     public float distanceFromCamera = 1.5f;
     
     [Tooltip("Offset from center (right/left, up/down, forward/back)")]
     public Vector3 canvasOffset = new Vector3(0.3f, -0.2f, 0);
-    
-    [Tooltip("Keep canvas upright (locked to world Y-axis)")]
-    public bool lockCanvasUpright = true;
     
     [Header("Compass Settings")]
     [Tooltip("Update frequency in seconds")]
@@ -99,11 +93,6 @@ public class EvacuationCompass : MonoBehaviour
         
         // Initial update
         FindClosestEnabledDoor();
-        
-        if (compassCanvas != null && xrCamera != null)
-        {
-            PositionCanvas();
-        }
     }
     
     void Update()
@@ -119,12 +108,6 @@ public class EvacuationCompass : MonoBehaviour
             updateTimer = 0f;
         }
         
-        // Position canvas to follow camera if enabled
-        if (followCamera && compassCanvas != null)
-        {
-            PositionCanvas();
-        }
-        
         // Update compass direction every frame for smooth rotation
         if (closestDoorTransform != null && compassImage != null)
         {
@@ -133,37 +116,6 @@ public class EvacuationCompass : MonoBehaviour
         
         // Update UI text if available
         UpdateUIText();
-    }
-    
-    void PositionCanvas()
-    {
-        // Position canvas in front of camera with offset
-        Vector3 targetPosition = xrCamera.position + 
-                                (xrCamera.forward * distanceFromCamera) +
-                                (xrCamera.right * canvasOffset.x) +
-                                (xrCamera.up * canvasOffset.y) +
-                                (xrCamera.forward * canvasOffset.z);
-        
-        compassCanvas.transform.position = targetPosition;
-        
-        // Rotate canvas to face camera
-        if (lockCanvasUpright)
-        {
-            // Face camera but stay upright (only rotate on Y axis)
-            Vector3 directionToCamera = xrCamera.position - compassCanvas.transform.position;
-            directionToCamera.y = 0; // Keep level
-            
-            if (directionToCamera != Vector3.zero)
-            {
-                compassCanvas.transform.rotation = Quaternion.LookRotation(-directionToCamera);
-            }
-        }
-        else
-        {
-            // Face camera completely
-            compassCanvas.transform.LookAt(xrCamera);
-            compassCanvas.transform.Rotate(0, 180, 0); // Flip to face camera
-        }
     }
     
     void FindClosestEnabledDoor()
@@ -178,8 +130,8 @@ public class EvacuationCompass : MonoBehaviour
         // Check all evacuation doors
         foreach (EvacuationDoor door in levelManager.allEvacuationDoors)
         {
-            // Only consider enabled doors
-            if (door.doorCollider != null && door.doorCollider.enabled)
+            // Only consider enabled TRIGGER colliders (not collision colliders)
+            if (door.doorCollider != null && door.doorCollider.enabled && door.doorCollider.isTrigger)
             {
                 float distance = Vector3.Distance(
                     xrCamera.position, 
@@ -233,8 +185,12 @@ public class EvacuationCompass : MonoBehaviour
         currentCompassAngle = Mathf.LerpAngle(currentCompassAngle, targetCompassAngle, 
                                               Time.deltaTime * rotationSmoothSpeed);
         
-        // Apply rotation to compass image (negative because UI rotates clockwise)
-        compassImage.rectTransform.localRotation = Quaternion.Euler(0, 0, currentCompassAngle + 180);
+        // Apply rotation to compass image
+        // Negative angle because UI coordinates rotate clockwise
+        // Remove the +180 offset - adjust this based on your compass image orientation
+        // If your compass pin points UP in the image, use: -currentCompassAngle
+        // If your compass pin points DOWN in the image, use: -currentCompassAngle + 180
+        compassImage.rectTransform.localRotation = Quaternion.Euler(0, 0, -currentCompassAngle);
     }
     
     void UpdateUIText()
