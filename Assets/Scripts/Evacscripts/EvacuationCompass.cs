@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class EvacuationCompass : MonoBehaviour
 {
@@ -32,11 +33,11 @@ public class EvacuationCompass : MonoBehaviour
     public float rotationSmoothSpeed = 10f;
     
     [Header("Optional: Distance Display")]
-    [Tooltip("Text component to show distance (optional)")]
-    public Text distanceText;
+    [Tooltip("TextMeshPro component to show distance (optional)")]
+    public TextMeshProUGUI distanceText;
     
-    [Tooltip("Text component to show door name (optional)")]
-    public Text doorNameText;
+    [Tooltip("TextMeshPro component to show door name (optional)")]
+    public TextMeshProUGUI doorNameText;
     
     [Header("Debug")]
     public bool showDebugInfo = false;
