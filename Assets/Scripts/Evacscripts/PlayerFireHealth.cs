@@ -15,6 +15,9 @@ public class PlayerFireHealth : MonoBehaviour
     [Tooltip("The filled heart image on the watch")]
     public Image healthImage;
     
+    [Tooltip("Canvas to show when player dies")]
+    public GameObject failureCanvas;
+    
     [Header("Damage Settings")]
     [Tooltip("Cooldown between damage instances (prevents rapid damage)")]
     public float damageCooldown = 1f;
@@ -184,14 +187,20 @@ public class PlayerFireHealth : MonoBehaviour
 
     void OnPlayerDeath()
     {
-        Debug.Log("<color=red>PLAYER DIED FROM FIRE!</color>");
-        StartCoroutine(RespawnAfterDelay(2f));
-    }
-
-    IEnumerator RespawnAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        ResetHealth();
+        Debug.Log("<color=red>PLAYER DIED FROM FIRE! Opening failure canvas and stopping time.</color>");
+        
+        // Stop time
+        Time.timeScale = 0f;
+        
+        // Show the assigned failure canvas
+        if (failureCanvas != null)
+        {
+            failureCanvas.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("Failure canvas not assigned to PlayerFireHealth!");
+        }
     }
 
     public void ResetHealth()

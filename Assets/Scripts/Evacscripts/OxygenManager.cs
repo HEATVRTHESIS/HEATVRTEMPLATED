@@ -32,6 +32,9 @@ public class OxygenManager : MonoBehaviour
     [Tooltip("Optional: Image that changes color based on oxygen")]
     public Image oxygenBarFill;
     
+    [Tooltip("Canvas to show when oxygen depleted")]
+    public GameObject failureCanvas;
+    
     [Header("Color Gradient")]
     public Color highOxygenColor = Color.green;
     public Color mediumOxygenColor = Color.yellow;
@@ -219,14 +222,20 @@ public class OxygenManager : MonoBehaviour
     
     void HandleSuffocation()
     {
-        // Implement your suffocation logic here
-        // Examples:
-        // - Fade screen to black
-        // - Show game over screen
-        // - Reset level
-        // - Apply damage to player
+        Debug.Log("HANDLE SUFFOCATION - Opening failure canvas and stopping time");
         
-        Debug.Log("HANDLE SUFFOCATION - Implement your game over logic here!");
+        // Stop time
+        Time.timeScale = 0f;
+        
+        // Show the assigned failure canvas
+        if (failureCanvas != null)
+        {
+            failureCanvas.SetActive(true);
+        }
+        else
+        {
+            Debug.LogWarning("Failure canvas not assigned to OxygenManager!");
+        }
     }
     
     // Public methods for external access
