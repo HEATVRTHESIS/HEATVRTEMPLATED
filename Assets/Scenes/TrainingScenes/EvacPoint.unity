@@ -4516,7 +4516,7 @@ MonoBehaviour:
     spawnPoint: {fileID: 678416120}
     assignedPathNumbers: 010000000200000003000000040000000500000008000000
     roadblockPoints:
-    - {fileID: 361641926}
+    - {fileID: 1540683687}
     - {fileID: 1600092094}
     enabledDoorNames:
     - Exit3
