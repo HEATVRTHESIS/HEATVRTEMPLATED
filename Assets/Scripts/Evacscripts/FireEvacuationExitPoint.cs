@@ -48,34 +48,40 @@ public class FireEvacuationExitPoint : MonoBehaviour
         }
     }
     
-    void HandlePlayerExit()
+   void HandlePlayerExit()
+{
+    // Play exit effect if assigned
+    if (exitEffect != null)
     {
-        // Play exit effect if assigned
-        if (exitEffect != null)
-        {
-            exitEffect.Play();
-        }
+        exitEffect.Play();
+    }
+    
+    // Get score tracker FIRST before it's destroyed
+    var scoreTracker = FindObjectOfType<FireEvacuationScoreTracker>();
+    if (scoreTracker != null)
+    {
+        // Notify score tracker to calculate final scores
+        scoreTracker.RecordSuccessfulExit();
         
-        // Notify score tracker and save data
-        var scoreTracker = FindObjectOfType<FireEvacuationScoreTracker>();
-        if (scoreTracker != null)
-        {
-            scoreTracker.RecordSuccessfulExit();
-        }
-        
-        // Save to ScoreDataManager
+        // Save to ScoreDataManager IMMEDIATELY while tracker still exists
         if (ScoreDataManager.Instance != null)
         {
-            ScoreDataManager.Instance.SaveFireEvacuationData();
+            ScoreDataManager.Instance.SaveFireEvacuationData(scoreTracker);
+            Debug.Log("Evacuation data saved!");
         }
         else
         {
-            Debug.LogWarning("ScoreDataManager not found! Score will not persist.");
+            Debug.LogWarning("ScoreDataManager not found!");
         }
-        
-        // Start loading next scene
-        StartCoroutine(LoadNextSceneCoroutine());
     }
+    else
+    {
+        Debug.LogError("FireEvacuationScoreTracker not found!");
+    }
+    
+    // NOW load the next scene
+    StartCoroutine(LoadNextSceneCoroutine());
+}
     
     IEnumerator LoadNextSceneCoroutine()
     {

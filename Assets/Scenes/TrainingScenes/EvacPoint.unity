@@ -24065,6 +24065,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1469808904}
+  - component: {fileID: 1469808905}
   m_Layer: 0
   m_Name: ScoreTracker
   m_TagString: Untagged
@@ -24087,6 +24088,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1113032068}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1469808905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469808903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96c4ea1999c2e374d9ed51fbccfa1ec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wetClothBonus: 15
+  npcRescueBonus: 15
+  timeCompletionBonus: 15
+  fireDamagePenalty: -10
+  oxygenDepletionPenalty: -10
+  currentScore: 0
+  safetyViolations: 0
+  errorCount: 0
+  scoreText: {fileID: 0}
+  safetyViolationsText: {fileID: 0}
+  errorsText: {fileID: 0}
+  oxygenManager: {fileID: 987783544}
+  playerFireHealth: {fileID: 427059689}
+  evacuationTimer: {fileID: 1532437544}
 --- !u!65 &1476473653
 BoxCollider:
   m_ObjectHideFlags: 0

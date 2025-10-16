@@ -46,7 +46,7 @@ public class ScoreDataManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            Debug.Log("UpdatedScoreDataManager initialized and persisted");
+            Debug.Log("ScoreDataManager initialized and persisted");
         }
         else
         {
@@ -104,7 +104,10 @@ public class ScoreDataManager : MonoBehaviour
         };
 
         levelScores.Add(currentLevelData);
-        Debug.Log($"Standard level saved: {levelName}");
+        Debug.Log($"===== STANDARD LEVEL SAVED =====");
+        Debug.Log($"Level: {levelName}");
+        Debug.Log($"Score: {currentLevelData.finalScore}");
+        Debug.Log($"================================");
     }
 
     /// <summary>
@@ -132,53 +135,63 @@ public class ScoreDataManager : MonoBehaviour
         };
 
         levelScores.Add(currentLevelData);
-        Debug.Log($"Fire level saved: {levelName}");
+        Debug.Log($"===== FIRE LEVEL SAVED =====");
+        Debug.Log($"Level: {levelName}");
+        Debug.Log($"Score: {currentLevelData.finalScore}");
+        Debug.Log($"============================");
     }
 
     /// <summary>
-    /// Save data from FireEvacuationScoreTracker levels
-    /// </summary>
-    public void SaveFireEvacuationData()
+/// Save data from FireEvacuationScoreTracker levels
+/// </summary>
+public void SaveFireEvacuationData(FireEvacuationScoreTracker scoreTracker)
+{
+    Debug.Log("===== SaveFireEvacuationData() CALLED =====");
+    
+    if (scoreTracker == null)
     {
-        FireEvacuationScoreTracker scoreTracker = FireEvacuationScoreTracker.Instance;
-        if (scoreTracker == null)
-        {
-            Debug.LogWarning("FireEvacuationScoreTracker not found!");
-            return;
-        }
-
-        string levelName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        FireEvacuationTimer timer = FindObjectOfType<FireEvacuationTimer>();
-        
-        currentLevelData = new LevelScoreData
-        {
-            levelName = levelName,
-            levelType = "Fire Evacuation",
-            completedTasks = scoreTracker.CompletedOnTime() ? 1 : 0,
-            totalTasks = 1,
-            finalScore = scoreTracker.GetCurrentScore(),
-            errorCount = scoreTracker.GetErrorCount(),
-            safetyViolations = scoreTracker.GetSafetyViolations(),
-            completionPercentage = scoreTracker.CompletedOnTime() ? 100f : 0f,
-            timeRemaining = timer != null ? timer.GetTimeRemaining() : 0f,
-            usedWetCloth = scoreTracker.HasUsedWetCloth(),
-            rescuedNPC = scoreTracker.HasRescuedNPC(),
-            completedOnTime = scoreTracker.CompletedOnTime(),
-            evacuationTime = timer != null ? timer.GetElapsedTime() : 0f,
-            timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-        };
-
-        levelScores.Add(currentLevelData);
-        Debug.Log($"===== FIRE EVACUATION LEVEL SAVED =====");
-        Debug.Log($"Level: {levelName}");
-        Debug.Log($"Final Score: {currentLevelData.finalScore}");
-        Debug.Log($"Completed On Time: {currentLevelData.completedOnTime}");
-        Debug.Log($"Used Wet Cloth: {currentLevelData.usedWetCloth}");
-        Debug.Log($"Rescued NPC: {currentLevelData.rescuedNPC}");
-        Debug.Log($"Safety Violations: {currentLevelData.safetyViolations}");
-        Debug.Log($"Errors: {currentLevelData.errorCount}");
-        Debug.Log($"======================================");
+        Debug.LogWarning("FireEvacuationScoreTracker is NULL!");
+        return;
     }
+
+    // Get scene name immediately
+    string levelName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+    Debug.Log($"Saving evacuation data for scene: {levelName}");
+    
+    FireEvacuationTimer timer = FindObjectOfType<FireEvacuationTimer>();
+    
+    currentLevelData = new LevelScoreData
+    {
+        levelName = levelName,
+        levelType = "Fire Evacuation",
+        completedTasks = scoreTracker.CompletedOnTime() ? 1 : 0,
+        totalTasks = 1,
+        finalScore = scoreTracker.GetCurrentScore(),
+        errorCount = scoreTracker.GetErrorCount(),
+        safetyViolations = scoreTracker.GetSafetyViolations(),
+        completionPercentage = scoreTracker.CompletedOnTime() ? 100f : 0f,
+        timeRemaining = timer != null ? timer.GetTimeRemaining() : 0f,
+        usedWetCloth = scoreTracker.HasUsedWetCloth(),
+        rescuedNPC = scoreTracker.HasRescuedNPC(),
+        completedOnTime = scoreTracker.CompletedOnTime(),
+        evacuationTime = timer != null ? timer.GetElapsedTime() : 0f,
+        timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+    };
+
+    levelScores.Add(currentLevelData);
+    
+    Debug.Log($"===== FIRE EVACUATION LEVEL SAVED =====");
+    Debug.Log($"Level: {levelName}");
+    Debug.Log($"Final Score: {currentLevelData.finalScore}");
+    Debug.Log($"Completed On Time: {currentLevelData.completedOnTime}");
+    Debug.Log($"Used Wet Cloth: {currentLevelData.usedWetCloth}");
+    Debug.Log($"Rescued NPC: {currentLevelData.rescuedNPC}");
+    Debug.Log($"Safety Violations: {currentLevelData.safetyViolations}");
+    Debug.Log($"Errors: {currentLevelData.errorCount}");
+    Debug.Log($"Total levels saved: {levelScores.Count}");
+    Debug.Log($"======================================");
+}
+
 
     public LevelScoreData GetCurrentLevelData() => currentLevelData;
     public List<LevelScoreData> GetAllLevelData() => levelScores;
