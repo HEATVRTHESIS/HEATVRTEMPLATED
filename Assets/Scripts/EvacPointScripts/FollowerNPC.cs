@@ -361,4 +361,9 @@ public class FollowerNPC : MonoBehaviour
     {
         return isSpeaking;
     }
+
+    public bool IsFollowing()
+    {
+        return isFollowing;
+    }
 }

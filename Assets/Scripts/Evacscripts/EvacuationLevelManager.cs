@@ -54,6 +54,12 @@ public class EvacuationLevelManager : MonoBehaviour
     public List<GameObject> obstaclePrefabs = new List<GameObject>();
     public GameObject roadblockPrefab;
     
+    [Header("Per-Path Prefab")]
+    [Tooltip("This prefab will spawn 2 times per active path (e.g., water bottle)")]
+    public GameObject perPathPrefab;
+    [Tooltip("Number of this prefab to spawn per active path")]
+    public int perPathSpawnCount = 2;
+    
     [Header("Player Settings")]
     [Tooltip("Reference to the player GameObject already in the scene")]
     public GameObject playerObject;
@@ -263,6 +269,9 @@ public class EvacuationLevelManager : MonoBehaviour
         // Generate obstacles
         GenerateObstaclesForConfig(selectedConfig);
         
+        // Spawn per-path prefabs (water bottles)
+        SpawnPerPathPrefabs(selectedConfig);
+        
         // Place roadblocks
         PlaceRoadblocks(selectedConfig);
     }
@@ -318,6 +327,47 @@ public class EvacuationLevelManager : MonoBehaviour
         }
         
         Debug.Log($"Successfully placed {obstaclesPlaced}/{config.totalObstaclesToSpawn} obstacles");
+    }
+    
+    void SpawnPerPathPrefabs(SpawnPointConfig config)
+    {
+        if (perPathPrefab == null)
+        {
+            if (debugMode) Debug.LogWarning("No per-path prefab assigned!");
+            return;
+        }
+        
+        int totalSpawned = 0;
+        
+        // Get assigned paths
+        foreach (int pathNum in config.assignedPathNumbers)
+        {
+            if (pathLookup.ContainsKey(pathNum))
+            {
+                PathPlane path = pathLookup[pathNum];
+                
+                // Spawn the specified number of prefabs on this path
+                for (int i = 0; i < perPathSpawnCount; i++)
+                {
+                    Vector3? spawnPos = FindValidSpawnPosition(path);
+                    
+                    if (spawnPos.HasValue)
+                    {
+                        GameObject spawnedPrefab = Instantiate(perPathPrefab, spawnPos.Value, 
+                            Quaternion.Euler(0, (float)(rng.NextDouble() * 360), 0));
+                        spawnedPrefab.transform.parent = this.transform;
+                        spawnedObjects.Add(spawnedPrefab);
+                        totalSpawned++;
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Could not find valid position for per-path prefab on Path {pathNum}");
+                    }
+                }
+            }
+        }
+        
+        Debug.Log($"Successfully spawned {totalSpawned} per-path prefabs ({perPathSpawnCount} per path × {config.assignedPathNumbers.Count} paths)");
     }
     
     Vector3? FindValidSpawnPosition(PathPlane path)

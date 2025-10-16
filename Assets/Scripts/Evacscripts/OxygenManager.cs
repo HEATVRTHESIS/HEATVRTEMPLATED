@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using System.Collections.Generic;
 
 public class OxygenManager : MonoBehaviour
 {
@@ -56,6 +57,9 @@ public class OxygenManager : MonoBehaviour
     private bool hasWarned = false;
     private bool hasSuffocated = false;
     
+    // Track which cloths are providing protection
+    private HashSet<WetCloth> protectingCloths = new HashSet<WetCloth>();
+    
     void Start()
     {
         currentOxygen = maxOxygen;
@@ -64,6 +68,9 @@ public class OxygenManager : MonoBehaviour
     
     void Update()
     {
+        // Check if ANY cloth is providing protection
+        isProtected = protectingCloths.Count > 0;
+        
         // Decrease or regenerate oxygen based on protection
         if (isProtected)
         {
@@ -121,13 +128,33 @@ public class OxygenManager : MonoBehaviour
         UpdateUI();
     }
     
+    // NEW METHOD: Register/unregister individual cloths
+    public void RegisterClothProtection(WetCloth cloth, bool isProtecting)
+    {
+        if (isProtecting)
+        {
+            if (protectingCloths.Add(cloth))
+            {
+                Debug.Log(cloth.gameObject.name + " is now protecting! Total protecting cloths: " + protectingCloths.Count);
+            }
+        }
+        else
+        {
+            if (protectingCloths.Remove(cloth))
+            {
+                Debug.Log(cloth.gameObject.name + " stopped protecting. Total protecting cloths: " + protectingCloths.Count);
+            }
+        }
+    }
+    
+    // DEPRECATED: Keep for backwards compatibility but not recommended
     public void SetClothProtection(bool protectionActive)
     {
         isProtected = protectionActive;
         
         if (protectionActive)
         {
-            Debug.Log("Player is protected with wet cloth!");
+            Debug.Log("Player is protected with wet cloth! (Legacy method)");
         }
     }
     
@@ -223,6 +250,11 @@ public class OxygenManager : MonoBehaviour
         return currentOxygen <= suffocationThreshold;
     }
     
+    public int GetProtectingClothCount()
+    {
+        return protectingCloths.Count;
+    }
+    
     // Optional: Reset oxygen (for testing or respawn)
     [ContextMenu("Reset Oxygen")]
     public void ResetOxygen()
@@ -230,6 +262,7 @@ public class OxygenManager : MonoBehaviour
         currentOxygen = maxOxygen;
         hasWarned = false;
         hasSuffocated = false;
+        protectingCloths.Clear();
         UpdateUI();
     }
     

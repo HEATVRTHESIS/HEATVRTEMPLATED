@@ -2,8 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
-/// Persistent data manager that stores score data between scenes.
-/// Supports both ScoreTracker and FireScoreTracker.
+/// Enhanced persistent data manager that stores score data between scenes.
+/// Supports ScoreTracker, FireScoreTracker, and FireEvacuationScoreTracker.
 /// </summary>
 public class ScoreDataManager : MonoBehaviour
 {
@@ -13,7 +13,7 @@ public class ScoreDataManager : MonoBehaviour
     public class LevelScoreData
     {
         public string levelName;
-        public string levelType; // "Standard" or "Fire"
+        public string levelType; // "Standard", "Fire", or "Fire Evacuation"
         public int completedTasks;
         public int totalTasks;
         public int finalScore;
@@ -29,6 +29,12 @@ public class ScoreDataManager : MonoBehaviour
         public int errorCount;
         public int safetyViolations;
         public float timeRemaining;
+        
+        // Fire Evacuation specific
+        public bool usedWetCloth;
+        public bool rescuedNPC;
+        public bool completedOnTime;
+        public float evacuationTime;
     }
 
     private List<LevelScoreData> levelScores = new List<LevelScoreData>();
@@ -40,6 +46,7 @@ public class ScoreDataManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            Debug.Log("UpdatedScoreDataManager initialized and persisted");
         }
         else
         {
@@ -73,6 +80,9 @@ public class ScoreDataManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Save data from standard ScoreTracker levels
+    /// </summary>
     public void SaveCurrentLevelData()
     {
         if (ScoreTracker.Instance == null) return;
@@ -97,6 +107,9 @@ public class ScoreDataManager : MonoBehaviour
         Debug.Log($"Standard level saved: {levelName}");
     }
 
+    /// <summary>
+    /// Save data from FireScoreTracker levels
+    /// </summary>
     public void SaveFireLevelData()
     {
         if (FireScoreTracker.Instance == null) return;
@@ -122,6 +135,51 @@ public class ScoreDataManager : MonoBehaviour
         Debug.Log($"Fire level saved: {levelName}");
     }
 
+    /// <summary>
+    /// Save data from FireEvacuationScoreTracker levels
+    /// </summary>
+    public void SaveFireEvacuationData()
+    {
+        FireEvacuationScoreTracker scoreTracker = FireEvacuationScoreTracker.Instance;
+        if (scoreTracker == null)
+        {
+            Debug.LogWarning("FireEvacuationScoreTracker not found!");
+            return;
+        }
+
+        string levelName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        FireEvacuationTimer timer = FindObjectOfType<FireEvacuationTimer>();
+        
+        currentLevelData = new LevelScoreData
+        {
+            levelName = levelName,
+            levelType = "Fire Evacuation",
+            completedTasks = scoreTracker.CompletedOnTime() ? 1 : 0,
+            totalTasks = 1,
+            finalScore = scoreTracker.GetCurrentScore(),
+            errorCount = scoreTracker.GetErrorCount(),
+            safetyViolations = scoreTracker.GetSafetyViolations(),
+            completionPercentage = scoreTracker.CompletedOnTime() ? 100f : 0f,
+            timeRemaining = timer != null ? timer.GetTimeRemaining() : 0f,
+            usedWetCloth = scoreTracker.HasUsedWetCloth(),
+            rescuedNPC = scoreTracker.HasRescuedNPC(),
+            completedOnTime = scoreTracker.CompletedOnTime(),
+            evacuationTime = timer != null ? timer.GetElapsedTime() : 0f,
+            timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+        };
+
+        levelScores.Add(currentLevelData);
+        Debug.Log($"===== FIRE EVACUATION LEVEL SAVED =====");
+        Debug.Log($"Level: {levelName}");
+        Debug.Log($"Final Score: {currentLevelData.finalScore}");
+        Debug.Log($"Completed On Time: {currentLevelData.completedOnTime}");
+        Debug.Log($"Used Wet Cloth: {currentLevelData.usedWetCloth}");
+        Debug.Log($"Rescued NPC: {currentLevelData.rescuedNPC}");
+        Debug.Log($"Safety Violations: {currentLevelData.safetyViolations}");
+        Debug.Log($"Errors: {currentLevelData.errorCount}");
+        Debug.Log($"======================================");
+    }
+
     public LevelScoreData GetCurrentLevelData() => currentLevelData;
     public List<LevelScoreData> GetAllLevelData() => levelScores;
     public int GetCompletedLevelCount() => levelScores.Count;
@@ -130,5 +188,34 @@ public class ScoreDataManager : MonoBehaviour
     {
         levelScores.Clear();
         currentLevelData = null;
+        Debug.Log("All score data cleared");
+    }
+    
+    /// <summary>
+    /// Get total score across all completed levels
+    /// </summary>
+    public int GetTotalScore()
+    {
+        int total = 0;
+        foreach (var data in levelScores)
+        {
+            total += data.finalScore;
+        }
+        return total;
+    }
+    
+    /// <summary>
+    /// Get overall completion percentage across all levels
+    /// </summary>
+    public float GetOverallCompletionPercentage()
+    {
+        if (levelScores.Count == 0) return 0f;
+        
+        float totalPercentage = 0f;
+        foreach (var data in levelScores)
+        {
+            totalPercentage += data.completionPercentage;
+        }
+        return totalPercentage / levelScores.Count;
     }
 }

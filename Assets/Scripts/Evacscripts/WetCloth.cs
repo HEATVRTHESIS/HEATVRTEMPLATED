@@ -84,17 +84,11 @@ public class WetCloth : MonoBehaviour
             }
         }
         
-        // Notify oxygen manager of cloth state
+        // Notify oxygen manager of THIS cloth's state
         if (oxygenManager != null)
         {
-            if (isNearFace && isWet)
-            {
-                oxygenManager.SetClothProtection(true);
-            }
-            else
-            {
-                oxygenManager.SetClothProtection(false);
-            }
+            bool shouldProtect = isNearFace && isWet;
+            oxygenManager.RegisterClothProtection(this, shouldProtect);
         }
     }
     
@@ -109,17 +103,15 @@ public class WetCloth : MonoBehaviour
         isNearFace = distance <= faceProximityDistance;
     }
     
-    // This is called by Unity's Particle System when a particle collides
+    // This is called by Unity's Particle System when a particle collides with THIS object
     void OnParticleCollision(GameObject other)
-{
-    // Check if this is the cloth (by tag instead of layer)
-    if (gameObject.tag == "WetCloth")
     {
+        // No tag check needed - this method only fires when particles hit THIS specific object
         ParticleSystem ps = other.GetComponent<ParticleSystem>();
         if (ps != null)
         {
             currentParticleHits++;
-            Debug.Log("Cloth hit by water particle! Total hits: " + currentParticleHits + "/" + hitsNeededToWet);
+            Debug.Log(gameObject.name + " hit by water particle! Total hits: " + currentParticleHits + "/" + hitsNeededToWet);
             
             if (currentParticleHits >= hitsNeededToWet && !isWet)
             {
@@ -127,7 +119,6 @@ public class WetCloth : MonoBehaviour
             }
         }
     }
-}
     
     void MakeClothWet()
     {
@@ -135,7 +126,7 @@ public class WetCloth : MonoBehaviour
         wetTimer = wetDuration;
         currentParticleHits = 0;
         UpdateClothAppearance();
-        Debug.Log("Cloth is now WET!");
+        Debug.Log(gameObject.name + " is now WET!");
     }
     
     void MakeClothDry()
@@ -144,7 +135,7 @@ public class WetCloth : MonoBehaviour
         wetTimer = 0f;
         currentParticleHits = 0;
         UpdateClothAppearance();
-        Debug.Log("Cloth has dried out");
+        Debug.Log(gameObject.name + " has dried out");
     }
     
     void UpdateClothAppearance()
