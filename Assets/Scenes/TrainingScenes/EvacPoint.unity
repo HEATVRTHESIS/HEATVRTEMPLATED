@@ -13832,7 +13832,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5833195381c64744fa1ff602d35e5553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: MedTechDepartment
+  nextSceneName: ResultsScene
   loadDelay: 1.5
   activeMaterial: {fileID: 0}
   exitEffect: {fileID: 0}
@@ -14766,7 +14766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5833195381c64744fa1ff602d35e5553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: MedTechDepartment
+  nextSceneName: ResultsScene
   loadDelay: 1.5
   activeMaterial: {fileID: 0}
   exitEffect: {fileID: 0}
@@ -15161,7 +15161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5833195381c64744fa1ff602d35e5553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: MedTechDepartment
+  nextSceneName: ResultsScene
   loadDelay: 1.5
   activeMaterial: {fileID: 0}
   exitEffect: {fileID: 0}
@@ -23659,7 +23659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5833195381c64744fa1ff602d35e5553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: MedTechDepartment
+  nextSceneName: ResultsScene
   loadDelay: 1.5
   activeMaterial: {fileID: 0}
   exitEffect: {fileID: 0}
@@ -26703,7 +26703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5833195381c64744fa1ff602d35e5553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: MedTechDepartment
+  nextSceneName: ResultsScene
   loadDelay: 1.5
   activeMaterial: {fileID: 0}
   exitEffect: {fileID: 0}
