@@ -24498,8 +24498,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a691ef5d2210943b0e7a562d2dd549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  evacuationTimeLimit: 180
-  targetEvacuationTime: 180
+  evacuationTimeLimit: 120
+  targetEvacuationTime: 120
   timerText: {fileID: 703605617}
   failureCanvas: {fileID: 358108412}
   xrRig: {fileID: 6292095195506263863}
