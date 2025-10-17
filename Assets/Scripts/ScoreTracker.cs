@@ -2,10 +2,10 @@ using UnityEngine;
 using TMPro; // Required for TextMeshPro
 
 /// <summary>
-/// A centralized score tracking system that listens for task completion events
-/// and updates a score display with accuracy-based scoring.
+/// Enhanced centralized score tracking system for Phase 1: Risk Identification and Mitigation
 /// Focus: Task Accuracy & Safety Compliance
 /// +10 points for correct actions, -5 points for errors
+/// Now includes detailed categorization for BFP evaluation metrics
 /// </summary>
 public class ScoreTracker : MonoBehaviour
 {
@@ -20,10 +20,12 @@ public class ScoreTracker : MonoBehaviour
     public GameObject summaryCanvas; // Canvas to show when level is complete
     public TextMeshProUGUI summaryCompletedTasksText; // Shows completed tasks count
     public TextMeshProUGUI summaryMistakesText; // Shows mistakes count
+    public TextMeshProUGUI summaryAccuracyText; // Shows accuracy percentage
 
     [Header("Scoring Settings")]
     [SerializeField] private int pointsPerCompletion = 10;
     [SerializeField] private int pointsPerError = -5;
+    [SerializeField] private int safetyViolationPenalty = -10;
 
     // The score counters
     private int completedTasks = 0;
@@ -31,6 +33,15 @@ public class ScoreTracker : MonoBehaviour
     private int currentScore = 0;
     private int perfectScore = 0; // Will be calculated as totalTasks * pointsPerCompletion
     private int mistakeCount = 0; // Track number of mistakes made
+    private int safetyViolations = 0; // Track safety protocol violations
+    
+    // Enhanced tracking for BFP metrics
+    private int storageTasksCompleted = 0;
+    private int maintenanceTasksCompleted = 0;
+    private int disposalTasksCompleted = 0;
+    private int storageErrors = 0;
+    private int maintenanceErrors = 0;
+    private int disposalErrors = 0;
 
     void Awake()
     {
@@ -47,7 +58,6 @@ public class ScoreTracker : MonoBehaviour
     void Start()
     {
         // Find and register all tasks at the start of the game.
-        // This is done to get a total count and subscribe to completion events.
         FindAndRegisterAllTasks();
 
         // Calculate perfect score
@@ -61,6 +71,8 @@ public class ScoreTracker : MonoBehaviour
         {
             summaryCanvas.SetActive(false);
         }
+        
+        Debug.Log($"ScoreTracker initialized. Total tasks: {totalTasks}, Perfect score: {perfectScore}");
     }
 
     /// <summary>
@@ -117,6 +129,33 @@ public class ScoreTracker : MonoBehaviour
             ShowSummaryScreen();
         }
     }
+    
+    /// <summary>
+    /// Track storage task completion
+    /// </summary>
+    public void OnStorageTaskCompleted()
+    {
+        storageTasksCompleted++;
+        OnTaskCompleted();
+    }
+    
+    /// <summary>
+    /// Track maintenance task completion
+    /// </summary>
+    public void OnMaintenanceTaskCompleted()
+    {
+        maintenanceTasksCompleted++;
+        OnTaskCompleted();
+    }
+    
+    /// <summary>
+    /// Track disposal task completion
+    /// </summary>
+    public void OnDisposalTaskCompleted()
+    {
+        disposalTasksCompleted++;
+        OnTaskCompleted();
+    }
 
     /// <summary>
     /// Public method to be called by other scripts when an error occurs.
@@ -131,6 +170,46 @@ public class ScoreTracker : MonoBehaviour
         currentScore = Mathf.Max(0, currentScore);
         
         Debug.Log($"Task error! {pointsPerError} points. Mistakes: {mistakeCount}. Current score: {currentScore}");
+        UpdateScoreDisplay();
+    }
+    
+    /// <summary>
+    /// Track storage-specific errors
+    /// </summary>
+    public void OnStorageError()
+    {
+        storageErrors++;
+        OnTaskError();
+    }
+    
+    /// <summary>
+    /// Track maintenance-specific errors
+    /// </summary>
+    public void OnMaintenanceError()
+    {
+        maintenanceErrors++;
+        OnTaskError();
+    }
+    
+    /// <summary>
+    /// Track disposal-specific errors
+    /// </summary>
+    public void OnDisposalError()
+    {
+        disposalErrors++;
+        OnTaskError();
+    }
+    
+    /// <summary>
+    /// Called when a safety protocol is violated
+    /// </summary>
+    public void OnSafetyViolation(string violationType)
+    {
+        safetyViolations++;
+        currentScore += safetyViolationPenalty;
+        currentScore = Mathf.Max(0, currentScore);
+        
+        Debug.Log($"Safety violation: {violationType}. {safetyViolationPenalty} points. Total violations: {safetyViolations}");
         UpdateScoreDisplay();
     }
 
@@ -170,6 +249,12 @@ public class ScoreTracker : MonoBehaviour
                 summaryMistakesText.text = $"Mistakes: {mistakeCount}";
             }
             
+            if (summaryAccuracyText != null)
+            {
+                float accuracy = GetAccuracyPercentage();
+                summaryAccuracyText.text = $"Accuracy: {accuracy:F1}%";
+            }
+            
             // Show the summary canvas
             summaryCanvas.SetActive(true);
             
@@ -179,49 +264,41 @@ public class ScoreTracker : MonoBehaviour
                 ScoreDataManager.Instance.SaveCurrentLevelData();
             }
             
-            Debug.Log($"Level Complete! Tasks: {completedTasks}/{totalTasks}, Mistakes: {mistakeCount}, Final Score: {currentScore}/{perfectScore}");
+            Debug.Log($"===== PHASE 1 COMPLETE =====");
+            Debug.Log($"Tasks: {completedTasks}/{totalTasks}");
+            Debug.Log($"Mistakes: {mistakeCount}");
+            Debug.Log($"Safety Violations: {safetyViolations}");
+            Debug.Log($"Final Score: {currentScore}/{perfectScore}");
+            Debug.Log($"Accuracy: {GetAccuracyPercentage():F1}%");
+            Debug.Log($"============================");
         }
     }
 
-    /// <summary>
-    /// Get the current score value (useful for other systems)
-    /// </summary>
-    public int GetCurrentScore()
-    {
-        return currentScore;
-    }
-
-    /// <summary>
-    /// Get the perfect score possible
-    /// </summary>
-    public int GetPerfectScore()
-    {
-        return perfectScore;
-    }
-
-    /// <summary>
-    /// Get the completion percentage
-    /// </summary>
+    // PUBLIC GETTERS for evaluation system
+    public int GetCurrentScore() => currentScore;
+    public int GetPerfectScore() => perfectScore;
+    public int GetMistakeCount() => mistakeCount;
+    public int GetSafetyViolations() => safetyViolations;
+    public int GetCompletedTasks() => completedTasks;
+    public int GetTotalTasks() => totalTasks;
+    
     public float GetCompletionPercentage()
     {
         if (totalTasks == 0) return 0f;
         return (float)completedTasks / totalTasks * 100f;
     }
-
-    /// <summary>
-    /// Get the accuracy percentage (score vs perfect score)
-    /// </summary>
+    
     public float GetAccuracyPercentage()
     {
         if (perfectScore == 0) return 100f;
         return (float)currentScore / perfectScore * 100f;
     }
-
-    /// <summary>
-    /// Get the total number of mistakes made
-    /// </summary>
-    public int GetMistakeCount()
-    {
-        return mistakeCount;
-    }
+    
+    // Detailed task breakdown getters
+    public int GetStorageTasksCompleted() => storageTasksCompleted;
+    public int GetMaintenanceTasksCompleted() => maintenanceTasksCompleted;
+    public int GetDisposalTasksCompleted() => disposalTasksCompleted;
+    public int GetStorageErrors() => storageErrors;
+    public int GetMaintenanceErrors() => maintenanceErrors;
+    public int GetDisposalErrors() => disposalErrors;
 }
