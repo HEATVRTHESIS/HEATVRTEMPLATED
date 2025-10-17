@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6604313
 Transform:
   m_ObjectHideFlags: 0
@@ -280,7 +280,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &105545452
 Transform:
   m_ObjectHideFlags: 0
@@ -866,7 +866,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1113032067}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6158dc665843d6498f0bfa8a8617d64, type: 3}
   m_Name: 
@@ -928,6 +928,10 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_Name
       value: XR Device Simulator
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7047,7 +7051,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskCompletionDialogue.Array.data[1]
-      value: t remains valid until the same month of the following year.
+      value: it remains valid until the same month of the following year.
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskCompletionDialogue.Array.data[2]
@@ -13672,7 +13676,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7208653284421047159, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9072306121119292477, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
       propertyPath: m_HoverExited.m_PersistentCalls.m_Calls.Array.size

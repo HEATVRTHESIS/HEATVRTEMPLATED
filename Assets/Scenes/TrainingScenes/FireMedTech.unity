@@ -1527,7 +1527,7 @@ MonoBehaviour:
   taskName: Pull Fire Alarm
   taskDescription: Pull down the fire alarm lever to activate it
   taskCompletionDialogue: []
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 5373646681556592961}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
   OnProgressUpdated:
@@ -1627,7 +1627,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1321564733
 Transform:
   m_ObjectHideFlags: 0
@@ -1832,7 +1832,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1589487302
 Transform:
   m_ObjectHideFlags: 0
@@ -1917,6 +1917,10 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_Name
       value: XR Device Simulator
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2352,7 +2356,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900590538}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a63b4ac30f8e1b746b3a66a1e6fea394, type: 3}
   m_Name: 
