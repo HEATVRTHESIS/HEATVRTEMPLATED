@@ -43,6 +43,12 @@ public class NPCCutsceneController : MonoBehaviour
     public bool startCutsceneOnStart = true;
     public float cutsceneStartDelay = 0.5f;
     
+    [Header("VR Stability")]
+    [Tooltip("Time before hover can toggle again to prevent flickering")]
+    public float hoverCooldown = 0.15f;
+    [Tooltip("Delay before hiding hover indicator after exit")]
+    public float hoverExitDelay = 0.15f;
+    
     private bool cutsceneActive = false;
     private bool waitingForChecklistPickup = false;
     private Transform playerCamera;
@@ -52,6 +58,7 @@ public class NPCCutsceneController : MonoBehaviour
 
     private bool isHovering = false;
     private Coroutine hoverCoroutine;
+    private float lastHoverChangeTime = 0f; // Track last hover state change
 
     void Awake()
     {
@@ -212,6 +219,10 @@ public class NPCCutsceneController : MonoBehaviour
     {
         if (!waitingForChecklistPickup) return;
 
+        // Prevent rapid toggling with cooldown
+        if (Time.time - lastHoverChangeTime < hoverCooldown)
+            return;
+
         // Cancel any pending hover exit
         if (hoverCoroutine != null)
         {
@@ -223,10 +234,9 @@ public class NPCCutsceneController : MonoBehaviour
         {
             hoverIndicator.SetActive(true);
             isHovering = true;
+            lastHoverChangeTime = Time.time; // Track time of state change
         }
     }
-
-
 
     // PUBLIC METHOD: Call this from XR Grab Interactable's Hover Exited event
     public void OnChecklistHoverExit()
@@ -241,19 +251,17 @@ public class NPCCutsceneController : MonoBehaviour
 
     private IEnumerator DelayedHoverExit()
     {
-        // Wait one frame to see if we immediately re-enter
-        yield return new WaitForEndOfFrame();
+        // Increased delay for VR stability
+        yield return new WaitForSeconds(hoverExitDelay);
 
         if (hoverIndicator != null && isHovering)
         {
             hoverIndicator.SetActive(false);
             isHovering = false;
+            lastHoverChangeTime = Time.time; // Track time of state change
         }
         hoverCoroutine = null;
     }
-
-
-
     
     private void PickupChecklist()
     {
