@@ -4548,7 +4548,7 @@ MonoBehaviour:
   perPathPrefab: {fileID: 9078256308285207597, guid: 1e51eb6a6228ccf4dbb0f788a22c0dd3, type: 3}
   perPathSpawnCount: 2
   playerObject: {fileID: 6292095195506263863}
-  selectedDepartment: Dietary
+  selectedDepartment: MedTech
   randomSeed: -1
   minObstacleSpacing: 3
   minPathClearance: 2
@@ -23322,7 +23322,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
