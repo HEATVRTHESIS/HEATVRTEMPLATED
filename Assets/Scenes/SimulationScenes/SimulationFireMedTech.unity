@@ -2045,7 +2045,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1589487302
 Transform:
   m_ObjectHideFlags: 0
@@ -6404,9 +6404,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3467165051091059484}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadNewLevel
+      - m_Target: {fileID: 5802271233254399769}
+        m_TargetAssemblyTypeName: DepartmentSceneLoader, Assembly-CSharp
+        m_MethodName: LoadLevelWithDepartment
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14928,9 +14928,9 @@ RectTransform:
   m_Father: {fileID: 1350483320531055753}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!54 &3303051461071511896
 Rigidbody:
@@ -15520,19 +15520,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &3467165051091059484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5802271233254399768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92354beeabc56244bd80c9197d1bc8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneToLoad: FireMedTech
 --- !u!114 &3477785424196415662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23550,7 +23537,7 @@ GameObject:
   - component: {fileID: 5037581256341006251}
   - component: {fileID: 2543333175912122558}
   - component: {fileID: 813913858664661965}
-  - component: {fileID: 3467165051091059484}
+  - component: {fileID: 5802271233254399769}
   m_Layer: 0
   m_Name: NextPhaseButt
   m_TagString: Untagged
@@ -23558,6 +23545,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &5802271233254399769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5802271233254399768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b81bf848ccce7864998700f33795290d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: SimulationEvac
+  departmentName: MedTech
 --- !u!4 &5815458925409045358
 Transform:
   m_ObjectHideFlags: 0
@@ -24197,8 +24198,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7324601096613814192}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.64}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -24402,6 +24403,7 @@ GameObject:
   - component: {fileID: 5989477650878959347}
   - component: {fileID: 8264163571253166507}
   - component: {fileID: 8322273851797767636}
+  - component: {fileID: 8322273851797767637}
   m_Layer: 0
   m_Name: RedoPhaseButt
   m_TagString: Untagged
@@ -28836,7 +28838,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &7506218867793057389
 GameObject:
   m_ObjectHideFlags: 0
@@ -31702,6 +31704,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8322273851797767637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6118138973982731443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b92354beeabc56244bd80c9197d1bc8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: SimulationFireMedTech
 --- !u!23 &8334736382260003888
 MeshRenderer:
   m_ObjectHideFlags: 0
