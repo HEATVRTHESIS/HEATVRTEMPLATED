@@ -27,11 +27,11 @@ EditorBuildSettings:
     path: Assets/Scenes/SimulationScenes/SimulationMedTechRiskReduc.unity
     guid: d25cf29becd77bd45aac2503a6dedbff
   - enabled: 1
+    path: Assets/Scenes/SimulationScenes/SimulationEvac.unity
+    guid: 484ee4b20efbded40b8b9d1ac6ea6b71
+  - enabled: 1
     path: Assets/Scenes/SimulationScenes/SimulationFireMedTech.unity
     guid: 42adfb96d177cb148a4ab5d3c1feae3d
-  - enabled: 1
-    path: Assets/Scenes/SimulationScenes/SimulationEvac.unity
-    guid: 9d5c2fa1eac03764595f770d37fef79e
   - enabled: 1
     path: Assets/Scenes/SimulationScenes/MedTechSimulResult.unity
     guid: d4125e55438050b40b206d90d83c6e80
