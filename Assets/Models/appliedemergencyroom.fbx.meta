@@ -3,12 +3,22 @@ guid: 1e983a820c548e94c86ec376e61bd90c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Curtains.003
+    second: {fileID: 2100000, guid: de522b02838650b44b397b107953bf3a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.235
+    second: {fileID: 2100000, guid: f655cd2a69ae7bb439665e95114d8da6, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
