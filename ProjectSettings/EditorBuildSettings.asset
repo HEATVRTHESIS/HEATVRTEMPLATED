@@ -12,10 +12,10 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 076806cd0b409b04c8acf14f2be28224
   - enabled: 1
-    path: Assets/Scenes/TrainingScenes/MedTechDepartment.unity
+    path: Assets/Scenes/TrainingScenes/MedTechDept/MedTechDepartment.unity
     guid: cf6621e1309e1b04088e59634d56c2e0
   - enabled: 1
-    path: Assets/Scenes/TrainingScenes/FireMedTech.unity
+    path: Assets/Scenes/TrainingScenes/MedTechDept/FireMedTech.unity
     guid: 728c8933d7dcad947bfaf41234a6d21e
   - enabled: 1
     path: Assets/Scenes/TrainingScenes/EvacPoint.unity

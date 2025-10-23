@@ -674,9 +674,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Retry
-
-'
+  m_text: Main Menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cc9f00fdede685849a9f95008e00e12b, type: 2}
   m_sharedMaterial: {fileID: 3315380329311723261, guid: cc9f00fdede685849a9f95008e00e12b, type: 2}
@@ -1380,7 +1378,7 @@ MonoBehaviour:
   proficientColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
   intermediateColor: {r: 0.8, g: 0.5, b: 0.2, a: 1}
   beginnerColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  retryButton: {fileID: 612213649}
+  retryButton: {fileID: 0}
   mainMenuSceneName: MainMenu
 --- !u!4 &556237744
 Transform:
@@ -1410,6 +1408,7 @@ GameObject:
   - component: {fileID: 612213651}
   - component: {fileID: 612213650}
   - component: {fileID: 612213649}
+  - component: {fileID: 612213653}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -1460,7 +1459,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 612213650}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 612213653}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: LoadNewLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &612213650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1507,7 +1518,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 612213648}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.000022761}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.09682015, y: 0.20814824, z: 0.20814824}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1516,9 +1527,22 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000026745, y: -35}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 0.31, y: -36.3}
+  m_SizeDelta: {x: 228.944, y: 59.35}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &612213653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612213648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b92354beeabc56244bd80c9197d1bc8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: MainMenu
 --- !u!1 &659334896
 GameObject:
   m_ObjectHideFlags: 0

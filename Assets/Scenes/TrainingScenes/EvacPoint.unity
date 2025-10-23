@@ -3301,7 +3301,7 @@ GameObject:
   - component: {fileID: 358108415}
   - component: {fileID: 358108414}
   - component: {fileID: 358108413}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RetryCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4668,7 +4668,7 @@ GameObject:
   - component: {fileID: 475850959}
   - component: {fileID: 475850958}
   - component: {fileID: 475850961}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RetryButt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6132,7 +6132,7 @@ GameObject:
   - component: {fileID: 664250107}
   - component: {fileID: 664250109}
   - component: {fileID: 664250108}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RetryText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15447,7 +15447,7 @@ GameObject:
   - component: {fileID: 878644851}
   - component: {fileID: 878644853}
   - component: {fileID: 878644852}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21678,7 +21678,6 @@ Transform:
   - {fileID: 1532437543}
   - {fileID: 987783545}
   - {fileID: 1479137391}
-  - {fileID: 1369232555}
   - {fileID: 470235796}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22759,7 +22758,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1264865329}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RetryStuff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23367,19 +23366,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1113032068}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.03713454
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.540627
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.011520673
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_LocalRotation.w
@@ -23387,15 +23386,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -23422,11 +23421,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
---- !u!4 &1369232555 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-  m_PrefabInstance: {fileID: 1369232554}
-  m_PrefabAsset: {fileID: 0}
 --- !u!65 &1369696499
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24983,7 +24977,7 @@ GameObject:
   - component: {fileID: 1565732924}
   - component: {fileID: 1565732923}
   - component: {fileID: 1565732922}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MainMenuButt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26125,7 +26119,7 @@ GameObject:
   - component: {fileID: 1669431492}
   - component: {fileID: 1669431491}
   - component: {fileID: 1669431490}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RedoBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35499,7 +35493,7 @@ GameObject:
   - component: {fileID: 2115550465}
   - component: {fileID: 2115550467}
   - component: {fileID: 2115550466}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37284,7 +37278,7 @@ GameObject:
   - component: {fileID: 4723662036177943731}
   - component: {fileID: 2749163396108589044}
   - component: {fileID: 3049492767902930408}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39988,7 +39982,7 @@ GameObject:
   - component: {fileID: 5785496134675208019}
   - component: {fileID: 1009787042888928928}
   - component: {fileID: 2604304104688342502}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SummaryText2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40333,7 +40327,7 @@ GameObject:
   - component: {fileID: 729010892660612039}
   - component: {fileID: 3917367334813751398}
   - component: {fileID: 1764909282187099705}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SummaryBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40994,7 +40988,7 @@ GameObject:
   - component: {fileID: 4219917554264551330}
   - component: {fileID: 702821553734082739}
   - component: {fileID: 166831120513147684}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SummaryCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41883,7 +41877,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6954926779286999508}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LevelSummary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43613,7 +43607,7 @@ GameObject:
   - component: {fileID: 7584919817607002596}
   - component: {fileID: 1392696095359204241}
   - component: {fileID: 4131129857643883030}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: YesButt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43797,7 +43791,7 @@ GameObject:
   - component: {fileID: 7139766580700821707}
   - component: {fileID: 6189896698128360382}
   - component: {fileID: 3186526481344399657}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: NoButt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44102,7 +44096,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4085135299769659942}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: QuestionBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44940,7 +44934,7 @@ GameObject:
   - component: {fileID: 2466866890259218574}
   - component: {fileID: 3721284432050717531}
   - component: {fileID: 5264629630738341288}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45646,7 +45640,7 @@ GameObject:
   - component: {fileID: 3126282779362997869}
   - component: {fileID: 8807009302233946366}
   - component: {fileID: 4563528893760918518}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45855,7 +45849,7 @@ GameObject:
   - component: {fileID: 3710676200054583629}
   - component: {fileID: 2488159651125798241}
   - component: {fileID: 5969624196960514413}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46105,7 +46099,7 @@ GameObject:
   - component: {fileID: 8167404213580720530}
   - component: {fileID: 8867550813476060072}
   - component: {fileID: 4142125111107449189}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47158,7 +47152,7 @@ GameObject:
   - component: {fileID: 4964612328733563940}
   - component: {fileID: 7885041806226967014}
   - component: {fileID: 1330964576017067099}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: QuestionCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47819,7 +47813,7 @@ GameObject:
   - component: {fileID: 2021851679445532538}
   - component: {fileID: 445677539038514832}
   - component: {fileID: 2387570890808205652}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Questext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47904,7 +47898,7 @@ GameObject:
   - component: {fileID: 7370900378289248882}
   - component: {fileID: 5180371146741503274}
   - component: {fileID: 5056120843656794453}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RedoPhaseButt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48016,7 +48010,7 @@ GameObject:
   - component: {fileID: 1594248891942067263}
   - component: {fileID: 4476523811801962316}
   - component: {fileID: 380990509400692637}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: NextPhaseButt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48920,7 +48914,7 @@ GameObject:
   - component: {fileID: 7410186066881259645}
   - component: {fileID: 834467377523863477}
   - component: {fileID: 5378370184204934704}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DiagBoxBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49503,7 +49497,7 @@ GameObject:
   - component: {fileID: 3690693971677150275}
   - component: {fileID: 5827790270994186155}
   - component: {fileID: 8037487177731938336}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SummaryText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50676,3 +50670,4 @@ SceneRoots:
   - {fileID: 100162893}
   - {fileID: 2132988213}
   - {fileID: 1113032068}
+  - {fileID: 1369232554}
