@@ -1,82 +1,92 @@
 using UnityEngine;
-using TMPro; // Make sure to import TextMeshPro
-
-// This class will hold the data for each step.
-// We make it [System.Serializable] so we can edit it in the Inspector.
-[System.Serializable]
-public class DialogueStep
-{
-    [TextArea(3, 10)]
-    public string dialogueText;
-    
-    // The GameObject that contains the "listener" script for this step.
-    // e.g., the "JoystickLookListener" or the "GrabbableCube".
-    public GameObject actionListener; 
-}
-
+using TMPro; // For the UI text
+using UnityEngine.InputSystem; // For the button action
 
 public class TutorialDialogueManager : MonoBehaviour
 {
-    // Assign your UI Text and Panel in the Inspector
+    [Header("UI References")]
     public TextMeshProUGUI dialogueTextUI;
     public GameObject dialoguePanel;
 
-    // This is your list of all tutorial steps
-    public DialogueStep[] allSteps;
+    [Header("Input Action")]
+    [Tooltip("Assign the 'Secondary Button' (B/Y) action here")]
+    public InputActionProperty nextButtonAction; 
 
-    private int currentStepIndex = 0;
+    [Header("Dialogue Content")]
+    [TextArea(3, 10)]
+    public string[] dialogueLines; // A simple array of dialogue strings
 
-    // Start the dialogue (e.g., call this from a button or trigger)
-    public void StartDialogue()
+    // Private variables
+    private int currentLineIndex = 0;
+    private bool isDialogueActive = false;
+
+    void Start()
     {
-        if (allSteps.Length == 0) return;
-
-        currentStepIndex = 0;
-        dialoguePanel.SetActive(true);
-        ShowStep(currentStepIndex);
-    }
-
-    // This is the public function our listeners will call
-    public void AdvanceDialogue()
-    {
-        // Deactivate the listener for the step we just finished
-        if (allSteps[currentStepIndex].actionListener != null)
+        // Make sure the dialogue UI is hidden at the start
+        if(dialoguePanel != null)
         {
-            allSteps[currentStepIndex].actionListener.SetActive(false);
+            dialoguePanel.SetActive(false);
         }
 
-        // Move to the next step
-        currentStepIndex++;
-
-        // Check if we are at the end of the dialogue
-        if (currentStepIndex < allSteps.Length)
+        // Enable the button action so we can listen to it
+        if (nextButtonAction.action != null)
         {
-            ShowStep(currentStepIndex);
+            nextButtonAction.action.Enable();
+        }
+    }
+
+    void Update()
+    {
+        // Don't do anything if the dialogue isn't active
+        if (!isDialogueActive)
+        {
+            return;
+        }
+
+        // Check if the "next" button was pressed this frame
+        if (nextButtonAction.action != null && nextButtonAction.action.WasPressedThisFrame())
+        {
+            // If it was, advance to the next line
+            AdvanceDialogue();
+        }
+    }
+
+    // Call this from your trigger zone to start
+    public void StartDialogue()
+    {
+        if (dialogueLines.Length == 0)
+        {
+            Debug.LogWarning("No dialogue lines found!");
+            return;
+        }
+
+        isDialogueActive = true;
+        currentLineIndex = 0;
+        dialoguePanel.SetActive(true);
+        dialogueTextUI.text = dialogueLines[currentLineIndex];
+    }
+
+    // This advances the dialogue one line at a time
+    private void AdvanceDialogue()
+    {
+        currentLineIndex++; // Move to the next index
+
+        if (currentLineIndex < dialogueLines.Length)
+        {
+            // Still have lines, show the next one
+            dialogueTextUI.text = dialogueLines[currentLineIndex];
         }
         else
         {
+            // No more lines, end the dialogue
             EndDialogue();
         }
     }
 
-    // Private function to show the current step's info
-    private void ShowStep(int index)
-    {
-        // Update the text
-        dialogueTextUI.text = allSteps[index].dialogueText;
-
-        // Activate the listener for this new step
-        if (allSteps[index].actionListener != null)
-        {
-            allSteps[index].actionListener.SetActive(true);
-        }
-        // If there is no listener, it means we wait for a button press (or you can auto-advance)
-        // For this example, we assume every step has a listener.
-    }
-
-    // Call this to hide the dialogue box
+    // This hides the panel and stops listening for input
     public void EndDialogue()
     {
+        isDialogueActive = false;
         dialoguePanel.SetActive(false);
         Debug.Log("Dialogue finished.");
     }

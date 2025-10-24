@@ -598,14 +598,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a333e782aaffd8a458f3995ab9219693, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5e1ca5c77d9b9d3468fe31a41d1710dd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -876,7 +876,6 @@ GameObject:
   - component: {fileID: 151318629}
   - component: {fileID: 151318628}
   - component: {fileID: 151318627}
-  - component: {fileID: 151318632}
   m_Layer: 0
   m_Name: GrabInteractable (2)
   m_TagString: Untagged
@@ -1155,19 +1154,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151318625}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &151318632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 151318625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a576c59a66110864f9606588403b1241, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 801162460}
 --- !u!1 &174391905 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1807970279642858887, guid: c7c99f4c466a39f4986c52a74d8cbfb3, type: 3}
@@ -2235,52 +2221,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 11.943359, y: 0, z: 9.123693}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &623719271
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 623719273}
-  - component: {fileID: 623719272}
-  m_Layer: 0
-  m_Name: LookRightListener
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &623719272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 623719271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 394f6453dd3df094881ba1e9a81521d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 801162460}
-  rightController: {fileID: 0}
---- !u!4 &623719273
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 623719271}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.2243614, y: -3.532873, z: 12.323072}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &646821877
 GameObject:
   m_ObjectHideFlags: 0
@@ -2565,11 +2505,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueTextUI: {fileID: 1966514776}
   dialoguePanel: {fileID: 1659073850}
-  allSteps:
-  - dialogueText: Welcome! Please look to your right by pushing the right joystick.
-    actionListener: {fileID: 623719271}
-  - dialogueText: Testing
-    actionListener: {fileID: 0}
+  nextButtonAction:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Next Button
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 9e8e768b-5836-43aa-8506-36848a91b8d5
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -8069514856583376848, guid: 0be0028c24f2a4c14a96b6aa39055933, type: 3}
+  dialogueLines:
+  - Welcome to H.E.A.T. VR. To learn how to move and interact with the world, please
+    proceed by pressing "B" button
+  - Let's start with the basics. Your headset tracks your movement. Simply move your
+    head to look around you. Look up, down, left, and right. Get a feel for your
+    surroundings.
+  - To walk, use the Left Thumbstick. Push it forward to move forward, and pull it
+    back to move backward. You can also strafe left and right. Go ahead, try walking
+    around the area.
+  - You can also teleport to move quickly. Push the Right Thumbstick forward. You
+    will see an arc. Aim that arc where you want to go. When you are ready, release
+    the Right Thumbstick to teleport instantly. Try teleporting to the platform ahead.
+  - To turn your view, flick the Right Thumbstick left or right. This will 'snap'
+    your view in that direction. This helps prevent motion sickness. Try turning
+    around now.
+  - To jump, press the 'A' Button on your right controller. Try jumping over this
+    small obstacle.
+  - To pick up an object, reach out with your hand. When your hand is near an item,
+    squeeze the Grip Button on the side of the controller (where your middle finger
+    rests) to grab it."
+  - Now, try picking up the cube in front of you.
+  - To let go of the item, simply release the Grip Button. Go ahead and drop the
+    cube.
 --- !u!1001 &842365755
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2967,7 +2937,6 @@ GameObject:
   - component: {fileID: 1027490263}
   - component: {fileID: 1027490262}
   - component: {fileID: 1027490261}
-  - component: {fileID: 1027490266}
   m_Layer: 0
   m_Name: GrabInteractable (2)
   m_TagString: Untagged
@@ -3246,19 +3215,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1027490259}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1027490266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1027490259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a576c59a66110864f9606588403b1241, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 801162460}
 --- !u!1 &1034721481
 GameObject:
   m_ObjectHideFlags: 0
@@ -3273,7 +3229,6 @@ GameObject:
   - component: {fileID: 1034721484}
   - component: {fileID: 1034721483}
   - component: {fileID: 1034721488}
-  - component: {fileID: 1034721489}
   m_Layer: 0
   m_Name: GrabInteractable
   m_TagString: Untagged
@@ -3552,19 +3507,6 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 0
---- !u!114 &1034721489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1034721481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a576c59a66110864f9606588403b1241, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 801162460}
 --- !u!1 &1068067359 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 636355347865144470, guid: 5562b7195846040408c129dfc9eff9f4, type: 3}
@@ -4171,7 +4113,6 @@ GameObject:
   - component: {fileID: 1335830476}
   - component: {fileID: 1335830475}
   - component: {fileID: 1335830474}
-  - component: {fileID: 1335830479}
   m_Layer: 0
   m_Name: GrabInteractable (3)
   m_TagString: Untagged
@@ -4450,19 +4391,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1335830472}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1335830479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1335830472}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a576c59a66110864f9606588403b1241, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 801162460}
 --- !u!1 &1404096804
 GameObject:
   m_ObjectHideFlags: 0
@@ -4582,7 +4510,6 @@ GameObject:
   - component: {fileID: 1411096174}
   - component: {fileID: 1411096173}
   - component: {fileID: 1411096172}
-  - component: {fileID: 1411096177}
   m_Layer: 0
   m_Name: GrabInteractable (3)
   m_TagString: Untagged
@@ -4861,19 +4788,156 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1411096170}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1411096177
+--- !u!1 &1424582863
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1424582864}
+  - component: {fileID: 1424582866}
+  - component: {fileID: 1424582865}
+  m_Layer: 0
+  m_Name: Mascot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1424582864
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424582863}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.22399999, y: 0.312, z: 0.316}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1659073855}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 213, y: -52}
+  m_SizeDelta: {x: 250, y: 250}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1424582865
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1411096170}
+  m_GameObject: {fileID: 1424582863}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a576c59a66110864f9606588403b1241, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 801162460}
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: d3f1adbcd2ee57241bd63fbd4e245347, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1424582866
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424582863}
+  m_CullTransparentMesh: 1
+--- !u!1 &1449863068
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1449863069}
+  - component: {fileID: 1449863071}
+  - component: {fileID: 1449863070}
+  m_Layer: 0
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1449863069
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449863068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
+  m_LocalScale: {x: 0.087999985, y: 0.06, z: 0.068}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1659073855}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 270, y: -63.99997}
+  m_SizeDelta: {x: 800, y: 800}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1449863070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449863068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: f94b8afccc9be994e98f16208f0a3d82, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1449863071
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449863068}
+  m_CullTransparentMesh: 1
 --- !u!1 &1467757566
 GameObject:
   m_ObjectHideFlags: 0
@@ -5143,7 +5207,6 @@ GameObject:
   - component: {fileID: 1473698600}
   - component: {fileID: 1473698599}
   - component: {fileID: 1473698598}
-  - component: {fileID: 1473698603}
   m_Layer: 0
   m_Name: GrabInteractable
   m_TagString: Untagged
@@ -5422,19 +5485,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1473698596}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1473698603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1473698596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a576c59a66110864f9606588403b1241, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 801162460}
 --- !u!20 &1474268208 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 9095766939937595490, guid: 5562b7195846040408c129dfc9eff9f4, type: 3}
@@ -5580,7 +5630,6 @@ GameObject:
   - component: {fileID: 1490662116}
   - component: {fileID: 1490662115}
   - component: {fileID: 1490662114}
-  - component: {fileID: 1490662119}
   m_Layer: 0
   m_Name: GrabInteractable (1)
   m_TagString: Untagged
@@ -5859,19 +5908,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1490662112}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1490662119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1490662112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a576c59a66110864f9606588403b1241, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 801162460}
 --- !u!1 &1502271605
 GameObject:
   m_ObjectHideFlags: 0
@@ -6052,7 +6088,6 @@ GameObject:
   - component: {fileID: 1548788399}
   - component: {fileID: 1548788398}
   - component: {fileID: 1548788397}
-  - component: {fileID: 1548788402}
   m_Layer: 0
   m_Name: GrabInteractable (4)
   m_TagString: Untagged
@@ -6331,19 +6366,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1548788395}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1548788402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1548788395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a576c59a66110864f9606588403b1241, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 801162460}
 --- !u!1 &1597707712
 GameObject:
   m_ObjectHideFlags: 0
@@ -6535,7 +6557,6 @@ GameObject:
   - component: {fileID: 1640042935}
   - component: {fileID: 1640042934}
   - component: {fileID: 1640042933}
-  - component: {fileID: 1640042938}
   m_Layer: 0
   m_Name: GrabInteractable (1)
   m_TagString: Untagged
@@ -6814,19 +6835,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1640042931}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1640042938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1640042931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a576c59a66110864f9606588403b1241, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 801162460}
 --- !u!1001 &1652230477
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7043,19 +7051,21 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659073850}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.2600002}
+  m_LocalRotation: {x: 0.072673656, y: -0, z: -0, w: 0.9973558}
+  m_LocalPosition: {x: 0, y: 0, z: 0.964}
   m_LocalScale: {x: 0.0025, y: 0.0025, z: 0.0025}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 121474114}
   - {fileID: 1966514775}
+  - {fileID: 1424582864}
+  - {fileID: 1449863069}
   m_Father: {fileID: 1474268212}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 8.335, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.038999975, y: -0.1614399}
-  m_SizeDelta: {x: 800, y: 400}
+  m_AnchoredPosition: {x: 0.038999975, y: -0.291}
+  m_SizeDelta: {x: 700, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1697924795
 GameObject:
@@ -7626,7 +7636,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 300}
+  m_SizeDelta: {x: 600, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1966514776
 MonoBehaviour:
@@ -7675,15 +7685,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -7940,7 +7950,6 @@ GameObject:
   - component: {fileID: 2080036472}
   - component: {fileID: 2080036471}
   - component: {fileID: 2080036470}
-  - component: {fileID: 2080036475}
   m_Layer: 0
   m_Name: GrabInteractable (4)
   m_TagString: Untagged
@@ -8219,19 +8228,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2080036468}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &2080036475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2080036468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a576c59a66110864f9606588403b1241, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueManager: {fileID: 801162460}
 --- !u!1 &2092705760
 GameObject:
   m_ObjectHideFlags: 0
@@ -8707,5 +8703,4 @@ SceneRoots:
   - {fileID: 1883519842}
   - {fileID: 1805814151}
   - {fileID: 801162459}
-  - {fileID: 623719273}
   - {fileID: 646821880}
