@@ -2540,6 +2540,7 @@ MonoBehaviour:
   - Now, try picking up the cube in front of you.
   - To let go of the item, simply release the Grip Button. Go ahead and drop the
     cube.
+  - Excellent. You've mastered the controls. You are now ready to begin. Good luck.
 --- !u!1001 &842365755
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6961,7 +6962,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1659073851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7685,8 +7686,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25
-  m_fontSizeBase: 25
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -7721,7 +7722,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 29.33957, y: 0, z: 13.464386, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
