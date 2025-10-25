@@ -35,7 +35,7 @@ public class StorageContainer : MonoBehaviour
             if (nextSnapPointIndex < snapPoints.Length)
             {
                 // Correct item has been dropped.
-                popupManager.ShowMessage("Correct! Item has been stored.");
+                popupManager.ShowMessage("Correct! Item stored.");
 
                 // Tell the StorableItem that it has been correctly stored.
                 storableItem.OnCorrectlyStored();
