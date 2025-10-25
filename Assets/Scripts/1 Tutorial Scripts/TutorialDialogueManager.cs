@@ -10,25 +10,53 @@ public class TutorialDialogueManager : MonoBehaviour
 
     [Header("Input Action")]
     [Tooltip("Assign the 'Secondary Button' (B/Y) action here")]
-    public InputActionProperty nextButtonAction; 
+    public InputActionProperty nextButtonAction;
+
+    [Header("Tutorial Triggers")]
+    [Tooltip("Drag your 'WalkTutorialTrigger' GameObject here.")]
+    public GameObject walkToMarkerTrigger;
+    
+    // --- NEW ---
+    [Tooltip("Drag your 'TeleportTutorialTrigger' GameObject here.")]
+    public GameObject teleportTutorialTrigger;
+    // --- END NEW ---
+
+    [Tooltip("Drag your 'Jump Tutorial Trigger' GameObject here.")]
+    public GameObject jumpTutorialTrigger;
 
     [Header("Dialogue Content")]
     [TextArea(3, 10)]
-    public string[] dialogueLines; // A simple array of dialogue strings
+    public string[] dialogueLines;
 
-    // Private variables
     private int currentLineIndex = 0;
     private bool isDialogueActive = false;
 
     void Start()
     {
-        // Make sure the dialogue UI is hidden at the start
-        if(dialoguePanel != null)
+        if (dialoguePanel != null)
         {
             dialoguePanel.SetActive(false);
         }
 
-        // Enable the button action so we can listen to it
+        // Make sure the triggers are hidden when the game starts
+        if (walkToMarkerTrigger != null)
+        {
+            walkToMarkerTrigger.SetActive(false);
+        }
+        
+        // --- NEW ---
+        if (teleportTutorialTrigger != null)
+        {
+            teleportTutorialTrigger.SetActive(false);
+        }
+        // --- END NEW ---
+
+         if (jumpTutorialTrigger != null)
+        {
+            jumpTutorialTrigger.SetActive(false);
+        }
+        // --- END NEW ---
+
         if (nextButtonAction.action != null)
         {
             nextButtonAction.action.Enable();
@@ -37,21 +65,17 @@ public class TutorialDialogueManager : MonoBehaviour
 
     void Update()
     {
-        // Don't do anything if the dialogue isn't active
         if (!isDialogueActive)
         {
             return;
         }
 
-        // Check if the "next" button was pressed this frame
         if (nextButtonAction.action != null && nextButtonAction.action.WasPressedThisFrame())
         {
-            // If it was, advance to the next line
             AdvanceDialogue();
         }
     }
 
-    // Call this from your trigger zone to start
     public void StartDialogue()
     {
         if (dialogueLines.Length == 0)
@@ -63,27 +87,66 @@ public class TutorialDialogueManager : MonoBehaviour
         isDialogueActive = true;
         currentLineIndex = 0;
         dialoguePanel.SetActive(true);
-        dialogueTextUI.text = dialogueLines[currentLineIndex];
+        ShowDialogueLine(currentLineIndex);
     }
 
-    // This advances the dialogue one line at a time
-    private void AdvanceDialogue()
+    // --- MODIFIED ---
+    // (Make sure this is public!)
+    public void AdvanceDialogue()
+    // --- END MODIFIED ---
     {
-        currentLineIndex++; // Move to the next index
+        currentLineIndex++; 
 
         if (currentLineIndex < dialogueLines.Length)
         {
-            // Still have lines, show the next one
-            dialogueTextUI.text = dialogueLines[currentLineIndex];
+            ShowDialogueLine(currentLineIndex);
         }
         else
         {
-            // No more lines, end the dialogue
             EndDialogue();
         }
     }
 
-    // This hides the panel and stops listening for input
+    private void ShowDialogueLine(int index)
+    {
+        dialogueTextUI.text = dialogueLines[index];
+
+        // Check for walking trigger
+        if (index == 2) // Element 3
+        {
+            if (walkToMarkerTrigger != null)
+            {
+                Debug.Log("Activating Walk-To-Marker trigger.");
+                walkToMarkerTrigger.SetActive(true);
+            }
+        }
+        
+        // --- NEW ---
+        // Check for teleport trigger
+        else if (index == 4) // Element 5
+        {
+            if (teleportTutorialTrigger != null)
+            {
+                Debug.Log("Activating Teleport-To-Marker trigger.");
+                teleportTutorialTrigger.SetActive(true);
+            }
+        }
+        // --- END NEW ---
+
+         // --- NEW ---
+        // Check for Jump Trigger
+        else if (index == 7) // Element 8
+        {
+            if (teleportTutorialTrigger != null)
+            {
+                Debug.Log("Activating Jump-To-Marker trigger.");
+                teleportTutorialTrigger.SetActive(true);
+            }
+        }
+        // --- END NEW ---
+
+    }
+
     public void EndDialogue()
     {
         isDialogueActive = false;
