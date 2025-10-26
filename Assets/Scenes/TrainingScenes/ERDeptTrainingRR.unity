@@ -724,6 +724,7 @@ Transform:
   m_Children:
   - {fileID: 7951121373587938117}
   - {fileID: 1933364764072717195}
+  - {fileID: 895259476}
   - {fileID: 1886169731079522703}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3431,6 +3432,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 885022489}
   m_Mesh: {fileID: -8936622394817868014, guid: 1e983a820c548e94c86ec376e61bd90c, type: 3}
+--- !u!1 &887493808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 887493809}
+  m_Layer: 0
+  m_Name: AlcoholSnapPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &887493809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 887493808}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.00083, y: -0.01012, z: 0.00324}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3622756384415376388}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &891270646
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3494,6 +3526,64 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.004476452, y: 0.012542141, z: 0.017115492}
   m_Center: {x: -0.00042126182, y: 0.000011534894, z: 0.000017374285}
+--- !u!1 &895259474
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 895259476}
+  - component: {fileID: 895259475}
+  m_Layer: 0
+  m_Name: AlcoholStorage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &895259475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895259474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39597bdc6fa57a446b4409ca5b28e0c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  taskName: Alcohol Storage
+  taskDescription: 
+  taskCompletionDialogue:
+  - Nice
+  audioSource: {fileID: 5329925472940090969}
+  successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  OnProgressUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTaskCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &895259476
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895259474}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.8897974, y: -1.597264, z: 1.1593342}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3622756384415376388}
+  - {fileID: 8946122712170351218}
+  m_Father: {fileID: 105545452}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &896340552
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3536,6 +3626,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.0013652991, y: 0.006214942, z: 0.0008990703}
   m_Center: {x: 0.00018516541, y: -0.00012716299, z: 0.00013021048}
+--- !u!1 &908130829
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 908130830}
+  m_Layer: 0
+  m_Name: AlcoholSnapPoint (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &908130830
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908130829}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.00083, y: -0.0143, z: 0.00324}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3622756384415376388}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &921262953
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12792,7 +12913,6 @@ Transform:
   - {fileID: 8616562854312290582}
   - {fileID: 2999713340898199979}
   - {fileID: 8786581027379668465}
-  - {fileID: 3622756384415376388}
   - {fileID: 1730288069222791381}
   - {fileID: 3395521928392501057}
   - {fileID: 6537314642752579053}
@@ -19758,7 +19878,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8984763107775089081}
-  - {fileID: 8946122712170351218}
   m_Father: {fileID: 105545452}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1898001178813379732
@@ -28192,12 +28311,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7417161421182835785}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: 0.8768006, y: 1.0609545, z: -13.407948}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 543450652145476969}
+  m_Children:
+  - {fileID: 887493809}
+  - {fileID: 908130830}
+  m_Father: {fileID: 895259476}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &3630241522629537611
 Transform:
@@ -37006,7 +37127,7 @@ Transform:
   m_GameObject: {fileID: 8595020668970568360}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.618, y: 0.339, z: 6.541}
+  m_LocalPosition: {x: 0.533, y: 0.339, z: -3.42}
   m_LocalScale: {x: 1, y: 0.38166, z: 0.38794}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43956,7 +44077,10 @@ GameObject:
   - component: {fileID: 3622756384415376388}
   - component: {fileID: 1804740118996567666}
   - component: {fileID: 8331730715581393143}
-  - component: {fileID: 8331730715581393144}
+  - component: {fileID: 8331730715581393147}
+  - component: {fileID: 8331730715581393146}
+  - component: {fileID: 8331730715581393145}
+  - component: {fileID: 8331730715581393148}
   m_Layer: 0
   m_Name: Rack_Palette_0.002
   m_TagString: Untagged
@@ -47569,8 +47693,57 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &8331730715581393144
-MeshCollider:
+--- !u!114 &8331730715581393145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7417161421182835785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &8331730715581393146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7417161421182835785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 986ae63fb662d8a4c82bd79820609a36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 0.5849056, g: 0.5824874, b: 0.5545567, a: 1}
+  highlightWidth: 5
+--- !u!114 &8331730715581393147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7417161421182835785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30af337ecd86f334bbac1ce3bdd87676, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  containerType: AlcoholShelf
+  popupManager: {fileID: 7830208495215971711}
+  snapPoints:
+  - {fileID: 887493809}
+  - {fileID: 908130830}
+--- !u!65 &8331730715581393148
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -47584,13 +47757,12 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 1
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6604243255209982940, guid: 1e983a820c548e94c86ec376e61bd90c, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.0071328925, y: 0.047918044, z: 0.020906053}
+  m_Center: {x: 0.000055410783, y: -0.000033130862, z: 0.0005774967}
 --- !u!33 &8335158053120676831
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -49651,7 +49823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPrefabs:
-  - {fileID: 2045412911157427340, guid: ae659692a043d6142999bd02ffc1b100, type: 3}
+  - {fileID: 8274811894028601057, guid: 88d1c336e2ea3994ea0391632e3392fc, type: 3}
   spawnCount: 2
   spawnArea: {fileID: 4818415949352128239}
 --- !u!4 &8687337822027184127
@@ -50540,7 +50712,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5790592362264631670}
-  m_Father: {fileID: 1886169731079522703}
+  m_Father: {fileID: 895259476}
   m_LocalEulerAnglesHint: {x: 0, y: 2.941, z: 0}
 --- !u!4 &8947950101890860679
 Transform:
