@@ -11,6 +11,12 @@ public class TutorialDialogueManager : MonoBehaviour
     [Header("Input Action")]
     [Tooltip("Assign the 'Secondary Button' (B/Y) action here")]
     public InputActionProperty nextButtonAction;
+    // --- NEW ---
+    [Tooltip("Assign the 'X' Button (Primary) action here")]
+    public InputActionProperty investigationButtonAction;
+    [Tooltip("Assign the 'Y' Button (Secondary) action here")]
+    public InputActionProperty tasklistButtonAction;
+    // --- END NEW ---
 
     [Header("Tutorial Triggers")]
     [Tooltip("Drag your 'WalkTutorialTrigger' GameObject here.")]
@@ -24,13 +30,11 @@ public class TutorialDialogueManager : MonoBehaviour
     [Tooltip("Drag the 'TrashCanTrigger' zone here.")]
     public GameObject trashCanTrigger;
 
-    // --- NEW ---
     [Header("Player Reset")]
     [Tooltip("The main player object (e.g., XR Origin) to teleport.")]
     public GameObject playerObject;
     [Tooltip("An empty GameObject marking the position and rotation to reset to.")]
     public Transform resetPosition;
-    // --- END NEW ---
 
     [Header("Dialogue Content")]
     [TextArea(3, 10)]
@@ -42,6 +46,12 @@ public class TutorialDialogueManager : MonoBehaviour
     // This flag will stop the 'Next' button from working
     // when we're waiting for a trigger to be completed.
     private bool isWaitingForTrigger = false;
+    
+    // --- NEW ---
+    // New flags for specific button presses
+    private bool isWaitingForXPress = false;
+    private bool isWaitingForYPress = false;
+    // --- END NEW ---
 
     void Start()
     {
@@ -76,6 +86,17 @@ public class TutorialDialogueManager : MonoBehaviour
         {
             nextButtonAction.action.Enable();
         }
+        
+        // --- NEW ---
+        if (investigationButtonAction.action != null)
+        {
+            investigationButtonAction.action.Enable();
+        }
+        if (tasklistButtonAction.action != null)
+        {
+            tasklistButtonAction.action.Enable();
+        }
+        // --- END NEW ---
     }
 
     // This function runs every frame
@@ -87,10 +108,34 @@ public class TutorialDialogueManager : MonoBehaviour
             return;
         }
 
+        // --- NEW ---
+        // Check for Investigation (X) press
+        if (isWaitingForXPress)
+        {
+            if (investigationButtonAction.action != null && investigationButtonAction.action.WasPressedThisFrame())
+            {
+                Debug.Log("Investigation (X) button pressed! Advancing dialogue.");
+                AdvanceDialogue();
+            }
+            return; // Block other input
+        }
+
+        // Check for Tasklist (Y) press
+        if (isWaitingForYPress)
+        {
+            if (tasklistButtonAction.action != null && tasklistButtonAction.action.WasPressedThisFrame())
+            {
+                Debug.Log("Tasklist (Y) button pressed! Advancing dialogue.");
+                AdvanceDialogue();
+            }
+            return; // Block other input
+        }
+        // --- END NEW ---
+
         // Check if the "next" button was pressed AND we are not waiting for a trigger
         if (nextButtonAction.action != null && 
             nextButtonAction.action.WasPressedThisFrame() && 
-            !isWaitingForTrigger) // <--- THIS IS THE NEW CONDITION
+            !isWaitingForTrigger)
         {
             // If it was, advance to the next line
             AdvanceDialogue();
@@ -117,6 +162,13 @@ public class TutorialDialogueManager : MonoBehaviour
     // by your triggers (OnPlayerEnter)
     public void AdvanceDialogue()
     {
+        // --- NEW ---
+        // Reset all wait flags to ensure a clean state
+        isWaitingForTrigger = false;
+        isWaitingForXPress = false;
+        isWaitingForYPress = false;
+        // --- END NEW ---
+
         currentLineIndex++;
 
         if (currentLineIndex < dialogueLines.Length)
@@ -138,17 +190,10 @@ public class TutorialDialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
         Debug.Log("Dialogue finished.");
 
-        // --- NEW ---
         // Reset player position after dialogue ends
         if (playerObject != null && resetPosition != null)
         {
             Debug.Log("Resetting player position.");
-            
-            // For this to work correctly, 'playerObject' should be your
-            // 'XR Origin' or main player controller object.
-            
-            // This is a simple teleport. If you use a CharacterController,
-            // you may need to disable it before changing the transform.
             playerObject.transform.position = resetPosition.position;
             playerObject.transform.rotation = resetPosition.rotation;
         }
@@ -156,7 +201,6 @@ public class TutorialDialogueManager : MonoBehaviour
         {
             Debug.LogWarning("Player Object or Reset Position not assigned. Cannot reset player position.");
         }
-        // --- END NEW ---
     }
 
     // This private function displays the line AND checks for special actions
@@ -165,7 +209,9 @@ public class TutorialDialogueManager : MonoBehaviour
         dialogueTextUI.text = dialogueLines[index];
         
         // By default, we are not waiting for a trigger.
-        isWaitingForTrigger = false;
+        // NOTE: We reset flags in AdvanceDialogue() *before* this runs
+        // to ensure a clean state.
+        isWaitingForTrigger = false; 
 
         // Check for walking trigger
         if (index == 3) // Element 3
@@ -188,7 +234,7 @@ public class TutorialDialogueManager : MonoBehaviour
             }
         }
         // Check for jump trigger
-        else if (index == 8) // Element 8
+        else if (index == 7) // Element 8
         {
             if (jumpTutorialTrigger != null)
             {
@@ -197,8 +243,26 @@ public class TutorialDialogueManager : MonoBehaviour
                 isWaitingForTrigger = true; 
             }
         }
+        // --- NEW ---
+        // Check for "Investigation" dialogue
+        /*
+        else if (index == 9) // Element 10 (NEW)
+        {
+            Debug.Log("Waiting for Investigation (X) press. Disabling 'Next' button.");
+            isWaitingForXPress = true;
+            isWaitingForTrigger = true; // This disables the 'Next' button
+        }
+        */
+        // Check for "Tasklist" dialogue
+        else if (index == 8) // Element 11 (NEW) Change value once the Investigation is added
+        {
+            Debug.Log("Waiting for Tasklist (Y) press. Disabling 'Next' button.");
+            isWaitingForYPress = true;
+            isWaitingForTrigger = true; // This disables the 'Next' button
+        }
+        // --- END NEW ---
         // Check for "Grab Item" dialogue
-        else if (index == 11) // Element 11 (Assuming this is your "Grab Me" dialogue)
+        else if (index == 11) // Element 12 (Original 11)
         {
             if (grabItemTrigger != null)
             {
@@ -208,7 +272,7 @@ public class TutorialDialogueManager : MonoBehaviour
             }
         }
         // Check for "Trash Item" dialogue
-        else if (index == 12) // Element 10 (Assuming this is your "Now throw it away" dialogue)
+        else if (index == 12) // Element 13 (Original 12)
         {
             if (trashCanTrigger != null)
             {
