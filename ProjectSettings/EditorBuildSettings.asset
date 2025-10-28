@@ -21,19 +21,25 @@ EditorBuildSettings:
     path: Assets/Scenes/TrainingScenes/EvacPoint.unity
     guid: 994ebf4d7e04f5744aa7caa8f42af270
   - enabled: 1
+    path: Assets/Scenes/SimulationScenes/ERSImulations/SimulationFireER.unity
+    guid: a83c9ae5e874d2c45a44e10ca0bd68d3
+  - enabled: 1
+    path: Assets/Scenes/SimulationScenes/ERSImulations/ERDeptTrainingRR.unity
+    guid: e500d933e99f43545997101e20c9ae7b
+  - enabled: 1
     path: Assets/Scenes/TrainingScenes/ResultsScene.unity
     guid: 139b35fb7e310894fa04b0446eb380f7
   - enabled: 1
     path: Assets/Scenes/TrainingScenes/ERDepartment/ERDeptTrainingRR.unity
     guid: 9f0f53fd02d40ea4d96a6fd7814e0558
   - enabled: 1
-    path: Assets/Scenes/SimulationScenes/SimulationMedTechRiskReduc.unity
+    path: Assets/Scenes/SimulationScenes/MedTechSimulations/SimulationMedTechRiskReduc.unity
     guid: d25cf29becd77bd45aac2503a6dedbff
   - enabled: 1
     path: Assets/Scenes/SimulationScenes/SimulationEvac.unity
     guid: 484ee4b20efbded40b8b9d1ac6ea6b71
   - enabled: 1
-    path: Assets/Scenes/SimulationScenes/SimulationFireMedTech.unity
+    path: Assets/Scenes/SimulationScenes/MedTechSimulations/SimulationFireMedTech.unity
     guid: 42adfb96d177cb148a4ab5d3c1feae3d
   - enabled: 1
     path: Assets/Scenes/SimulationScenes/MedTechSimulResult.unity

@@ -429,5 +429,29 @@ MonoBehaviour:
         m_Flags: 0
       m_Flags: 0
     m_Reference: {fileID: 0}
+  nextLineAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Next Line
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 08b056e0-24bc-463e-be41-a39121fc6a15
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   startCutsceneOnStart: 1
   cutsceneStartDelay: 0.5
+  typingSpeed: 0.05
+  enableTTS: 1
+  speechAudioSource: {fileID: 0}
+  voiceName: 
+  speechRate: 1
+  speechPitch: 1
+  speechVolume: 1
+  waitForSpeech: 1
+  showTextImmediatelyWithSpeech: 0
+  useNativeSpeech: 1
+  hoverCooldown: 0.15
+  hoverExitDelay: 0.15
