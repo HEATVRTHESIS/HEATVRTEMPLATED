@@ -214,7 +214,7 @@ public class TutorialDialogueManager : MonoBehaviour
         isWaitingForTrigger = false; 
 
         // Check for walking trigger
-        if (index == 3) // Element 3
+        if (index == 3) // Element 4
         {
             if (walkToMarkerTrigger != null)
             {
@@ -224,7 +224,7 @@ public class TutorialDialogueManager : MonoBehaviour
             }
         }
         // Check for teleport trigger
-        else if (index == 5) // Element 5
+        else if (index == 5) // Element 6
         {
             if (teleportTutorialTrigger != null)
             {
@@ -234,7 +234,7 @@ public class TutorialDialogueManager : MonoBehaviour
             }
         }
         // Check for jump trigger
-        else if (index == 7) // Element 8
+        else if (index == 8) // Element 9
         {
             if (jumpTutorialTrigger != null)
             {
@@ -254,7 +254,7 @@ public class TutorialDialogueManager : MonoBehaviour
         }
         */
         // Check for "Tasklist" dialogue
-        else if (index == 8) // Element 11 (NEW) Change value once the Investigation is added
+        else if (index == 9) // Element 10 (NEW) Change value once the Investigation is added
         {
             Debug.Log("Waiting for Tasklist (Y) press. Disabling 'Next' button.");
             isWaitingForYPress = true;
@@ -262,7 +262,7 @@ public class TutorialDialogueManager : MonoBehaviour
         }
         // --- END NEW ---
         // Check for "Grab Item" dialogue
-        else if (index == 11) // Element 12 (Original 11)
+        else if (index == 12) // Element 13 (Original 11)
         {
             if (grabItemTrigger != null)
             {
@@ -272,7 +272,7 @@ public class TutorialDialogueManager : MonoBehaviour
             }
         }
         // Check for "Trash Item" dialogue
-        else if (index == 12) // Element 13 (Original 12)
+        else if (index == 14) // Element 15 (Original 12)
         {
             if (trashCanTrigger != null)
             {
