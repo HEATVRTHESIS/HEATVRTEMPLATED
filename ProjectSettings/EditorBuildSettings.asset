@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Scenes/SimulationScenes/ERSImulations/SimulationFireER.unity
     guid: a83c9ae5e874d2c45a44e10ca0bd68d3
   - enabled: 1
-    path: Assets/Scenes/SimulationScenes/ERSImulations/ERDeptTrainingRR.unity
+    path: Assets/Scenes/SimulationScenes/ERSImulations/ERDeptSimulationRR.unity
     guid: e500d933e99f43545997101e20c9ae7b
   - enabled: 1
     path: Assets/Scenes/TrainingScenes/ResultsScene.unity

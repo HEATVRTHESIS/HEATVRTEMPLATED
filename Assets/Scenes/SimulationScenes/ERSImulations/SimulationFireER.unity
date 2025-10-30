@@ -994,6 +994,7 @@ GameObject:
   m_Component:
   - component: {fileID: 578363229}
   - component: {fileID: 578363230}
+  - component: {fileID: 578363231}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1042,6 +1043,18 @@ MonoBehaviour:
   followSpeed: 5
   smoothFollow: 1
   creationCooldown: 0.2
+--- !u!114 &578363231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578363228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f9573bf5374da24686b8b54fe38d7d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &690191430
 GameObject:
   m_ObjectHideFlags: 0
@@ -4560,6 +4573,10 @@ PrefabInstance:
     - target: {fileID: 2008971635339555393, guid: 0987d4c71ec75b442b5f09e9d519df63, type: 3}
       propertyPath: textElement
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008971635339555393, guid: 0987d4c71ec75b442b5f09e9d519df63, type: 3}
+      propertyPath: enablePopups
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4248496847388952874, guid: 0987d4c71ec75b442b5f09e9d519df63, type: 3}
       propertyPath: m_Name
