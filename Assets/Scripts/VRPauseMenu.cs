@@ -21,6 +21,7 @@ public class VRPauseMenu : MonoBehaviour
     private bool isPaused = false;
     private float currentVolume = 1f;
     private bool isTTSMuted = false;
+    private float timeScaleBeforePause = 1f; // Store time scale when pause menu opens
 
     private void Awake()
     {
@@ -127,7 +128,11 @@ public class VRPauseMenu : MonoBehaviour
             pauseMenuCanvas.enabled = true;
         }
         
-        // Stop time
+        // Save the current time scale before pausing
+        // (This could be 0 if dialogue is active, or 1 if not)
+        timeScaleBeforePause = Time.timeScale;
+        
+        // Pause time (ensure it's 0 for the pause menu)
         Time.timeScale = 0f;
         
         // Update slider to current volume
@@ -151,8 +156,11 @@ public class VRPauseMenu : MonoBehaviour
             pauseMenuCanvas.enabled = false;
         }
         
-        // Resume time
-        Time.timeScale = 1f;
+        // Restore time to whatever it was before the pause menu opened
+        // (If dialogue was active, this will restore it back to 0)
+        Time.timeScale = timeScaleBeforePause;
+        
+        Debug.Log($"VRPauseMenu: Restored time scale to {timeScaleBeforePause}");
     }
 
     void OnAudioSliderChanged(float value)
