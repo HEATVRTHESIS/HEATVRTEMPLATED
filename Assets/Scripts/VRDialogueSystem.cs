@@ -75,6 +75,9 @@ public class VRDialogueSystem : MonoBehaviour
     private Voice _selectedVoice;
     private string _currentSpeechId;
 
+    // Static mute state that can be controlled by VRPauseMenu
+    public static bool IsTTSMuted { get; set; } = false;
+
     void Awake()
     {
         // Store the original time scale
@@ -353,6 +356,13 @@ public class VRDialogueSystem : MonoBehaviour
     {
         if (!enableTTS || Speaker.Instance == null || string.IsNullOrEmpty(text.Trim()))
             return;
+
+        // Don't start speech if TTS is muted
+        if (IsTTSMuted)
+        {
+            Debug.Log("TTS is muted - skipping speech");
+            return;
+        }
 
         // Mark that speech has started for this line
         _speechStartedForCurrentLine = true;

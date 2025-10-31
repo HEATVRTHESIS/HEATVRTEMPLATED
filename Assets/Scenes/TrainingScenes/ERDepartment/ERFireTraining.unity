@@ -4230,6 +4230,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6402032355436464013, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: useNativeSpeech
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6402032355436464013, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: speechAudioSource
       value: 
       objectReference: {fileID: 9207420083136283537, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}

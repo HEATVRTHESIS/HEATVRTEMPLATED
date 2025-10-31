@@ -7,6 +7,7 @@ public class VRPauseMenu : MonoBehaviour
     [Header("Menu References")]
     [SerializeField] private Canvas pauseMenuCanvas;
     [SerializeField] private Slider audioSlider;
+    [SerializeField] private Toggle muteTTSToggle;
     
     [Header("Audio Sources to Control")]
     [Tooltip("The dialogue system's speech AudioSource (RT-Voice uses this)")]
@@ -19,6 +20,7 @@ public class VRPauseMenu : MonoBehaviour
     
     private bool isPaused = false;
     private float currentVolume = 1f;
+    private bool isTTSMuted = false;
 
     private void Awake()
     {
@@ -78,6 +80,15 @@ public class VRPauseMenu : MonoBehaviour
             audioSlider.value = currentVolume;
             audioSlider.onValueChanged.AddListener(OnAudioSliderChanged);
         }
+        
+        // Setup mute TTS toggle
+        if (muteTTSToggle != null)
+        {
+            // Sync with the current mute state from VRDialogueSystem
+            isTTSMuted = VRDialogueSystem.IsTTSMuted;
+            muteTTSToggle.isOn = isTTSMuted;
+            muteTTSToggle.onValueChanged.AddListener(OnMuteTTSToggled);
+        }
     }
 
     void Update()
@@ -125,6 +136,12 @@ public class VRPauseMenu : MonoBehaviour
             audioSlider.value = speechAudioSource.volume;
             currentVolume = speechAudioSource.volume;
         }
+        
+        // Update mute toggle
+        if (muteTTSToggle != null)
+        {
+            muteTTSToggle.isOn = isTTSMuted;
+        }
     }
 
     void ClosePauseMenu()
@@ -142,6 +159,25 @@ public class VRPauseMenu : MonoBehaviour
     {
         currentVolume = value;
         ApplyVolume();
+    }
+
+    void OnMuteTTSToggled(bool isMuted)
+    {
+        isTTSMuted = isMuted;
+        
+        // Set the mute state in VRDialogueSystem
+        VRDialogueSystem.IsTTSMuted = isMuted;
+        
+        if (isTTSMuted)
+        {
+            // Silence any currently playing RT-Voice dialogue
+            Crosstales.RTVoice.Speaker.Instance.Silence();
+            Debug.Log("TTS Muted");
+        }
+        else
+        {
+            Debug.Log("TTS Unmuted");
+        }
     }
 
     void ApplyVolume()
@@ -189,10 +225,15 @@ public class VRPauseMenu : MonoBehaviour
 
     void OnDestroy()
     {
-        // Clean up listener
+        // Clean up listeners
         if (audioSlider != null)
         {
             audioSlider.onValueChanged.RemoveListener(OnAudioSliderChanged);
+        }
+        
+        if (muteTTSToggle != null)
+        {
+            muteTTSToggle.onValueChanged.RemoveListener(OnMuteTTSToggled);
         }
         
         // Ensure time is restored

@@ -724,7 +724,7 @@ MonoBehaviour:
   speechVolume: 1
   waitForSpeech: 1
   showTextImmediatelyWithSpeech: 0
-  useNativeSpeech: 1
+  useNativeSpeech: 0
 --- !u!114 &2091064551252122857
 MonoBehaviour:
   m_ObjectHideFlags: 0
