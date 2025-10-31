@@ -9,9 +9,14 @@ public class PopupManager : MonoBehaviour
     // Duration the message will be shown
     public float displayDuration = 2f;
 
+    // Toggle to enable or disable the popup system
+    public bool enablePopups = true;
+
     // This method will be called by the Bin script to show a message
     public void ShowMessage(string message)
     {
+        if (!enablePopups) return;
+
         // Set the text and make it visible
         textElement.text = message;
         textElement.gameObject.SetActive(true);
@@ -27,4 +32,3 @@ public class PopupManager : MonoBehaviour
         textElement.gameObject.SetActive(false);
     }
 }
-
