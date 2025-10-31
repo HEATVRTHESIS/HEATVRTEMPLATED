@@ -943,6 +943,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenuCanvas: {fileID: 833276697}
   volumeSlider: {fileID: 1757075728}
+  playerCamera: {fileID: 2037037025360254718}
+  menuDistance: 0.9
 --- !u!1 &558749807
 GameObject:
   m_ObjectHideFlags: 0

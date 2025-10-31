@@ -9,6 +9,8 @@ public class PauseMenuVR : MonoBehaviour
     [Header("Pause Menu")]
     public GameObject pauseMenuCanvas;
     public Slider volumeSlider;
+    public Camera playerCamera; // VR Camera (Main Camera)
+    public float menuDistance = 2f; // Distance in front of player
     
     private bool isPaused = false;
 
@@ -23,6 +25,10 @@ public class PauseMenuVR : MonoBehaviour
             volumeSlider.value = AudioListener.volume;
             volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
         }
+        
+        // Auto-find camera if not assigned
+        if (playerCamera == null)
+            playerCamera = Camera.main;
     }
 
     void Update()
@@ -65,7 +71,26 @@ public class PauseMenuVR : MonoBehaviour
         AudioListener.pause = true;
         
         if (pauseMenuCanvas != null)
+        {
+            // Position menu in front of player
+            PositionMenuInFrontOfPlayer();
             pauseMenuCanvas.SetActive(true);
+        }
+    }
+    
+    void PositionMenuInFrontOfPlayer()
+    {
+        if (pauseMenuCanvas == null || playerCamera == null)
+            return;
+            
+        // Position canvas in front of camera
+        Vector3 forward = playerCamera.transform.forward;
+        Vector3 position = playerCamera.transform.position + (forward * menuDistance);
+        
+        pauseMenuCanvas.transform.position = position;
+        
+        // Make canvas face the player
+        pauseMenuCanvas.transform.rotation = Quaternion.LookRotation(forward);
     }
 
     public void ResumeGame()
