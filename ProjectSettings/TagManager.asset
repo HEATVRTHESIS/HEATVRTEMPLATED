@@ -7,6 +7,7 @@ TagManager:
   - Anchor
   - WetCloth
   - TutorialGrabbable
+  - IVPole
   layers:
   - Default
   - TransparentFX
