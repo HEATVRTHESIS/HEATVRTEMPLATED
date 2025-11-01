@@ -1063,7 +1063,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Resume
+  m_text: Retry
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cc9f00fdede685849a9f95008e00e12b, type: 2}
   m_sharedMaterial: {fileID: 3315380329311723261, guid: cc9f00fdede685849a9f95008e00e12b, type: 2}
@@ -1269,6 +1269,7 @@ GameObject:
   - component: {fileID: 1062953699751055468}
   - component: {fileID: 1689463864969055731}
   - component: {fileID: 1183521968904363684}
+  - component: {fileID: 4602116451375296237}
   m_Layer: 0
   m_Name: ResumeButt
   m_TagString: Untagged
@@ -1377,7 +1378,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1689463864969055731}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4602116451375296237}
+        m_TargetAssemblyTypeName: RestartCurrentScene, Assembly-CSharp
+        m_MethodName: RestartScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4602116451375296237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7549023775756799736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62b9eece4fd8fdf4699bafd8e975252c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8290473338805842632
 GameObject:
   m_ObjectHideFlags: 0

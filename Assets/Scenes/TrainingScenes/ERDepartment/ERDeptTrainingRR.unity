@@ -497,7 +497,6 @@ GameObject:
   m_Component:
   - component: {fileID: 314236168}
   - component: {fileID: 314236169}
-  - component: {fileID: 314236170}
   m_Layer: 0
   m_Name: ScoreDataManager
   m_TagString: Untagged
@@ -532,27 +531,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57432d2b1eded8148a9907b65a20c508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &314236170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 314236167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23854043a91aa124bba322cd469c62f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scoreText: {fileID: 1560887062519183582}
-  scoreValueText: {fileID: 3085921282335627590}
-  summaryCanvas: {fileID: 2081104468832324638}
-  summaryCompletedTasksText: {fileID: 6465485930912039865}
-  summaryMistakesText: {fileID: 1302870679103606399}
-  summaryAccuracyText: {fileID: 0}
-  pointsPerCompletion: 10
-  pointsPerError: -5
-  safetyViolationPenalty: -10
 --- !u!1 &428975179 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2a5bc7836e013bc4a93bdfb505993473, type: 3}
@@ -1827,6 +1805,7 @@ GameObject:
   - component: {fileID: 1113032070}
   - component: {fileID: 1113032072}
   - component: {fileID: 1113032073}
+  - component: {fileID: 1113032074}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1901,6 +1880,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSystem: {fileID: 832396335}
+--- !u!114 &1113032074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113032067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23854043a91aa124bba322cd469c62f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 1560887062519183582}
+  scoreValueText: {fileID: 3085921282335627590}
+  summaryCanvas: {fileID: 2081104468832324638}
+  summaryCompletedTasksText: {fileID: 6465485930912039865}
+  summaryMistakesText: {fileID: 1302870679103606399}
+  summaryAccuracyText: {fileID: 0}
+  pointsPerCompletion: 10
+  pointsPerError: -5
+  safetyViolationPenalty: -10
 --- !u!1001 &1155644976
 PrefabInstance:
   m_ObjectHideFlags: 0
