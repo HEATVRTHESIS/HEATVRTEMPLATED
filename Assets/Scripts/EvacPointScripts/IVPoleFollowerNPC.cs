@@ -295,7 +295,7 @@ public class IVPoleFollowerNPC : MonoBehaviour
             if (navAgent != null && !navAgent.isStopped)
             {
                 navAgent.isStopped = true;
-                if (npcAnimator != null)
+                if (npcAnimator != null && npcAnimator.runtimeAnimatorController != null)
                 {
                     npcAnimator.SetTrigger("Idle");
                 }
@@ -318,7 +318,7 @@ public class IVPoleFollowerNPC : MonoBehaviour
             if (!navAgent.pathPending && navAgent.remainingDistance <= navAgent.stoppingDistance)
             {
                 // Reached destination - idle
-                if (npcAnimator != null)
+                if (npcAnimator != null && npcAnimator.runtimeAnimatorController != null)
                 {
                     npcAnimator.SetTrigger("Idle");
                 }
@@ -326,7 +326,7 @@ public class IVPoleFollowerNPC : MonoBehaviour
             else
             {
                 // Still moving - walk
-                if (npcAnimator != null)
+                if (npcAnimator != null && npcAnimator.runtimeAnimatorController != null)
                 {
                     npcAnimator.SetTrigger("Walk");
                 }
@@ -346,7 +346,7 @@ public class IVPoleFollowerNPC : MonoBehaviour
             navAgent.isStopped = true;
         }
         
-        if (npcAnimator != null)
+        if (npcAnimator != null && npcAnimator.runtimeAnimatorController != null)
         {
             npcAnimator.SetTrigger("Idle");
         }
