@@ -52,7 +52,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: suzie
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 4408e0a9982860d40b897c98ef0e6770, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

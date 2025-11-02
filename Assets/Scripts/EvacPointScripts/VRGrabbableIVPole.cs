@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(XRGrabInteractable))]
@@ -47,6 +48,14 @@ public class VRGrabbableIVPole : MonoBehaviour
     [Header("Ground Constraint")]
     [Tooltip("Keep pole on ground (prevents lifting)")]
     public bool constrainToGround = true;
+    [Tooltip("Use NavMesh for ground detection (allows stairs/ramps)")]
+    public bool useNavMeshGround = true;
+    [Tooltip("Height offset from NavMesh surface to object origin (adjust based on pivot point)")]
+    public float groundOffset = 0f;
+    [Tooltip("NavMesh area mask (-1 for all areas)")]
+    public int navMeshAreaMask = -1;
+    [Tooltip("Max distance to search for NavMesh surface")]
+    public float navMeshSampleDistance = 2f;
 
     private Rigidbody rb;
     private XRGrabInteractable grabInteractable;
@@ -81,10 +90,24 @@ public class VRGrabbableIVPole : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        // If constraining to ground, freeze Y position from the start
+        // If constraining to ground, freeze rotations but allow Y movement for NavMesh
         if (constrainToGround)
         {
-            rb.constraints = RigidbodyConstraints.FreezePositionY;
+            if (useNavMeshGround)
+            {
+                // Only freeze rotations, allow Y movement for stairs/ramps
+                rb.constraints = RigidbodyConstraints.FreezeRotationX | 
+                               RigidbodyConstraints.FreezeRotationY |
+                               RigidbodyConstraints.FreezeRotationZ;
+            }
+            else
+            {
+                // Freeze Y position (stay on ground) and ALL rotations to prevent ANY tipping
+                rb.constraints = RigidbodyConstraints.FreezePositionY | 
+                               RigidbodyConstraints.FreezeRotationX | 
+                               RigidbodyConstraints.FreezeRotationY |
+                               RigidbodyConstraints.FreezeRotationZ;
+            }
         }
 
         // Subscribe to grab events
@@ -122,7 +145,21 @@ public class VRGrabbableIVPole : MonoBehaviour
         // Always freeze Y position to prevent lifting
         if (constrainToGround)
         {
-            rb.constraints = RigidbodyConstraints.FreezePositionY;
+            if (useNavMeshGround)
+            {
+                // Only freeze rotations, allow Y movement for stairs/ramps
+                rb.constraints = RigidbodyConstraints.FreezeRotationX | 
+                               RigidbodyConstraints.FreezeRotationY |
+                               RigidbodyConstraints.FreezeRotationZ;
+            }
+            else
+            {
+                // Freeze Y position and ALL rotations to prevent tipping
+                rb.constraints = RigidbodyConstraints.FreezePositionY | 
+                               RigidbodyConstraints.FreezeRotationX | 
+                               RigidbodyConstraints.FreezeRotationY |
+                               RigidbodyConstraints.FreezeRotationZ;
+            }
         }
         
         Debug.Log("IV Pole grabbed");
@@ -138,7 +175,21 @@ public class VRGrabbableIVPole : MonoBehaviour
         // Keep Y position frozen if constraining to ground
         if (constrainToGround)
         {
-            rb.constraints = RigidbodyConstraints.FreezePositionY;
+            if (useNavMeshGround)
+            {
+                // Only freeze rotations, allow Y movement for stairs/ramps
+                rb.constraints = RigidbodyConstraints.FreezeRotationX | 
+                               RigidbodyConstraints.FreezeRotationY |
+                               RigidbodyConstraints.FreezeRotationZ;
+            }
+            else
+            {
+                // Freeze Y position and ALL rotations to prevent tipping
+                rb.constraints = RigidbodyConstraints.FreezePositionY | 
+                               RigidbodyConstraints.FreezeRotationX | 
+                               RigidbodyConstraints.FreezeRotationY |
+                               RigidbodyConstraints.FreezeRotationZ;
+            }
         }
         
         Debug.Log("IV Pole released");
@@ -176,24 +227,66 @@ public class VRGrabbableIVPole : MonoBehaviour
 
     /// <summary>
     /// Keeps the pole constrained to the ground (no lifting)
+    /// Uses NavMesh to follow stairs and ramps
     /// </summary>
     void ConstrainToGround()
     {
-        // Y position is already frozen by constraints
-        // Just ensure no upward velocity (safety measure)
-        Vector3 velocity = rb.velocity;
-        if (velocity.y > 0f)
+        if (useNavMeshGround)
         {
-            velocity.y = 0f;
-            rb.velocity = velocity;
+            // Sample the NavMesh to find the ground height at this position
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(transform.position, out hit, navMeshSampleDistance, navMeshAreaMask))
+            {
+                // Snap to the NavMesh surface height + offset
+                Vector3 targetPosition = transform.position;
+                targetPosition.y = hit.position.y + groundOffset;
+                
+                // Smoothly move to target height (or instantly set it)
+                transform.position = targetPosition;
+                
+                // Also zero out any Y velocity to prevent bouncing
+                Vector3 velocity = rb.velocity;
+                velocity.y = 0f;
+                rb.velocity = velocity;
+            }
+            else
+            {
+                // Fallback: No NavMesh found, just prevent upward movement
+                Vector3 velocity = rb.velocity;
+                if (velocity.y > 0f)
+                {
+                    velocity.y = 0f;
+                    rb.velocity = velocity;
+                }
+            }
+        }
+        else
+        {
+            // Y position is already frozen by constraints
+            // Just ensure no upward velocity (safety measure)
+            Vector3 velocity = rb.velocity;
+            if (velocity.y > 0f)
+            {
+                velocity.y = 0f;
+                rb.velocity = velocity;
+            }
         }
     }
 
     /// <summary>
     /// Applies force to keep the pole upright at X=-90 rotation
+    /// NOTE: With ALL rotation constraints enabled, this force has no effect
+    /// The constraints handle keeping the pole upright instead
     /// </summary>
     void ApplyUprightForce()
     {
+        // With all rotations frozen, this method is disabled
+        // The rigidbody constraints handle keeping the pole upright
+        
+        // Skip upright force if constraining to ground (rotations are frozen)
+        if (constrainToGround)
+            return;
+        
         // Get current rotation
         Quaternion currentRotation = transform.rotation;
         
@@ -329,6 +422,18 @@ public class VRGrabbableIVPole : MonoBehaviour
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawLine(transform.position, transform.position + rb.velocity);
+        }
+        
+        // Draw ground offset visualization
+        if (constrainToGround && useNavMeshGround)
+        {
+            // Show where the NavMesh ground contact point is
+            Vector3 groundPoint = transform.position;
+            groundPoint.y -= groundOffset;
+            
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(groundPoint, 0.1f);
+            Gizmos.DrawLine(transform.position, groundPoint);
         }
     }
 }

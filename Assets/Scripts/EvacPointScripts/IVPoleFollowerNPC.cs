@@ -28,6 +28,8 @@ public class IVPoleFollowerNPC : MonoBehaviour
     public string initialDialogue = "I need my IV! Can you bring it to me?";
     [TextArea(2, 4)]
     public string followingDialogue = "Thank you! I'll follow my IV pole now.";
+    [TextArea(2, 4)]
+    public string tooFarDialogue = "Wait! My IV pole is too far away!";
     
     [Header("NPC Settings")]
     public Animator npcAnimator;
@@ -58,6 +60,7 @@ public class IVPoleFollowerNPC : MonoBehaviour
     private bool isDialogueActive = false;
     private bool isFollowing = false;
     private bool isSpeaking = false;
+    private bool hasSpokenTooFarWarning = false;
     private Voice selectedVoice;
     private string currentSpeechId;
 
@@ -275,6 +278,7 @@ public class IVPoleFollowerNPC : MonoBehaviour
         dialoguePanel.SetActive(false);
         isDialogueActive = false;
         isFollowing = true;
+        hasSpokenTooFarWarning = false; // Reset warning flag
         
         Debug.Log($"{gameObject.name} is now following the IV pole");
     }
@@ -295,13 +299,24 @@ public class IVPoleFollowerNPC : MonoBehaviour
             if (navAgent != null && !navAgent.isStopped)
             {
                 navAgent.isStopped = true;
-                if (npcAnimator != null && npcAnimator.runtimeAnimatorController != null)
+                if (npcAnimator != null)
                 {
                     npcAnimator.SetTrigger("Idle");
                 }
             }
+            
+            // Speak the too far warning (only once until pole comes back in range)
+            if (!hasSpokenTooFarWarning)
+            {
+                StartSpeech(tooFarDialogue);
+                hasSpokenTooFarWarning = true;
+            }
+            
             return;
         }
+        
+        // Reset the warning flag when IV pole is back in range
+        hasSpokenTooFarWarning = false;
 
         if (navAgent != null)
         {
@@ -318,7 +333,7 @@ public class IVPoleFollowerNPC : MonoBehaviour
             if (!navAgent.pathPending && navAgent.remainingDistance <= navAgent.stoppingDistance)
             {
                 // Reached destination - idle
-                if (npcAnimator != null && npcAnimator.runtimeAnimatorController != null)
+                if (npcAnimator != null)
                 {
                     npcAnimator.SetTrigger("Idle");
                 }
@@ -326,7 +341,7 @@ public class IVPoleFollowerNPC : MonoBehaviour
             else
             {
                 // Still moving - walk
-                if (npcAnimator != null && npcAnimator.runtimeAnimatorController != null)
+                if (npcAnimator != null)
                 {
                     npcAnimator.SetTrigger("Walk");
                 }
@@ -346,7 +361,7 @@ public class IVPoleFollowerNPC : MonoBehaviour
             navAgent.isStopped = true;
         }
         
-        if (npcAnimator != null && npcAnimator.runtimeAnimatorController != null)
+        if (npcAnimator != null)
         {
             npcAnimator.SetTrigger("Idle");
         }
