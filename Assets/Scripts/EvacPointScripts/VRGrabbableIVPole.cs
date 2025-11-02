@@ -19,7 +19,7 @@ public class VRGrabbableIVPole : MonoBehaviour
     public float uprightForce = 200f;
     [Tooltip("Damping for upright force")]
     public float uprightDamping = 30f;
-    [Tooltip("Lock rotation on X axis (prevents spinning around pole length for X-oriented models)")]
+    [Tooltip("(Not currently used) Lock rotation on X axis")]
     public bool lockYRotation = true;
 
     [Header("Wheel Settings")]
@@ -43,6 +43,10 @@ public class VRGrabbableIVPole : MonoBehaviour
     public float rollingAudioThreshold = 0.5f;
     [Tooltip("Volume multiplier based on velocity")]
     public float rollingAudioVolumeMultiplier = 0.3f;
+
+    [Header("Ground Constraint")]
+    [Tooltip("Keep pole on ground (prevents lifting)")]
+    public bool constrainToGround = true;
 
     private Rigidbody rb;
     private XRGrabInteractable grabInteractable;
@@ -77,10 +81,10 @@ public class VRGrabbableIVPole : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
 
-        // Constrain rotation to keep pole upright
-        if (lockYRotation)
+        // If constraining to ground, freeze Y position from the start
+        if (constrainToGround)
         {
-            rb.constraints = RigidbodyConstraints.FreezeRotationX;
+            rb.constraints = RigidbodyConstraints.FreezePositionY;
         }
 
         // Subscribe to grab events
@@ -115,6 +119,12 @@ public class VRGrabbableIVPole : MonoBehaviour
         // Reduce drag when grabbed to make it easier to push
         rb.drag = baseDrag * grabbedDragMultiplier;
         
+        // Always freeze Y position to prevent lifting
+        if (constrainToGround)
+        {
+            rb.constraints = RigidbodyConstraints.FreezePositionY;
+        }
+        
         Debug.Log("IV Pole grabbed");
     }
 
@@ -125,11 +135,23 @@ public class VRGrabbableIVPole : MonoBehaviour
         // Restore normal drag
         rb.drag = baseDrag;
         
+        // Keep Y position frozen if constraining to ground
+        if (constrainToGround)
+        {
+            rb.constraints = RigidbodyConstraints.FreezePositionY;
+        }
+        
         Debug.Log("IV Pole released");
     }
 
     void FixedUpdate()
     {
+        // Constrain to ground if enabled
+        if (constrainToGround)
+        {
+            ConstrainToGround();
+        }
+
         // Apply upright force to keep pole standing
         ApplyUprightForce();
 
@@ -150,6 +172,21 @@ public class VRGrabbableIVPole : MonoBehaviour
         UpdateRollingAudio();
 
         previousPosition = transform.position;
+    }
+
+    /// <summary>
+    /// Keeps the pole constrained to the ground (no lifting)
+    /// </summary>
+    void ConstrainToGround()
+    {
+        // Y position is already frozen by constraints
+        // Just ensure no upward velocity (safety measure)
+        Vector3 velocity = rb.velocity;
+        if (velocity.y > 0f)
+        {
+            velocity.y = 0f;
+            rb.velocity = velocity;
+        }
     }
 
     /// <summary>
