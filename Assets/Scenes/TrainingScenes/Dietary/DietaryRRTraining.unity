@@ -7707,8 +7707,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPrefabs:
-  - {fileID: 6157248462430622884, guid: 0226d8705f2517145a059a7c791c673d, type: 3}
-  spawnCount: 1
+  - {fileID: 2088726989604001011, guid: 2fe9f102bb97d6b43baeb472addcae9b, type: 3}
+  spawnCount: 2
   spawnArea: {fileID: 3231050250657590567}
 --- !u!33 &2279416040077322262
 MeshFilter:
@@ -11342,11 +11342,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39597bdc6fa57a446b4409ca5b28e0c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taskName: Mask Storage
-  taskDescription: Place the Masks in the box
+  taskName: Cleaning Rags
+  taskDescription: Place the rags in the box
   taskCompletionDialogue:
-  - Storing excess supplies in safe spaces
-  - Can help avoid unecessary items being at risk of fire
+  - Nice!
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:
@@ -19234,7 +19233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30af337ecd86f334bbac1ce3bdd87676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  containerType: Masks
+  containerType: CleaningRags
   popupManager: {fileID: 7830208495215971711}
   snapPoints:
   - {fileID: 2149174830999245130}
