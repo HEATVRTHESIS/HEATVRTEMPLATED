@@ -2872,6 +2872,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: appliedemergencyroom
       objectReference: {fileID: 0}
+    - target: {fileID: 709697221684934168, guid: 752f8abab878c3b4f932b06e6028345d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2365611500261319966, guid: 752f8abab878c3b4f932b06e6028345d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

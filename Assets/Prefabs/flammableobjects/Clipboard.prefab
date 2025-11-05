@@ -60,9 +60,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8234596735910504976, guid: 004b035359a8f3346b3e5dd812c98d27, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -620872991842562119, guid: 004b035359a8f3346b3e5dd812c98d27, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 741808593568725213, guid: 004b035359a8f3346b3e5dd812c98d27, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 004b035359a8f3346b3e5dd812c98d27, type: 3}
       propertyPath: m_Name
       value: Clipboard
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 004b035359a8f3346b3e5dd812c98d27, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1412827137150407991, guid: 004b035359a8f3346b3e5dd812c98d27, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1787543730043967467, guid: 004b035359a8f3346b3e5dd812c98d27, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7036213049465896255, guid: 004b035359a8f3346b3e5dd812c98d27, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9221168553374246932, guid: 004b035359a8f3346b3e5dd812c98d27, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -146,7 +178,7 @@ MonoBehaviour:
   fireSpread: 0
   onFireTimer: 0
   isEffectOnForever: 0
-  burnOutStart_s: 300
+  burnOutStart_s: 180
   burnOutLength_s: 10
   isReignitable: 0
   deleteAfterBurnout: 0

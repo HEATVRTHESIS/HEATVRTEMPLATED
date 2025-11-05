@@ -255,7 +255,6 @@ Transform:
   - {fileID: 1933364764072717195}
   - {fileID: 895259476}
   - {fileID: 832196325}
-  - {fileID: 1886169731079522703}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &118368342
@@ -905,81 +904,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9054167324086753903}
     m_Modifications:
-    - target: {fileID: 1458507903568444957, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: m_Camera
-      value: 
+    - target: {fileID: 2242382834724990875, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242382834724990875, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898093291477732550, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898093291477732550, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898093291477732550, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5326470366494845269, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_Name
       value: DialogueBox
-      objectReference: {fileID: 0}
-    - target: {fileID: 5670627181488636559, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 279
-      objectReference: {fileID: 0}
-    - target: {fileID: 5670627181488636559, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 279
-      objectReference: {fileID: 0}
-    - target: {fileID: 5670627181488636559, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.04204962
-      objectReference: {fileID: 0}
-    - target: {fileID: 5670627181488636559, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.092388324
-      objectReference: {fileID: 0}
-    - target: {fileID: 5670627181488636559, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.092388324
-      objectReference: {fileID: 0}
-    - target: {fileID: 5670627181488636559, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 34.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5670627181488636559, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -31.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712256934849051291, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: m_fontSize
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712256934849051291, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: m_margin.w
-      value: -39.53121
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712256934849051291, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: m_margin.z
-      value: -267.11133
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712256934849051291, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 5712256934849051291, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: m_HorizontalAlignment
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6402032355436464013, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: useNativeSpeech
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6402032355436464013, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: speechAudioSource
       value: 
       objectReference: {fileID: 5329925472940090969}
     - target: {fileID: 6873454980733723821, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.5496
-      objectReference: {fileID: 0}
-    - target: {fileID: 6873454980733723821, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.2656
       objectReference: {fileID: 0}
     - target: {fileID: 6873454980733723821, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.5971
+      value: -1.617
       objectReference: {fileID: 0}
     - target: {fileID: 6873454980733723821, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1012,10 +971,6 @@ PrefabInstance:
     - target: {fileID: 6873454980733723821, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8780896447573500414, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1131,9 +1086,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskName: Medicine Box Storage
-  taskDescription: 
+  taskDescription: Store the Medicine Boxes in the shelves
   taskCompletionDialogue:
-  - Nice
+  - 'Arrange remaining medication boxes neatly in closed shelves '
+  - '(not near direct sunlight). '
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:
@@ -1214,9 +1170,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskName: Alcohol Storage
-  taskDescription: 
+  taskDescription: Store the bottles of alcohol in the shelves
   taskCompletionDialogue:
-  - Nice
+  - 'Store in a cool, ventilated cabinet away from electrical '
+  - outlets and ignition sources.
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:
@@ -2059,8 +2016,8 @@ GameObject:
   - component: {fileID: 1113032068}
   - component: {fileID: 1113032070}
   - component: {fileID: 1113032072}
-  - component: {fileID: 1113032073}
   - component: {fileID: 1113032074}
+  - component: {fileID: 1113032075}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -2122,19 +2079,6 @@ MonoBehaviour:
   fadeInTime: 1
   fadeInOnStart: 1
   alwaysFadeInWhenTesting: 1
---- !u!114 &1113032073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1113032067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6158dc665843d6498f0bfa8a8617d64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueSystem: {fileID: 832396335}
 --- !u!114 &1113032074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2156,6 +2100,19 @@ MonoBehaviour:
   pointsPerCompletion: 10
   pointsPerError: -5
   safetyViolationPenalty: -10
+--- !u!114 &1113032075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113032067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fb2a910d28cd3d41869c38f5e08a9a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueSystem: {fileID: 832396335}
 --- !u!1001 &1155644976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2592,7 +2549,9 @@ MonoBehaviour:
   taskName: "MgSO\u2084 Maint"
   taskDescription: "Check the MgSO\u2084 bottle"
   taskCompletionDialogue:
-  - "Exposed MgSO\u2084 is bad"
+  - "Exposed MgSO\u2084 is bad as this can"
+  - make fires worse even if itself
+  - is not actually flammable
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:
@@ -5125,21 +5084,6 @@ RectTransform:
   m_AnchoredPosition: {x: -12.5, y: -24.6}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!4 &1003548500902296765
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6760539056004577300}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.015, y: 0.031, z: 0.0439}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8984763107775089081}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1009009680229869894
 GameObject:
   m_ObjectHideFlags: 0
@@ -5285,22 +5229,6 @@ GameObject:
   - component: {fileID: 1109109839812620687}
   m_Layer: 0
   m_Name: YesButt
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1106071018917276405
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7271786970991421704}
-  m_Layer: 0
-  m_Name: SnapPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6970,24 +6898,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4313469875999566701}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1813580437739819183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8645674187660743427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!33 &1851205001467254876
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -7127,22 +7037,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!4 &1886169731079522703
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3716329783341735796}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.8897974, y: -1.597264, z: 1.1593342}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8984763107775089081}
-  m_Father: {fileID: 105545452}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1906405459276945717
 Transform:
   m_ObjectHideFlags: 0
@@ -7324,7 +7218,8 @@ MonoBehaviour:
   taskName: Disposal
   taskDescription: Throw away the cotton swab
   taskCompletionDialogue:
-  - Congrats!
+  - Used cotton swabs may still contain
+  - traces of alcohol that may lead to possible fires
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
@@ -8049,27 +7944,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5647714203086456847}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2259338190082285282
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8645674187660743427}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 1
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.05876023, y: 0.02452566, z: 0.116193496}
-  m_Center: {x: 0, y: -0.00077508617, z: 0.0000063516195}
 --- !u!114 &2273059043965503543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8815,9 +8689,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskName: Dispose Rubber tubes
-  taskDescription: Dispose this
+  taskDescription: DIspose the old rubber tubes
   taskCompletionDialogue:
-  - Dispose
+  - Old rubber tubes can cause leaks
+  - which can lead to nearby short circuits
+  - or fuel to a fire source nearby
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
@@ -11192,6 +11068,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: appliedemergencyroom
       objectReference: {fileID: 0}
+    - target: {fileID: 709697221684934168, guid: 752f8abab878c3b4f932b06e6028345d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2365611500261319966, guid: 752f8abab878c3b4f932b06e6028345d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -11416,23 +11296,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: ERFireTraining
---- !u!1 &3716329783341735796
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1886169731079522703}
-  - component: {fileID: 5348895619375174623}
-  m_Layer: 0
-  m_Name: TestTubeStorage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &3764389583105198495
 GameObject:
   m_ObjectHideFlags: 0
@@ -11520,20 +11383,6 @@ Transform:
   - {fileID: 3785387728762632033}
   m_Father: {fileID: 1061236603453238011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3791995241072744623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8645674187660743427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 986ae63fb662d8a4c82bd79820609a36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  highlightColor: {r: 0.5849056, g: 0.5824874, b: 0.5545567, a: 1}
-  highlightWidth: 5
 --- !u!4 &3825980799968157577
 Transform:
   m_ObjectHideFlags: 0
@@ -11845,23 +11694,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4129122388726788459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8645674187660743427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30af337ecd86f334bbac1ce3bdd87676, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  containerType: TestTubes
-  popupManager: {fileID: 7830208495215971711}
-  snapPoints:
-  - {fileID: 7271786970991421704}
-  - {fileID: 1003548500902296765}
 --- !u!224 &4139198960466862961
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13999,31 +13831,6 @@ MonoBehaviour:
       m_AllowFreeYMovement: 1
       m_AllowFreeZMovement: 1
     m_Variable: {fileID: 0}
---- !u!114 &5348895619375174623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3716329783341735796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39597bdc6fa57a446b4409ca5b28e0c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  taskName: Test Tube Storage
-  taskDescription: Place the clean test tubes in the rack
-  taskCompletionDialogue:
-  - Proper test tube storage can help keep them free from bacteria
-  - It also keeps them safe from cracking or being damagedf
-  audioSource: {fileID: 5329925472940090969}
-  successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
-  OnProgressUpdated:
-    m_PersistentCalls:
-      m_Calls: []
-  OnTaskCompleted:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &5373899962965965470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14325,14 +14132,6 @@ MonoBehaviour:
     m_InputActionReference: {fileID: -6756787485274679044, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     m_ObjectReferenceObject: {fileID: 0}
     m_ManualValue: {x: 0, y: 0}
---- !u!33 &5413205686433023516
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8645674187660743427}
-  m_Mesh: {fileID: 3680687292192122401, guid: 23c8717d5e905e74b8610e4c9c8a6287, type: 3}
 --- !u!114 &5420250287778063528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15844,9 +15643,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4124677d8cd495e45b105660622e6964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taskName: NonBioDisposal
-  taskDescription: Throw away the clipboards
-  taskCompletionDialogue: []
+  taskName: MedicineDisposal
+  taskDescription: Throw away the medicine boxes
+  taskCompletionDialogue:
+  - Pharmacies usually have a designated bin
+  - for disposal of old expired medications
+  - The boxes or raw materials may be a fuel source
+  - for a potential fire
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
@@ -16114,22 +15917,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &6760539056004577300
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1003548500902296765}
-  m_Layer: 0
-  m_Name: SnapPoint (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!114 &6765465495683962977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17303,21 +17090,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!4 &7271786970991421704
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1106071018917276405}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0113, y: 0.031, z: 0.0439}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8984763107775089081}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &7275060518974947338
 Transform:
   m_ObjectHideFlags: 0
@@ -17569,7 +17341,9 @@ MonoBehaviour:
   taskName: IV Disposal
   taskDescription: Throw away the used IV Bags
   taskCompletionDialogue:
-  - test
+  - Used IV bags can cause a short circuit
+  - to nearby electrical equipment
+  - Immediately dispose to reduce the risk
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
@@ -18299,48 +18073,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!23 &7852983272121823958
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8645674187660743427}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 5561349426305759274, guid: 23c8717d5e905e74b8610e4c9c8a6287, type: 3}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!210 &7901384390493608421
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -19860,28 +19592,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &8645674187660743427
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8984763107775089081}
-  - component: {fileID: 5413205686433023516}
-  - component: {fileID: 7852983272121823958}
-  - component: {fileID: 4129122388726788459}
-  - component: {fileID: 2259338190082285282}
-  - component: {fileID: 3791995241072744623}
-  - component: {fileID: 1813580437739819183}
-  m_Layer: 0
-  m_Name: TestTube_Stand
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &8653810483984141663
 GameObject:
   m_ObjectHideFlags: 0
@@ -20289,23 +19999,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8984763107775089081
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8645674187660743427}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.162, y: 0.66617364, z: 3.65}
-  m_LocalScale: {x: 1.9565756, y: 1.9565756, z: 1.9565756}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7271786970991421704}
-  - {fileID: 1003548500902296765}
-  m_Father: {fileID: 1886169731079522703}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &8993580547819386215
 CharacterController:
   m_ObjectHideFlags: 0

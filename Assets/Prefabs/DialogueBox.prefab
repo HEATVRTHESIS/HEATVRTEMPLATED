@@ -305,15 +305,15 @@ RectTransform:
   m_GameObject: {fileID: 1925043293948745083}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.16202788, y: 0.16202788, z: 0.16202788}
+  m_LocalScale: {x: 0.04204962, y: 0.092388324, z: 0.092388324}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7448684565117459584}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 29.7, y: -24}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 34.7, y: -31.3}
+  m_SizeDelta: {x: 279, y: 279}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3882079389698329262
 CanvasRenderer:
@@ -567,14 +567,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15
-  m_fontSizeBase: 15
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 8
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -603,7 +603,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -196.72528, w: 20.194502}
+  m_margin: {x: 0, y: 0, z: -267.11133, w: -39.53121}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -667,9 +667,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5326470366494845269}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.067, y: -1.384, z: 0.0067}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5496, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 416678447055314559}
@@ -763,8 +763,135 @@ MonoBehaviour:
     ignoreCase: 0
     mediaType: 1
     imageTexture: {fileID: 2800000, guid: bb457d896a329d54682bf52927f144e7, type: 3}
-    videoClip: {fileID: 32900000, guid: b6c422ede7c1b9d4bade5b8c6e5624a5, type: 3}
-  loopVideo: 0
+    videoClip: {fileID: 32900000, guid: 00a942b47c23f0f4ea270408672eedf1, type: 3}
+  - matchMode: 1
+    dialogueLine: 
+    dialogueLines:
+    - 'A - ALARM: Activate the fire alarm system immediately.'
+    - Alert others in the building and notify emergency services.
+    containsKeyword: 
+    ignoreCase: 0
+    mediaType: 1
+    imageTexture: {fileID: 2800000, guid: bb457d896a329d54682bf52927f144e7, type: 3}
+    videoClip: {fileID: 32900000, guid: 4b2d69dfacddf17468acbd66e80fb13e, type: 3}
+  - matchMode: 1
+    dialogueLine: 
+    dialogueLines:
+    - 'C - CONFINE: Close doors and windows to contain the fire'
+    - and prevent it from spreading to other areas.
+    containsKeyword: 
+    ignoreCase: 0
+    mediaType: 1
+    imageTexture: {fileID: 2800000, guid: bb457d896a329d54682bf52927f144e7, type: 3}
+    videoClip: {fileID: 32900000, guid: 336f608426fab2144955c7901a4b0ecb, type: 3}
+  - matchMode: 1
+    dialogueLine: 
+    dialogueLines:
+    - 'E - EVACUATE or EXTINGUISH: If the fire is small and you'
+    - are trained, attempt to extinguish it. Otherwise, evacuate
+    - the area immediately and let professionals handle it.
+    containsKeyword: 
+    ignoreCase: 0
+    mediaType: 1
+    imageTexture: {fileID: 2800000, guid: bb457d896a329d54682bf52927f144e7, type: 3}
+    videoClip: {fileID: 32900000, guid: 336f608426fab2144955c7901a4b0ecb, type: 3}
+  - matchMode: 1
+    dialogueLine: 
+    dialogueLines:
+    - safety protocols essential for the Emergency Department. You will
+    - learn proper storage of flammable medical supplies, oxygen
+    containsKeyword: 
+    ignoreCase: 0
+    mediaType: 1
+    imageTexture: {fileID: 2800000, guid: bb457d896a329d54682bf52927f144e7, type: 3}
+    videoClip: {fileID: 32900000, guid: 92193e68929e4eb409d674db7b3ba878, type: 3}
+  - matchMode: 1
+    dialogueLine: 
+    dialogueLines:
+    - cylinder safety procedures, electrical equipment inspection,
+    - and how to maintain fire safety systems in high-pressure
+    - medical environments.
+    containsKeyword: 
+    ignoreCase: 0
+    mediaType: 1
+    imageTexture: {fileID: 2800000, guid: bb457d896a329d54682bf52927f144e7, type: 3}
+    videoClip: {fileID: 32900000, guid: b5374ff8ad7b8bd49a942888e59624d6, type: 3}
+  - matchMode: 1
+    dialogueLine: 
+    dialogueLines:
+    - Today's training focuses on fire risk management and emergency
+    containsKeyword: 
+    ignoreCase: 0
+    mediaType: 1
+    imageTexture: {fileID: 2800000, guid: bb457d896a329d54682bf52927f144e7, type: 3}
+    videoClip: {fileID: 32900000, guid: 91499091dde28e84ba49fdb7ab5014e1, type: 3}
+  - matchMode: 1
+    dialogueLine: 
+    dialogueLines:
+    - You can focus on specific tasks by pressing the track button
+    - on the side of each task entry.
+    containsKeyword: 
+    ignoreCase: 0
+    mediaType: 1
+    imageTexture: {fileID: 2800000, guid: bb457d896a329d54682bf52927f144e7, type: 3}
+    videoClip: {fileID: 32900000, guid: 91499091dde28e84ba49fdb7ab5014e1, type: 3}
+  - matchMode: 1
+    dialogueLine: 
+    dialogueLines:
+    - Interactive objects are highlighted with glowing outlines to
+    - guide your training. Press Y on your left VR controller to
+    - open your task checklist and monitor your progress.
+    - open your task checklist and monitor your progress.
+    containsKeyword: 
+    ignoreCase: 0
+    mediaType: 1
+    imageTexture: {fileID: 2800000, guid: bb457d896a329d54682bf52927f144e7, type: 3}
+    videoClip: {fileID: 32900000, guid: e8586399c79ae3d40b905ec101bcac71, type: 3}
+  - matchMode: 0
+    dialogueLine: 
+    dialogueLines:
+    - correct disposal methods for hazardous waste, and how to
+    containsKeyword: 
+    ignoreCase: 0
+    mediaType: 1
+    imageTexture: {fileID: 2800000, guid: bb457d896a329d54682bf52927f144e7, type: 3}
+    videoClip: {fileID: 32900000, guid: 91499091dde28e84ba49fdb7ab5014e1, type: 3}
+  - matchMode: 1
+    dialogueLine: 
+    dialogueLines:
+    - inspect and maintain fire safety equipment to ensure
+    - compliance with safety standards.
+    containsKeyword: 
+    ignoreCase: 0
+    mediaType: 1
+    imageTexture: {fileID: 2800000, guid: bb457d896a329d54682bf52927f144e7, type: 3}
+    videoClip: {fileID: 32900000, guid: b5374ff8ad7b8bd49a942888e59624d6, type: 3}
+  - matchMode: 1
+    dialogueLine: 
+    dialogueLines:
+    - proper storage procedures for flammable chemicals and materials,
+    containsKeyword: 
+    ignoreCase: 0
+    mediaType: 1
+    imageTexture: {fileID: 2800000, guid: bb457d896a329d54682bf52927f144e7, type: 3}
+    videoClip: {fileID: 32900000, guid: 92193e68929e4eb409d674db7b3ba878, type: 3}
+  - matchMode: 1
+    dialogueLine: 
+    dialogueLines:
+    - 'Next, the PASS technique for using fire extinguishers safely:'
+    - 'P - PULL: Pull the safety pin from the fire extinguisher.'
+    - 'A - AIM: Aim the nozzle at the BASE of the flames,'
+    - not at the top. Target the fuel source, not the smoke.
+    - 'S - SQUEEZE: Squeeze the handle to release the'
+    - extinguishing agent in controlled bursts.
+    - 'S - SWEEP: Sweep the nozzle side to side at the base'
+    - of the fire until it appears to be completely out.
+    containsKeyword: 
+    ignoreCase: 0
+    mediaType: 1
+    imageTexture: {fileID: 2800000, guid: bb457d896a329d54682bf52927f144e7, type: 3}
+    videoClip: {fileID: 32900000, guid: d2b1a3c86034f874d82b404e943113d7, type: 3}
+  loopVideo: 1
   fadeDuration: 0.2
   preserveAspect: 1
 --- !u!1 &7651257807878894543
@@ -1016,6 +1143,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 573619417487158574, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 573619417487158574, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 573619417487158574, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1525809260861734022}
+    - target: {fileID: 573619417487158574, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 573619417487158574, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadNewLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 573619417487158574, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SceneLoader, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 573619417487158574, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1183521968904363684, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3202519862741884234}
+    - target: {fileID: 1183521968904363684, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadNewLevel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1183521968904363684, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SceneLoader, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 1732837534877794353, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1047,10 +1214,52 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7549023775756799736, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3202519862741884234}
+    - targetCorrespondingSourceObject: {fileID: 8290473338805842632, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1525809260861734022}
   m_SourcePrefab: {fileID: 100100000, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
 --- !u!4 &416678447055314559 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 205647256817676757, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
   m_PrefabInstance: {fileID: 509695933134253994}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8057301337519153490 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7549023775756799736, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
+  m_PrefabInstance: {fileID: 509695933134253994}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3202519862741884234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8057301337519153490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b92354beeabc56244bd80c9197d1bc8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: MedTechDepartment
+--- !u!1 &8367512544536157538 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8290473338805842632, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
+  m_PrefabInstance: {fileID: 509695933134253994}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1525809260861734022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8367512544536157538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b92354beeabc56244bd80c9197d1bc8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: MainMenu

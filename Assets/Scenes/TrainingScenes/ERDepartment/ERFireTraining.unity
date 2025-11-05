@@ -506,7 +506,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.7
+      value: 0.332
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
       propertyPath: m_LocalPosition.z
@@ -771,22 +771,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 766697013664912297, guid: 17918d7f207887f419b185cf1659d794, type: 3}
   m_PrefabInstance: {fileID: 400854747}
   m_PrefabAsset: {fileID: 0}
---- !u!328 &442676781 stripped
-VideoPlayer:
-  m_CorrespondingSourceObject: {fileID: 3120691178079555723, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-  m_PrefabInstance: {fileID: 757874634987369196}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &442676782 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1741064302741335732, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-  m_PrefabInstance: {fileID: 757874634987369196}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &467039887
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1052,11 +1036,6 @@ MonoBehaviour:
   tooltipDescription: Spray!
   actionCooldown: 0.15
   hideWhenGrabbed: 1
---- !u!1 &619261428 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2423185463152656359, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-  m_PrefabInstance: {fileID: 757874634987369196}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &680592517
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1364,7 +1343,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5975969674770549835, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.44099998
+      value: 0.463
       objectReference: {fileID: 0}
     - target: {fileID: 5975969674770549835, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1384,7 +1363,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5975969674770549835, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -0.001
       objectReference: {fileID: 0}
     - target: {fileID: 5975969674770549835, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4326,18 +4305,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2037037025360254718}
-    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: mediaCanvas
-      value: 
-      objectReference: {fileID: 619261428}
-    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: videoPlayer
-      value: 
-      objectReference: {fileID: 442676781}
-    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      propertyPath: mediaDisplay
-      value: 
-      objectReference: {fileID: 442676782}
     - target: {fileID: 2242382834724990875, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -14541,6 +14508,30 @@ PrefabInstance:
       propertyPath: successMonitor
       value: 
       objectReference: {fileID: 1867228382}
+    - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: taskCompletionDialogue.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: taskCompletionDialogue.Array.data[0]
+      value: Only attempt to extinguish small fires
+      objectReference: {fileID: 0}
+    - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: taskCompletionDialogue.Array.data[1]
+      value: If the fire is something you are not equipped to handle
+      objectReference: {fileID: 0}
+    - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: taskCompletionDialogue.Array.data[2]
+      value: Dry powder extinguishers can only extinguish
+      objectReference: {fileID: 0}
+    - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: taskCompletionDialogue.Array.data[3]
+      value: Class A, B, and C materials and would be ineffective
+      objectReference: {fileID: 0}
+    - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: taskCompletionDialogue.Array.data[4]
+      value: towards oils or metal fires
+      objectReference: {fileID: 0}
     - target: {fileID: 6176834025734505685, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
       propertyPath: m_Name
       value: FireExtinguisher
@@ -15991,11 +15982,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6eed37f52235d347b56049b33172b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taskName: Help the Coworker
-  taskDescription: Talk to your Coworker
+  taskName: Help the Civilian
+  taskDescription: Talk to the Civilian
   taskCompletionDialogue:
-  - Evacuating others to safety is important
-  - This ensures help can be called
+  - Evacuating others is important
+  - In order to minimize casualties
+  - And alert others of the ongoing fire
   audioSource: {fileID: 5373646681556592961}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
@@ -16037,7 +16029,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 0}
   enableTTS: 1
-  speechAudioSource: {fileID: 5373646681556592961}
+  speechAudioSource: {fileID: 0}
   voiceName: 
   speechRate: 1
   speechPitch: 1
