@@ -5785,7 +5785,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &622474864
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -6395,7 +6395,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: YOU DIED YOU SUCK
+  m_text: YOU DIED! TRY AGAIN?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cc9f00fdede685849a9f95008e00e12b, type: 2}
   m_sharedMaterial: {fileID: 3315380329311723261, guid: cc9f00fdede685849a9f95008e00e12b, type: 2}
@@ -15287,6 +15287,75 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.020000031, y: 0.020000001, z: 0.020000003}
   m_Center: {x: 0.00000023841858, y: -0.000000014901161, z: 0.0000000038417056}
+--- !u!1001 &836257760
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 805717225813456152, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -54.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 805717225813456152, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.069
+      objectReference: {fileID: 0}
+    - target: {fileID: 805717225813456152, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -51.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 805717225813456152, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 805717225813456152, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 805717225813456152, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 805717225813456152, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 805717225813456152, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 805717225813456152, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 805717225813456152, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881256554865412422, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: m_Name
+      value: PoleNPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772718263136248898, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 34.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772718263136248898, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 7772718263136248898, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -11.63
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
 --- !u!65 &837174052
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -38739,6 +38808,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 8379253376636852891, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -51396,6 +51469,7 @@ SceneRoots:
   - {fileID: 9218719975206061688}
   - {fileID: 1276028068}
   - {fileID: 456520842}
+  - {fileID: 836257760}
   - {fileID: 2684601349546511067}
   - {fileID: 622474869}
   - {fileID: 7532978724546521948}

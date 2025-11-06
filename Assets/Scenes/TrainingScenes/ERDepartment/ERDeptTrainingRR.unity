@@ -8795,7 +8795,7 @@ Transform:
   m_GameObject: {fileID: 6270848623166972748}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7169858, z: -0, w: 0.6970878}
-  m_LocalPosition: {x: 14.038229, y: -0.44999993, z: 5.2948794}
+  m_LocalPosition: {x: 14.038229, y: -0.78, z: 5.2948794}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10594,7 +10594,7 @@ Transform:
   m_GameObject: {fileID: 8466603918980526180}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.20037818, y: 0.04597, z: 0.12445877}
+  m_LocalPosition: {x: -0.20037818, y: 0.0371, z: 0.12445877}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11067,10 +11067,6 @@ PrefabInstance:
     - target: {fileID: 529956391157590013, guid: 752f8abab878c3b4f932b06e6028345d, type: 3}
       propertyPath: m_Name
       value: appliedemergencyroom
-      objectReference: {fileID: 0}
-    - target: {fileID: 709697221684934168, guid: 752f8abab878c3b4f932b06e6028345d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2365611500261319966, guid: 752f8abab878c3b4f932b06e6028345d, type: 3}
       propertyPath: m_LocalPosition.x
