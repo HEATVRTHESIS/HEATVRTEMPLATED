@@ -4149,6 +4149,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 97406881364485125, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: cancelButton
+      value: 
+      objectReference: {fileID: 296176087}
+    - target: {fileID: 97406881364485125, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: dialogueText
+      value: 
+      objectReference: {fileID: 1606379364}
+    - target: {fileID: 97406881364485125, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: followButton
+      value: 
+      objectReference: {fileID: 266638747}
+    - target: {fileID: 97406881364485125, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: dialoguePanel
+      value: 
+      objectReference: {fileID: 1063171124}
+    - target: {fileID: 97406881364485125, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: interactionIndicator
+      value: 
+      objectReference: {fileID: 735361483}
+    - target: {fileID: 97406881364485125, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: rightControllerTransform
+      value: 
+      objectReference: {fileID: 4221990225890602452}
     - target: {fileID: 805717225813456152, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
       propertyPath: m_LocalPosition.x
       value: -54.14
@@ -5324,7 +5348,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 470235795}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af49c9cb936805a4dbaa6786c3dad0fe, type: 3}
   m_Name: 
