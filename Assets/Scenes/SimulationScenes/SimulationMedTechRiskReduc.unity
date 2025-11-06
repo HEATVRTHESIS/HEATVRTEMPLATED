@@ -1011,8 +1011,10 @@ MonoBehaviour:
   summaryCanvas: {fileID: 551105124}
   summaryCompletedTasksText: {fileID: 1503927821}
   summaryMistakesText: {fileID: 924046919}
+  summaryAccuracyText: {fileID: 0}
   pointsPerCompletion: 10
   pointsPerError: -5
+  safetyViolationPenalty: -10
 --- !u!114 &1113032070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2096,6 +2098,10 @@ PrefabInstance:
       propertyPath: pinchAction
       value: 
       objectReference: {fileID: -7813013294023911475, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    - target: {fileID: 2738012430500439418, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
+      propertyPath: m_RayInteractor
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4419314036175079351, guid: bf25731d4f000414d8ded40b0a1ccdef, type: 3}
       propertyPath: m_IsActive
       value: 1

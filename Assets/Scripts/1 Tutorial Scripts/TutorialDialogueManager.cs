@@ -243,16 +243,7 @@ public class TutorialDialogueManager : MonoBehaviour
                 isWaitingForTrigger = true; 
             }
         }
-        // --- NEW ---
-        // Check for "Investigation" dialogue
-        /*
-        else if (index == 9) // Element 10 (NEW)
-        {
-            Debug.Log("Waiting for Investigation (X) press. Disabling 'Next' button.");
-            isWaitingForXPress = true;
-            isWaitingForTrigger = true; // This disables the 'Next' button
-        }
-        */
+
         // Check for "Tasklist" dialogue
         else if (index == 9) // Element 10 (NEW) Change value once the Investigation is added
         {
@@ -260,14 +251,24 @@ public class TutorialDialogueManager : MonoBehaviour
             isWaitingForYPress = true;
             isWaitingForTrigger = true; // This disables the 'Next' button
         }
+        // --- NEW ---
+        // Check for "Investigation" dialogue
+     
+        else if (index == 11) // Element 12 (NEW)
+        {
+            Debug.Log("Waiting for Investigation (X) press. Disabling 'Next' button.");
+            grabItemTrigger.SetActive(true);
+            isWaitingForXPress = true;
+            isWaitingForTrigger = true; // This disables the 'Next' button
+        }
+ 
         // --- END NEW ---
         // Check for "Grab Item" dialogue
         else if (index == 12) // Element 13 (Original 11)
         {
             if (grabItemTrigger != null)
             {
-                Debug.Log("Activating Grab Item trigger. Disabling 'Next' button.");
-                grabItemTrigger.SetActive(true);
+                Debug.Log("Activating Grab Item trigger. Disabling 'Next' button");
                 isWaitingForTrigger = true; 
             }
         }
