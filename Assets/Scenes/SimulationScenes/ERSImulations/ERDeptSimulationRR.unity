@@ -616,8 +616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: ECG Cord Maint
   taskDescription: Check the ECG machine cord for damages
-  taskCompletionDialogue:
-  - Faulty wiring can spark nearby objects on fire
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:
@@ -1154,9 +1153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Medicine Box Storage
   taskDescription: Store the Medicine Boxes in the shelves
-  taskCompletionDialogue:
-  - 'Arrange remaining medication boxes neatly in closed shelves '
-  - '(not near direct sunlight). '
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:
@@ -1238,9 +1235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Alcohol Storage
   taskDescription: Store the bottles of alcohol in the shelves
-  taskCompletionDialogue:
-  - 'Store in a cool, ventilated cabinet away from electrical '
-  - outlets and ignition sources.
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:
@@ -2753,10 +2748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: "MgSO\u2084 Maint"
   taskDescription: "Check the MgSO\u2084 bottle"
-  taskCompletionDialogue:
-  - "Exposed MgSO\u2084 is bad as this can"
-  - make fires worse even if itself
-  - is not actually flammable
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:
@@ -7422,9 +7414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Disposal
   taskDescription: Throw away the cotton swab
-  taskCompletionDialogue:
-  - Used cotton swabs may still contain
-  - traces of alcohol that may lead to possible fires
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
@@ -8895,10 +8885,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Dispose Rubber tubes
   taskDescription: DIspose the old rubber tubes
-  taskCompletionDialogue:
-  - Old rubber tubes can cause leaks
-  - which can lead to nearby short circuits
-  - or fuel to a fire source nearby
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
@@ -9973,7 +9960,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskCompletionDialogue.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskCompletionDialogue.Array.data[0]
@@ -12051,9 +12038,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Mask Storage
   taskDescription: Place the Masks in the box
-  taskCompletionDialogue:
-  - Storing excess supplies in safe spaces
-  - Can help avoid unecessary items being at risk of fire
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:
@@ -15846,11 +15831,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: MedicineDisposal
   taskDescription: Throw away the medicine boxes
-  taskCompletionDialogue:
-  - Pharmacies usually have a designated bin
-  - for disposal of old expired medications
-  - The boxes or raw materials may be a fuel source
-  - for a potential fire
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
@@ -17541,10 +17522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: IV Disposal
   taskDescription: Throw away the used IV Bags
-  taskCompletionDialogue:
-  - Used IV bags can cause a short circuit
-  - to nearby electrical equipment
-  - Immediately dispose to reduce the risk
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
@@ -20240,9 +20218,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Document Storage
   taskDescription: Store the Documents in the filing cabinet
-  taskCompletionDialogue:
-  - Paper documents are not just important to store for safe keeping
-  - But also to prevent fire starters
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:
