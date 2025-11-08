@@ -97,6 +97,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b48c014eafb944347981290b62b90d7f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 505076787640482694}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b48c014eafb944347981290b62b90d7f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 934714951030604669}
   m_SourcePrefab: {fileID: 100100000, guid: b48c014eafb944347981290b62b90d7f, type: 3}
 --- !u!1 &2088726989604001011 stripped
 GameObject:
@@ -360,3 +363,22 @@ MonoBehaviour:
   storableType: CleaningRags
   parentTaskController: {fileID: 0}
   hasBeenProcessed: 0
+--- !u!114 &934714951030604669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088726989604001011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9b30d1f303b324e90639c2aad6f4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueTriggerId: 
+  indicatorTarget: {fileID: 0}
+  indicatorText: STORE
+  audioMessageTTS: Store this item in the storage room shelf
+  audioClip: {fileID: 0}
+  hideIndicatorOnDrop: 1
+  onlyShowWhileGrabbed: 1

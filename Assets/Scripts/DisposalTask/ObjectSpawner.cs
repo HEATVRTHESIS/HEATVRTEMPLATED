@@ -1,9 +1,9 @@
-
 using UnityEngine;
 using System.Collections.Generic; // Required for List
 
 /// <summary>
 /// This script handles the spawning of a list of prefabs within a defined area.
+/// Now includes automatic tutorial configuration for spawned objects!
 /// </summary>
 public class ObjectSpawner : MonoBehaviour
 {
@@ -15,6 +15,17 @@ public class ObjectSpawner : MonoBehaviour
 
     // The area where objects will be spawned, represented by a Box Collider
     public BoxCollider spawnArea;
+    
+    [Header("Tutorial Settings")]
+    [Tooltip("If spawned prefabs have TutorialTriggerGrabbable, set this as their indicator target (e.g., trash can)")]
+    public Transform tutorialIndicatorTarget;
+    
+    [Tooltip("Override the indicator text for all spawned objects (leave empty to use prefab's default)")]
+    public string overrideIndicatorText = "";
+    
+    [Tooltip("Override the audio message for all spawned objects (leave empty to use prefab's default)")]
+    [TextArea(3, 5)]
+    public string overrideAudioMessage = "";
     
     // A reference to the transform of the TaskController, which is the parent of this spawner.
     private Transform parentTaskTransform;
@@ -54,8 +65,45 @@ public class ObjectSpawner : MonoBehaviour
             // Instantiate the prefab and set the TaskController as its parent.
             GameObject spawnedObject = Instantiate(prefabToSpawn, randomPos, Quaternion.identity, parentTaskTransform);
             
-            // Note: The previous line 'Instantiate(..., parentTaskTransform)' automatically handles setting the parent.
-            // This is the more correct and clean way to do it.
+            // Configure tutorial settings if the spawned object has TutorialTriggerGrabbable
+            ConfigureTutorialTrigger(spawnedObject);
+        }
+    }
+    
+    /// <summary>
+    /// Configures the TutorialTriggerGrabbable component on spawned objects
+    /// Searches in children in case the component is not on the root object
+    /// </summary>
+    private void ConfigureTutorialTrigger(GameObject spawnedObject)
+    {
+        // Try to find TutorialTriggerGrabbable component (including children)
+        TutorialTriggerGrabbable tutorialTrigger = spawnedObject.GetComponentInChildren<TutorialTriggerGrabbable>();
+        
+        if (tutorialTrigger == null)
+        {
+            // Object doesn't have tutorial trigger, skip
+            return;
+        }
+        
+        // Set the indicator target if specified
+        if (tutorialIndicatorTarget != null)
+        {
+            tutorialTrigger.SetIndicatorTarget(tutorialIndicatorTarget);
+            Debug.Log($"[ObjectSpawner] Set tutorial indicator target for {spawnedObject.name} to {tutorialIndicatorTarget.name}");
+        }
+        
+        // Override indicator text if specified
+        if (!string.IsNullOrEmpty(overrideIndicatorText))
+        {
+            tutorialTrigger.SetIndicatorText(overrideIndicatorText);
+            Debug.Log($"[ObjectSpawner] Set tutorial indicator text for {spawnedObject.name}: {overrideIndicatorText}");
+        }
+        
+        // Override audio message if specified
+        if (!string.IsNullOrEmpty(overrideAudioMessage))
+        {
+            tutorialTrigger.audioMessageTTS = overrideAudioMessage;
+            Debug.Log($"[ObjectSpawner] Set tutorial audio message for {spawnedObject.name}");
         }
     }
 

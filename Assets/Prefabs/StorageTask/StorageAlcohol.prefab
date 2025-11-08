@@ -109,6 +109,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 48079f6bf79ad1a45b217ce4daad8718, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6747650294138204180}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 48079f6bf79ad1a45b217ce4daad8718, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7274277564232524915}
   m_SourcePrefab: {fileID: 100100000, guid: 48079f6bf79ad1a45b217ce4daad8718, type: 3}
 --- !u!1 &7074814443769377024 stripped
 GameObject:
@@ -372,6 +375,25 @@ MonoBehaviour:
   tooltipDescription: Grab!
   actionCooldown: 0.15
   hideWhenGrabbed: 0
+--- !u!114 &7274277564232524915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7074814443769377024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9b30d1f303b324e90639c2aad6f4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueTriggerId: 
+  indicatorTarget: {fileID: 0}
+  indicatorText: STORE
+  audioMessageTTS: Store this item in the storage room shelf
+  audioClip: {fileID: 0}
+  hideIndicatorOnDrop: 1
+  onlyShowWhileGrabbed: 1
 --- !u!4 &7594505948452711354 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 48079f6bf79ad1a45b217ce4daad8718, type: 3}

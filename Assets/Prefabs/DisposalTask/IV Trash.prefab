@@ -109,6 +109,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34098f052f69bbc48b81e0b9ea3d29d2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5418462256385601759}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 34098f052f69bbc48b81e0b9ea3d29d2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7561865583515654976}
   m_SourcePrefab: {fileID: 100100000, guid: 34098f052f69bbc48b81e0b9ea3d29d2, type: 3}
 --- !u!1 &7427307774892890211 stripped
 GameObject:
@@ -371,6 +374,25 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.0010575742, y: 0.001057574, z: 0.002487069}
   m_Center: {x: -4.7232704e-18, y: 0, z: 0.00052480487}
+--- !u!114 &7561865583515654976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7427307774892890211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9b30d1f303b324e90639c2aad6f4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueTriggerId: 
+  indicatorTarget: {fileID: 0}
+  indicatorText: HERE
+  audioMessageTTS: 'Throw this item away in the Yellow Bin '
+  audioClip: {fileID: 0}
+  hideIndicatorOnDrop: 1
+  onlyShowWhileGrabbed: 1
 --- !u!4 &7807211768929616601 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 34098f052f69bbc48b81e0b9ea3d29d2, type: 3}

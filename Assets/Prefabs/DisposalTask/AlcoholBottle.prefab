@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1436134781095635971}
   - component: {fileID: 4868602341258685070}
   - component: {fileID: 3985828302623647627}
+  - component: {fileID: 434304001101771812}
   m_Layer: 0
   m_Name: alcoholbot
   m_TagString: Untagged
@@ -475,6 +476,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9166257131569266225, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3985828302623647627}
+    - targetCorrespondingSourceObject: {fileID: 9166257131569266225, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 434304001101771812}
   m_SourcePrefab: {fileID: 100100000, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
 --- !u!114 &133443135826022377
 MonoBehaviour:
@@ -536,3 +540,22 @@ MonoBehaviour:
   tooltipDescription: Grab!
   actionCooldown: 0.15
   hideWhenGrabbed: 1
+--- !u!114 &434304001101771812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2429628482725024022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9b30d1f303b324e90639c2aad6f4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueTriggerId: 
+  indicatorTarget: {fileID: 0}
+  indicatorText: HERE
+  audioMessageTTS: Throw this item away in the Yellow Bin with the Black Band
+  audioClip: {fileID: 0}
+  hideIndicatorOnDrop: 1
+  onlyShowWhileGrabbed: 1

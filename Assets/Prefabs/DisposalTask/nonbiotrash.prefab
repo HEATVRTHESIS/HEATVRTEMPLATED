@@ -51,6 +51,7 @@ GameObject:
   - component: {fileID: 4602661944112378095}
   - component: {fileID: 8796576193040962874}
   - component: {fileID: 5226870727324206431}
+  - component: {fileID: 3888764696523338149}
   m_Layer: 0
   m_Name: Clipboard
   m_TagString: Untagged
@@ -200,7 +201,7 @@ MonoBehaviour:
   m_HoverEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5226870727324206431}
         m_TargetAssemblyTypeName: TooltipTrigger, Assembly-CSharp
         m_MethodName: CreateTooltip
         m_Mode: 1
@@ -215,7 +216,7 @@ MonoBehaviour:
   m_HoverExited:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5226870727324206431}
         m_TargetAssemblyTypeName: TooltipTrigger, Assembly-CSharp
         m_MethodName: DestroyTooltip
         m_Mode: 1
@@ -391,3 +392,22 @@ MonoBehaviour:
   tooltipDescription: Grab!
   actionCooldown: 0.15
   hideWhenGrabbed: 1
+--- !u!114 &3888764696523338149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6901216374423292350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9b30d1f303b324e90639c2aad6f4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueTriggerId: 
+  indicatorTarget: {fileID: 0}
+  indicatorText: HERE
+  audioMessageTTS: 'Throw this item away in the Black Bin '
+  audioClip: {fileID: 0}
+  hideIndicatorOnDrop: 1
+  onlyShowWhileGrabbed: 1

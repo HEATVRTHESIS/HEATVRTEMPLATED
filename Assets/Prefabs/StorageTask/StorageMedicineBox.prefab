@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 2483740089407314607}
   - component: {fileID: 8769330907673916117}
   - component: {fileID: 2944158975112281523}
+  - component: {fileID: 3971736880248027127}
   m_Layer: 0
   m_Name: StorageMedicineBox
   m_TagString: Untagged
@@ -347,3 +348,22 @@ MonoBehaviour:
   tooltipDescription: Grab!
   actionCooldown: 0.15
   hideWhenGrabbed: 0
+--- !u!114 &3971736880248027127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6236664083042210838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9b30d1f303b324e90639c2aad6f4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueTriggerId: 
+  indicatorTarget: {fileID: 0}
+  indicatorText: STORE
+  audioMessageTTS: Store this item in the right pharmacy shelf
+  audioClip: {fileID: 0}
+  hideIndicatorOnDrop: 1
+  onlyShowWhileGrabbed: 1

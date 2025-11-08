@@ -49,8 +49,8 @@ MonoBehaviour:
   taskName: Disposal
   taskDescription: Throw away the chemical trash
   taskCompletionDialogue:
-  - Congrats
-  - The task is complete
+  - You can crush the bottles before throwing them away
+  - This ensures that the bottle cannot be reused
   audioSource: {fileID: 0}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
@@ -309,6 +309,9 @@ MonoBehaviour:
   - {fileID: 6986418479339866841, guid: 7f3efea37d80a954a883dcd22ae2135a, type: 3}
   spawnCount: 2
   spawnArea: {fileID: 5131563034427321989}
+  tutorialIndicatorTarget: {fileID: 5713260504478304848}
+  overrideIndicatorText: 
+  overrideAudioMessage: 
 --- !u!1 &7973811480239984942
 GameObject:
   m_ObjectHideFlags: 0
