@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7660033996290956408}
   - component: {fileID: 1156335795632281693}
   - component: {fileID: 1635164280463867597}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -151,7 +151,7 @@ MonoBehaviour:
   fireSpread: 0
   onFireTimer: 0
   isEffectOnForever: 0
-  burnOutStart_s: 300
+  burnOutStart_s: 180
   burnOutLength_s: 10
   isReignitable: 0
   deleteAfterBurnout: 0

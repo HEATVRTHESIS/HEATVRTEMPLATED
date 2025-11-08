@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.unity.ai.navigation": "1.1.7",
+    "com.unity.animation.rigging": "1.2.1",
     "com.unity.burst": "1.8.21",
     "com.unity.collab-proxy": "2.8.2",
     "com.unity.collections": "1.4.0",
