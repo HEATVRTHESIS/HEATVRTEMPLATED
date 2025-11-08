@@ -222,7 +222,7 @@ MonoBehaviour:
   m_HoverEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3233681023002030101}
         m_TargetAssemblyTypeName: TooltipTrigger, Assembly-CSharp
         m_MethodName: CreateTooltip
         m_Mode: 1
@@ -237,7 +237,7 @@ MonoBehaviour:
   m_HoverExited:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3233681023002030101}
         m_TargetAssemblyTypeName: TooltipTrigger, Assembly-CSharp
         m_MethodName: DestroyTooltip
         m_Mode: 1

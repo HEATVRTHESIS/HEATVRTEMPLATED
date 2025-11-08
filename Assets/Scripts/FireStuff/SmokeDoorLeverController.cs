@@ -92,7 +92,7 @@ public class SmokeDoorLeverController : CustomTaskController
             targetObject.SetHighlight(true);
         }
 
-        Debug.Log($"Started smoke door task '{taskName}'. Current angle: {myHingeJoint.angle:F1}°");
+       
     }
 
     /// <summary>

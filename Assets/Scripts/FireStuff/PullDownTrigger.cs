@@ -6,7 +6,7 @@ public class PullDownTrigger : CustomTaskController
     // Original PullDownTrigger fields
     private HingeJoint myHingeJoint; 
     public float successAngle = 92f; 
-    public UnityEvent onPullSuccess;
+    [SerializeField] private UnityEvent onPullSuccess;
     private bool _isPulled = false;
 
     // Additional task-specific fields
