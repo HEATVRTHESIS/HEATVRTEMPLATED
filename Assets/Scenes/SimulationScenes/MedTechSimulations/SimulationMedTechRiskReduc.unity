@@ -843,6 +843,11 @@ MonoBehaviour:
   questionTextUI: {fileID: 1662595864987433677}
   yesButton: {fileID: 1109109839812620687}
   noButton: {fileID: 1875803952161542832}
+  cameraTransform: {fileID: 0}
+  distanceFromObject: 1
+  heightOffset: 0.5
+  followSpeed: 5
+  smoothFollow: 1
 --- !u!114 &1113032071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16954,6 +16959,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 105545452}
     m_Modifications:
+    - target: {fileID: 1226719591743753387, guid: f329a10a15c7d3b44b3387306e62c62d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.045
+      objectReference: {fileID: 0}
     - target: {fileID: 2850071237514630861, guid: f329a10a15c7d3b44b3387306e62c62d, type: 3}
       propertyPath: audioSource
       value: 
