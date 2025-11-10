@@ -2101,7 +2101,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1374198196}
   - {fileID: 6553051742120217990}
   - {fileID: 698831974}
   - {fileID: 1025889403}
@@ -2127,6 +2126,11 @@ MonoBehaviour:
   questionTextUI: {fileID: 1662595864987433677}
   yesButton: {fileID: 1109109839812620687}
   noButton: {fileID: 1875803952161542832}
+  cameraTransform: {fileID: 0}
+  distanceFromObject: 1
+  heightOffset: 0.5
+  followSpeed: 5
+  smoothFollow: 1
 --- !u!114 &1113032072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2188,63 +2192,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f9573bf5374da24686b8b54fe38d7d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &1155644976
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1113032068}
-    m_Modifications:
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_Name
-      value: XR Device Simulator
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
 --- !u!1 &1222583303
 GameObject:
   m_ObjectHideFlags: 0
@@ -2294,11 +2241,9 @@ MonoBehaviour:
   - {fileID: 6236664083042210838, guid: 11c98c82a4cb32541ba294e00b8bc078, type: 3}
   spawnCount: 2
   spawnArea: {fileID: 210047835}
---- !u!4 &1374198196 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-  m_PrefabInstance: {fileID: 1155644976}
-  m_PrefabAsset: {fileID: 0}
+  tutorialIndicatorTarget: {fileID: 0}
+  overrideIndicatorText: 
+  overrideAudioMessage: 
 --- !u!1 &1479137389
 GameObject:
   m_ObjectHideFlags: 0
@@ -5521,7 +5466,7 @@ MonoBehaviour:
   m_Camera: {fileID: 2243276073627277798}
   m_OriginBaseGameObject: {fileID: 7017419712344857774}
   m_CameraFloorOffsetObject: {fileID: 2817462930579697597}
-  m_RequestedTrackingOriginMode: 0
+  m_RequestedTrackingOriginMode: 2
   m_CameraYOffset: 1.36144
 --- !u!224 &1139020999960901744
 RectTransform:
@@ -8305,6 +8250,9 @@ MonoBehaviour:
   - {fileID: 6157248462430622884, guid: 0226d8705f2517145a059a7c791c673d, type: 3}
   spawnCount: 1
   spawnArea: {fileID: 3231050250657590567}
+  tutorialIndicatorTarget: {fileID: 0}
+  overrideIndicatorText: 
+  overrideAudioMessage: 
 --- !u!33 &2279416040077322262
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -9010,6 +8958,9 @@ MonoBehaviour:
   - {fileID: 5734279408937186659, guid: 13688dd0e1acb7a449ede6ff31c7b00b, type: 3}
   spawnCount: 2
   spawnArea: {fileID: 8047480855220265155}
+  tutorialIndicatorTarget: {fileID: 0}
+  overrideIndicatorText: 
+  overrideAudioMessage: 
 --- !u!4 &2493394151473753874
 Transform:
   m_ObjectHideFlags: 0
@@ -13784,6 +13735,9 @@ MonoBehaviour:
   - {fileID: 9181349944099433422, guid: 0c570c75114c28f4389060e7e3001d3c, type: 3}
   spawnCount: 3
   spawnArea: {fileID: 7926789429850752016}
+  tutorialIndicatorTarget: {fileID: 0}
+  overrideIndicatorText: 
+  overrideAudioMessage: 
 --- !u!224 &5229223181347783058
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13852,6 +13806,9 @@ MonoBehaviour:
   - {fileID: 6993626809808352531, guid: be3e5104b252c96459025e8c2b6b3a89, type: 3}
   spawnCount: 2
   spawnArea: {fileID: 7506134772890513217}
+  tutorialIndicatorTarget: {fileID: 0}
+  overrideIndicatorText: 
+  overrideAudioMessage: 
 --- !u!4 &5315221837348234897
 Transform:
   m_ObjectHideFlags: 0
@@ -16325,6 +16282,9 @@ MonoBehaviour:
   - {fileID: 5668489214020365865, guid: 9b5d44ed974c8844882ce655e1e2e009, type: 3}
   spawnCount: 2
   spawnArea: {fileID: 6490294015389734522}
+  tutorialIndicatorTarget: {fileID: 0}
+  overrideIndicatorText: 
+  overrideAudioMessage: 
 --- !u!4 &6830741531153620147 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3344383791836496640, guid: 40cfddb6102b76f44b428ac9735f3589, type: 3}
@@ -16949,6 +16909,9 @@ MonoBehaviour:
   - {fileID: 1087520105305034028, guid: 142638592fae68b47b4f69873855d902, type: 3}
   spawnCount: 2
   spawnArea: {fileID: 6537156560178183535}
+  tutorialIndicatorTarget: {fileID: 0}
+  overrideIndicatorText: 
+  overrideAudioMessage: 
 --- !u!114 &7155803908860484551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19848,6 +19811,9 @@ MonoBehaviour:
   - {fileID: 8274811894028601057, guid: 88d1c336e2ea3994ea0391632e3392fc, type: 3}
   spawnCount: 2
   spawnArea: {fileID: 4818415949352128239}
+  tutorialIndicatorTarget: {fileID: 0}
+  overrideIndicatorText: 
+  overrideAudioMessage: 
 --- !u!1 &8716393599062667655
 GameObject:
   m_ObjectHideFlags: 0
