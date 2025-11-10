@@ -821,6 +821,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11493764, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+      propertyPath: androidEngine
+      value: com.google.android.tts
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

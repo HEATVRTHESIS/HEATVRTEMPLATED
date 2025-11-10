@@ -871,12 +871,12 @@ Transform:
   m_GameObject: {fileID: 735510355}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.03713454, y: 1.540627, z: 0.011520673}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 180356598}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1113032068}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &743513128
 PrefabInstance:
@@ -889,6 +889,26 @@ PrefabInstance:
     - target: {fileID: 1458507903568444957, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_Camera
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242382834724990875, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242382834724990875, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898093291477732550, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898093291477732550, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898093291477732550, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5326470366494845269, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_Name
@@ -1395,6 +1415,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 735510357}
   - {fileID: 1966247139}
   - {fileID: 698831974}
   - {fileID: 6553051742120217990}
@@ -1734,6 +1755,10 @@ PrefabInstance:
     - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11493764, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+      propertyPath: androidEngine
+      value: com.google.android.tts
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2092,6 +2117,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8618589968782642333, guid: f329a10a15c7d3b44b3387306e62c62d, type: 3}
   m_PrefabInstance: {fileID: 7905616736896812306}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1596724846 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1921852158566186382, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+  m_PrefabInstance: {fileID: 3080775114083081320}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1623384861 stripped
 GameObject:
@@ -8691,6 +8721,10 @@ PrefabInstance:
       propertyPath: yesAnswerImage
       value: 
       objectReference: {fileID: 21300000, guid: 45e0600eef40b0f48b4d4412e61cf8cd, type: 3}
+    - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+      propertyPath: targetGameObject
+      value: 
+      objectReference: {fileID: 1596724846}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: magnifyingGlassIcon
       value: 
@@ -15891,6 +15925,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7830208495215971711}
     - target: {fileID: 2849985074940863052, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: targetGameObject
+      value: 
+      objectReference: {fileID: 1377550843}
+    - target: {fileID: 2849985074940863052, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
       propertyPath: magnifyingGlassIcon
       value: 
       objectReference: {fileID: 2925773371957866777}
@@ -15906,6 +15944,10 @@ PrefabInstance:
       propertyPath: popupManager
       value: 
       objectReference: {fileID: 7830208495215971711}
+    - target: {fileID: 3994310791346735890, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: targetGameObject
+      value: 
+      objectReference: {fileID: 1971191283}
     - target: {fileID: 3994310791346735890, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
       propertyPath: magnifyingGlassIcon
       value: 
@@ -19102,7 +19144,6 @@ SceneRoots:
   - {fileID: 57626308}
   - {fileID: 5323142383255215585}
   - {fileID: 1113032068}
-  - {fileID: 735510357}
   - {fileID: 118368343}
   - {fileID: 2065643053213364558}
   - {fileID: 799597470}

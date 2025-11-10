@@ -37,6 +37,7 @@ public class MaintenanceTaskController : MonoBehaviour
     // A private total items (always 1 for maintenance tasks)
     private int totalItems = 1;
     private bool isTaskCompleted = false;
+    private bool isHovering = false; // Track if object is being hovered
 
     // Maintenance task-specific fields
     [Header("Maintenance Task Fields")]
@@ -45,6 +46,7 @@ public class MaintenanceTaskController : MonoBehaviour
     public Sprite noAnswerImage;
     public bool isYesTheCorrectAnswer;
     public HighlightableObject targetObject; // The object to look at (e.g., the fire extinguisher)
+    public GameObject targetGameObject; // Backup GameObject reference that won't be destroyed
     public GameObject magnifyingGlassIcon;
 
     // A reference to the PopupManager, consistent with your Bin.cs
@@ -60,6 +62,12 @@ public class MaintenanceTaskController : MonoBehaviour
         if (magnifyingGlassIcon != null)
         {
             magnifyingGlassIcon.SetActive(false);
+        }
+        
+        // If targetGameObject is not set but targetObject is, get the GameObject from it
+        if (targetGameObject == null && targetObject != null)
+        {
+            targetGameObject = targetObject.gameObject;
         }
     }
 
@@ -91,6 +99,7 @@ public class MaintenanceTaskController : MonoBehaviour
     {
         if (!isTaskCompleted && magnifyingGlassIcon != null)
         {
+            isHovering = true; // Set hover state
             magnifyingGlassIcon.SetActive(true);
             // Use the unified TaskListManager instead of MaintenanceTaskListManager
             if (TaskListManager.Instance != null)
@@ -102,6 +111,7 @@ public class MaintenanceTaskController : MonoBehaviour
     
     public void OnGazeExit()
     {
+        isHovering = false; // Clear hover state
         if (magnifyingGlassIcon != null)
         {
             magnifyingGlassIcon.SetActive(false);
@@ -115,7 +125,7 @@ public class MaintenanceTaskController : MonoBehaviour
     {
         // Only show the question if the player is currently gazing at the object
         // and if this is the currently selected task by the manager.
-        if (magnifyingGlassIcon != null && magnifyingGlassIcon.activeSelf && 
+        if (isHovering && 
             TaskListManager.Instance != null && TaskListManager.Instance.IsThisMaintenanceTaskSelected(this))
         {
             // Tell the central QuestionUIManager to show the question for THIS task.
@@ -170,7 +180,7 @@ public class MaintenanceTaskController : MonoBehaviour
     {
         if (isTaskCompleted) return;
 
-        if (targetObject != null)
+        if (targetObject != null && targetObject.enabled)
         {
             targetObject.SetHighlight(true);
         }
@@ -182,7 +192,7 @@ public class MaintenanceTaskController : MonoBehaviour
     public void EndTask()
     {
         Debug.Log($"Ending task '{taskName}' and turning off highlights.");
-        if (targetObject != null)
+        if (targetObject != null && targetObject.enabled)
         {
             targetObject.SetHighlight(false);
         }

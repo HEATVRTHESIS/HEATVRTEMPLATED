@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 48854136}
   - component: {fileID: 48854135}
   - component: {fileID: 48854134}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: SuzieCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1800,7 +1800,7 @@ GameObject:
   - component: {fileID: 200798504}
   - component: {fileID: 200798506}
   - component: {fileID: 200798505}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6498,6 +6498,10 @@ PrefabInstance:
     - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11493764, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+      propertyPath: androidEngine
+      value: com.google.android.tts
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16328,7 +16332,7 @@ GameObject:
   - component: {fileID: 908318050}
   - component: {fileID: 908318049}
   - component: {fileID: 908318048}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: DiagBoxBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22026,7 +22030,7 @@ GameObject:
   - component: {fileID: 1042914805}
   - component: {fileID: 1042914804}
   - component: {fileID: 1042914803}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: NoSuz
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22775,7 +22779,7 @@ GameObject:
   - component: {fileID: 1150754345}
   - component: {fileID: 1150754347}
   - component: {fileID: 1150754346}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: SuzieQuest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23910,6 +23914,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5696770371371422416, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
+      propertyPath: fireParent
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696770371371422416, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
+      propertyPath: triggerParent
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696770371371422416, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
+      propertyPath: fireVFXVariant
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696770371371422416, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
+      propertyPath: vsProMaskParent
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696770371371422416, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
+      propertyPath: runTimeTreeParent
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696770371371422416, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
+      propertyPath: flameWindRetriever
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696770371371422416, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
+      propertyPath: flameLodCullDistance
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5696770371371422416, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
+      propertyPath: globalFireVFXMultiplier
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 5696770371371422430, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
       propertyPath: m_Name
       value: FlameEngine
@@ -25542,7 +25578,7 @@ GameObject:
   - component: {fileID: 1488472043}
   - component: {fileID: 1488472045}
   - component: {fileID: 1488472044}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26610,7 +26646,7 @@ GameObject:
   - component: {fileID: 1586136328}
   - component: {fileID: 1586136327}
   - component: {fileID: 1586136326}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: YesSuz
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45370,7 +45406,7 @@ GameObject:
   - component: {fileID: 7584919817607002596}
   - component: {fileID: 1392696095359204241}
   - component: {fileID: 4131129857643883030}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: YesButt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45554,7 +45590,7 @@ GameObject:
   - component: {fileID: 7139766580700821707}
   - component: {fileID: 6189896698128360382}
   - component: {fileID: 3186526481344399657}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: NoButt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47408,7 +47444,7 @@ GameObject:
   - component: {fileID: 3126282779362997869}
   - component: {fileID: 8807009302233946366}
   - component: {fileID: 4563528893760918518}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47617,7 +47653,7 @@ GameObject:
   - component: {fileID: 3710676200054583629}
   - component: {fileID: 2488159651125798241}
   - component: {fileID: 5969624196960514413}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48922,7 +48958,7 @@ GameObject:
   - component: {fileID: 4964612328733563940}
   - component: {fileID: 7885041806226967014}
   - component: {fileID: 1330964576017067099}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: QuestionCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49583,7 +49619,7 @@ GameObject:
   - component: {fileID: 2021851679445532538}
   - component: {fileID: 445677539038514832}
   - component: {fileID: 2387570890808205652}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Questext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50684,7 +50720,7 @@ GameObject:
   - component: {fileID: 7410186066881259645}
   - component: {fileID: 834467377523863477}
   - component: {fileID: 5378370184204934704}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: DiagBoxBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
