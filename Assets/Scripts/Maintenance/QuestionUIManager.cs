@@ -125,14 +125,34 @@ public class QuestionUIManager : MonoBehaviour
     /// </summary>
     public void ShowQuestion(MaintenanceTaskController task)
     {
-        if (task == null || task.targetObject == null)
+        if (task == null)
         {
-            Debug.LogError("Cannot show question: task or targetObject is null!");
+            Debug.LogError("Cannot show question: task is null!");
+            return;
+        }
+
+        // Use targetGameObject as fallback if targetObject component is destroyed
+        Transform target = null;
+        
+        if (task.targetObject != null)
+        {
+            target = task.targetObject.transform;
+            Debug.Log("Using targetObject transform");
+        }
+        else if (task.targetGameObject != null)
+        {
+            target = task.targetGameObject.transform;
+            Debug.Log("Using targetGameObject transform (targetObject was destroyed)");
+        }
+        
+        if (target == null)
+        {
+            Debug.LogError($"Cannot show question: both targetObject and targetGameObject are null for task '{task.taskName}'!");
             return;
         }
 
         currentTask = task;
-        targetObject = task.targetObject.transform;
+        targetObject = target;
         
         // Set the UI content
         if (questionTextUI != null)

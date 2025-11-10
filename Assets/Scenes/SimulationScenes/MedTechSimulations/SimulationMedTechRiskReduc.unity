@@ -871,12 +871,12 @@ Transform:
   m_GameObject: {fileID: 735510355}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.03713454, y: 1.540627, z: 0.011520673}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 180356598}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1113032068}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &743513128
 PrefabInstance:
@@ -1400,6 +1400,7 @@ Transform:
   - {fileID: 6553051742120217990}
   - {fileID: 1025889403}
   - {fileID: 1914934343}
+  - {fileID: 735510357}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1113032069
@@ -8692,6 +8693,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 45e0600eef40b0f48b4d4412e61cf8cd, type: 3}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+      propertyPath: targetGameObject
+      value: 
+      objectReference: {fileID: 3080775114083081323}
+    - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: magnifyingGlassIcon
       value: 
       objectReference: {fileID: 2925773371957866777}
@@ -8907,6 +8912,11 @@ MonoBehaviour:
 --- !u!4 &3080775114083081322 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5339672174359428346, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+  m_PrefabInstance: {fileID: 3080775114083081320}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3080775114083081323 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1921852158566186382, guid: af578c62e52857b4d865ffc88649658f, type: 3}
   m_PrefabInstance: {fileID: 3080775114083081320}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &3085921282335627590
@@ -15891,6 +15901,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7830208495215971711}
     - target: {fileID: 2849985074940863052, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: targetGameObject
+      value: 
+      objectReference: {fileID: 1377550843}
+    - target: {fileID: 2849985074940863052, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
       propertyPath: magnifyingGlassIcon
       value: 
       objectReference: {fileID: 2925773371957866777}
@@ -15906,6 +15920,10 @@ PrefabInstance:
       propertyPath: popupManager
       value: 
       objectReference: {fileID: 7830208495215971711}
+    - target: {fileID: 3994310791346735890, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: targetGameObject
+      value: 
+      objectReference: {fileID: 1971191283}
     - target: {fileID: 3994310791346735890, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
       propertyPath: magnifyingGlassIcon
       value: 
@@ -19102,7 +19120,6 @@ SceneRoots:
   - {fileID: 57626308}
   - {fileID: 5323142383255215585}
   - {fileID: 1113032068}
-  - {fileID: 735510357}
   - {fileID: 118368343}
   - {fileID: 2065643053213364558}
   - {fileID: 799597470}

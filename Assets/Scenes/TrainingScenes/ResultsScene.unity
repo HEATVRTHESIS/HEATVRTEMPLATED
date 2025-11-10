@@ -273,7 +273,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.1366, y: 0.614, z: 2.519}
-  m_LocalScale: {x: 5.851326, y: 1, z: 0.1114}
+  m_LocalScale: {x: 5.851326, y: 26.869, z: 0.1114}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1975674104}
@@ -294,7 +294,7 @@ BoxCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
@@ -1006,7 +1006,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -2.78, y: 0.614, z: -0.2659}
-  m_LocalScale: {x: 5.6796665, y: 1, z: 0.1114}
+  m_LocalScale: {x: 5.6796665, y: 26.869, z: 0.1114}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1975674104}
@@ -1027,7 +1027,7 @@ BoxCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
@@ -1964,7 +1964,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 1.907, y: 0.614, z: -0.249}
-  m_LocalScale: {x: 5.6784043, y: 1, z: 0.1114}
+  m_LocalScale: {x: 5.6784043, y: 26.869, z: 0.1114}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1975674104}
@@ -1985,7 +1985,7 @@ BoxCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
@@ -2616,7 +2616,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.1566, y: 0.614, z: -3.058}
-  m_LocalScale: {x: 5.778518, y: 1, z: 0.1114}
+  m_LocalScale: {x: 5.778518, y: 26.869, z: 0.1114}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1975674104}
@@ -2637,7 +2637,7 @@ BoxCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
@@ -6327,7 +6327,7 @@ Transform:
   m_GameObject: {fileID: 1717954562237339160}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.5854137, z: -0, w: 0.8107348}
-  m_LocalPosition: {x: -3.93, y: 0.26, z: 3.11}
+  m_LocalPosition: {x: -3.93, y: 0, z: 3.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

@@ -1152,6 +1152,7 @@ MonoBehaviour:
   noAnswerImage: {fileID: 21300000, guid: 554c4c9fc7f51bf4f8d69a9d38177ab2, type: 3}
   isYesTheCorrectAnswer: 1
   targetObject: {fileID: 1101190938}
+  targetGameObject: {fileID: 1101190934}
   magnifyingGlassIcon: {fileID: 2925773371957866777}
   popupManager: {fileID: 7830208495215971711}
   playerAction:
@@ -1174,6 +1175,37 @@ MonoBehaviour:
         m_Flags: 0
       m_Flags: 0
     m_Reference: {fileID: 0}
+--- !u!1 &489923308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 489923309}
+  m_Layer: 0
+  m_Name: ' asd'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &489923309
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489923308}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.866, y: 0, z: -1.554}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1933364764072717195}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &504988914
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3009,7 +3041,7 @@ MonoBehaviour:
   - {fileID: 6236664083042210838, guid: 11c98c82a4cb32541ba294e00b8bc078, type: 3}
   spawnCount: 2
   spawnArea: {fileID: 210047835}
-  tutorialIndicatorTarget: {fileID: 0}
+  tutorialIndicatorTarget: {fileID: 2288953963070056304}
   overrideIndicatorText: 
   overrideAudioMessage: 
 --- !u!1 &1319163841
@@ -3881,6 +3913,7 @@ MonoBehaviour:
   noAnswerImage: {fileID: 21300000, guid: 18e6697c4ec6c5148bb9b76a75294e65, type: 3}
   isYesTheCorrectAnswer: 0
   targetObject: {fileID: 1029187212}
+  targetGameObject: {fileID: 1029187210}
   magnifyingGlassIcon: {fileID: 2925773371957866777}
   popupManager: {fileID: 7830208495215971711}
   playerAction:
@@ -7932,6 +7965,7 @@ Transform:
   m_Children:
   - {fileID: 2961137092360122493}
   - {fileID: 4154887037291083922}
+  - {fileID: 489923309}
   m_Father: {fileID: 105545452}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2004201589107202662
@@ -8954,7 +8988,7 @@ MonoBehaviour:
   - {fileID: 6157248462430622884, guid: 0226d8705f2517145a059a7c791c673d, type: 3}
   spawnCount: 1
   spawnArea: {fileID: 3231050250657590567}
-  tutorialIndicatorTarget: {fileID: 0}
+  tutorialIndicatorTarget: {fileID: 3463547908352046592}
   overrideIndicatorText: 
   overrideAudioMessage: 
 --- !u!33 &2279416040077322262
@@ -10490,6 +10524,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 45e0600eef40b0f48b4d4412e61cf8cd, type: 3}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+      propertyPath: targetGameObject
+      value: 
+      objectReference: {fileID: 3080775114083081323}
+    - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: magnifyingGlassIcon
       value: 
       objectReference: {fileID: 2925773371957866777}
@@ -10705,6 +10743,11 @@ MonoBehaviour:
 --- !u!4 &3080775114083081322 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5339672174359428346, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+  m_PrefabInstance: {fileID: 3080775114083081320}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3080775114083081323 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1921852158566186382, guid: af578c62e52857b4d865ffc88649658f, type: 3}
   m_PrefabInstance: {fileID: 3080775114083081320}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &3085921282335627590
@@ -16704,7 +16747,7 @@ MonoBehaviour:
   - {fileID: 5668489214020365865, guid: 9b5d44ed974c8844882ce655e1e2e009, type: 3}
   spawnCount: 2
   spawnArea: {fileID: 6490294015389734522}
-  tutorialIndicatorTarget: {fileID: 0}
+  tutorialIndicatorTarget: {fileID: 489923309}
   overrideIndicatorText: 
   overrideAudioMessage: 
 --- !u!4 &6830741531153620147 stripped
@@ -19997,7 +20040,7 @@ MonoBehaviour:
   - {fileID: 8274811894028601057, guid: 88d1c336e2ea3994ea0391632e3392fc, type: 3}
   spawnCount: 2
   spawnArea: {fileID: 4818415949352128239}
-  tutorialIndicatorTarget: {fileID: 0}
+  tutorialIndicatorTarget: {fileID: 3622756384415376388}
   overrideIndicatorText: 
   overrideAudioMessage: 
 --- !u!4 &8755912503328860831
