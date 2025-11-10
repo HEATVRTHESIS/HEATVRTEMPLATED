@@ -33,11 +33,11 @@ EditorBuildSettings:
     path: Assets/Scenes/TrainingScenes/ERDepartment/ERDeptTrainingRR.unity
     guid: 9f0f53fd02d40ea4d96a6fd7814e0558
   - enabled: 1
-    path: Assets/Scenes/SimulationScenes/MedTechSimulations/SimulationMedTechRiskReduc.unity
-    guid: d25cf29becd77bd45aac2503a6dedbff
-  - enabled: 1
     path: Assets/Scenes/SimulationScenes/SimulationEvac.unity
     guid: 484ee4b20efbded40b8b9d1ac6ea6b71
+  - enabled: 1
+    path: Assets/Scenes/SimulationScenes/MedTechSimulations/SimulationMedTechRiskReduc.unity
+    guid: d25cf29becd77bd45aac2503a6dedbff
   - enabled: 1
     path: Assets/Scenes/SimulationScenes/MedTechSimulations/SimulationFireMedTech.unity
     guid: 42adfb96d177cb148a4ab5d3c1feae3d
