@@ -15,27 +15,33 @@ public class VRPauseMenu : MonoBehaviour
     [Tooltip("Any other AudioSources you want to control")]
     [SerializeField] private AudioSource[] additionalAudioSources;
     
-    [Header("Input Mapping")]
-    [Tooltip("Map this to the pause button (e.g., left controller menu button)")]
-    public InputActionProperty pauseButtonAction;
+    // Input action for the pause button (menu button on left controller)
+    private InputAction pauseAction;
     
     private bool isPaused = false;
     private float currentVolume = 1f;
     private bool isTTSMuted = false;
     private float timeScaleBeforePause = 1f; // Store time scale when pause menu opens
 
+    private void Awake()
+    {
+        // Create an input action for the left controller menu button
+        pauseAction = new InputAction(
+            name: "Pause",
+            binding: "<XRController>{LeftHand}/menuButton"
+        );
+    }
+
     private void OnEnable()
     {
-        // Subscribe to the action's 'performed' event
-        pauseButtonAction.action.performed += OnPauseButtonPressed;
-        pauseButtonAction.action.Enable();
+        pauseAction.Enable();
+        pauseAction.performed += OnPauseButtonPressed;
     }
 
     private void OnDisable()
     {
-        // Unsubscribe to prevent memory leaks
-        pauseButtonAction.action.performed -= OnPauseButtonPressed;
-        pauseButtonAction.action.Disable();
+        pauseAction.performed -= OnPauseButtonPressed;
+        pauseAction.Disable();
     }
 
     void Start()
@@ -53,7 +59,7 @@ public class VRPauseMenu : MonoBehaviour
             if (dialogueSystem != null)
             {
                 speechAudioSource = dialogueSystem.speechAudioSource;
-                Debug.Log("VRPauseMenu: Found speech AudioSource from VRDialogueSystem");
+                Debug.Log("Found speech AudioSource from VRDialogueSystem");
             }
         }
         
@@ -84,8 +90,6 @@ public class VRPauseMenu : MonoBehaviour
             muteTTSToggle.isOn = isTTSMuted;
             muteTTSToggle.onValueChanged.AddListener(OnMuteTTSToggled);
         }
-        
-        Debug.Log("VRPauseMenu: Initialized and waiting for pause button input");
     }
 
     void Update()
@@ -97,12 +101,9 @@ public class VRPauseMenu : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// This method is called by the InputAction when the pause button is pressed.
-    /// </summary>
+    // This function is called every time the pause button is pressed
     private void OnPauseButtonPressed(InputAction.CallbackContext context)
     {
-        Debug.Log("VRPauseMenu: Pause button pressed!");
         TogglePauseMenu();
     }
 
@@ -122,15 +123,9 @@ public class VRPauseMenu : MonoBehaviour
 
     void OpenPauseMenu()
     {
-        Debug.Log("VRPauseMenu: Opening pause menu");
-        
         if (pauseMenuCanvas != null)
         {
             pauseMenuCanvas.enabled = true;
-        }
-        else
-        {
-            Debug.LogWarning("VRPauseMenu: pauseMenuCanvas is not assigned!");
         }
         
         // Save the current time scale before pausing
@@ -156,8 +151,6 @@ public class VRPauseMenu : MonoBehaviour
 
     void ClosePauseMenu()
     {
-        Debug.Log("VRPauseMenu: Closing pause menu");
-        
         if (pauseMenuCanvas != null)
         {
             pauseMenuCanvas.enabled = false;
@@ -187,11 +180,11 @@ public class VRPauseMenu : MonoBehaviour
         {
             // Silence any currently playing RT-Voice dialogue
             Crosstales.RTVoice.Speaker.Instance.Silence();
-            Debug.Log("VRPauseMenu: TTS Muted");
+            Debug.Log("TTS Muted");
         }
         else
         {
-            Debug.Log("VRPauseMenu: TTS Unmuted");
+            Debug.Log("TTS Unmuted");
         }
     }
 
@@ -222,15 +215,12 @@ public class VRPauseMenu : MonoBehaviour
     // Public methods for UI buttons if needed
     public void ResumeButton()
     {
-        Debug.Log("VRPauseMenu: Resume button clicked");
         isPaused = false;
         ClosePauseMenu();
     }
 
     public void QuitButton()
     {
-        Debug.Log("VRPauseMenu: Quit button clicked");
-        
         // Resume time before quitting
         Time.timeScale = 1f;
         

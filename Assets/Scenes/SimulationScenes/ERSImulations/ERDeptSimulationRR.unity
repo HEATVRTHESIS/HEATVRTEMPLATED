@@ -1152,7 +1152,6 @@ MonoBehaviour:
   noAnswerImage: {fileID: 21300000, guid: 554c4c9fc7f51bf4f8d69a9d38177ab2, type: 3}
   isYesTheCorrectAnswer: 1
   targetObject: {fileID: 1101190938}
-  targetGameObject: {fileID: 1101190934}
   magnifyingGlassIcon: {fileID: 2925773371957866777}
   popupManager: {fileID: 7830208495215971711}
   playerAction:
@@ -3882,7 +3881,6 @@ MonoBehaviour:
   noAnswerImage: {fileID: 21300000, guid: 18e6697c4ec6c5148bb9b76a75294e65, type: 3}
   isYesTheCorrectAnswer: 0
   targetObject: {fileID: 1029187212}
-  targetGameObject: {fileID: 1029187210}
   magnifyingGlassIcon: {fileID: 2925773371957866777}
   popupManager: {fileID: 7830208495215971711}
   playerAction:
@@ -10492,10 +10490,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 45e0600eef40b0f48b4d4412e61cf8cd, type: 3}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
-      propertyPath: targetGameObject
-      value: 
-      objectReference: {fileID: 3080775114083081323}
-    - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: magnifyingGlassIcon
       value: 
       objectReference: {fileID: 2925773371957866777}
@@ -10711,11 +10705,6 @@ MonoBehaviour:
 --- !u!4 &3080775114083081322 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5339672174359428346, guid: af578c62e52857b4d865ffc88649658f, type: 3}
-  m_PrefabInstance: {fileID: 3080775114083081320}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3080775114083081323 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1921852158566186382, guid: af578c62e52857b4d865ffc88649658f, type: 3}
   m_PrefabInstance: {fileID: 3080775114083081320}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &3085921282335627590

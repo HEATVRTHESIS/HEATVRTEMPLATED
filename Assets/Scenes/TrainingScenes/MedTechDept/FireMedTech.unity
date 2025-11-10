@@ -370,38 +370,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5696770371371422416, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
-      propertyPath: fireParent
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5696770371371422416, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
-      propertyPath: triggerParent
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5696770371371422416, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
-      propertyPath: fireVFXVariant
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5696770371371422416, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
-      propertyPath: vsProMaskParent
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5696770371371422416, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
-      propertyPath: runTimeTreeParent
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5696770371371422416, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
-      propertyPath: flameWindRetriever
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5696770371371422416, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
-      propertyPath: flameLodCullDistance
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5696770371371422416, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
-      propertyPath: globalFireVFXMultiplier
-      value: 0.4
-      objectReference: {fileID: 0}
     - target: {fileID: 5696770371371422430, guid: c240efe879a8bc249b3f1332f485edc1, type: 3}
       propertyPath: m_Name
       value: FlameEngine
