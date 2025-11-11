@@ -1,42 +1,27 @@
 using UnityEngine;
 
 /// <summary>
-/// A simple script to start the dialogue system at the beginning of a level.
-/// Attach this script to an empty GameObject in your scene.
+/// Updated main menu dialogue that now works with the tutorial system.
+/// This script should be attached to an empty GameObject in your tutorial scene.
 /// </summary>
-public class MainMenuDialogue: MonoBehaviour
+public class MainMenuDialogue : MonoBehaviour
 {
-    [Tooltip("Drag the GameObject with the VRDialogueSystem component here.")]
+    [Header("References")]
+    [Tooltip("Drag the GameObject with the TutorialManager component here.")]
     [SerializeField]
-    private VRDialogueSystem dialogueSystem;
+    private TutorialManager tutorialManager;
 
     void Start()
     {
-        // Check if the dialogue system reference is set to avoid errors.
-        if (dialogueSystem != null)
+        // Check if the tutorial manager reference is set
+        if (tutorialManager != null)
         {
-           // Define the lines to be displayed.
-string[] welcomeLines = new string[]
-{
-    "Welcome to the HEAT VR Game.",
-    "",
-    "Today you will be learning protocols when there is a fire.",
-    "All of this simulation facility will help you provide crucial knowledge on",
-    "regarding what to do when there's a fire.",
-    "",
-    "First off, check your checklist and look behind you.",
-    "The items and the checklist help you formalize on what you're about to do",
-    "on the training area.",
-    "",
-    "Good luck!"
-};
-
-            // Call the StartDialog method to begin displaying the text.
-            dialogueSystem.StartDialog(welcomeLines);
+            Debug.Log("Tutorial system initialized. The TutorialManager will handle all dialogue.");
+            // The TutorialManager will automatically start the tutorial in its Start() method
         }
         else
         {
-            Debug.LogError("VRDialogueSystem reference is not set in the Inspector on " + gameObject.name);
+            Debug.LogError("TutorialManager reference is not set in the Inspector on " + gameObject.name);
         }
     }
 }
