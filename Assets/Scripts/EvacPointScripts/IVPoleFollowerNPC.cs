@@ -4,8 +4,8 @@ using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.AI;
-using Crosstales.RTVoice;
-using Crosstales.RTVoice.Model;
+using Meta.WitAi.TTS.Utilities; // Meta Voice SDK namespace
+using Meta.WitAi.TTS.Data; // For TTSClipData
 
 public class IVPoleFollowerNPC : MonoBehaviour
 {
@@ -37,32 +37,20 @@ public class IVPoleFollowerNPC : MonoBehaviour
     public float followDistance = 2.5f; // Distance to maintain from IV pole
     public float stopFollowingDistance = 15f; // Stop following if IV pole gets too far
 
-    [Header("RT-Voice TTS Settings")]
+    [Header("Meta Voice TTS Settings")]
     [Tooltip("Enable text-to-speech for this NPC")]
     public bool enableTTS = true;
-    [Tooltip("AudioSource for RT-Voice speech output")]
-    public AudioSource speechAudioSource;
-    [Tooltip("Voice to use for speech (leave empty for default)")]
-    public string voiceName = "";
-    [Tooltip("Speech rate (0.1 to 3.0, 1.0 is normal speed)")]
-    [Range(0.1f, 3.0f)]
-    public float speechRate = 1.0f;
-    [Tooltip("Speech pitch (0.0 to 2.0, 1.0 is normal pitch)")]
-    [Range(0.0f, 2.0f)]
-    public float speechPitch = 1.0f;
-    [Tooltip("Speech volume (0.0 to 1.0)")]
-    [Range(0.0f, 1.0f)]
-    public float speechVolume = 1.0f;
-    [Tooltip("Use native speech (no file generation)")]
-    public bool useNativeSpeech = true;
+    [Tooltip("Shared TTSSpeaker component for Meta Voice SDK speech output")]
+    public TTSSpeaker ttsSpeaker;
+    [Tooltip("Voice preset name for this NPC (e.g., WITSREBECCA, WITSCODY)")]
+    public string voicePresetName = "WITSREBECCA";
     
     private bool isPlayerPointingAtNPC = false;
     private bool isDialogueActive = false;
     private bool isFollowing = false;
     private bool isSpeaking = false;
     private bool hasSpokenTooFarWarning = false;
-    private Voice selectedVoice;
-    private string currentSpeechId;
+    private string currentSpeechText;
 
     void Start()
     {
@@ -74,22 +62,22 @@ public class IVPoleFollowerNPC : MonoBehaviour
         
         talkAction.action.Enable();
 
-        // Setup AudioSource for RT-Voice if not assigned
-        if (speechAudioSource == null && enableTTS)
+        // Setup TTSSpeaker if not assigned
+        if (ttsSpeaker == null && enableTTS)
         {
-            speechAudioSource = gameObject.GetComponent<AudioSource>();
-            if (speechAudioSource == null)
+            ttsSpeaker = GetComponent<TTSSpeaker>();
+            if (ttsSpeaker == null)
             {
-                speechAudioSource = gameObject.AddComponent<AudioSource>();
+                Debug.LogError($"IVPoleFollowerNPC on {gameObject.name}: TTSSpeaker component not found! Please add a TTSSpeaker component or assign it in the inspector.");
             }
         }
 
-        // Subscribe to RT-Voice events if TTS is enabled
-        if (enableTTS && Speaker.Instance != null)
+        // Subscribe to Meta Voice TTS events if TTS is enabled
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.OnSpeakStart += OnSpeechStart;
-            Speaker.Instance.OnSpeakComplete += OnSpeechComplete;
-            Speaker.Instance.OnVoicesReady += OnVoicesReady;
+            ttsSpeaker.Events.OnPlaybackStart.AddListener(OnSpeechStart);
+            ttsSpeaker.Events.OnPlaybackComplete.AddListener(OnSpeechComplete);
+            ttsSpeaker.Events.OnPlaybackCancelled.AddListener(OnSpeechCancelled);
         }
 
         // Set NavMesh stopping distance based on follow distance
@@ -101,96 +89,84 @@ public class IVPoleFollowerNPC : MonoBehaviour
 
     void OnDestroy()
     {
-        // Unsubscribe from RT-Voice events
-        if (enableTTS && Speaker.Instance != null)
+        // Unsubscribe from Meta Voice TTS events
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.OnSpeakStart -= OnSpeechStart;
-            Speaker.Instance.OnSpeakComplete -= OnSpeechComplete;
-            Speaker.Instance.OnVoicesReady -= OnVoicesReady;
-            Speaker.Instance.Silence();
+            ttsSpeaker.Events.OnPlaybackStart.RemoveListener(OnSpeechStart);
+            ttsSpeaker.Events.OnPlaybackComplete.RemoveListener(OnSpeechComplete);
+            ttsSpeaker.Events.OnPlaybackCancelled.RemoveListener(OnSpeechCancelled);
+            ttsSpeaker.Stop();
         }
     }
 
     /// <summary>
-    /// RT-Voice event: Called when voices are ready
+    /// Meta Voice TTS event: Called when speech playback starts
     /// </summary>
-    private void OnVoicesReady()
+    private void OnSpeechStart(TTSSpeaker speaker, TTSClipData clipData)
     {
-        // Try to find the specified voice, or use default
-        if (!string.IsNullOrEmpty(voiceName))
-        {
-            selectedVoice = Speaker.Instance.VoiceForName(voiceName);
-            if (selectedVoice == null)
-            {
-                Debug.LogWarning($"Voice '{voiceName}' not found for {gameObject.name}. Using default voice.");
-            }
-        }
-    }
-
-    /// <summary>
-    /// RT-Voice event: Called when speech starts
-    /// </summary>
-    private void OnSpeechStart(Wrapper wrapper)
-    {
-        if (wrapper.Uid == currentSpeechId)
+        if (clipData.textToSpeak == currentSpeechText)
         {
             isSpeaking = true;
         }
     }
 
     /// <summary>
-    /// RT-Voice event: Called when speech completes
+    /// Meta Voice TTS event: Called when speech playback completes
     /// </summary>
-    private void OnSpeechComplete(Wrapper wrapper)
+    private void OnSpeechComplete(TTSSpeaker speaker, TTSClipData clipData)
     {
-        if (wrapper.Uid == currentSpeechId)
+        if (clipData.textToSpeak == currentSpeechText)
         {
             isSpeaking = false;
         }
     }
 
     /// <summary>
-    /// Starts speech using RT-Voice
+    /// Meta Voice TTS event: Called when speech playback is cancelled
+    /// </summary>
+    private void OnSpeechCancelled(TTSSpeaker speaker, TTSClipData clipData, string reason)
+    {
+        if (clipData.textToSpeak == currentSpeechText)
+        {
+            isSpeaking = false;
+        }
+    }
+
+    /// <summary>
+    /// Starts speech using Meta Voice SDK
     /// </summary>
     private void StartSpeech(string text)
     {
-        if (!enableTTS || Speaker.Instance == null || string.IsNullOrEmpty(text.Trim()))
+        if (!enableTTS || ttsSpeaker == null || string.IsNullOrEmpty(text.Trim()))
+            return;
+
+        // Check if TTS is muted globally (from VRPauseMenu)
+        if (VRDialogueSystem.IsTTSMuted)
             return;
 
         // Stop any ongoing speech first
         if (isSpeaking)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop();
         }
 
-        // Generate unique ID for this speech
-        currentSpeechId = System.Guid.NewGuid().ToString();
-
-        if (useNativeSpeech)
+        // Set the voice preset for this NPC before speaking
+        if (!string.IsNullOrEmpty(voicePresetName))
         {
-            // Use native speech (no file generation)
-            Speaker.Instance.SpeakNative(
-                text,
-                selectedVoice,
-                speechRate,
-                speechPitch,
-                speechVolume
-            );
+            Debug.Log($"[{gameObject.name}] Setting voice to: '{voicePresetName}'");
+            ttsSpeaker.VoiceID = voicePresetName;
+            Debug.Log($"[{gameObject.name}] Voice now set to: '{ttsSpeaker.VoiceID}'");
         }
         else
         {
-            // Use file generation method
-            Speaker.Instance.Speak(
-                text,
-                speechAudioSource,
-                selectedVoice,
-                true,
-                speechRate,
-                speechPitch,
-                speechVolume,
-                currentSpeechId
-            );
+            Debug.LogWarning($"[{gameObject.name}] voicePresetName is empty!");
         }
+
+        // Store current speech text for tracking
+        currentSpeechText = text;
+
+        // Use Speak() for immediate playback
+        ttsSpeaker.Speak(text);
     }
 
     void Update()
@@ -262,9 +238,9 @@ public class IVPoleFollowerNPC : MonoBehaviour
     void OnCancelButtonClicked()
     {
         // Stop any ongoing speech
-        if (enableTTS && isSpeaking)
+        if (enableTTS && isSpeaking && ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop();
         }
 
         dialoguePanel.SetActive(false);
@@ -367,9 +343,9 @@ public class IVPoleFollowerNPC : MonoBehaviour
         }
 
         // Stop any ongoing speech
-        if (enableTTS && isSpeaking)
+        if (enableTTS && isSpeaking && ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop();
         }
         
         Debug.Log($"{gameObject.name} stopped following");
@@ -388,15 +364,6 @@ public class IVPoleFollowerNPC : MonoBehaviour
                 ivPoleTransform = ivPole.transform;
             }
         }
-    }
-
-    /// <summary>
-    /// Public method to set voice by name
-    /// </summary>
-    public void SetVoice(string newVoiceName)
-    {
-        voiceName = newVoiceName;
-        selectedVoice = Speaker.Instance?.VoiceForName(voiceName);
     }
 
     /// <summary>

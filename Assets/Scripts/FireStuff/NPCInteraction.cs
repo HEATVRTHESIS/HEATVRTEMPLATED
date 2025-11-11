@@ -3,8 +3,8 @@ using TMPro;
 using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using Crosstales.RTVoice; // Add RT-Voice namespace
-using Crosstales.RTVoice.Model;
+using Meta.WitAi.TTS.Utilities; // Meta Voice SDK namespace
+using Meta.WitAi.TTS.Data; // For TTSClipData
 
 public class NPCInteraction : CustomTaskController
 {
@@ -39,30 +39,16 @@ public class NPCInteraction : CustomTaskController
     // VR Controller Input
     public InputActionProperty talkAction;
 
-    [Header("RT-Voice TTS Settings")]
+    [Header("Meta Voice TTS Settings")]
     [Tooltip("Enable text-to-speech for this NPC")]
     public bool enableTTS = true;
-    [Tooltip("AudioSource for RT-Voice speech output")]
-    public AudioSource speechAudioSource;
-    [Tooltip("Voice to use for speech (leave empty for default)")]
-    public string voiceName = "";
-    [Tooltip("Speech rate (0.1 to 3.0, 1.0 is normal speed)")]
-    [Range(0.1f, 3.0f)]
-    public float speechRate = 1.0f;
-    [Tooltip("Speech pitch (0.0 to 2.0, 1.0 is normal pitch)")]
-    [Range(0.0f, 2.0f)]
-    public float speechPitch = 1.0f;
-    [Tooltip("Speech volume (0.0 to 1.0)")]
-    [Range(0.0f, 1.0f)]
-    public float speechVolume = 1.0f;
-    [Tooltip("Use native speech (no file generation)")]
-    public bool useNativeSpeech = true;
+    [Tooltip("TTSSpeaker component for Meta Voice SDK speech output")]
+    public TTSSpeaker ttsSpeaker;
 
     private bool isPlayerPointingAtNPC = false;
     private bool isDialogueActive = false;
     private bool isSpeaking = false;
-    private Voice selectedVoice;
-    private string currentSpeechId;
+    private string currentSpeechText;
 
     void Start()
     {
@@ -84,117 +70,93 @@ public class NPCInteraction : CustomTaskController
         // Set totalItems to 1 for NPC evacuation task
         totalItems = 1;
 
-        // Setup AudioSource for RT-Voice if not assigned
-        if (speechAudioSource == null && enableTTS)
+        // Setup TTSSpeaker if not assigned
+        if (ttsSpeaker == null && enableTTS)
         {
-            speechAudioSource = gameObject.GetComponent<AudioSource>();
-            if (speechAudioSource == null)
+            ttsSpeaker = GetComponent<TTSSpeaker>();
+            if (ttsSpeaker == null)
             {
-                speechAudioSource = gameObject.AddComponent<AudioSource>();
+                Debug.LogError($"NPCInteraction on {gameObject.name}: TTSSpeaker component not found! Please add a TTSSpeaker component or assign it in the inspector.");
             }
         }
 
-        // Subscribe to RT-Voice events if TTS is enabled
-        if (enableTTS && Speaker.Instance != null)
+        // Subscribe to Meta Voice TTS events if TTS is enabled
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.OnSpeakStart += OnSpeechStart;
-            Speaker.Instance.OnSpeakComplete += OnSpeechComplete;
-            Speaker.Instance.OnVoicesReady += OnVoicesReady;
+            ttsSpeaker.Events.OnPlaybackStart.AddListener(OnSpeechStart);
+            ttsSpeaker.Events.OnPlaybackComplete.AddListener(OnSpeechComplete);
+            ttsSpeaker.Events.OnPlaybackCancelled.AddListener(OnSpeechCancelled);
         }
     }
 
     void OnDestroy()
     {
-        // Unsubscribe from RT-Voice events
-        if (enableTTS && Speaker.Instance != null)
+        // Unsubscribe from Meta Voice TTS events
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.OnSpeakStart -= OnSpeechStart;
-            Speaker.Instance.OnSpeakComplete -= OnSpeechComplete;
-            Speaker.Instance.OnVoicesReady -= OnVoicesReady;
-            Speaker.Instance.Silence();
+            ttsSpeaker.Events.OnPlaybackStart.RemoveListener(OnSpeechStart);
+            ttsSpeaker.Events.OnPlaybackComplete.RemoveListener(OnSpeechComplete);
+            ttsSpeaker.Events.OnPlaybackCancelled.RemoveListener(OnSpeechCancelled);
+            ttsSpeaker.Stop();
         }
     }
 
     /// <summary>
-    /// RT-Voice event: Called when voices are ready
+    /// Meta Voice TTS event: Called when speech playback starts
     /// </summary>
-    private void OnVoicesReady()
+    private void OnSpeechStart(TTSSpeaker speaker, TTSClipData clipData)
     {
-        // Try to find the specified voice, or use default
-        if (!string.IsNullOrEmpty(voiceName))
-        {
-            selectedVoice = Speaker.Instance.VoiceForName(voiceName);
-            if (selectedVoice == null)
-            {
-                Debug.LogWarning($"Voice '{voiceName}' not found for {gameObject.name}. Using default voice.");
-            }
-        }
-    }
-
-    /// <summary>
-    /// RT-Voice event: Called when speech starts
-    /// </summary>
-    private void OnSpeechStart(Wrapper wrapper)
-    {
-        if (wrapper.Uid == currentSpeechId)
+        if (clipData.textToSpeak == currentSpeechText)
         {
             isSpeaking = true;
         }
     }
 
     /// <summary>
-    /// RT-Voice event: Called when speech completes
+    /// Meta Voice TTS event: Called when speech playback completes
     /// </summary>
-    private void OnSpeechComplete(Wrapper wrapper)
+    private void OnSpeechComplete(TTSSpeaker speaker, TTSClipData clipData)
     {
-        if (wrapper.Uid == currentSpeechId)
+        if (clipData.textToSpeak == currentSpeechText)
         {
             isSpeaking = false;
         }
     }
 
     /// <summary>
-    /// Starts speech using RT-Voice
+    /// Meta Voice TTS event: Called when speech playback is cancelled
+    /// </summary>
+    private void OnSpeechCancelled(TTSSpeaker speaker, TTSClipData clipData, string reason)
+    {
+        if (clipData.textToSpeak == currentSpeechText)
+        {
+            isSpeaking = false;
+        }
+    }
+
+    /// <summary>
+    /// Starts speech using Meta Voice SDK
     /// </summary>
     private void StartSpeech(string text)
     {
-        if (!enableTTS || Speaker.Instance == null || string.IsNullOrEmpty(text.Trim()))
+        if (!enableTTS || ttsSpeaker == null || string.IsNullOrEmpty(text.Trim()))
+            return;
+
+        // Check if TTS is muted globally (from VRPauseMenu)
+        if (VRDialogueSystem.IsTTSMuted)
             return;
 
         // Stop any ongoing speech first
         if (isSpeaking)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop(currentSpeechText);
         }
 
-        // Generate unique ID for this speech
-        currentSpeechId = System.Guid.NewGuid().ToString();
+        // Store current speech text for tracking
+        currentSpeechText = text;
 
-        if (useNativeSpeech)
-        {
-            // Use native speech (no file generation)
-            Speaker.Instance.SpeakNative(
-                text,
-                selectedVoice,
-                speechRate,
-                speechPitch,
-                speechVolume
-            );
-        }
-        else
-        {
-            // Use file generation method
-            Speaker.Instance.Speak(
-                text,
-                speechAudioSource,
-                selectedVoice,
-                true,
-                speechRate,
-                speechPitch,
-                speechVolume,
-                currentSpeechId
-            );
-        }
+        // Use SpeakQueued to ensure speech is properly queued
+        ttsSpeaker.SpeakQueued(text);
     }
 
     /// <summary>
@@ -298,9 +260,9 @@ public class NPCInteraction : CustomTaskController
         CompleteTask();
 
         // Stop any ongoing speech before destroying
-        if (enableTTS && isSpeaking)
+        if (enableTTS && isSpeaking && ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop();
         }
 
         // Hide dialogue first
@@ -339,9 +301,9 @@ public class NPCInteraction : CustomTaskController
         Debug.Log($"Ending NPC evacuation task '{taskName}' and turning off highlights.");
 
         // Stop any ongoing speech
-        if (enableTTS && isSpeaking)
+        if (enableTTS && isSpeaking && ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop();
         }
 
         if (targetObject != null)
@@ -353,15 +315,6 @@ public class NPCInteraction : CustomTaskController
         {
             interactionIndicator.SetActive(false);
         }
-    }
-
-    /// <summary>
-    /// Public method to set voice by name
-    /// </summary>
-    public void SetVoice(string newVoiceName)
-    {
-        voiceName = newVoiceName;
-        selectedVoice = Speaker.Instance?.VoiceForName(voiceName);
     }
 
     /// <summary>

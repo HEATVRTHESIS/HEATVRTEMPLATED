@@ -850,92 +850,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224778073}
   m_CullTransparentMesh: 1
---- !u!1 &229676227
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 229676230}
-  - component: {fileID: 229676229}
-  - component: {fileID: 229676228}
-  m_Layer: 0
-  m_Name: RTVoice
-  m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &229676228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 229676227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5907082d48125c43af0cfe08c54cbf5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &229676229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 229676227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11222982cd0da5048a5b032a719ffd7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dontDestroy: 1
-  customProvider: {fileID: 0}
-  customMode: 0
-  eSpeakMode: 0
-  eSpeakApplication: espeak
-  eSpeakDataPath: 
-  eSpeakModifier: 0
-  androidEngine: 
-  windowsForce32bit: 0
-  autoClearTags: 0
-  caching: 1
-  silenceOnDisable: 0
-  silenceOnFocusLost: 0
-  handleFocus: 1
-  OnReady:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSpeakStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSpeakCompleted:
-    m_PersistentCalls:
-      m_Calls: []
-  OnProviderChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnError:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!4 &229676230
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 229676227}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &314236167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1731,6 +1645,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+--- !u!114 &743513129 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7153430123473003476, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 743513128}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15403450229c3a4b8455a61d6143a6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &744823902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3451,9 +3376,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1558719257}
     - target: {fileID: 4689036134721822645, guid: 0bda3cfbfab6913418c5495410c75a63, type: 3}
+      propertyPath: ttsSpeaker
+      value: 
+      objectReference: {fileID: 743513129}
+    - target: {fileID: 4689036134721822645, guid: 0bda3cfbfab6913418c5495410c75a63, type: 3}
       propertyPath: dialogueText
       value: 
       objectReference: {fileID: 1614186162}
+    - target: {fileID: 4689036134721822645, guid: 0bda3cfbfab6913418c5495410c75a63, type: 3}
+      propertyPath: waitForSpeech
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4689036134721822645, guid: 0bda3cfbfab6913418c5495410c75a63, type: 3}
       propertyPath: hoverIndicator
       value: 
@@ -20933,4 +20866,3 @@ SceneRoots:
   - {fileID: 3663535275640584380}
   - {fileID: 504988914}
   - {fileID: 1562044956}
-  - {fileID: 229676230}

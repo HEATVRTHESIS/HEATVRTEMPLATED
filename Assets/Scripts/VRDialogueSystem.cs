@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO; // Add this for Directory operations
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using Crosstales.RTVoice; // Add RT-Voice namespace
-using Crosstales.RTVoice.Model;
+using Meta.WitAi.TTS.Utilities; // Meta Voice SDK namespace
+using Meta.WitAi.TTS.Events; // For TTS events
+using Meta.WitAi.TTS.Data; // For TTSClipData
 
 /// <summary>
 /// A text display system for VR that shows dialogue lines and progresses with user input.
-/// Includes animated mascot that "talks" during text typing and RT-Voice text-to-speech.
+/// Includes animated mascot that "talks" during text typing and Meta Voice SDK text-to-speech.
 /// Pauses the game time scale during dialogue display.
 /// </summary>
 public class VRDialogueSystem : MonoBehaviour
@@ -39,41 +39,27 @@ public class VRDialogueSystem : MonoBehaviour
     [Tooltip("How fast the mascot's mouth animates (seconds between sprite changes).")]
     public float mouthAnimationSpeed = 0.15f;
 
-    [Header("RT-Voice Settings")]
-    [Tooltip("Enable text-to-speech using RT-Voice")]
+    [Header("Meta Voice TTS Settings")]
+    [Tooltip("Enable text-to-speech using Meta Voice SDK")]
     public bool enableTTS = true;
-    [Tooltip("AudioSource for RT-Voice speech output")]
-    public AudioSource speechAudioSource;
-    [Tooltip("Voice to use for speech (leave empty for default)")]
-    public string voiceName = "";
-    [Tooltip("Speech rate (0.1 to 3.0, 1.0 is normal speed)")]
-    [Range(0.1f, 3.0f)]
-    public float speechRate = 1.0f;
-    [Tooltip("Speech pitch (0.0 to 2.0, 1.0 is normal pitch)")]
-    [Range(0.0f, 2.0f)]
-    public float speechPitch = 1.0f;
-    [Tooltip("Speech volume (0.0 to 1.0)")]
-    [Range(0.0f, 1.0f)]
-    public float speechVolume = 1.0f;
+    [Tooltip("TTSSpeaker component for Meta Voice SDK speech output")]
+    public TTSSpeaker ttsSpeaker;
     [Tooltip("Wait for speech to complete before allowing next line")]
     public bool waitForSpeech = true;
     [Tooltip("Show text immediately when speech starts (disable typewriter for speech)")]
     public bool showTextImmediatelyWithSpeech = false;
-    [Tooltip("Use native speech (no file generation) to avoid file system issues")]
-    public bool useNativeSpeech = true;
 
     // --- Private Fields ---
     private Queue<string> _dialogLines = new Queue<string>();
     private bool _isDisplaying = false;
     private bool _isTyping = false;
     private bool _isSpeaking = false;
-    private bool _speechStartedForCurrentLine = false; // NEW: Track if speech already started for this line
+    private bool _speechStartedForCurrentLine = false; // Track if speech already started for this line
     private string _currentLine;
     private Coroutine _typingCoroutine;
     private Coroutine _mouthAnimationCoroutine;
     private float _originalTimeScale = 1f;
-    private Voice _selectedVoice;
-    private string _currentSpeechId;
+    private string _currentSpeechText; // Track current speech text for stop operations
 
     // Static mute state that can be controlled by VRPauseMenu
     public static bool IsTTSMuted { get; set; } = false;
@@ -83,16 +69,14 @@ public class VRDialogueSystem : MonoBehaviour
         // Store the original time scale
         _originalTimeScale = Time.timeScale;
 
-        // Configure RT-Voice audio path to avoid file conflicts
-        if (enableTTS)
+        // Setup TTSSpeaker if not assigned
+        if (ttsSpeaker == null && enableTTS)
         {
-            // Set RT-Voice to use a specific directory for audio files
-            string audioPath = Path.Combine(Application.persistentDataPath, "RTVoiceAudio");
-            if (!Directory.Exists(audioPath))
+            ttsSpeaker = GetComponent<TTSSpeaker>();
+            if (ttsSpeaker == null)
             {
-                Directory.CreateDirectory(audioPath);
+                Debug.LogError("VRDialogueSystem: TTSSpeaker component not found! Please add a TTSSpeaker component or assign it in the inspector.");
             }
-            Crosstales.RTVoice.Util.Config.AUDIOFILE_PATH = audioPath;
         }
 
         // Ensure the initial state is hidden
@@ -105,16 +89,6 @@ public class VRDialogueSystem : MonoBehaviour
         if (mascotImage != null && mouthClosedSprite != null)
         {
             mascotImage.sprite = mouthClosedSprite;
-        }
-
-        // Setup AudioSource for RT-Voice if not assigned
-        if (speechAudioSource == null && enableTTS)
-        {
-            speechAudioSource = gameObject.GetComponent<AudioSource>();
-            if (speechAudioSource == null)
-            {
-                speechAudioSource = gameObject.AddComponent<AudioSource>();
-            }
         }
 
         // Listen for the next line action button press
@@ -131,12 +105,12 @@ public class VRDialogueSystem : MonoBehaviour
             nextLineAction.action.Enable();
         }
 
-        // Subscribe to RT-Voice events if TTS is enabled
-        if (enableTTS)
+        // Subscribe to Meta Voice TTS events if TTS is enabled
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.OnSpeakStart += OnSpeechStart;
-            Speaker.Instance.OnSpeakComplete += OnSpeechComplete;
-            Speaker.Instance.OnVoicesReady += OnVoicesReady;
+            ttsSpeaker.Events.OnPlaybackStart.AddListener(OnSpeechStart);
+            ttsSpeaker.Events.OnPlaybackComplete.AddListener(OnSpeechComplete);
+            ttsSpeaker.Events.OnPlaybackCancelled.AddListener(OnSpeechCancelled);
         }
     }
 
@@ -147,12 +121,12 @@ public class VRDialogueSystem : MonoBehaviour
             nextLineAction.action.Disable();
         }
 
-        // Unsubscribe from RT-Voice events
-        if (enableTTS && Speaker.Instance != null)
+        // Unsubscribe from Meta Voice TTS events
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.OnSpeakStart -= OnSpeechStart;
-            Speaker.Instance.OnSpeakComplete -= OnSpeechComplete;
-            Speaker.Instance.OnVoicesReady -= OnVoicesReady;
+            ttsSpeaker.Events.OnPlaybackStart.RemoveListener(OnSpeechStart);
+            ttsSpeaker.Events.OnPlaybackComplete.RemoveListener(OnSpeechComplete);
+            ttsSpeaker.Events.OnPlaybackCancelled.RemoveListener(OnSpeechCancelled);
         }
         
         // Restore time scale if dialogue is disabled while active
@@ -163,27 +137,11 @@ public class VRDialogueSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// RT-Voice event: Called when voices are ready
+    /// Meta Voice TTS event: Called when speech playback starts
     /// </summary>
-    private void OnVoicesReady()
+    private void OnSpeechStart(TTSSpeaker speaker, TTSClipData clipData)
     {
-        // Try to find the specified voice, or use default
-        if (!string.IsNullOrEmpty(voiceName))
-        {
-            _selectedVoice = Speaker.Instance.VoiceForName(voiceName);
-            if (_selectedVoice == null)
-            {
-                Debug.LogWarning($"Voice '{voiceName}' not found. Using default voice.");
-            }
-        }
-    }
-
-    /// <summary>
-    /// RT-Voice event: Called when speech starts
-    /// </summary>
-    private void OnSpeechStart(Wrapper wrapper)
-    {
-        if (wrapper.Uid == _currentSpeechId)
+        if (clipData.textToSpeak == _currentSpeechText)
         {
             _isSpeaking = true;
             // Start mouth animation when speech begins
@@ -195,14 +153,30 @@ public class VRDialogueSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// RT-Voice event: Called when speech completes
+    /// Meta Voice TTS event: Called when speech playback completes
     /// </summary>
-    private void OnSpeechComplete(Wrapper wrapper)
+    private void OnSpeechComplete(TTSSpeaker speaker, TTSClipData clipData)
     {
-        if (wrapper.Uid == _currentSpeechId)
+        if (clipData.textToSpeak == _currentSpeechText)
         {
             _isSpeaking = false;
             // Stop mouth animation when speech ends (if not typing)
+            if (!_isTyping)
+            {
+                StopMouthAnimation();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Meta Voice TTS event: Called when speech playback is cancelled
+    /// </summary>
+    private void OnSpeechCancelled(TTSSpeaker speaker, TTSClipData clipData, string reason)
+    {
+        if (clipData.textToSpeak == _currentSpeechText)
+        {
+            _isSpeaking = false;
+            // Stop mouth animation when speech is cancelled (if not typing)
             if (!_isTyping)
             {
                 StopMouthAnimation();
@@ -224,9 +198,9 @@ public class VRDialogueSystem : MonoBehaviour
         _isSpeaking = false;
 
         // Stop any ongoing speech
-        if (enableTTS)
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop();
         }
 
         // Add all new lines to the queue
@@ -261,140 +235,86 @@ public class VRDialogueSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Handles the button press event from the input system.
-    /// </summary>
-    private void OnNextLineButtonPressed(InputAction.CallbackContext context)
-    {
-        if (!_isDisplaying)
-        {
-            // Do nothing if the dialogue is not active
-            return;
-        }
-
-        // If speech is playing and we're waiting for it, skip speech
-        if (_isSpeaking && enableTTS)
-        {
-            Speaker.Instance.Silence();
-            return;
-        }
-
-        // If a line is currently being typed, complete it immediately.
-        if (_isTyping)
-        {
-            CompleteLine();
-        }
-        else if (!waitForSpeech || !_isSpeaking)
-        {
-            // If the line is complete and speech is done (or we're not waiting), move to next line
-            DisplayNextLine();
-        }
-    }
-
-    /// <summary>
-    /// Displays the next line from the queue or ends the dialogue if no more lines exist.
+    /// Displays the next line in the queue, if any.
     /// </summary>
     private void DisplayNextLine()
     {
-        // Ensure the canvas is active before trying to start coroutines
-        if (dialogCanvas != null && !dialogCanvas.activeInHierarchy)
-        {
-            Debug.LogWarning("VRDialogueSystem: Trying to display dialogue when canvas is inactive!");
-            return;
-        }
-
-        // Stop any ongoing typing coroutine just in case
-        if (_typingCoroutine != null)
-        {
-            StopCoroutine(_typingCoroutine);
-        }
-
-        // Stop any ongoing speech
-        if (enableTTS && _isSpeaking)
-        {
-            Speaker.Instance.Silence();
-        }
-
-        // Reset speech flag for new line
-        _speechStartedForCurrentLine = false;
-
-        // Check if there are lines left to display
+        // If there are more lines, show the next one
         if (_dialogLines.Count > 0)
         {
-            // Dequeue and store the line before starting the coroutine.
             _currentLine = _dialogLines.Dequeue();
+            _speechStartedForCurrentLine = false; // Reset speech flag for new line
             
-            // Skip empty lines
-            if (string.IsNullOrEmpty(_currentLine.Trim()))
+            // Show text immediately if the option is enabled
+            if (showTextImmediatelyWithSpeech)
             {
-                DisplayNextLine(); // Recursively call to get the next non-empty line
-                return;
-            }
-            
-            if (enableTTS && showTextImmediatelyWithSpeech)
-            {
-                // Show text immediately and start speech
                 dialogText.text = _currentLine;
-                StartSpeech(_currentLine);
+                _isTyping = false;
+                
+                // Start speech immediately
+                if (enableTTS)
+                {
+                    StartSpeech(_currentLine);
+                }
             }
             else
             {
-                // Start typing animation
+                // Otherwise, start the typing animation
                 _typingCoroutine = StartCoroutine(TypeLine(_currentLine));
             }
         }
         else
         {
-            // If the queue is empty, all lines have been displayed, so end the dialogue
+            // No more lines, end the dialogue
             EndDialog();
         }
     }
 
     /// <summary>
-    /// Starts speech using RT-Voice
+    /// Handles the button press for progressing dialogue.
+    /// </summary>
+    private void OnNextLineButtonPressed(InputAction.CallbackContext context)
+    {
+        // If dialogue isn't active, ignore
+        if (!_isDisplaying)
+            return;
+
+        // If typing is in progress, complete the current line
+        if (_isTyping)
+        {
+            CompleteLine();
+            return;
+        }
+
+        // If we're waiting for speech to complete, don't allow progressing
+        if (waitForSpeech && _isSpeaking)
+        {
+            return;
+        }
+
+        // Stop any ongoing speech before moving to next line
+        if (enableTTS && ttsSpeaker != null)
+        {
+            ttsSpeaker.Stop(_currentSpeechText);
+        }
+
+        // Otherwise, show the next line
+        DisplayNextLine();
+    }
+
+    /// <summary>
+    /// Starts text-to-speech for the given line using Meta Voice SDK
     /// </summary>
     private void StartSpeech(string text)
     {
-        if (!enableTTS || Speaker.Instance == null || string.IsNullOrEmpty(text.Trim()))
+        if (!enableTTS || ttsSpeaker == null || IsTTSMuted)
             return;
 
-        // Don't start speech if TTS is muted
-        if (IsTTSMuted)
-        {
-            Debug.Log("TTS is muted - skipping speech");
-            return;
-        }
-
-        // Mark that speech has started for this line
+        _currentSpeechText = text;
         _speechStartedForCurrentLine = true;
 
-        // Generate unique ID for this speech
-        _currentSpeechId = System.Guid.NewGuid().ToString();
-
-        if (useNativeSpeech)
-        {
-            // Use native speech (no file generation)
-            Speaker.Instance.SpeakNative(
-                text,                    // text to speak
-                _selectedVoice,          // voice (can be null for default)
-                speechRate,              // rate
-                speechPitch,             // pitch  
-                speechVolume             // volume
-            );
-        }
-        else
-        {
-            // Use the correct RT-Voice Speak method with file generation
-            Speaker.Instance.Speak(
-                text,                    // text to speak
-                speechAudioSource,       // audio source
-                _selectedVoice,          // voice (can be null for default)
-                true,                    // speak immediately
-                speechRate,              // rate
-                speechPitch,             // pitch  
-                speechVolume,            // volume
-                _currentSpeechId         // unique ID
-            );
-        }
+        // Use SpeakQueued to ensure speech is properly queued
+        ttsSpeaker.SpeakQueued(text);
     }
 
     /// <summary>
@@ -457,7 +377,7 @@ public class VRDialogueSystem : MonoBehaviour
             StopMouthAnimation();
         }
 
-        // FIXED: Only start speech if it hasn't been started yet for this line
+        // Only start speech if it hasn't been started yet for this line
         if (enableTTS && !_speechStartedForCurrentLine && !_isSpeaking)
         {
             StartSpeech(_currentLine);
@@ -556,9 +476,9 @@ public class VRDialogueSystem : MonoBehaviour
         _isSpeaking = false;
 
         // Stop any ongoing speech
-        if (enableTTS)
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop();
         }
 
         // Stop any mouth animation
@@ -596,9 +516,9 @@ public class VRDialogueSystem : MonoBehaviour
         }
 
         // Stop speech
-        if (enableTTS)
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop();
         }
 
         // Clear the queue and end dialogue
@@ -615,24 +535,11 @@ public class VRDialogueSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Get available voices for UI selection
+    /// Get if TTS is currently speaking
     /// </summary>
-    public List<Voice> GetAvailableVoices()
+    public bool IsSpeaking()
     {
-        if (enableTTS && Speaker.Instance != null)
-        {
-            return Speaker.Instance.Voices;
-        }
-        return new List<Voice>();
-    }
-
-    /// <summary>
-    /// Set voice by name
-    /// </summary>
-    public void SetVoice(string newVoiceName)
-    {
-        voiceName = newVoiceName;
-        _selectedVoice = Speaker.Instance?.VoiceForName(voiceName);
+        return _isSpeaking;
     }
 
     void OnDestroy()
@@ -644,9 +551,9 @@ public class VRDialogueSystem : MonoBehaviour
         }
 
         // Stop any ongoing speech
-        if (enableTTS && Speaker.Instance != null)
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop();
         }
     }
 }

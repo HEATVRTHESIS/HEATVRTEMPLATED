@@ -15609,6 +15609,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 97406881364485125, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: ttsSpeaker
+      value: 
+      objectReference: {fileID: 4598410587691705966}
+    - target: {fileID: 97406881364485125, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
       propertyPath: cancelButton
       value: 
       objectReference: {fileID: 1042914803}
@@ -45815,12 +45819,7 @@ MonoBehaviour:
   npcAnimator: {fileID: 5368670657153546207}
   playerTransform: {fileID: 9218719975206061688}
   enableTTS: 1
-  speechAudioSource: {fileID: 9207420083164560832}
-  voiceName: 
-  speechRate: 1
-  speechPitch: 1
-  speechVolume: 1
-  useNativeSpeech: 1
+  ttsSpeaker: {fileID: 4598410587691705966}
 --- !u!195 &4353715978970414003
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -46106,9 +46105,29 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 2242382834724990875, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242382834724990875, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2928753624113935422, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_Layer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898093291477732550, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898093291477732550, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4898093291477732550, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5091672698383021475, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_Layer
@@ -46243,6 +46262,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+--- !u!114 &4598410587691705966 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7153430123473003476, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 4598410587691705965}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15403450229c3a4b8455a61d6143a6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4636798376134385127
 MonoBehaviour:
   m_ObjectHideFlags: 0

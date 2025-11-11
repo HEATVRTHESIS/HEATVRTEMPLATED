@@ -842,12 +842,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 0}
   enableTTS: 1
-  speechAudioSource: {fileID: 0}
-  voiceName: 
-  speechRate: 1
-  speechPitch: 1
-  speechVolume: 1
-  useNativeSpeech: 1
+  ttsSpeaker: {fileID: 757874634987369199}
 --- !u!143 &342037933
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2069,14 +2064,9 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 0}
   enableTTS: 1
-  speechAudioSource: {fileID: 5373646681556592961}
-  voiceName: 
-  speechRate: 1
-  speechPitch: 1
-  speechVolume: 1
+  ttsSpeaker: {fileID: 757874634987369199}
   waitForSpeech: 1
   showTextImmediatelyWithSpeech: 0
-  useNativeSpeech: 1
   fireTimer: {fileID: 1900590543}
   scriptsToDisable: []
   startCutsceneOnStart: 1
@@ -2145,63 +2135,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7177315462333056187, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
   m_PrefabInstance: {fileID: 1133196108}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1269581622
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 101928, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_Name
-      value: RTVoice
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
 --- !u!1001 &1387027170
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5513,6 +5446,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8780896447573500414, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
   m_PrefabInstance: {fileID: 757874634987369196}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &757874634987369199 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7153430123473003476, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 757874634987369196}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15403450229c3a4b8455a61d6143a6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &794146603043493486
 Transform:
   m_ObjectHideFlags: 0
@@ -16932,4 +16876,3 @@ SceneRoots:
   - {fileID: 1426004441}
   - {fileID: 1051526461}
   - {fileID: 997856202}
-  - {fileID: 1269581622}

@@ -3,9 +3,8 @@ using UnityEngine.XR;
 using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using Crosstales.RTVoice;
-using Crosstales.RTVoice.Model;
+using Meta.WitAi.TTS.Utilities; // Meta Voice SDK namespace
+using Meta.WitAi.TTS.Data; // For TTSClipData
 
 public class NPCCutsceneController : MonoBehaviour
 {
@@ -50,28 +49,15 @@ public class NPCCutsceneController : MonoBehaviour
     [Tooltip("The speed at which characters are typed out. A smaller value is faster.")]
     public float typingSpeed = 0.05f;
     
-    [Header("RT-Voice Settings")]
-    [Tooltip("Enable text-to-speech using RT-Voice")]
+    [Header("Meta Voice TTS Settings")]
+    [Tooltip("Enable text-to-speech using Meta Voice SDK")]
     public bool enableTTS = true;
-    [Tooltip("AudioSource for RT-Voice speech output")]
-    public AudioSource speechAudioSource;
-    [Tooltip("Voice to use for speech (leave empty for default)")]
-    public string voiceName = "";
-    [Tooltip("Speech rate (0.1 to 3.0, 1.0 is normal speed)")]
-    [Range(0.1f, 3.0f)]
-    public float speechRate = 1.0f;
-    [Tooltip("Speech pitch (0.0 to 2.0, 1.0 is normal pitch)")]
-    [Range(0.0f, 2.0f)]
-    public float speechPitch = 1.0f;
-    [Tooltip("Speech volume (0.0 to 1.0)")]
-    [Range(0.0f, 1.0f)]
-    public float speechVolume = 1.0f;
+    [Tooltip("TTSSpeaker component for Meta Voice SDK speech output")]
+    public TTSSpeaker ttsSpeaker;
     [Tooltip("Wait for speech to complete before allowing next line")]
     public bool waitForSpeech = true;
     [Tooltip("Show text immediately when speech starts (disable typewriter for speech)")]
     public bool showTextImmediatelyWithSpeech = false;
-    [Tooltip("Use native speech (no file generation) to avoid file system issues")]
-    public bool useNativeSpeech = true;
     
     [Header("VR Stability")]
     [Tooltip("Time before hover can toggle again to prevent flickering")]
@@ -95,9 +81,8 @@ public class NPCCutsceneController : MonoBehaviour
     private bool isSpeaking = false;
     private bool speechStartedForCurrentLine = false;
     private string currentLine;
+    private string currentSpeechText;
     private Coroutine typingCoroutine;
-    private Voice selectedVoice;
-    private string currentSpeechId;
     private Queue<string> dialogueQueue = new Queue<string>();
     private bool dialogueInProgress = false;
 
@@ -109,24 +94,13 @@ public class NPCCutsceneController : MonoBehaviour
             hoverIndicator.SetActive(false);
         }
 
-        // Configure RT-Voice audio path to avoid file conflicts
-        if (enableTTS)
+        // Setup TTSSpeaker if not assigned
+        if (ttsSpeaker == null && enableTTS)
         {
-            string audioPath = Path.Combine(Application.persistentDataPath, "RTVoiceAudio");
-            if (!Directory.Exists(audioPath))
+            ttsSpeaker = GetComponent<TTSSpeaker>();
+            if (ttsSpeaker == null)
             {
-                Directory.CreateDirectory(audioPath);
-            }
-            Crosstales.RTVoice.Util.Config.AUDIOFILE_PATH = audioPath;
-        }
-
-        // Setup AudioSource for RT-Voice if not assigned
-        if (speechAudioSource == null && enableTTS)
-        {
-            speechAudioSource = gameObject.GetComponent<AudioSource>();
-            if (speechAudioSource == null)
-            {
-                speechAudioSource = gameObject.AddComponent<AudioSource>();
+                Debug.LogError($"NPCCutsceneController on {gameObject.name}: TTSSpeaker component not found! Please add a TTSSpeaker component or assign it in the inspector.");
             }
         }
     }
@@ -185,12 +159,12 @@ public class NPCCutsceneController : MonoBehaviour
             nextLineAction.action.Enable();
         }
 
-        // Subscribe to RT-Voice events if TTS is enabled
-        if (enableTTS && Speaker.Instance != null)
+        // Subscribe to Meta Voice TTS events if TTS is enabled
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.OnSpeakStart += OnSpeechStart;
-            Speaker.Instance.OnSpeakComplete += OnSpeechComplete;
-            Speaker.Instance.OnVoicesReady += OnVoicesReady;
+            ttsSpeaker.Events.OnPlaybackStart.AddListener(OnSpeechStart);
+            ttsSpeaker.Events.OnPlaybackComplete.AddListener(OnSpeechComplete);
+            ttsSpeaker.Events.OnPlaybackCancelled.AddListener(OnSpeechCancelled);
         }
     }
     
@@ -210,40 +184,36 @@ public class NPCCutsceneController : MonoBehaviour
             nextLineAction.action.Disable();
         }
 
-        // Unsubscribe from RT-Voice events
-        if (enableTTS && Speaker.Instance != null)
+        // Unsubscribe from Meta Voice TTS events
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.OnSpeakStart -= OnSpeechStart;
-            Speaker.Instance.OnSpeakComplete -= OnSpeechComplete;
-            Speaker.Instance.OnVoicesReady -= OnVoicesReady;
+            ttsSpeaker.Events.OnPlaybackStart.RemoveListener(OnSpeechStart);
+            ttsSpeaker.Events.OnPlaybackComplete.RemoveListener(OnSpeechComplete);
+            ttsSpeaker.Events.OnPlaybackCancelled.RemoveListener(OnSpeechCancelled);
         }
     }
 
-    #region RT-Voice Event Handlers
+    #region Meta Voice Event Handlers
 
-    private void OnVoicesReady()
+    private void OnSpeechStart(TTSSpeaker speaker, TTSClipData clipData)
     {
-        if (!string.IsNullOrEmpty(voiceName))
-        {
-            selectedVoice = Speaker.Instance.VoiceForName(voiceName);
-            if (selectedVoice == null)
-            {
-                Debug.LogWarning($"Voice '{voiceName}' not found. Using default voice.");
-            }
-        }
-    }
-
-    private void OnSpeechStart(Wrapper wrapper)
-    {
-        if (wrapper.Uid == currentSpeechId)
+        if (clipData.textToSpeak == currentSpeechText)
         {
             isSpeaking = true;
         }
     }
 
-    private void OnSpeechComplete(Wrapper wrapper)
+    private void OnSpeechComplete(TTSSpeaker speaker, TTSClipData clipData)
     {
-        if (wrapper.Uid == currentSpeechId)
+        if (clipData.textToSpeak == currentSpeechText)
+        {
+            isSpeaking = false;
+        }
+    }
+
+    private void OnSpeechCancelled(TTSSpeaker speaker, TTSClipData clipData, string reason)
+    {
+        if (clipData.textToSpeak == currentSpeechText)
         {
             isSpeaking = false;
         }
@@ -263,69 +233,58 @@ public class NPCCutsceneController : MonoBehaviour
 
     private void OnNextLineButtonPressed(InputAction.CallbackContext context)
     {
-        if (!dialogueInProgress)
-        {
+        if (!dialogueInProgress || !cutsceneActive)
             return;
-        }
 
-        // If speech is playing and we're waiting for it, skip speech
-        if (isSpeaking && enableTTS)
-        {
-            Speaker.Instance.Silence();
-            return;
-        }
-
-        // If a line is currently being typed, complete it immediately
+        // If typing is in progress, complete the current line
         if (isTyping)
         {
             CompleteLine();
+            return;
         }
-        else if (!waitForSpeech || !isSpeaking)
+
+        // If we're waiting for speech to complete, don't allow progressing
+        if (waitForSpeech && isSpeaking)
         {
-            // Move to next line if typing is done and speech is done (or we're not waiting)
-            DisplayNextDialogueLine();
+            return;
         }
+
+        // Stop any ongoing speech before moving to next line
+        if (enableTTS && ttsSpeaker != null)
+        {
+            ttsSpeaker.Stop();
+        }
+
+        // Otherwise, show the next line
+        DisplayNextDialogueLine();
     }
 
     #endregion
     
-    public void StartCutscene()
+    private void StartCutscene()
     {
-        if (cutsceneActive) return;
-        
         cutsceneActive = true;
         DisablePlayerMovement();
-        StartCoroutine(PlayCutsceneSequence());
-    }
-    
-    private IEnumerator PlayCutsceneSequence()
-    {
-        // Start with idle animation
-        PlayAnimation(idleAnimationName);
         
-        // Show dialogue UI
         if (dialogueUI != null)
             dialogueUI.SetActive(true);
-
-        // Populate dialogue queue
+        
+        // Initialize dialogue queue
         dialogueQueue.Clear();
         foreach (string line in dialogueLines)
         {
-            if (!string.IsNullOrEmpty(line.Trim()))
-            {
-                dialogueQueue.Enqueue(line);
-            }
+            dialogueQueue.Enqueue(line);
         }
-
-        // Start dialogue progression
+        
         dialogueInProgress = true;
         DisplayNextDialogueLine();
+        
+        Debug.Log("Cutscene started!");
+    }
 
-        // Wait for all dialogue to complete
-        while (dialogueInProgress)
-        {
-            yield return null;
-        }
+    private IEnumerator ShowChecklistAfterDialogue()
+    {
+        yield return new WaitForSeconds(timeBetweenLines);
         
         // Hide dialogue UI
         if (dialogueUI != null)
@@ -360,9 +319,9 @@ public class NPCCutsceneController : MonoBehaviour
         }
 
         // Stop any ongoing speech
-        if (enableTTS && isSpeaking)
+        if (enableTTS && isSpeaking && ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop();
         }
 
         // Reset speech flag for new line
@@ -394,6 +353,7 @@ public class NPCCutsceneController : MonoBehaviour
             // All dialogue complete
             dialogueInProgress = false;
             PlayAnimation(idleAnimationName);
+            StartCoroutine(ShowChecklistAfterDialogue());
         }
     }
 
@@ -445,35 +405,18 @@ public class NPCCutsceneController : MonoBehaviour
 
     private void StartSpeech(string text)
     {
-        if (!enableTTS || Speaker.Instance == null || string.IsNullOrEmpty(text.Trim()))
+        if (!enableTTS || ttsSpeaker == null || string.IsNullOrEmpty(text.Trim()))
+            return;
+
+        // Check if TTS is muted globally (from VRPauseMenu)
+        if (VRDialogueSystem.IsTTSMuted)
             return;
 
         speechStartedForCurrentLine = true;
-        currentSpeechId = System.Guid.NewGuid().ToString();
+        currentSpeechText = text;
 
-        if (useNativeSpeech)
-        {
-            Speaker.Instance.SpeakNative(
-                text,
-                selectedVoice,
-                speechRate,
-                speechPitch,
-                speechVolume
-            );
-        }
-        else
-        {
-            Speaker.Instance.Speak(
-                text,
-                speechAudioSource,
-                selectedVoice,
-                true,
-                speechRate,
-                speechPitch,
-                speechVolume,
-                currentSpeechId
-            );
-        }
+        // Use Speak() for immediate playback
+        ttsSpeaker.Speak(text);
     }
     
     private void PlayAnimation(string animationName, bool loop = true)
@@ -583,9 +526,9 @@ public class NPCCutsceneController : MonoBehaviour
     void OnDestroy()
     {
         // Stop any ongoing speech
-        if (enableTTS && Speaker.Instance != null)
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop();
         }
     }
 }
