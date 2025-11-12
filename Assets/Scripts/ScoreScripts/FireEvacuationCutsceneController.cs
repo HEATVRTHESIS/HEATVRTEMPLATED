@@ -448,8 +448,8 @@ public class FireEvacuationCutsceneController : MonoBehaviour
             FinalEvaluationScreen evalScreen = evaluationScreen.GetComponent<FinalEvaluationScreen>();
             if (evalScreen != null)
             {
-                // This method is assumed to exist on FinalEvaluationScreen
-                // evalScreen.CalculateAndDisplayResults();
+                
+                evalScreen.CalculateAndDisplayResults();
             }
         }
         

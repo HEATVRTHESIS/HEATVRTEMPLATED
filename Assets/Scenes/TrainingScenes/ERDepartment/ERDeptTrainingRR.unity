@@ -3622,6 +3622,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PopUpText
       objectReference: {fileID: 0}
+    - target: {fileID: 7368568741755371755, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8379253376636852891, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1

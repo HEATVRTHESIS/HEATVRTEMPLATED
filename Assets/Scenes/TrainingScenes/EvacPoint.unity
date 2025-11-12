@@ -614,7 +614,7 @@ GameObject:
   - component: {fileID: 48854136}
   - component: {fileID: 48854135}
   - component: {fileID: 48854134}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: SuzieCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1800,7 +1800,7 @@ GameObject:
   - component: {fileID: 200798504}
   - component: {fileID: 200798506}
   - component: {fileID: 200798505}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6447,63 +6447,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.16662319, y: 0.22038609, z: 0.22855166}
   m_Center: {x: -0.051956963, y: 0.11862167, z: -0.024671085}
---- !u!1001 &637596009
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 101928, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_Name
-      value: RTVoice
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
 --- !u!65 &644385097
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16332,7 +16275,7 @@ GameObject:
   - component: {fileID: 908318050}
   - component: {fileID: 908318049}
   - component: {fileID: 908318048}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: DiagBoxBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22030,7 +21973,7 @@ GameObject:
   - component: {fileID: 1042914805}
   - component: {fileID: 1042914804}
   - component: {fileID: 1042914803}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: NoSuz
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22779,7 +22722,7 @@ GameObject:
   - component: {fileID: 1150754345}
   - component: {fileID: 1150754347}
   - component: {fileID: 1150754346}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: SuzieQuest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25297,6 +25240,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeftVRTarget
       objectReference: {fileID: 0}
+    - target: {fileID: 3059032998717035982, guid: 6474f9bb93fb29441a1d7141ce818ee2, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4900397929047357971, guid: 6474f9bb93fb29441a1d7141ce818ee2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.01
@@ -25546,7 +25493,7 @@ GameObject:
   - component: {fileID: 1488472043}
   - component: {fileID: 1488472045}
   - component: {fileID: 1488472044}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26309,6 +26256,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RightVRTarget
       objectReference: {fileID: 0}
+    - target: {fileID: 3906558466062957588, guid: 17918d7f207887f419b185cf1659d794, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26614,7 +26565,7 @@ GameObject:
   - component: {fileID: 1586136328}
   - component: {fileID: 1586136327}
   - component: {fileID: 1586136326}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: YesSuz
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36524,7 +36475,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d36ddd22d320eea4f90163296b6746f6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 51a82b90b899dca41a8f0ce70003ece4, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -36936,6 +36887,10 @@ PrefabInstance:
     - target: {fileID: 6626944881809647565, guid: 0dbe8084c6a42f94897e1f9cbf19ed34, type: 3}
       propertyPath: m_Name
       value: HeadVRTarget
+      objectReference: {fileID: 0}
+    - target: {fileID: 6626944881809647565, guid: 0dbe8084c6a42f94897e1f9cbf19ed34, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -45374,7 +45329,7 @@ GameObject:
   - component: {fileID: 7584919817607002596}
   - component: {fileID: 1392696095359204241}
   - component: {fileID: 4131129857643883030}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: YesButt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45558,7 +45513,7 @@ GameObject:
   - component: {fileID: 7139766580700821707}
   - component: {fileID: 6189896698128360382}
   - component: {fileID: 3186526481344399657}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: NoButt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45820,6 +45775,7 @@ MonoBehaviour:
   playerTransform: {fileID: 9218719975206061688}
   enableTTS: 1
   ttsSpeaker: {fileID: 4598410587691705966}
+  voicePresetName: WITSCODY
 --- !u!195 &4353715978970414003
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -45859,7 +45815,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4085135299769659942}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: QuestionBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46093,7 +46049,27 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5446606804242366966}
     m_Modifications:
+    - target: {fileID: 467674625403852570, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 732842967432427116, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 763665797512886373, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1112821883843009067, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1123483283705356743, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1358900672892178033, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
@@ -46113,7 +46089,39 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2423185463152656359, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2478607948695400575, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2697173522503578114, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2928753624113935422, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3541556269604042018, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3829251379955596855, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4066698795249968296, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4343120275008281253, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4568420509745428113, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
@@ -46129,7 +46137,15 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4981731765049169242, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5091672698383021475, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5159787749792274034, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
@@ -46144,6 +46160,10 @@ PrefabInstance:
     - target: {fileID: 5326470366494845269, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5584425949678783057, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5670627181488636559, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_SizeDelta.x
@@ -46197,6 +46217,14 @@ PrefabInstance:
       propertyPath: speechAudioSource
       value: 
       objectReference: {fileID: 9207420083164560832}
+    - target: {fileID: 6763593935837592608, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6801456158634535285, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6873454980733723821, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5496
@@ -46241,7 +46269,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7487336672516529775, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7651257807878894543, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8057301337519153490, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8114265421487996588, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198732846846850678, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8367512544536157538, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8382864877203591217, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8655732284981589955, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
@@ -46252,6 +46308,14 @@ PrefabInstance:
     - target: {fileID: 8780896447573500414, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8842826045231839821, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8995865553689038503, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9150101833041015829, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: speechAudioSource
@@ -47438,7 +47502,7 @@ GameObject:
   - component: {fileID: 3126282779362997869}
   - component: {fileID: 8807009302233946366}
   - component: {fileID: 4563528893760918518}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47647,7 +47711,7 @@ GameObject:
   - component: {fileID: 3710676200054583629}
   - component: {fileID: 2488159651125798241}
   - component: {fileID: 5969624196960514413}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47899,7 +47963,7 @@ GameObject:
   - component: {fileID: 8167404213580720530}
   - component: {fileID: 8867550813476060072}
   - component: {fileID: 4142125111107449189}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48952,7 +49016,7 @@ GameObject:
   - component: {fileID: 4964612328733563940}
   - component: {fileID: 7885041806226967014}
   - component: {fileID: 1330964576017067099}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: QuestionCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49613,7 +49677,7 @@ GameObject:
   - component: {fileID: 2021851679445532538}
   - component: {fileID: 445677539038514832}
   - component: {fileID: 2387570890808205652}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Questext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50714,7 +50778,7 @@ GameObject:
   - component: {fileID: 7410186066881259645}
   - component: {fileID: 834467377523863477}
   - component: {fileID: 5378370184204934704}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: DiagBoxBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52472,4 +52536,3 @@ SceneRoots:
   - {fileID: 2132988213}
   - {fileID: 1113032068}
   - {fileID: 1807014593}
-  - {fileID: 637596009}

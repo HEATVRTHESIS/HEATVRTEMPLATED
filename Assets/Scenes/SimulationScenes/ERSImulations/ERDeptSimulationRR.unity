@@ -5663,7 +5663,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3709116626896669700}
+      - m_Target: {fileID: 6044247570461347841}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: LoadNewLevel
         m_Mode: 1
@@ -11978,19 +11978,6 @@ Transform:
   - {fileID: 7903325974505974165}
   m_Father: {fileID: 5323142383255215585}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3709116626896669700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6044247570461347840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92354beeabc56244bd80c9197d1bc8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneToLoad: SimulationFireER
 --- !u!1 &3764389583105198495
 GameObject:
   m_ObjectHideFlags: 0
@@ -15575,7 +15562,7 @@ GameObject:
   - component: {fileID: 5083896178460485811}
   - component: {fileID: 2319083162894862246}
   - component: {fileID: 589742312813022421}
-  - component: {fileID: 3709116626896669700}
+  - component: {fileID: 6044247570461347841}
   m_Layer: 0
   m_Name: NextPhaseButt
   m_TagString: Untagged
@@ -15583,6 +15570,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6044247570461347841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6044247570461347840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b92354beeabc56244bd80c9197d1bc8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: SimulationFireER
 --- !u!23 &6080185092032834699
 MeshRenderer:
   m_ObjectHideFlags: 0
