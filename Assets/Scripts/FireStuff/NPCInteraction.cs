@@ -8,12 +8,6 @@ using Meta.WitAi.TTS.Data; // For TTSClipData
 
 public class NPCInteraction : CustomTaskController
 {
-    // UI Elements
-    public GameObject dialoguePanel;
-    public TextMeshProUGUI dialogueText;
-    public Button replyOption1;
-    public Button replyOption2;
-
     // VR Interaction UI
     public GameObject interactionIndicator;
 
@@ -33,6 +27,10 @@ public class NPCInteraction : CustomTaskController
     [Tooltip("The NPC object to highlight (usually this same GameObject)")]
     public HighlightableObject targetObject;
 
+    [Header("Dialogue Settings")]
+    [Tooltip("Is 'Yes' the correct answer? (True = Option1 is correct, False = Option2 is correct)")]
+    public bool isOption1Correct = true;
+
     [Header("UI")]
     public PopupManager popupManager;
 
@@ -49,15 +47,14 @@ public class NPCInteraction : CustomTaskController
     private bool isDialogueActive = false;
     private bool isSpeaking = false;
     private string currentSpeechText;
+    private bool questionAnswered = false;
 
     void Start()
     {
         Debug.Log($"NPCInteraction Start() called on {gameObject.name}");
         Debug.Log($"taskName: '{taskName}', taskDescription: '{taskDescription}'");
-        dialoguePanel.SetActive(false);
+        
         interactionIndicator.SetActive(false);
-        replyOption1.onClick.AddListener(OnReplyOption1);
-        replyOption2.onClick.AddListener(OnReplyOption2);
         talkAction.action.Enable();
 
         // Task controller setup
@@ -181,7 +178,7 @@ public class NPCInteraction : CustomTaskController
     {
         CheckForRaycastHit();
 
-        if (isPlayerPointingAtNPC && talkAction.action.WasPressedThisFrame() && !isDialogueActive)
+        if (isPlayerPointingAtNPC && talkAction.action.WasPressedThisFrame() && !isDialogueActive && !questionAnswered)
         {
             ShowInitialDialogue();
         }
@@ -212,34 +209,203 @@ public class NPCInteraction : CustomTaskController
 
     void ShowInitialDialogue()
     {
+        if (QuestionUIManager.Instance == null)
+        {
+            Debug.LogError("QuestionUIManager.Instance is null! Make sure QuestionUIManager is in the scene.");
+            return;
+        }
+
         isDialogueActive = true;
-        dialoguePanel.SetActive(true);
-        dialogueText.text = initialDialogue;
         interactionIndicator.SetActive(false);
 
         // Speak the initial dialogue
         StartSpeech(initialDialogue);
+
+        // Show the question UI using the QuestionUIManager
+        ShowNPCQuestion();
+    }
+
+    /// <summary>
+    /// Shows the NPC question using the QuestionUIManager
+    /// </summary>
+    private void ShowNPCQuestion()
+    {
+        if (QuestionUIManager.Instance == null)
+        {
+            Debug.LogError("Cannot show NPC question: QuestionUIManager.Instance is null!");
+            return;
+        }
+
+        // Set the question text
+        if (QuestionUIManager.Instance.questionTextUI != null)
+        {
+            QuestionUIManager.Instance.questionTextUI.text = initialDialogue;
+        }
+
+        // Hide the image for NPC dialogue (it's only used for maintenance tasks)
+        if (QuestionUIManager.Instance.questionImage != null)
+        {
+            QuestionUIManager.Instance.questionImage.gameObject.SetActive(false);
+        }
+
+        // Set up button listeners for this specific NPC interaction
+        // Yes button = Option 1 (e.g., "Evacuate")
+        // No button = Option 2 (e.g., "Fight the fire")
+        if (QuestionUIManager.Instance.yesButton != null)
+        {
+            QuestionUIManager.Instance.yesButton.onClick.RemoveAllListeners();
+            QuestionUIManager.Instance.yesButton.onClick.AddListener(OnReplyOption1);
+        }
+
+        if (QuestionUIManager.Instance.noButton != null)
+        {
+            QuestionUIManager.Instance.noButton.onClick.RemoveAllListeners();
+            QuestionUIManager.Instance.noButton.onClick.AddListener(OnReplyOption2);
+        }
+
+        // Position and show the canvas
+        ShowQuestionForNPC();
+    }
+
+    /// <summary>
+    /// Helper method to position and show the question UI for this NPC
+    /// </summary>
+    private void ShowQuestionForNPC()
+    {
+        if (QuestionUIManager.Instance == null || QuestionUIManager.Instance.questionCanvas == null)
+            return;
+
+        Transform target = targetObject != null ? targetObject.transform : transform;
+        
+        QuestionUIManager.Instance.questionCanvas.SetActive(true);
+        
+        // Manually position the canvas
+        if (QuestionUIManager.Instance.cameraTransform != null)
+        {
+            Vector3 basePosition = target.position + Vector3.up * QuestionUIManager.Instance.heightOffset;
+            Vector3 cameraToTarget = (basePosition - QuestionUIManager.Instance.cameraTransform.position).normalized;
+            Vector3 uiPosition = basePosition - cameraToTarget * QuestionUIManager.Instance.distanceFromObject;
+            
+            QuestionUIManager.Instance.questionCanvas.transform.position = uiPosition;
+            
+            // Make UI face the camera
+            Vector3 lookDirection = QuestionUIManager.Instance.cameraTransform.position - QuestionUIManager.Instance.questionCanvas.transform.position;
+            lookDirection.y = 0;
+            
+            if (lookDirection != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                targetRotation *= Quaternion.Euler(0, 180, 0);
+                QuestionUIManager.Instance.questionCanvas.transform.rotation = targetRotation;
+            }
+        }
     }
 
     void OnReplyOption1()
     {
-        dialogueText.text = correctDialogue;
-        replyOption1.gameObject.SetActive(false);
-        replyOption2.gameObject.SetActive(false);
-
-        // Speak the correct response
-        StartSpeech(correctDialogue);
-
-        StartCoroutine(EvacuateNPC());
+        // Check if this is the correct answer
+        if (isOption1Correct)
+        {
+            // Correct answer
+            UpdateDialogueText(correctDialogue);
+            StartSpeech(correctDialogue);
+            questionAnswered = true;
+            StartCoroutine(DelayedEvacuation());
+        }
+        else
+        {
+            // Wrong answer
+            UpdateDialogueText(wrongDialogue);
+            StartSpeech(wrongDialogue);
+            
+            // Track the error in FireScoreTracker
+            if (FireScoreTracker.Instance != null)
+            {
+                FireScoreTracker.Instance.OnTaskError("Wrong NPC evacuation advice");
+            }
+            
+            StartCoroutine(ResetDialogueAfterDelay());
+        }
+        
         isDialogueActive = false;
     }
 
     void OnReplyOption2()
     {
-        dialogueText.text = wrongDialogue;
+        // Check if this is the correct answer
+        if (!isOption1Correct)
+        {
+            // Correct answer
+            UpdateDialogueText(correctDialogue);
+            StartSpeech(correctDialogue);
+            questionAnswered = true;
+            StartCoroutine(DelayedEvacuation());
+        }
+        else
+        {
+            // Wrong answer
+            UpdateDialogueText(wrongDialogue);
+            StartSpeech(wrongDialogue);
+            
+            // Track the error in FireScoreTracker
+            if (FireScoreTracker.Instance != null)
+            {
+                FireScoreTracker.Instance.OnTaskError("Wrong NPC evacuation advice");
+            }
+            
+            StartCoroutine(ResetDialogueAfterDelay());
+        }
+    }
 
-        // Speak the wrong response
-        StartSpeech(wrongDialogue);
+    /// <summary>
+    /// Updates the dialogue text in the QuestionUIManager
+    /// </summary>
+    private void UpdateDialogueText(string text)
+    {
+        if (QuestionUIManager.Instance != null && QuestionUIManager.Instance.questionTextUI != null)
+        {
+            QuestionUIManager.Instance.questionTextUI.text = text;
+        }
+    }
+
+    IEnumerator ResetDialogueAfterDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        
+        // Hide the question UI
+        if (QuestionUIManager.Instance != null)
+        {
+            QuestionUIManager.Instance.HideQuestion();
+            
+            // Re-enable the image for future maintenance tasks
+            if (QuestionUIManager.Instance.questionImage != null)
+            {
+                QuestionUIManager.Instance.questionImage.gameObject.SetActive(true);
+            }
+        }
+        
+        isDialogueActive = false;
+    }
+
+    IEnumerator DelayedEvacuation()
+    {
+        // Wait a moment for the player to read/hear the response
+        yield return new WaitForSeconds(1.5f);
+        
+        // Hide the question UI
+        if (QuestionUIManager.Instance != null)
+        {
+            QuestionUIManager.Instance.HideQuestion();
+            
+            // Re-enable the image for future maintenance tasks
+            if (QuestionUIManager.Instance.questionImage != null)
+            {
+                QuestionUIManager.Instance.questionImage.gameObject.SetActive(true);
+            }
+        }
+        
+        // Start evacuation
+        yield return StartCoroutine(EvacuateNPC());
     }
 
     IEnumerator EvacuateNPC()
@@ -264,9 +430,6 @@ public class NPCInteraction : CustomTaskController
         {
             ttsSpeaker.Stop();
         }
-
-        // Hide dialogue first
-        dialoguePanel.SetActive(false);
 
         // Wait for events to finish, then destroy
         yield return new WaitForSeconds(0.5f);

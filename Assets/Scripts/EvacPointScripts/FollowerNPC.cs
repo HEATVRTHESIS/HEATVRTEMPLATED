@@ -9,14 +9,12 @@ using Meta.WitAi.TTS.Data; // For TTSClipData
 
 public class FollowerNPC : MonoBehaviour
 {
-    [Header("UI Elements")]
-    public GameObject dialoguePanel;
-    public TextMeshProUGUI dialogueText;
-    public Button followButton;
-    public Button cancelButton;
-
     [Header("Navigation")]
     public NavMeshAgent navAgent;
+    
+    [Header("Task Settings")]
+    [Tooltip("The NPC object to highlight (usually this same GameObject)")]
+    public HighlightableObject targetObject;
     
     [Header("VR Interaction")]
     public GameObject interactionIndicator;
@@ -49,13 +47,16 @@ public class FollowerNPC : MonoBehaviour
 
     void Start()
     {
-        dialoguePanel.SetActive(false);
         interactionIndicator.SetActive(false);
         
-        followButton.onClick.AddListener(OnFollowButtonClicked);
-        cancelButton.onClick.AddListener(OnCancelButtonClicked);
-        
         talkAction.action.Enable();
+
+        // Task controller setup
+        if (targetObject == null)
+        {
+            // Try to find HighlightableObject on this GameObject if not assigned
+            targetObject = GetComponent<HighlightableObject>();
+        }
 
         // Setup TTSSpeaker if not assigned
         if (ttsSpeaker == null && enableTTS)
@@ -200,23 +201,112 @@ public class FollowerNPC : MonoBehaviour
 
     void ShowInitialDialogue()
     {
+        if (QuestionUIManager.Instance == null)
+        {
+            Debug.LogError("QuestionUIManager.Instance is null! Make sure QuestionUIManager is in the scene.");
+            return;
+        }
+
+        // SAFETY CHECK: Don't show if another NPC is already using the UI
+        if (QuestionUIManager.Instance.questionCanvas.activeSelf && !isDialogueActive)
+        {
+            Debug.LogWarning($"{gameObject.name}: Question UI is already active. Wait for it to close.");
+            return;
+        }
+
         isDialogueActive = true;
-        dialoguePanel.SetActive(true);
-        dialogueText.text = initialDialogue;
         interactionIndicator.SetActive(false);
-        
-        followButton.gameObject.SetActive(true);
-        cancelButton.gameObject.SetActive(true);
 
         // Speak the initial dialogue
         StartSpeech(initialDialogue);
+
+        // Show the question UI using the QuestionUIManager
+        ShowFollowerQuestion();
+    }
+
+    /// <summary>
+    /// Shows the follower question using the QuestionUIManager
+    /// </summary>
+    private void ShowFollowerQuestion()
+    {
+        if (QuestionUIManager.Instance == null)
+        {
+            Debug.LogError("Cannot show follower question: QuestionUIManager.Instance is null!");
+            return;
+        }
+
+        // Set the question text
+        if (QuestionUIManager.Instance.questionTextUI != null)
+        {
+            QuestionUIManager.Instance.questionTextUI.text = initialDialogue;
+        }
+
+        // Hide the image for NPC dialogue (it's only used for maintenance tasks)
+        if (QuestionUIManager.Instance.questionImage != null)
+        {
+            QuestionUIManager.Instance.questionImage.gameObject.SetActive(false);
+        }
+
+        // Set up button listeners for this specific follower interaction
+        // Yes button = "Follow" (help the NPC)
+        // No button = "Cancel" (don't help)
+        if (QuestionUIManager.Instance.yesButton != null)
+        {
+            QuestionUIManager.Instance.yesButton.onClick.RemoveAllListeners();
+            QuestionUIManager.Instance.yesButton.onClick.AddListener(OnFollowButtonClicked);
+        }
+
+        if (QuestionUIManager.Instance.noButton != null)
+        {
+            QuestionUIManager.Instance.noButton.onClick.RemoveAllListeners();
+            QuestionUIManager.Instance.noButton.onClick.AddListener(OnCancelButtonClicked);
+        }
+
+        // Position and show the canvas
+        ShowQuestionForNPC();
+    }
+
+    /// <summary>
+    /// Helper method to position and show the question UI for this NPC
+    /// </summary>
+    private void ShowQuestionForNPC()
+    {
+        if (QuestionUIManager.Instance == null || QuestionUIManager.Instance.questionCanvas == null)
+            return;
+
+        Transform target = targetObject != null ? targetObject.transform : transform;
+        
+        QuestionUIManager.Instance.questionCanvas.SetActive(true);
+        
+        // Manually position the canvas
+        if (QuestionUIManager.Instance.cameraTransform != null)
+        {
+            Vector3 basePosition = target.position + Vector3.up * QuestionUIManager.Instance.heightOffset;
+            Vector3 cameraToTarget = (basePosition - QuestionUIManager.Instance.cameraTransform.position).normalized;
+            Vector3 uiPosition = basePosition - cameraToTarget * QuestionUIManager.Instance.distanceFromObject;
+            
+            QuestionUIManager.Instance.questionCanvas.transform.position = uiPosition;
+            
+            // Make UI face the camera
+            Vector3 lookDirection = QuestionUIManager.Instance.cameraTransform.position - QuestionUIManager.Instance.questionCanvas.transform.position;
+            lookDirection.y = 0;
+            
+            if (lookDirection != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                targetRotation *= Quaternion.Euler(0, 180, 0);
+                QuestionUIManager.Instance.questionCanvas.transform.rotation = targetRotation;
+            }
+        }
     }
 
     void OnFollowButtonClicked()
     {
-        dialogueText.text = followingDialogue;
-        followButton.gameObject.SetActive(false);
-        cancelButton.gameObject.SetActive(false);
+        // Update the dialogue text to show feedback
+        if (QuestionUIManager.Instance != null && QuestionUIManager.Instance.questionTextUI != null)
+        {
+            QuestionUIManager.Instance.questionTextUI.text = followingDialogue;
+        }
 
         // Speak the following dialogue
         StartSpeech(followingDialogue);
@@ -232,7 +322,18 @@ public class FollowerNPC : MonoBehaviour
             ttsSpeaker.Stop();
         }
 
-        dialoguePanel.SetActive(false);
+        // Hide the question UI
+        if (QuestionUIManager.Instance != null)
+        {
+            QuestionUIManager.Instance.HideQuestion();
+            
+            // Re-enable the image for future maintenance tasks
+            if (QuestionUIManager.Instance.questionImage != null)
+            {
+                QuestionUIManager.Instance.questionImage.gameObject.SetActive(true);
+            }
+        }
+
         isDialogueActive = false;
     }
 
@@ -240,7 +341,18 @@ public class FollowerNPC : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         
-        dialoguePanel.SetActive(false);
+        // Hide the question UI
+        if (QuestionUIManager.Instance != null)
+        {
+            QuestionUIManager.Instance.HideQuestion();
+            
+            // Re-enable the image for future maintenance tasks
+            if (QuestionUIManager.Instance.questionImage != null)
+            {
+                QuestionUIManager.Instance.questionImage.gameObject.SetActive(true);
+            }
+        }
+        
         isDialogueActive = false;
         isFollowing = true;
         
