@@ -3,17 +3,11 @@ using TMPro;
 using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using Crosstales.RTVoice; // Add RT-Voice namespace
-using Crosstales.RTVoice.Model;
+using Meta.WitAi.TTS.Utilities; // Meta Voice SDK namespace
+using Meta.WitAi.TTS.Data; // For TTSClipData
 
 public class NPCInteraction : CustomTaskController
 {
-    // UI Elements
-    public GameObject dialoguePanel;
-    public TextMeshProUGUI dialogueText;
-    public Button replyOption1;
-    public Button replyOption2;
-
     // VR Interaction UI
     public GameObject interactionIndicator;
 
@@ -33,45 +27,34 @@ public class NPCInteraction : CustomTaskController
     [Tooltip("The NPC object to highlight (usually this same GameObject)")]
     public HighlightableObject targetObject;
 
+    [Header("Dialogue Settings")]
+    [Tooltip("Is 'Yes' the correct answer? (True = Option1 is correct, False = Option2 is correct)")]
+    public bool isOption1Correct = true;
+
     [Header("UI")]
     public PopupManager popupManager;
 
     // VR Controller Input
     public InputActionProperty talkAction;
 
-    [Header("RT-Voice TTS Settings")]
+    [Header("Meta Voice TTS Settings")]
     [Tooltip("Enable text-to-speech for this NPC")]
     public bool enableTTS = true;
-    [Tooltip("AudioSource for RT-Voice speech output")]
-    public AudioSource speechAudioSource;
-    [Tooltip("Voice to use for speech (leave empty for default)")]
-    public string voiceName = "";
-    [Tooltip("Speech rate (0.1 to 3.0, 1.0 is normal speed)")]
-    [Range(0.1f, 3.0f)]
-    public float speechRate = 1.0f;
-    [Tooltip("Speech pitch (0.0 to 2.0, 1.0 is normal pitch)")]
-    [Range(0.0f, 2.0f)]
-    public float speechPitch = 1.0f;
-    [Tooltip("Speech volume (0.0 to 1.0)")]
-    [Range(0.0f, 1.0f)]
-    public float speechVolume = 1.0f;
-    [Tooltip("Use native speech (no file generation)")]
-    public bool useNativeSpeech = true;
+    [Tooltip("TTSSpeaker component for Meta Voice SDK speech output")]
+    public TTSSpeaker ttsSpeaker;
 
     private bool isPlayerPointingAtNPC = false;
     private bool isDialogueActive = false;
     private bool isSpeaking = false;
-    private Voice selectedVoice;
-    private string currentSpeechId;
+    private string currentSpeechText;
+    private bool questionAnswered = false;
 
     void Start()
     {
         Debug.Log($"NPCInteraction Start() called on {gameObject.name}");
         Debug.Log($"taskName: '{taskName}', taskDescription: '{taskDescription}'");
-        dialoguePanel.SetActive(false);
+        
         interactionIndicator.SetActive(false);
-        replyOption1.onClick.AddListener(OnReplyOption1);
-        replyOption2.onClick.AddListener(OnReplyOption2);
         talkAction.action.Enable();
 
         // Task controller setup
@@ -84,117 +67,93 @@ public class NPCInteraction : CustomTaskController
         // Set totalItems to 1 for NPC evacuation task
         totalItems = 1;
 
-        // Setup AudioSource for RT-Voice if not assigned
-        if (speechAudioSource == null && enableTTS)
+        // Setup TTSSpeaker if not assigned
+        if (ttsSpeaker == null && enableTTS)
         {
-            speechAudioSource = gameObject.GetComponent<AudioSource>();
-            if (speechAudioSource == null)
+            ttsSpeaker = GetComponent<TTSSpeaker>();
+            if (ttsSpeaker == null)
             {
-                speechAudioSource = gameObject.AddComponent<AudioSource>();
+                Debug.LogError($"NPCInteraction on {gameObject.name}: TTSSpeaker component not found! Please add a TTSSpeaker component or assign it in the inspector.");
             }
         }
 
-        // Subscribe to RT-Voice events if TTS is enabled
-        if (enableTTS && Speaker.Instance != null)
+        // Subscribe to Meta Voice TTS events if TTS is enabled
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.OnSpeakStart += OnSpeechStart;
-            Speaker.Instance.OnSpeakComplete += OnSpeechComplete;
-            Speaker.Instance.OnVoicesReady += OnVoicesReady;
+            ttsSpeaker.Events.OnPlaybackStart.AddListener(OnSpeechStart);
+            ttsSpeaker.Events.OnPlaybackComplete.AddListener(OnSpeechComplete);
+            ttsSpeaker.Events.OnPlaybackCancelled.AddListener(OnSpeechCancelled);
         }
     }
 
     void OnDestroy()
     {
-        // Unsubscribe from RT-Voice events
-        if (enableTTS && Speaker.Instance != null)
+        // Unsubscribe from Meta Voice TTS events
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.OnSpeakStart -= OnSpeechStart;
-            Speaker.Instance.OnSpeakComplete -= OnSpeechComplete;
-            Speaker.Instance.OnVoicesReady -= OnVoicesReady;
-            Speaker.Instance.Silence();
+            ttsSpeaker.Events.OnPlaybackStart.RemoveListener(OnSpeechStart);
+            ttsSpeaker.Events.OnPlaybackComplete.RemoveListener(OnSpeechComplete);
+            ttsSpeaker.Events.OnPlaybackCancelled.RemoveListener(OnSpeechCancelled);
+            ttsSpeaker.Stop();
         }
     }
 
     /// <summary>
-    /// RT-Voice event: Called when voices are ready
+    /// Meta Voice TTS event: Called when speech playback starts
     /// </summary>
-    private void OnVoicesReady()
+    private void OnSpeechStart(TTSSpeaker speaker, TTSClipData clipData)
     {
-        // Try to find the specified voice, or use default
-        if (!string.IsNullOrEmpty(voiceName))
-        {
-            selectedVoice = Speaker.Instance.VoiceForName(voiceName);
-            if (selectedVoice == null)
-            {
-                Debug.LogWarning($"Voice '{voiceName}' not found for {gameObject.name}. Using default voice.");
-            }
-        }
-    }
-
-    /// <summary>
-    /// RT-Voice event: Called when speech starts
-    /// </summary>
-    private void OnSpeechStart(Wrapper wrapper)
-    {
-        if (wrapper.Uid == currentSpeechId)
+        if (clipData.textToSpeak == currentSpeechText)
         {
             isSpeaking = true;
         }
     }
 
     /// <summary>
-    /// RT-Voice event: Called when speech completes
+    /// Meta Voice TTS event: Called when speech playback completes
     /// </summary>
-    private void OnSpeechComplete(Wrapper wrapper)
+    private void OnSpeechComplete(TTSSpeaker speaker, TTSClipData clipData)
     {
-        if (wrapper.Uid == currentSpeechId)
+        if (clipData.textToSpeak == currentSpeechText)
         {
             isSpeaking = false;
         }
     }
 
     /// <summary>
-    /// Starts speech using RT-Voice
+    /// Meta Voice TTS event: Called when speech playback is cancelled
+    /// </summary>
+    private void OnSpeechCancelled(TTSSpeaker speaker, TTSClipData clipData, string reason)
+    {
+        if (clipData.textToSpeak == currentSpeechText)
+        {
+            isSpeaking = false;
+        }
+    }
+
+    /// <summary>
+    /// Starts speech using Meta Voice SDK
     /// </summary>
     private void StartSpeech(string text)
     {
-        if (!enableTTS || Speaker.Instance == null || string.IsNullOrEmpty(text.Trim()))
+        if (!enableTTS || ttsSpeaker == null || string.IsNullOrEmpty(text.Trim()))
+            return;
+
+        // Check if TTS is muted globally (from VRPauseMenu)
+        if (VRDialogueSystem.IsTTSMuted)
             return;
 
         // Stop any ongoing speech first
         if (isSpeaking)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop(currentSpeechText);
         }
 
-        // Generate unique ID for this speech
-        currentSpeechId = System.Guid.NewGuid().ToString();
+        // Store current speech text for tracking
+        currentSpeechText = text;
 
-        if (useNativeSpeech)
-        {
-            // Use native speech (no file generation)
-            Speaker.Instance.SpeakNative(
-                text,
-                selectedVoice,
-                speechRate,
-                speechPitch,
-                speechVolume
-            );
-        }
-        else
-        {
-            // Use file generation method
-            Speaker.Instance.Speak(
-                text,
-                speechAudioSource,
-                selectedVoice,
-                true,
-                speechRate,
-                speechPitch,
-                speechVolume,
-                currentSpeechId
-            );
-        }
+        // Use SpeakQueued to ensure speech is properly queued
+        ttsSpeaker.SpeakQueued(text);
     }
 
     /// <summary>
@@ -219,7 +178,7 @@ public class NPCInteraction : CustomTaskController
     {
         CheckForRaycastHit();
 
-        if (isPlayerPointingAtNPC && talkAction.action.WasPressedThisFrame() && !isDialogueActive)
+        if (isPlayerPointingAtNPC && talkAction.action.WasPressedThisFrame() && !isDialogueActive && !questionAnswered)
         {
             ShowInitialDialogue();
         }
@@ -250,34 +209,203 @@ public class NPCInteraction : CustomTaskController
 
     void ShowInitialDialogue()
     {
+        if (QuestionUIManager.Instance == null)
+        {
+            Debug.LogError("QuestionUIManager.Instance is null! Make sure QuestionUIManager is in the scene.");
+            return;
+        }
+
         isDialogueActive = true;
-        dialoguePanel.SetActive(true);
-        dialogueText.text = initialDialogue;
         interactionIndicator.SetActive(false);
 
         // Speak the initial dialogue
         StartSpeech(initialDialogue);
+
+        // Show the question UI using the QuestionUIManager
+        ShowNPCQuestion();
+    }
+
+    /// <summary>
+    /// Shows the NPC question using the QuestionUIManager
+    /// </summary>
+    private void ShowNPCQuestion()
+    {
+        if (QuestionUIManager.Instance == null)
+        {
+            Debug.LogError("Cannot show NPC question: QuestionUIManager.Instance is null!");
+            return;
+        }
+
+        // Set the question text
+        if (QuestionUIManager.Instance.questionTextUI != null)
+        {
+            QuestionUIManager.Instance.questionTextUI.text = initialDialogue;
+        }
+
+        // Hide the image for NPC dialogue (it's only used for maintenance tasks)
+        if (QuestionUIManager.Instance.questionImage != null)
+        {
+            QuestionUIManager.Instance.questionImage.gameObject.SetActive(false);
+        }
+
+        // Set up button listeners for this specific NPC interaction
+        // Yes button = Option 1 (e.g., "Evacuate")
+        // No button = Option 2 (e.g., "Fight the fire")
+        if (QuestionUIManager.Instance.yesButton != null)
+        {
+            QuestionUIManager.Instance.yesButton.onClick.RemoveAllListeners();
+            QuestionUIManager.Instance.yesButton.onClick.AddListener(OnReplyOption1);
+        }
+
+        if (QuestionUIManager.Instance.noButton != null)
+        {
+            QuestionUIManager.Instance.noButton.onClick.RemoveAllListeners();
+            QuestionUIManager.Instance.noButton.onClick.AddListener(OnReplyOption2);
+        }
+
+        // Position and show the canvas
+        ShowQuestionForNPC();
+    }
+
+    /// <summary>
+    /// Helper method to position and show the question UI for this NPC
+    /// </summary>
+    private void ShowQuestionForNPC()
+    {
+        if (QuestionUIManager.Instance == null || QuestionUIManager.Instance.questionCanvas == null)
+            return;
+
+        Transform target = targetObject != null ? targetObject.transform : transform;
+        
+        QuestionUIManager.Instance.questionCanvas.SetActive(true);
+        
+        // Manually position the canvas
+        if (QuestionUIManager.Instance.cameraTransform != null)
+        {
+            Vector3 basePosition = target.position + Vector3.up * QuestionUIManager.Instance.heightOffset;
+            Vector3 cameraToTarget = (basePosition - QuestionUIManager.Instance.cameraTransform.position).normalized;
+            Vector3 uiPosition = basePosition - cameraToTarget * QuestionUIManager.Instance.distanceFromObject;
+            
+            QuestionUIManager.Instance.questionCanvas.transform.position = uiPosition;
+            
+            // Make UI face the camera
+            Vector3 lookDirection = QuestionUIManager.Instance.cameraTransform.position - QuestionUIManager.Instance.questionCanvas.transform.position;
+            lookDirection.y = 0;
+            
+            if (lookDirection != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+                targetRotation *= Quaternion.Euler(0, 180, 0);
+                QuestionUIManager.Instance.questionCanvas.transform.rotation = targetRotation;
+            }
+        }
     }
 
     void OnReplyOption1()
     {
-        dialogueText.text = correctDialogue;
-        replyOption1.gameObject.SetActive(false);
-        replyOption2.gameObject.SetActive(false);
-
-        // Speak the correct response
-        StartSpeech(correctDialogue);
-
-        StartCoroutine(EvacuateNPC());
+        // Check if this is the correct answer
+        if (isOption1Correct)
+        {
+            // Correct answer
+            UpdateDialogueText(correctDialogue);
+            StartSpeech(correctDialogue);
+            questionAnswered = true;
+            StartCoroutine(DelayedEvacuation());
+        }
+        else
+        {
+            // Wrong answer
+            UpdateDialogueText(wrongDialogue);
+            StartSpeech(wrongDialogue);
+            
+            // Track the error in FireScoreTracker
+            if (FireScoreTracker.Instance != null)
+            {
+                FireScoreTracker.Instance.OnTaskError("Wrong NPC evacuation advice");
+            }
+            
+            StartCoroutine(ResetDialogueAfterDelay());
+        }
+        
         isDialogueActive = false;
     }
 
     void OnReplyOption2()
     {
-        dialogueText.text = wrongDialogue;
+        // Check if this is the correct answer
+        if (!isOption1Correct)
+        {
+            // Correct answer
+            UpdateDialogueText(correctDialogue);
+            StartSpeech(correctDialogue);
+            questionAnswered = true;
+            StartCoroutine(DelayedEvacuation());
+        }
+        else
+        {
+            // Wrong answer
+            UpdateDialogueText(wrongDialogue);
+            StartSpeech(wrongDialogue);
+            
+            // Track the error in FireScoreTracker
+            if (FireScoreTracker.Instance != null)
+            {
+                FireScoreTracker.Instance.OnTaskError("Wrong NPC evacuation advice");
+            }
+            
+            StartCoroutine(ResetDialogueAfterDelay());
+        }
+    }
 
-        // Speak the wrong response
-        StartSpeech(wrongDialogue);
+    /// <summary>
+    /// Updates the dialogue text in the QuestionUIManager
+    /// </summary>
+    private void UpdateDialogueText(string text)
+    {
+        if (QuestionUIManager.Instance != null && QuestionUIManager.Instance.questionTextUI != null)
+        {
+            QuestionUIManager.Instance.questionTextUI.text = text;
+        }
+    }
+
+    IEnumerator ResetDialogueAfterDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        
+        // Hide the question UI
+        if (QuestionUIManager.Instance != null)
+        {
+            QuestionUIManager.Instance.HideQuestion();
+            
+            // Re-enable the image for future maintenance tasks
+            if (QuestionUIManager.Instance.questionImage != null)
+            {
+                QuestionUIManager.Instance.questionImage.gameObject.SetActive(true);
+            }
+        }
+        
+        isDialogueActive = false;
+    }
+
+    IEnumerator DelayedEvacuation()
+    {
+        // Wait a moment for the player to read/hear the response
+        yield return new WaitForSeconds(1.5f);
+        
+        // Hide the question UI
+        if (QuestionUIManager.Instance != null)
+        {
+            QuestionUIManager.Instance.HideQuestion();
+            
+            // Re-enable the image for future maintenance tasks
+            if (QuestionUIManager.Instance.questionImage != null)
+            {
+                QuestionUIManager.Instance.questionImage.gameObject.SetActive(true);
+            }
+        }
+        
+        // Start evacuation
+        yield return StartCoroutine(EvacuateNPC());
     }
 
     IEnumerator EvacuateNPC()
@@ -298,13 +426,10 @@ public class NPCInteraction : CustomTaskController
         CompleteTask();
 
         // Stop any ongoing speech before destroying
-        if (enableTTS && isSpeaking)
+        if (enableTTS && isSpeaking && ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop();
         }
-
-        // Hide dialogue first
-        dialoguePanel.SetActive(false);
 
         // Wait for events to finish, then destroy
         yield return new WaitForSeconds(0.5f);
@@ -339,9 +464,9 @@ public class NPCInteraction : CustomTaskController
         Debug.Log($"Ending NPC evacuation task '{taskName}' and turning off highlights.");
 
         // Stop any ongoing speech
-        if (enableTTS && isSpeaking)
+        if (enableTTS && isSpeaking && ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop();
         }
 
         if (targetObject != null)
@@ -353,15 +478,6 @@ public class NPCInteraction : CustomTaskController
         {
             interactionIndicator.SetActive(false);
         }
-    }
-
-    /// <summary>
-    /// Public method to set voice by name
-    /// </summary>
-    public void SetVoice(string newVoiceName)
-    {
-        voiceName = newVoiceName;
-        selectedVoice = Speaker.Instance?.VoiceForName(voiceName);
     }
 
     /// <summary>

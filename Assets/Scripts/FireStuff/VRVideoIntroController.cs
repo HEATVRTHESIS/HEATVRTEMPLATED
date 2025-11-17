@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Plays a video full-screen in VR before starting level scripts.
-/// Uses a Canvas overlay to display video in VR.
+/// Uses a Canvas overlay to display video in VR (both eyes).
 /// </summary>
 [DefaultExecutionOrder(-100)]
 public class VRVideoIntroController : MonoBehaviour
@@ -220,10 +220,12 @@ public class VRVideoIntroController : MonoBehaviour
     
     private void CreateVideoCanvas()
     {
-        // Create canvas
+        // Create canvas - CRITICAL: Use ScreenSpaceCamera for VR to render in both eyes
         videoCanvas = new GameObject("VideoIntroCanvas");
         Canvas canvas = videoCanvas.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.worldCamera = playerCamera; // Assign the VR camera
+        canvas.planeDistance = 1f; // Distance from camera (adjust if needed)
         canvas.sortingOrder = 999;
         
         CanvasScaler scaler = videoCanvas.AddComponent<CanvasScaler>();

@@ -4,8 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
-using Crosstales.RTVoice;
-using Crosstales.RTVoice.Model;
+using Meta.WitAi.TTS.Utilities; // NEW: Meta Voice SDK namespace
+using Meta.WitAi.TTS.Data; // NEW: For TTSClipData
+
+// Removed: using Crosstales.RTVoice;
+// Removed: using Crosstales.RTVoice.Model;
 
 /// <summary>
 /// Post-evacuation cutscene controller with integrated dialogue, TTS, and mascot animation.
@@ -68,19 +71,13 @@ public class FirefighterDebriefCutsceneController : MonoBehaviour
     [Tooltip("How fast the mascot's mouth animates")]
     public float mouthAnimationSpeed = 0.15f;
     
-    [Header("RT-Voice Settings")]
-    [Tooltip("Enable text-to-speech using RT-Voice")]
+    // --- NEW: Meta Voice TTS Settings ---
+    [Header("Meta Voice TTS Settings")]
+    [Tooltip("Enable text-to-speech using Meta Voice SDK")]
     public bool enableTTS = true;
-    [Tooltip("AudioSource for RT-Voice speech output")]
-    public AudioSource speechAudioSource;
-    [Tooltip("Voice to use for speech (leave empty for default)")]
-    public string voiceName = "";
-    [Tooltip("Speech rate (0.1 to 3.0, 1.0 is normal speed)")]
-    [Range(0.1f, 3.0f)]
-    public float speechRate = 1.0f;
-    [Tooltip("Speech volume (0.0 to 1.0)")]
-    [Range(0.0f, 1.0f)]
-    public float speechVolume = 1.0f;
+    [Tooltip("TTSSpeaker component for Meta Voice SDK speech output")]
+    public TTSSpeaker ttsSpeaker;
+    // Removed RT-Voice Settings: speechAudioSource, voiceName, speechRate, speechVolume
     
     [Header("Evaluation Screen")]
     public GameObject evaluationScreen;
@@ -99,8 +96,23 @@ public class FirefighterDebriefCutsceneController : MonoBehaviour
     private Coroutine mouthAnimationCoroutine;
     private CharacterController characterController;
     private bool characterControllerWasEnabled;
-    private Voice selectedVoice;
-    private string currentSpeechId;
+    
+    // NEW: Fields for Meta Voice tracking
+    private string currentSpeechText;
+    // Removed RT-Voice Fields: selectedVoice, currentSpeechId
+
+    void Awake()
+    {
+        // Setup TTSSpeaker if not assigned (similar to other scripts)
+        if (ttsSpeaker == null && enableTTS)
+        {
+            ttsSpeaker = GetComponent<TTSSpeaker>();
+            if (ttsSpeaker == null)
+            {
+                Debug.LogError($"FirefighterDebriefCutsceneController on {gameObject.name}: TTSSpeaker component not found! Please add a TTSSpeaker component or assign it in the inspector.");
+            }
+        }
+    }
 
     void Start()
     {
@@ -110,15 +122,7 @@ public class FirefighterDebriefCutsceneController : MonoBehaviour
             characterController = playerRig.GetComponent<CharacterController>();
         }
         
-        // Setup AudioSource for RT-Voice if not assigned
-        if (speechAudioSource == null && enableTTS)
-        {
-            speechAudioSource = gameObject.GetComponent<AudioSource>();
-            if (speechAudioSource == null)
-            {
-                speechAudioSource = gameObject.AddComponent<AudioSource>();
-            }
-        }
+        // Removed: Setup AudioSource for RT-Voice
         
         // Set initial mascot sprite to mouth closed
         if (mascotImage != null && mouthClosedSprite != null)
@@ -149,13 +153,14 @@ public class FirefighterDebriefCutsceneController : MonoBehaviour
             nextLineAction.action.Enable();
         }
         
-        // Subscribe to RT-Voice events if TTS is enabled
-        if (enableTTS)
+        // NEW: Subscribe to Meta Voice TTS events
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.OnSpeakStart += OnSpeechStart;
-            Speaker.Instance.OnSpeakComplete += OnSpeechComplete;
-            Speaker.Instance.OnVoicesReady += OnVoicesReady;
+            ttsSpeaker.Events.OnPlaybackStart.AddListener(OnSpeechStart);
+            ttsSpeaker.Events.OnPlaybackComplete.AddListener(OnSpeechComplete);
+            ttsSpeaker.Events.OnPlaybackCancelled.AddListener(OnSpeechCancelled); // FIX: 3-argument listener
         }
+        // Removed RT-Voice subscriptions
     }
     
     void OnDisable()
@@ -167,27 +172,22 @@ public class FirefighterDebriefCutsceneController : MonoBehaviour
             nextLineAction.action.Disable();
         }
         
-        // Unsubscribe from RT-Voice events
-        if (enableTTS && Speaker.Instance != null)
+        // NEW: Unsubscribe from Meta Voice TTS events
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.OnSpeakStart -= OnSpeechStart;
-            Speaker.Instance.OnSpeakComplete -= OnSpeechComplete;
-            Speaker.Instance.OnVoicesReady -= OnVoicesReady;
+            ttsSpeaker.Events.OnPlaybackStart.RemoveListener(OnSpeechStart);
+            ttsSpeaker.Events.OnPlaybackComplete.RemoveListener(OnSpeechComplete);
+            ttsSpeaker.Events.OnPlaybackCancelled.RemoveListener(OnSpeechCancelled);
         }
+        // Removed RT-Voice unsubscriptions
     }
     
-    // RT-Voice event handlers
-    private void OnVoicesReady()
-    {
-        if (!string.IsNullOrEmpty(voiceName))
-        {
-            selectedVoice = Speaker.Instance.VoiceForName(voiceName);
-        }
-    }
+    #region Meta Voice Event Handlers
+    // Removed OnVoicesReady()
     
-    private void OnSpeechStart(Wrapper wrapper)
+    private void OnSpeechStart(TTSSpeaker speaker, TTSClipData clipData)
     {
-        if (wrapper.Uid == currentSpeechId)
+        if (clipData.textToSpeak == currentSpeechText)
         {
             isSpeaking = true;
             if (!isTyping)
@@ -197,9 +197,9 @@ public class FirefighterDebriefCutsceneController : MonoBehaviour
         }
     }
     
-    private void OnSpeechComplete(Wrapper wrapper)
+    private void OnSpeechComplete(TTSSpeaker speaker, TTSClipData clipData)
     {
-        if (wrapper.Uid == currentSpeechId)
+        if (clipData.textToSpeak == currentSpeechText)
         {
             isSpeaking = false;
             if (!isTyping)
@@ -208,6 +208,21 @@ public class FirefighterDebriefCutsceneController : MonoBehaviour
             }
         }
     }
+
+    // NEW: Handler for OnPlaybackCancelled (3-argument signature)
+    private void OnSpeechCancelled(TTSSpeaker speaker, TTSClipData clipData, string reason)
+    {
+        // Treat cancellation the same way as completion
+        if (clipData.textToSpeak == currentSpeechText)
+        {
+            isSpeaking = false;
+            if (!isTyping)
+            {
+                StopMouthAnimation();
+            }
+        }
+    }
+    #endregion
     
     // Input handler
     private void OnNextLinePressed(InputAction.CallbackContext context)
@@ -215,9 +230,9 @@ public class FirefighterDebriefCutsceneController : MonoBehaviour
         if (!cutsceneActive) return;
         
         // If speech is playing, skip it
-        if (isSpeaking && enableTTS)
+        if (isSpeaking && enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop(); // NEW: Use ttsSpeaker.Stop()
             return;
         }
         
@@ -301,9 +316,9 @@ public class FirefighterDebriefCutsceneController : MonoBehaviour
             StopCoroutine(typingCoroutine);
         }
         
-        if (enableTTS && isSpeaking)
+        if (enableTTS && isSpeaking && ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop(); // NEW: Stop Meta Voice speech
         }
         
         // Get next line
@@ -360,26 +375,24 @@ public class FirefighterDebriefCutsceneController : MonoBehaviour
         isTyping = false;
         dialogueText.text = currentLine;
         
-        if (!isSpeaking)
+        // Ensure speech starts if it hasn't, in case the line was completed quickly
+        if (enableTTS && !isSpeaking)
         {
-            StopMouthAnimation();
+            StartSpeech(currentLine);
         }
     }
     
     private void StartSpeech(string text)
     {
-        if (!enableTTS || Speaker.Instance == null || string.IsNullOrEmpty(text.Trim()))
+        if (!enableTTS || ttsSpeaker == null || string.IsNullOrEmpty(text.Trim()))
             return;
         
-        currentSpeechId = System.Guid.NewGuid().ToString();
+        // Removed: currentSpeechId = System.Guid.NewGuid().ToString();
+        currentSpeechText = text; // NEW: Set text to track completion/cancellation
         
-        Speaker.Instance.SpeakNative(
-            text,
-            selectedVoice,
-            speechRate,
-            1.0f,
-            speechVolume
-        );
+        // Removed: Speaker.Instance.SpeakNative(...)
+        // NEW: Use TTSSpeaker's Speak()
+        ttsSpeaker.Speak(text);
     }
     
     private void StartMouthAnimation()
@@ -412,6 +425,7 @@ public class FirefighterDebriefCutsceneController : MonoBehaviour
     {
         bool mouthOpen = false;
         
+        // Animation runs while typing OR while speaking
         while (isTyping || isSpeaking)
         {
             if (mouthOpen)
@@ -490,9 +504,10 @@ public class FirefighterDebriefCutsceneController : MonoBehaviour
     
     void OnDestroy()
     {
-        if (enableTTS && Speaker.Instance != null)
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop(); // NEW: Use ttsSpeaker.Stop()
         }
+        // Removed: RT-Voice Silence() call
     }
 }

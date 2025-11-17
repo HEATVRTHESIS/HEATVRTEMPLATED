@@ -10,32 +10,40 @@ public class VRPauseMenu : MonoBehaviour
     [SerializeField] private Toggle muteTTSToggle;
     
     [Header("Audio Sources to Control")]
-    [Tooltip("The dialogue system's speech AudioSource (RT-Voice uses this)")]
-    [SerializeField] private AudioSource speechAudioSource;
-    [Tooltip("Any other AudioSources you want to control")]
+    [Tooltip("Any AudioSources you want to control (background music, sound effects, etc.)")]
     [SerializeField] private AudioSource[] additionalAudioSources;
     
-    [Header("Input Mapping")]
-    [Tooltip("Map this to the pause button (e.g., left controller menu button)")]
-    public InputActionProperty pauseButtonAction;
+    [Header("TTS Reference")]
+    [Tooltip("Reference to the dialogue system for TTS control")]
+    [SerializeField] private VRDialogueSystem dialogueSystem;
+    
+    // Input action for the pause button (menu button on left controller)
+    private InputAction pauseAction;
     
     private bool isPaused = false;
     private float currentVolume = 1f;
     private bool isTTSMuted = false;
     private float timeScaleBeforePause = 1f; // Store time scale when pause menu opens
 
+    private void Awake()
+    {
+        // Create an input action for the left controller menu button
+        pauseAction = new InputAction(
+            name: "Pause",
+            binding: "<XRController>{LeftHand}/menuButton"
+        );
+    }
+
     private void OnEnable()
     {
-        // Subscribe to the action's 'performed' event
-        pauseButtonAction.action.performed += OnPauseButtonPressed;
-        pauseButtonAction.action.Enable();
+        pauseAction.Enable();
+        pauseAction.performed += OnPauseButtonPressed;
     }
 
     private void OnDisable()
     {
-        // Unsubscribe to prevent memory leaks
-        pauseButtonAction.action.performed -= OnPauseButtonPressed;
-        pauseButtonAction.action.Disable();
+        pauseAction.performed -= OnPauseButtonPressed;
+        pauseAction.Disable();
     }
 
     void Start()
@@ -46,26 +54,18 @@ public class VRPauseMenu : MonoBehaviour
             pauseMenuCanvas.enabled = false;
         }
         
-        // Auto-find the speech AudioSource if not assigned
-        if (speechAudioSource == null)
+        // Auto-find the dialogue system if not assigned
+        if (dialogueSystem == null)
         {
-            VRDialogueSystem dialogueSystem = FindObjectOfType<VRDialogueSystem>();
+            dialogueSystem = FindObjectOfType<VRDialogueSystem>();
             if (dialogueSystem != null)
             {
-                speechAudioSource = dialogueSystem.speechAudioSource;
-                Debug.Log("VRPauseMenu: Found speech AudioSource from VRDialogueSystem");
+                Debug.Log("Found VRDialogueSystem");
             }
         }
         
-        // Get initial volume from speech AudioSource
-        if (speechAudioSource != null)
-        {
-            currentVolume = speechAudioSource.volume;
-        }
-        else
-        {
-            currentVolume = AudioListener.volume;
-        }
+        // Get initial volume from AudioListener
+        currentVolume = AudioListener.volume;
         
         // Setup audio slider
         if (audioSlider != null)
@@ -84,8 +84,6 @@ public class VRPauseMenu : MonoBehaviour
             muteTTSToggle.isOn = isTTSMuted;
             muteTTSToggle.onValueChanged.AddListener(OnMuteTTSToggled);
         }
-        
-        Debug.Log("VRPauseMenu: Initialized and waiting for pause button input");
     }
 
     void Update()
@@ -97,12 +95,9 @@ public class VRPauseMenu : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// This method is called by the InputAction when the pause button is pressed.
-    /// </summary>
+    // This function is called every time the pause button is pressed
     private void OnPauseButtonPressed(InputAction.CallbackContext context)
     {
-        Debug.Log("VRPauseMenu: Pause button pressed!");
         TogglePauseMenu();
     }
 
@@ -122,15 +117,9 @@ public class VRPauseMenu : MonoBehaviour
 
     void OpenPauseMenu()
     {
-        Debug.Log("VRPauseMenu: Opening pause menu");
-        
         if (pauseMenuCanvas != null)
         {
             pauseMenuCanvas.enabled = true;
-        }
-        else
-        {
-            Debug.LogWarning("VRPauseMenu: pauseMenuCanvas is not assigned!");
         }
         
         // Save the current time scale before pausing
@@ -141,10 +130,9 @@ public class VRPauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         
         // Update slider to current volume
-        if (audioSlider != null && speechAudioSource != null)
+        if (audioSlider != null)
         {
-            audioSlider.value = speechAudioSource.volume;
-            currentVolume = speechAudioSource.volume;
+            audioSlider.value = currentVolume;
         }
         
         // Update mute toggle
@@ -156,8 +144,6 @@ public class VRPauseMenu : MonoBehaviour
 
     void ClosePauseMenu()
     {
-        Debug.Log("VRPauseMenu: Closing pause menu");
-        
         if (pauseMenuCanvas != null)
         {
             pauseMenuCanvas.enabled = false;
@@ -185,13 +171,16 @@ public class VRPauseMenu : MonoBehaviour
         
         if (isTTSMuted)
         {
-            // Silence any currently playing RT-Voice dialogue
-            Crosstales.RTVoice.Speaker.Instance.Silence();
-            Debug.Log("VRPauseMenu: TTS Muted");
+            // Stop any currently playing Meta Voice TTS
+            if (dialogueSystem != null && dialogueSystem.ttsSpeaker != null)
+            {
+                dialogueSystem.ttsSpeaker.Stop();
+            }
+            Debug.Log("TTS Muted");
         }
         else
         {
-            Debug.Log("VRPauseMenu: TTS Unmuted");
+            Debug.Log("TTS Unmuted");
         }
     }
 
@@ -200,13 +189,7 @@ public class VRPauseMenu : MonoBehaviour
         // Apply to master volume
         AudioListener.volume = currentVolume;
         
-        // Apply to the speech AudioSource (RT-Voice)
-        if (speechAudioSource != null)
-        {
-            speechAudioSource.volume = currentVolume;
-        }
-        
-        // Apply to any additional AudioSources
+        // Apply to any additional AudioSources (background music, sound effects, etc.)
         if (additionalAudioSources != null)
         {
             foreach (AudioSource audioSource in additionalAudioSources)
@@ -217,20 +200,20 @@ public class VRPauseMenu : MonoBehaviour
                 }
             }
         }
+        
+        // Note: Meta Voice SDK's TTSSpeaker handles its own audio internally
+        // Volume is controlled via AudioListener.volume or the TTSSpeaker's AudioSource
     }
 
     // Public methods for UI buttons if needed
     public void ResumeButton()
     {
-        Debug.Log("VRPauseMenu: Resume button clicked");
         isPaused = false;
         ClosePauseMenu();
     }
 
     public void QuitButton()
     {
-        Debug.Log("VRPauseMenu: Quit button clicked");
-        
         // Resume time before quitting
         Time.timeScale = 1f;
         

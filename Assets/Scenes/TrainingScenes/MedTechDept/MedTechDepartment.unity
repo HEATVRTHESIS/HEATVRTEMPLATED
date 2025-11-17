@@ -316,11 +316,8 @@ MonoBehaviour:
   smoothFollow: 1
   heightOffset: 0.91
   distanceFromObject: 0.18
-  useRTVoice: 1
+  ttsSpeaker: {fileID: 333603413}
   audioSource: {fileID: 5329925472940090969}
-  voiceName: 
-  speechRate: 1
-  speechVolume: 1
 --- !u!1 &105545451
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,78 +386,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 118368342}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -4.897135, y: -1.540627, z: 0.10447933}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.86, y: -1.540627, z: 1.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1113032068}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!1001 &265960618
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 101928, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_Name
-      value: RTVoice
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11493764, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: customMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11493764, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: androidEngine
-      value: com.google.android.tts
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &314236167
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,6 +435,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57432d2b1eded8148a9907b65a20c508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &333603413 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7153430123473003476, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 743513128}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15403450229c3a4b8455a61d6143a6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &394482270 stripped
@@ -1233,10 +1176,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9054167324086753903}
     m_Modifications:
-    - target: {fileID: 990326918647938102, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2328993696059774100, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
       propertyPath: m_Camera
       value: 
@@ -1324,6 +1263,10 @@ PrefabInstance:
     - target: {fileID: 7368568741755371755, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
       propertyPath: m_Name
       value: PopUpText
+      objectReference: {fileID: 0}
+    - target: {fileID: 7368568741755371755, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8379253376636852891, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -7415,6 +7358,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 45e0600eef40b0f48b4d4412e61cf8cd, type: 3}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+      propertyPath: targetGameObject
+      value: 
+      objectReference: {fileID: 3080775114083081323}
+    - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: magnifyingGlassIcon
       value: 
       objectReference: {fileID: 2925773371957866777}
@@ -7630,6 +7577,11 @@ MonoBehaviour:
 --- !u!4 &3080775114083081322 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5339672174359428346, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+  m_PrefabInstance: {fileID: 3080775114083081320}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3080775114083081323 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1921852158566186382, guid: af578c62e52857b4d865ffc88649658f, type: 3}
   m_PrefabInstance: {fileID: 3080775114083081320}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &3085921282335627590
@@ -13842,6 +13794,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7830208495215971711}
     - target: {fileID: 2849985074940863052, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: targetGameObject
+      value: 
+      objectReference: {fileID: 1377550843}
+    - target: {fileID: 2849985074940863052, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
       propertyPath: magnifyingGlassIcon
       value: 
       objectReference: {fileID: 2925773371957866777}
@@ -13853,6 +13809,10 @@ PrefabInstance:
       propertyPath: popupManager
       value: 
       objectReference: {fileID: 7830208495215971711}
+    - target: {fileID: 3994310791346735890, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: targetGameObject
+      value: 
+      objectReference: {fileID: 1971191283}
     - target: {fileID: 3994310791346735890, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
       propertyPath: magnifyingGlassIcon
       value: 
@@ -16865,4 +16825,3 @@ SceneRoots:
   - {fileID: 1113032068}
   - {fileID: 314236168}
   - {fileID: 926649565}
-  - {fileID: 265960618}

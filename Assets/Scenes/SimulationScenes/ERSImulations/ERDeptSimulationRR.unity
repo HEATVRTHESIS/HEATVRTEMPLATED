@@ -850,92 +850,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224778073}
   m_CullTransparentMesh: 1
---- !u!1 &229676227
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 229676230}
-  - component: {fileID: 229676229}
-  - component: {fileID: 229676228}
-  m_Layer: 0
-  m_Name: RTVoice
-  m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &229676228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 229676227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5907082d48125c43af0cfe08c54cbf5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &229676229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 229676227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11222982cd0da5048a5b032a719ffd7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dontDestroy: 1
-  customProvider: {fileID: 0}
-  customMode: 0
-  eSpeakMode: 0
-  eSpeakApplication: espeak
-  eSpeakDataPath: 
-  eSpeakModifier: 0
-  androidEngine: 
-  windowsForce32bit: 0
-  autoClearTags: 0
-  caching: 1
-  silenceOnDisable: 0
-  silenceOnFocusLost: 0
-  handleFocus: 1
-  OnReady:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSpeakStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSpeakCompleted:
-    m_PersistentCalls:
-      m_Calls: []
-  OnProviderChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnError:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!4 &229676230
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 229676227}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &314236167
 GameObject:
   m_ObjectHideFlags: 0
@@ -1175,6 +1089,37 @@ MonoBehaviour:
         m_Flags: 0
       m_Flags: 0
     m_Reference: {fileID: 0}
+--- !u!1 &489923308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 489923309}
+  m_Layer: 0
+  m_Name: ' asd'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &489923309
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 489923308}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.866, y: 0, z: -1.554}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1933364764072717195}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &504988914
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1700,6 +1645,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+--- !u!114 &743513129 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7153430123473003476, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 743513128}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15403450229c3a4b8455a61d6143a6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &744823902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3010,7 +2966,7 @@ MonoBehaviour:
   - {fileID: 6236664083042210838, guid: 11c98c82a4cb32541ba294e00b8bc078, type: 3}
   spawnCount: 2
   spawnArea: {fileID: 210047835}
-  tutorialIndicatorTarget: {fileID: 0}
+  tutorialIndicatorTarget: {fileID: 2288953963070056304}
   overrideIndicatorText: 
   overrideAudioMessage: 
 --- !u!1 &1319163841
@@ -3420,9 +3376,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1558719257}
     - target: {fileID: 4689036134721822645, guid: 0bda3cfbfab6913418c5495410c75a63, type: 3}
+      propertyPath: ttsSpeaker
+      value: 
+      objectReference: {fileID: 743513129}
+    - target: {fileID: 4689036134721822645, guid: 0bda3cfbfab6913418c5495410c75a63, type: 3}
       propertyPath: dialogueText
       value: 
       objectReference: {fileID: 1614186162}
+    - target: {fileID: 4689036134721822645, guid: 0bda3cfbfab6913418c5495410c75a63, type: 3}
+      propertyPath: waitForSpeech
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4689036134721822645, guid: 0bda3cfbfab6913418c5495410c75a63, type: 3}
       propertyPath: hoverIndicator
       value: 
@@ -5699,7 +5663,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3709116626896669700}
+      - m_Target: {fileID: 6044247570461347841}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: LoadNewLevel
         m_Mode: 1
@@ -7934,6 +7898,7 @@ Transform:
   m_Children:
   - {fileID: 2961137092360122493}
   - {fileID: 4154887037291083922}
+  - {fileID: 489923309}
   m_Father: {fileID: 105545452}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2004201589107202662
@@ -8956,7 +8921,7 @@ MonoBehaviour:
   - {fileID: 6157248462430622884, guid: 0226d8705f2517145a059a7c791c673d, type: 3}
   spawnCount: 1
   spawnArea: {fileID: 3231050250657590567}
-  tutorialIndicatorTarget: {fileID: 0}
+  tutorialIndicatorTarget: {fileID: 3463547908352046592}
   overrideIndicatorText: 
   overrideAudioMessage: 
 --- !u!33 &2279416040077322262
@@ -12013,19 +11978,6 @@ Transform:
   - {fileID: 7903325974505974165}
   m_Father: {fileID: 5323142383255215585}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3709116626896669700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6044247570461347840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92354beeabc56244bd80c9197d1bc8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneToLoad: SimulationFireER
 --- !u!1 &3764389583105198495
 GameObject:
   m_ObjectHideFlags: 0
@@ -15610,7 +15562,7 @@ GameObject:
   - component: {fileID: 5083896178460485811}
   - component: {fileID: 2319083162894862246}
   - component: {fileID: 589742312813022421}
-  - component: {fileID: 3709116626896669700}
+  - component: {fileID: 6044247570461347841}
   m_Layer: 0
   m_Name: NextPhaseButt
   m_TagString: Untagged
@@ -15618,6 +15570,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6044247570461347841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6044247570461347840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b92354beeabc56244bd80c9197d1bc8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: SimulationFireER
 --- !u!23 &6080185092032834699
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -16715,7 +16680,7 @@ MonoBehaviour:
   - {fileID: 5668489214020365865, guid: 9b5d44ed974c8844882ce655e1e2e009, type: 3}
   spawnCount: 2
   spawnArea: {fileID: 6490294015389734522}
-  tutorialIndicatorTarget: {fileID: 0}
+  tutorialIndicatorTarget: {fileID: 489923309}
   overrideIndicatorText: 
   overrideAudioMessage: 
 --- !u!4 &6830741531153620147 stripped
@@ -20008,7 +19973,7 @@ MonoBehaviour:
   - {fileID: 8274811894028601057, guid: 88d1c336e2ea3994ea0391632e3392fc, type: 3}
   spawnCount: 2
   spawnArea: {fileID: 4818415949352128239}
-  tutorialIndicatorTarget: {fileID: 0}
+  tutorialIndicatorTarget: {fileID: 3622756384415376388}
   overrideIndicatorText: 
   overrideAudioMessage: 
 --- !u!4 &8755912503328860831
@@ -20901,4 +20866,3 @@ SceneRoots:
   - {fileID: 3663535275640584380}
   - {fileID: 504988914}
   - {fileID: 1562044956}
-  - {fileID: 229676230}

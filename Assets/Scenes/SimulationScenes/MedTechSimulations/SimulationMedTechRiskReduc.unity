@@ -1207,6 +1207,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8950767705098824686, guid: 900a7b9583edd914db894778aa3f2cff, type: 3}
   m_PrefabInstance: {fileID: 3395112320161563076}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1025560114 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7153430123473003476, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 743513128}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15403450229c3a4b8455a61d6143a6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1025889402
 GameObject:
   m_ObjectHideFlags: 0
@@ -1415,12 +1426,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 735510357}
   - {fileID: 1966247139}
   - {fileID: 698831974}
   - {fileID: 6553051742120217990}
   - {fileID: 1025889403}
   - {fileID: 1914934343}
+  - {fileID: 735510357}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1113032069
@@ -1485,14 +1496,9 @@ MonoBehaviour:
   mouthOpenSprite: {fileID: 21300000, guid: d3f1adbcd2ee57241bd63fbd4e245347, type: 3}
   mouthAnimationSpeed: 0.15
   enableTTS: 1
-  speechAudioSource: {fileID: 0}
-  voiceName: 
-  speechRate: 1
-  speechPitch: 1
-  speechVolume: 1
+  ttsSpeaker: {fileID: 0}
   waitForSpeech: 1
   showTextImmediatelyWithSpeech: 0
-  useNativeSpeech: 1
 --- !u!114 &1113032072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1704,67 +1710,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!1001 &1261140510
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 101928, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_Name
-      value: RTVoice
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11493764, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: androidEngine
-      value: com.google.android.tts
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
 --- !u!4 &1264660058 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5293413233763613120, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
@@ -2117,11 +2062,6 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 8618589968782642333, guid: f329a10a15c7d3b44b3387306e62c62d, type: 3}
   m_PrefabInstance: {fileID: 7905616736896812306}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1596724846 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1921852158566186382, guid: af578c62e52857b4d865ffc88649658f, type: 3}
-  m_PrefabInstance: {fileID: 3080775114083081320}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1623384861 stripped
 GameObject:
@@ -4452,7 +4392,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &799597562058705537
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6754,9 +6694,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1623384861}
     - target: {fileID: 4689036134721822645, guid: 0bda3cfbfab6913418c5495410c75a63, type: 3}
+      propertyPath: ttsSpeaker
+      value: 
+      objectReference: {fileID: 1025560114}
+    - target: {fileID: 4689036134721822645, guid: 0bda3cfbfab6913418c5495410c75a63, type: 3}
       propertyPath: dialogueText
       value: 
       objectReference: {fileID: 1342195901}
+    - target: {fileID: 4689036134721822645, guid: 0bda3cfbfab6913418c5495410c75a63, type: 3}
+      propertyPath: waitForSpeech
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4689036134721822645, guid: 0bda3cfbfab6913418c5495410c75a63, type: 3}
       propertyPath: hoverIndicator
       value: 
@@ -8724,7 +8672,7 @@ PrefabInstance:
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: targetGameObject
       value: 
-      objectReference: {fileID: 1596724846}
+      objectReference: {fileID: 3080775114083081323}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: magnifyingGlassIcon
       value: 
@@ -8941,6 +8889,11 @@ MonoBehaviour:
 --- !u!4 &3080775114083081322 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5339672174359428346, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+  m_PrefabInstance: {fileID: 3080775114083081320}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3080775114083081323 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1921852158566186382, guid: af578c62e52857b4d865ffc88649658f, type: 3}
   m_PrefabInstance: {fileID: 3080775114083081320}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &3085921282335627590
@@ -19148,4 +19101,3 @@ SceneRoots:
   - {fileID: 2065643053213364558}
   - {fileID: 799597470}
   - {fileID: 1395545426}
-  - {fileID: 1261140510}

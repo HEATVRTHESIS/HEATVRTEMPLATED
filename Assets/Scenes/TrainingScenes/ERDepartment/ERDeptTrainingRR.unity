@@ -839,6 +839,7 @@ MonoBehaviour:
   noAnswerImage: {fileID: 21300000, guid: 554c4c9fc7f51bf4f8d69a9d38177ab2, type: 3}
   isYesTheCorrectAnswer: 1
   targetObject: {fileID: 1101190938}
+  targetGameObject: {fileID: 0}
   magnifyingGlassIcon: {fileID: 2925773371957866777}
   popupManager: {fileID: 7830208495215971711}
   playerAction:
@@ -912,11 +913,8 @@ MonoBehaviour:
   smoothFollow: 1
   heightOffset: 0.91
   distanceFromObject: 0.18
-  useRTVoice: 1
+  ttsSpeaker: {fileID: 743513129}
   audioSource: {fileID: 0}
-  voiceName: 
-  speechRate: 1
-  speechVolume: 1
 --- !u!1001 &504988914
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1335,6 +1333,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+--- !u!114 &743513129 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7153430123473003476, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 743513128}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15403450229c3a4b8455a61d6143a6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &744823902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3412,63 +3421,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1575017513}
   m_CullTransparentMesh: 1
---- !u!1001 &1733903272
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 101928, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_Name
-      value: RTVoice
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 411916, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
 --- !u!1 &1750113468
 GameObject:
   m_ObjectHideFlags: 0
@@ -3670,6 +3622,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PopUpText
       objectReference: {fileID: 0}
+    - target: {fileID: 7368568741755371755, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8379253376636852891, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
@@ -3743,6 +3699,7 @@ MonoBehaviour:
   noAnswerImage: {fileID: 21300000, guid: 18e6697c4ec6c5148bb9b76a75294e65, type: 3}
   isYesTheCorrectAnswer: 0
   targetObject: {fileID: 1029187212}
+  targetGameObject: {fileID: 0}
   magnifyingGlassIcon: {fileID: 2925773371957866777}
   popupManager: {fileID: 7830208495215971711}
   playerAction:
@@ -20767,4 +20724,3 @@ SceneRoots:
   - {fileID: 314236168}
   - {fileID: 3663535275640584380}
   - {fileID: 504988914}
-  - {fileID: 1733903272}

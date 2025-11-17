@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Crosstales.RTVoice;
-using Crosstales.RTVoice.Model;
+using Meta.WitAi.TTS.Utilities; // Meta Voice SDK namespace
+using Meta.WitAi.TTS.Data; // For TTSClipData
 
 /// <summary>
 /// Manages tutorial indicators and one-time audio instructions for VR interactions.
@@ -29,21 +29,11 @@ public class VRTutorialManager : MonoBehaviour
     [Tooltip("Distance from object towards camera (like tooltip system)")]
     public float distanceFromObject = 0.3f;
     
-    [Header("Audio Settings - Choose One Method")]
-    [Tooltip("Use RT-Voice for text-to-speech (like your dialogue system)")]
-    public bool useRTVoice = true;
-    [Tooltip("AudioSource for playing pre-recorded audio clips (not needed for RT-Voice native TTS)")]
+    [Header("Audio Settings - Meta Voice TTS")]
+    [Tooltip("TTSSpeaker component for Meta Voice SDK speech output (required)")]
+    public TTSSpeaker ttsSpeaker;
+    [Tooltip("AudioSource for playing pre-recorded audio clips")]
     public AudioSource audioSource;
-    
-    [Header("RT-Voice Settings (if enabled)")]
-    [Tooltip("Voice to use for speech (leave empty for default)")]
-    public string voiceName = "";
-    [Tooltip("Speech rate (0.1 to 3.0, 1.0 is normal speed)")]
-    [Range(0.1f, 3.0f)]
-    public float speechRate = 1.0f;
-    [Tooltip("Speech volume (0.0 to 1.0)")]
-    [Range(0.0f, 1.0f)]
-    public float speechVolume = 1.0f;
     
     // Active indicator tracking
     private GameObject activeIndicator;
@@ -53,13 +43,10 @@ public class VRTutorialManager : MonoBehaviour
     // Audio queue system
     private Queue<TutorialAudioMessage> audioQueue = new Queue<TutorialAudioMessage>();
     private bool isPlayingAudio = false;
-    // private string currentSpeechId; // Not used with SpeakNative
+    private string currentSpeechText; // Track the text of the currently speaking message
     
     // First-time tracking
     private HashSet<string> triggeredObjects = new HashSet<string>();
-    
-    // RT-Voice
-    private Voice selectedVoice;
     
     private struct TutorialAudioMessage
     {
@@ -68,9 +55,22 @@ public class VRTutorialManager : MonoBehaviour
         public bool useTextToSpeech;
     }
     
+    private void Awake()
+    {
+        // Setup TTSSpeaker if not assigned (must be done before Start to subscribe events)
+        if (ttsSpeaker == null)
+        {
+            ttsSpeaker = GetComponent<TTSSpeaker>();
+            if (ttsSpeaker == null)
+            {
+                Debug.LogError($"VRTutorialManager on {gameObject.name}: TTSSpeaker component not found! Please add a TTSSpeaker component or assign it in the inspector.");
+            }
+        }
+    }
+    
     private void Start()
     {
-        // Auto-find camera if not assigned
+        // Find player camera
         if (cameraTransform == null)
         {
             cameraTransform = Camera.main?.transform;
@@ -81,8 +81,8 @@ public class VRTutorialManager : MonoBehaviour
             }
         }
         
-        // Setup audio source (only needed for AudioClip playback, NOT for native TTS)
-        if (audioSource == null && !useRTVoice)
+        // Setup audio source (only for AudioClip playback)
+        if (audioSource == null)
         {
             audioSource = GetComponent<AudioSource>();
             if (audioSource == null)
@@ -90,48 +90,67 @@ public class VRTutorialManager : MonoBehaviour
                 audioSource = gameObject.AddComponent<AudioSource>();
             }
         }
-        
-        // Setup RT-Voice if enabled
-        if (useRTVoice)
+    }
+    
+    private void OnEnable()
+    {
+        // Subscribe to Meta Voice TTS events
+        if (ttsSpeaker != null)
         {
-            // Note: SpeakNative doesn't fire OnSpeakComplete, so we don't subscribe to it
-            Speaker.Instance.OnVoicesReady += OnVoicesReady;
+            ttsSpeaker.Events.OnPlaybackComplete.AddListener(OnSpeechComplete);
+            ttsSpeaker.Events.OnPlaybackCancelled.AddListener(OnSpeechCancelled); // FIX: Use the 3-argument listener
+        }
+    }
+    
+    private void OnDisable()
+    {
+        // Unsubscribe from Meta Voice TTS events
+        if (ttsSpeaker != null)
+        {
+            ttsSpeaker.Events.OnPlaybackComplete.RemoveListener(OnSpeechComplete);
+            ttsSpeaker.Events.OnPlaybackCancelled.RemoveListener(OnSpeechCancelled); // FIX: Remove the 3-argument listener
+        }
+        
+        // Stop any ongoing speech
+        if (ttsSpeaker != null)
+        {
+            ttsSpeaker.Stop();
         }
     }
     
     private void OnDestroy()
     {
-        if (useRTVoice && Speaker.Instance != null)
+        // Ensure any ongoing indicator/speech is cleaned up
+        DestroyIndicator();
+        if (ttsSpeaker != null)
         {
-            Speaker.Instance.OnVoicesReady -= OnVoicesReady;
+            ttsSpeaker.Stop();
         }
     }
     
-    private void OnVoicesReady()
-    {
-        if (!string.IsNullOrEmpty(voiceName))
-        {
-            selectedVoice = Speaker.Instance.VoiceForName(voiceName);
-            if (selectedVoice == null)
-            {
-                Debug.LogWarning($"[VRTutorialManager] Voice '{voiceName}' not found. Using default.");
-            }
-        }
-    }
+    #region Meta Voice Event Handlers
     
-    // NOTE: Not used with SpeakNative (which doesn't fire OnSpeakComplete)
-    // Kept here in case switching to file-based Speak() method in the future
-    /*
-    private void OnSpeechComplete(Wrapper wrapper)
+    private void OnSpeechComplete(TTSSpeaker speaker, TTSClipData clipData)
     {
-        if (wrapper.Uid == currentSpeechId)
+        // Only progress the queue if the completed speech is the one we started
+        if (clipData.textToSpeak == currentSpeechText)
         {
             isPlayingAudio = false;
+            currentSpeechText = null;
             ProcessAudioQueue();
         }
     }
-    */
+
+    // FIX: New handler to match the 3-argument signature of OnPlaybackCancelled
+    private void OnSpeechCancelled(TTSSpeaker speaker, TTSClipData clipData, string reason)
+    {
+        // Treat cancellation the same way as completion for queue progression.
+        // We call OnSpeechComplete which handles the queue progression logic.
+        OnSpeechComplete(speaker, clipData);
+    }
     
+    #endregion
+
     private void Update()
     {
         // Destroy indicator if system disabled
@@ -261,7 +280,8 @@ public class VRTutorialManager : MonoBehaviour
         {
             messageText = messageText,
             audioClip = audioClip,
-            useTextToSpeech = useRTVoice && !string.IsNullOrEmpty(messageText)
+            // Use TTS only if the speaker is assigned AND a message is provided
+            useTextToSpeech = ttsSpeaker != null && !string.IsNullOrEmpty(messageText)
         };
         
         audioQueue.Enqueue(msg);
@@ -289,7 +309,7 @@ public class VRTutorialManager : MonoBehaviour
         
         if (msg.useTextToSpeech)
         {
-            // Use RT-Voice
+            // Use Meta Voice TTS
             PlayTextToSpeech(msg.messageText);
         }
         else if (msg.audioClip != null)
@@ -306,60 +326,27 @@ public class VRTutorialManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Plays text-to-speech using RT-Voice
+    /// Plays text-to-speech using Meta Voice TTS SDK
     /// </summary>
     private void PlayTextToSpeech(string text)
     {
-        if (Speaker.Instance == null)
+        if (ttsSpeaker == null)
         {
-            Debug.LogError("[VRTutorialManager] RT-Voice Speaker not available!");
+            Debug.LogError("[VRTutorialManager] TTSSpeaker not assigned! Cannot play TTS.");
             isPlayingAudio = false;
             ProcessAudioQueue();
             return;
         }
         
-        // USE NATIVE SPEECH - NO FILE GENERATION
-        // Note: SpeakNative doesn't return a UID, so we can't track completion
-        // We'll use a simple timer based on text length
-        Speaker.Instance.SpeakNative(
-            text,
-            selectedVoice,
-            speechRate,
-            1.0f,  // pitch
-            speechVolume
-        );
+        // Track the text so we can match it in the OnSpeechComplete event
+        currentSpeechText = text;
+
+        // Use Speak() for immediate playback/synthesis
+        ttsSpeaker.Speak(text);
         
-        Debug.Log($"[VRTutorialManager] Playing TTS (NATIVE): {text}");
+        Debug.Log($"[VRTutorialManager] Playing TTS (Meta Voice): {text}");
         
-        // Estimate speech duration (rough: 150 words per minute average)
-        float estimatedDuration = EstimateSpeechDuration(text);
-        StartCoroutine(WaitForNativeSpeechComplete(estimatedDuration));
-    }
-    
-    /// <summary>
-    /// Estimates speech duration based on text length
-    /// </summary>
-    private float EstimateSpeechDuration(string text)
-    {
-        // Average speaking rate: ~150 words per minute = 2.5 words per second
-        // Average word length: ~5 characters
-        // So roughly: characters / 12.5 = seconds
-        int charCount = text.Length;
-        float baseDuration = charCount / 12.5f / speechRate;
-        
-        // Add small buffer
-        return baseDuration + 0.5f;
-    }
-    
-    /// <summary>
-    /// Waits for estimated native speech completion
-    /// </summary>
-    private System.Collections.IEnumerator WaitForNativeSpeechComplete(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        
-        isPlayingAudio = false;
-        ProcessAudioQueue();
+        // Completion is handled by the OnSpeechComplete event, so no manual timer is needed.
     }
     
     /// <summary>
@@ -407,15 +394,6 @@ public class VRTutorialManager : MonoBehaviour
         
         // Check if this is the first positioning (indicator is at origin)
         bool isFirstPosition = activeIndicator.transform.position == Vector3.zero;
-        
-        if (isFirstPosition)
-        {
-            Debug.Log($"[VRTutorialManager] UpdateIndicatorPosition - First position calculation:");
-            Debug.Log($"  Target: {indicatorTarget.position}");
-            Debug.Log($"  Base Position: {basePosition}");
-            Debug.Log($"  Camera: {cameraTransform.position}");
-            Debug.Log($"  Final Indicator Position: {indicatorPosition}");
-        }
         
         // Apply position (force immediate on first frame, then optional smoothing)
         if (smoothFollow && !isFirstPosition)
@@ -492,9 +470,9 @@ public class VRTutorialManager : MonoBehaviour
         isPlayingAudio = false;
         DestroyIndicator();
         
-        if (useRTVoice && Speaker.Instance != null)
+        if (ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop();
         }
         
         Debug.Log("[VRTutorialManager] Tutorial progress reset");
@@ -513,9 +491,9 @@ public class VRTutorialManager : MonoBehaviour
             audioQueue.Clear();
             isPlayingAudio = false;
             
-            if (useRTVoice && Speaker.Instance != null)
+            if (ttsSpeaker != null)
             {
-                Speaker.Instance.Silence();
+                ttsSpeaker.Stop();
             }
         }
     }

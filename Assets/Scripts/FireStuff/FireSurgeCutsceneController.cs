@@ -3,14 +3,17 @@ using UnityEngine.XR;
 using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using Crosstales.RTVoice;
-using Crosstales.RTVoice.Model;
+using Meta.WitAi.TTS.Utilities; // NEW: Meta Voice SDK namespace
+using Meta.WitAi.TTS.Data; // NEW: For TTSClipData
+
+// Removed: using System.IO;
+// Removed: using Crosstales.RTVoice;
+// Removed: using Crosstales.RTVoice.Model;
 
 /// <summary>
 /// Manages a fire surge cutscene with lightning effects, light flickering, and NPC dialogue.
 /// Freezes time and player movement during the cutscene to prevent premature gameplay.
-/// Includes RT-Voice TTS support and button-based dialogue progression.
+/// Includes Meta Voice TTS support and button-based dialogue progression.
 /// </summary>
 public class FireSurgeCutsceneController : MonoBehaviour
 {
@@ -71,28 +74,17 @@ public class FireSurgeCutsceneController : MonoBehaviour
     [Tooltip("Input action to progress dialogue lines")]
     public InputActionProperty nextLineAction;
     
-    [Header("RT-Voice Settings")]
-    [Tooltip("Enable text-to-speech using RT-Voice")]
+    // --- NEW: Meta Voice TTS Settings ---
+    [Header("Meta Voice TTS Settings")]
+    [Tooltip("Enable text-to-speech using Meta Voice SDK")]
     public bool enableTTS = true;
-    [Tooltip("AudioSource for RT-Voice speech output")]
-    public AudioSource speechAudioSource;
-    [Tooltip("Voice to use for speech (leave empty for default)")]
-    public string voiceName = "";
-    [Tooltip("Speech rate (0.1 to 3.0, 1.0 is normal speed)")]
-    [Range(0.1f, 3.0f)]
-    public float speechRate = 1.0f;
-    [Tooltip("Speech pitch (0.0 to 2.0, 1.0 is normal pitch)")]
-    [Range(0.0f, 2.0f)]
-    public float speechPitch = 1.0f;
-    [Tooltip("Speech volume (0.0 to 1.0)")]
-    [Range(0.0f, 1.0f)]
-    public float speechVolume = 1.0f;
+    [Tooltip("TTSSpeaker component for Meta Voice SDK speech output")]
+    public TTSSpeaker ttsSpeaker;
     [Tooltip("Wait for speech to complete before allowing next line")]
     public bool waitForSpeech = true;
     [Tooltip("Show text immediately when speech starts (disable typewriter for speech)")]
     public bool showTextImmediatelyWithSpeech = false;
-    [Tooltip("Use native speech (no file generation) to avoid file system issues")]
-    public bool useNativeSpeech = true;
+    // --- REMOVED RT-Voice Settings ---
     
     [Header("Game State Management")]
     [Tooltip("FireTimer component to pause during cutscene")]
@@ -123,37 +115,37 @@ public class FireSurgeCutsceneController : MonoBehaviour
     private bool speechStartedForCurrentLine = false;
     private string currentLine;
     private Coroutine typingCoroutine;
-    private Voice selectedVoice;
-    private string currentSpeechId;
+    
+    // NEW: Variable to track the currently speaking text (like NPCCutsceneController.cs)
+    private string currentSpeechText;
+    
+    // Removed RT-Voice specific variables:
+    // private Voice selectedVoice;
+    // private string currentSpeechId;
+    
     private Queue<string> dialogueQueue = new Queue<string>();
     private bool dialogueInProgress = false;
     
     void Awake()
     {
-        // Configure RT-Voice audio path to avoid file conflicts
-        if (enableTTS)
+        // Removed RT-Voice path configuration.
+        // Removed speechAudioSource setup (not used by TTSSpeaker)
+        
+        // Setup TTSSpeaker if not assigned
+        if (ttsSpeaker == null && enableTTS)
         {
-            string audioPath = Path.Combine(Application.persistentDataPath, "RTVoiceAudio");
-            if (!Directory.Exists(audioPath))
+            ttsSpeaker = GetComponent<TTSSpeaker>();
+            if (ttsSpeaker == null)
             {
-                Directory.CreateDirectory(audioPath);
-            }
-            Crosstales.RTVoice.Util.Config.AUDIOFILE_PATH = audioPath;
-        }
-
-        // Setup AudioSource for RT-Voice if not assigned
-        if (speechAudioSource == null && enableTTS)
-        {
-            speechAudioSource = gameObject.GetComponent<AudioSource>();
-            if (speechAudioSource == null)
-            {
-                speechAudioSource = gameObject.AddComponent<AudioSource>();
+                Debug.LogError($"FireSurgeCutsceneController on {gameObject.name}: TTSSpeaker component not found! Please add a TTSSpeaker component or assign it in the inspector.");
             }
         }
     }
     
     void Start()
     {
+        // ... (rest of Start() is unchanged) ...
+        
         // Find player camera
         playerCamera = Camera.main.transform;
         
@@ -202,13 +194,14 @@ public class FireSurgeCutsceneController : MonoBehaviour
             nextLineAction.action.Enable();
         }
 
-        // Subscribe to RT-Voice events if TTS is enabled
-        if (enableTTS && Speaker.Instance != null)
+        // NEW: Subscribe to Meta Voice TTS events
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.OnSpeakStart += OnSpeechStart;
-            Speaker.Instance.OnSpeakComplete += OnSpeechComplete;
-            Speaker.Instance.OnVoicesReady += OnVoicesReady;
+            ttsSpeaker.Events.OnPlaybackStart.AddListener(OnSpeechStart);
+            ttsSpeaker.Events.OnPlaybackComplete.AddListener(OnSpeechComplete);
+            ttsSpeaker.Events.OnPlaybackCancelled.AddListener(OnSpeechCancelled); // FIX: 3-argument listener
         }
+        // Removed RT-Voice subscriptions (Speaker.Instance)
     }
     
     void OnDisable()
@@ -220,40 +213,40 @@ public class FireSurgeCutsceneController : MonoBehaviour
             nextLineAction.action.Disable();
         }
 
-        // Unsubscribe from RT-Voice events
-        if (enableTTS && Speaker.Instance != null)
+        // NEW: Unsubscribe from Meta Voice TTS events
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.OnSpeakStart -= OnSpeechStart;
-            Speaker.Instance.OnSpeakComplete -= OnSpeechComplete;
-            Speaker.Instance.OnVoicesReady -= OnVoicesReady;
+            ttsSpeaker.Events.OnPlaybackStart.RemoveListener(OnSpeechStart);
+            ttsSpeaker.Events.OnPlaybackComplete.RemoveListener(OnSpeechComplete);
+            ttsSpeaker.Events.OnPlaybackCancelled.RemoveListener(OnSpeechCancelled);
         }
+        // Removed RT-Voice unsubscriptions (Speaker.Instance)
     }
 
-    #region RT-Voice Event Handlers
+    #region Meta Voice Event Handlers // NEW: Using Meta Voice Handlers
 
-    private void OnVoicesReady()
-    {
-        if (!string.IsNullOrEmpty(voiceName))
-        {
-            selectedVoice = Speaker.Instance.VoiceForName(voiceName);
-            if (selectedVoice == null)
-            {
-                Debug.LogWarning($"Voice '{voiceName}' not found. Using default voice.");
-            }
-        }
-    }
+    // Removed OnVoicesReady()
 
-    private void OnSpeechStart(Wrapper wrapper)
+    private void OnSpeechStart(TTSSpeaker speaker, TTSClipData clipData)
     {
-        if (wrapper.Uid == currentSpeechId)
+        if (clipData.textToSpeak == currentSpeechText)
         {
             isSpeaking = true;
         }
     }
 
-    private void OnSpeechComplete(Wrapper wrapper)
+    private void OnSpeechComplete(TTSSpeaker speaker, TTSClipData clipData)
     {
-        if (wrapper.Uid == currentSpeechId)
+        if (clipData.textToSpeak == currentSpeechText)
+        {
+            isSpeaking = false;
+        }
+    }
+
+    // NEW: Handler for OnPlaybackCancelled (3-argument signature)
+    private void OnSpeechCancelled(TTSSpeaker speaker, TTSClipData clipData, string reason)
+    {
+        if (clipData.textToSpeak == currentSpeechText)
         {
             isSpeaking = false;
         }
@@ -270,21 +263,31 @@ public class FireSurgeCutsceneController : MonoBehaviour
             return;
         }
 
-        // If speech is playing and we're waiting for it, skip speech
-        if (isSpeaking && enableTTS)
-        {
-            Speaker.Instance.Silence();
-            return;
-        }
-
         // If a line is currently being typed, complete it immediately
         if (isTyping)
         {
             CompleteLine();
+            return;
         }
-        else if (!waitForSpeech || !isSpeaking)
+        
+        // If we are waiting for speech, and it's playing, skip the speech
+        if (waitForSpeech && isSpeaking)
         {
-            // Move to next line if typing is done and speech is done (or we're not waiting)
+            if (enableTTS && ttsSpeaker != null)
+            {
+                ttsSpeaker.Stop(); // Stop speech immediately
+            }
+            return;
+        }
+
+        // Move to next line if typing is done and speech is done (or we're not waiting)
+        if (!waitForSpeech || !isSpeaking)
+        {
+            // Stop any ongoing speech before moving to next line (safety)
+            if (enableTTS && ttsSpeaker != null)
+            {
+                ttsSpeaker.Stop();
+            }
             DisplayNextDialogueLine();
         }
     }
@@ -302,6 +305,8 @@ public class FireSurgeCutsceneController : MonoBehaviour
     
     private IEnumerator PlayCutsceneSequence()
     {
+        // ... (Unchanged) ...
+        
         // Phase 1: Lightning Strike
         PlayLightningSound();
         
@@ -330,6 +335,7 @@ public class FireSurgeCutsceneController : MonoBehaviour
     
     private void PlayLightningSound()
     {
+        // ... (Unchanged) ...
         if (lightningAudioSource != null && lightningSound != null)
         {
             lightningAudioSource.PlayOneShot(lightningSound, lightningVolume);
@@ -343,6 +349,7 @@ public class FireSurgeCutsceneController : MonoBehaviour
     
     private IEnumerator FlickerLights()
     {
+        // ... (Unchanged) ...
         for (int i = 0; i < flickerCount; i++)
         {
             // Turn lights off
@@ -382,6 +389,7 @@ public class FireSurgeCutsceneController : MonoBehaviour
     
     private IEnumerator PlaySparkParticles()
     {
+        // ... (Unchanged) ...
         int burstCount = 0;
         sparksRunning = true;
         
@@ -430,6 +438,7 @@ public class FireSurgeCutsceneController : MonoBehaviour
     
     private IEnumerator PlayDialogue()
     {
+        // ... (Unchanged) ...
         // Show dialogue UI
         if (dialogueUI != null)
             dialogueUI.SetActive(true);
@@ -470,9 +479,9 @@ public class FireSurgeCutsceneController : MonoBehaviour
         }
 
         // Stop any ongoing speech
-        if (enableTTS && isSpeaking)
+        if (enableTTS && ttsSpeaker != null && isSpeaking)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop();
         }
 
         // Reset speech flag for new line
@@ -523,12 +532,13 @@ public class FireSurgeCutsceneController : MonoBehaviour
         {
             if (dialogueText != null)
                 dialogueText.text += character;
+            // Use real time for cutscene/dialogue during frozen game state
             yield return new WaitForSecondsRealtime(typingSpeed);
         }
 
         isTyping = false;
 
-        // Start speech after typing if not already started
+        // Start speech after typing if not already started (edge case)
         if (enableTTS && showTextImmediatelyWithSpeech && !isSpeaking)
         {
             StartSpeech(line);
@@ -555,39 +565,21 @@ public class FireSurgeCutsceneController : MonoBehaviour
 
     private void StartSpeech(string text)
     {
-        if (!enableTTS || Speaker.Instance == null || string.IsNullOrEmpty(text.Trim()))
+        if (!enableTTS || ttsSpeaker == null || string.IsNullOrEmpty(text.Trim()))
             return;
+        
+        // Removed RT-Voice specific logic (voice selection, speech ID, native vs file)
 
         speechStartedForCurrentLine = true;
-        currentSpeechId = System.Guid.NewGuid().ToString();
+        currentSpeechText = text; // Set text to track completion/cancellation
 
-        if (useNativeSpeech)
-        {
-            Speaker.Instance.SpeakNative(
-                text,
-                selectedVoice,
-                speechRate,
-                speechPitch,
-                speechVolume
-            );
-        }
-        else
-        {
-            Speaker.Instance.Speak(
-                text,
-                speechAudioSource,
-                selectedVoice,
-                true,
-                speechRate,
-                speechPitch,
-                speechVolume,
-                currentSpeechId
-            );
-        }
+        // Use TTSSpeaker's Speak() for immediate playback/synthesis
+        ttsSpeaker.Speak(text);
     }
     
     private void PlayAnimation(string animationName)
     {
+        // ... (Unchanged) ...
         if (npcAnimator != null && !string.IsNullOrEmpty(animationName))
         {
             npcAnimator.Play(animationName);
@@ -596,6 +588,7 @@ public class FireSurgeCutsceneController : MonoBehaviour
     
     private float CalculateLineDuration(string line)
     {
+        // ... (Unchanged) ...
         // Rough estimate: 0.05 seconds per character, minimum 2 seconds
         float duration = Mathf.Max(2f, line.Length * 0.05f);
         return duration;
@@ -603,6 +596,7 @@ public class FireSurgeCutsceneController : MonoBehaviour
     
     private void FreezeGameState()
     {
+        // ... (Unchanged) ...
         // Freeze time (prevents physics and most Update loops)
         Time.timeScale = 0f;
         
@@ -645,6 +639,7 @@ public class FireSurgeCutsceneController : MonoBehaviour
     
     private void UnfreezeGameState()
     {
+        // ... (Unchanged) ...
         // Stop spark particles when unfreezing
         sparksRunning = false;
         
@@ -683,6 +678,7 @@ public class FireSurgeCutsceneController : MonoBehaviour
     
     private void EndCutscene()
     {
+        // ... (Unchanged) ...
         // Return NPC to idle
         PlayAnimation(idleAnimationName);
         
@@ -710,11 +706,12 @@ public class FireSurgeCutsceneController : MonoBehaviour
             // Stop spark particles
             sparksRunning = false;
             
-            // Stop any ongoing speech
-            if (enableTTS && Speaker.Instance != null)
+            // NEW: Stop Meta Voice speech
+            if (enableTTS && ttsSpeaker != null)
             {
-                Speaker.Instance.Silence();
+                ttsSpeaker.Stop();
             }
+            // Removed RT-Voice Silence() call
             
             // Set lights to final state
             foreach (Light light in sceneLights)
@@ -735,10 +732,11 @@ public class FireSurgeCutsceneController : MonoBehaviour
 
     void OnDestroy()
     {
-        // Stop any ongoing speech
-        if (enableTTS && Speaker.Instance != null)
+        // NEW: Stop Meta Voice speech
+        if (enableTTS && ttsSpeaker != null)
         {
-            Speaker.Instance.Silence();
+            ttsSpeaker.Stop();
         }
+        // Removed RT-Voice Silence() call
     }
 }

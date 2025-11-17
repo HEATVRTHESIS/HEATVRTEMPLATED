@@ -10,7 +10,7 @@ public class StorageContainer : MonoBehaviour
     
     private int nextSnapPointIndex = 0; // Tracks the next available slot
     
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         StorableItem storableItem = other.GetComponent<StorableItem>();
         
@@ -25,9 +25,29 @@ public class StorageContainer : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        StorableItem storableItem = other.GetComponent<StorableItem>();
+        
+        // Reset the hasBeenProcessed flag when the item leaves the container
+        // This allows the same item to be re-evaluated if dropped in the container again
+        if (storableItem != null)
+        {
+            // Only reset if it was a wrong item (not correctly stored)
+            // Correctly stored items should stay processed
+            if (storableItem.storableType != containerType)
+            {
+                storableItem.hasBeenProcessed = false;
+            }
+        }
+    }
     
     private void ProcessDroppedItem(StorableItem storableItem, GameObject droppedObject)
     {
+        // Mark as processed immediately to prevent repeated triggers
+        storableItem.hasBeenProcessed = true;
+
         // Check if the dropped object's type matches the container
         if (storableItem.storableType == containerType)
         {
@@ -73,7 +93,10 @@ public class StorageContainer : MonoBehaviour
         {
             // Wrong item has been dropped in the container's zone.
             popupManager.ShowMessage($"Wrong container! That doesn't go in the '{containerType}' box.");
-             ScoreTracker.Instance.OnTaskError();
+            ScoreTracker.Instance.OnTaskError();
+            
+            // Note: hasBeenProcessed is already set to true at the start of this method
+            // It will be reset to false when the item exits the trigger (OnTriggerExit)
         }
     }
 }
