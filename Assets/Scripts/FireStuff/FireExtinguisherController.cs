@@ -153,13 +153,20 @@ public class FireExtinguisherController : CustomTaskController
     /// This method should be called by the FireExtinguishSuccessMonitor when all fires are extinguished
     /// </summary>
     public void OnAllFiresExtinguished()
+{
+    if (!IsTaskCompleted())
     {
-        if (!IsTaskCompleted())
+        CompleteTask();
+        
+        // Add this line
+        if (FireScoreTracker.Instance != null)
         {
-            CompleteTask();
-            OnExtinguisherCompleted();
+            FireScoreTracker.Instance.OnFireExtinguisherCompleted();
         }
+        
+        OnExtinguisherCompleted();
     }
+}
     
     // Event methods
     protected virtual void OnExtinguisherActivated()

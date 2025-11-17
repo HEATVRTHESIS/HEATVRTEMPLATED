@@ -3,8 +3,8 @@ using TMPro;
 using System.Collections.Generic;
 
 /// <summary>
-/// Fire training score tracker focusing on Task Accuracy, Speed & Efficiency, and Safety Compliance.
-/// Tracks fire suppression tasks with specialized metrics for extinguisher usage and safety protocols.
+/// Enhanced Fire training score tracker with detailed task-specific error tracking.
+/// Tracks which specific tasks were completed/failed for better feedback.
 /// </summary>
 public class FireScoreTracker : MonoBehaviour
 {
@@ -46,6 +46,17 @@ public class FireScoreTracker : MonoBehaviour
     private int totalTasks = 0;
     private int errorCount = 0;
     private int safetyViolations = 0;
+    
+    // NEW: Specific task completion tracking
+    private bool fireExtinguisherUsed = false;
+    private bool fireAlarmPulled = false;
+    private bool fireDoorClosed = false;
+    private bool npcEvacuated = false;
+    
+    // NEW: Specific error type tracking
+    private int wrongNPCResponseErrors = 0;
+    private int fireExtinguisherErrors = 0;
+    private int passMethodErrors = 0;
     
     // Task timing tracking
     private Dictionary<CustomTaskController, float> taskStartTimes = new Dictionary<CustomTaskController, float>();
@@ -224,6 +235,76 @@ public class FireScoreTracker : MonoBehaviour
         UpdateScoreDisplay();
     }
 
+    // NEW: Specific task completion tracking methods
+    
+    /// <summary>
+    /// Call this when fire extinguisher task is completed
+    /// </summary>
+    public void OnFireExtinguisherCompleted()
+    {
+        fireExtinguisherUsed = true;
+        Debug.Log("Fire extinguisher task marked as completed");
+    }
+    
+    /// <summary>
+    /// Call this when fire alarm is pulled
+    /// </summary>
+    public void OnFireAlarmPulled()
+    {
+        fireAlarmPulled = true;
+        Debug.Log("Fire alarm task marked as completed");
+    }
+    
+    /// <summary>
+    /// Call this when fire door is closed
+    /// </summary>
+    public void OnFireDoorClosed()
+    {
+        fireDoorClosed = true;
+        Debug.Log("Fire door task marked as completed");
+    }
+    
+    /// <summary>
+    /// Call this when NPC evacuation is completed
+    /// </summary>
+    public void OnNPCEvacuated()
+    {
+        npcEvacuated = true;
+        Debug.Log("NPC evacuation task marked as completed");
+    }
+    
+    // NEW: Specific error tracking methods
+    
+    /// <summary>
+    /// Call this when player gives wrong NPC response
+    /// </summary>
+    public void OnWrongNPCResponse()
+    {
+        wrongNPCResponseErrors++;
+        OnTaskError("Wrong NPC Response");
+        Debug.Log($"Wrong NPC response error. Total NPC errors: {wrongNPCResponseErrors}");
+    }
+    
+    /// <summary>
+    /// Call this when player uses wrong fire extinguisher type
+    /// </summary>
+    public void OnWrongExtinguisherType()
+    {
+        fireExtinguisherErrors++;
+        OnTaskError("Wrong Extinguisher Type");
+        Debug.Log($"Wrong extinguisher type error. Total extinguisher errors: {fireExtinguisherErrors}");
+    }
+    
+    /// <summary>
+    /// Call this when player uses incorrect PASS method
+    /// </summary>
+    public void OnIncorrectPASSMethod()
+    {
+        passMethodErrors++;
+        OnTaskError("Incorrect PASS Method");
+        Debug.Log($"Incorrect PASS method error. Total PASS errors: {passMethodErrors}");
+    }
+
     /// <summary>
     /// Award points for safety compliance (alarm activation, door closure)
     /// </summary>
@@ -249,21 +330,47 @@ public class FireScoreTracker : MonoBehaviour
     }
 
     /// <summary>
-    /// Called when timer expires - penalize incomplete critical tasks
+    /// Called when timer expires - track which specific tasks were incomplete
     /// </summary>
     private void OnTimerExpired()
     {
-        Debug.Log("Timer expired! Applying penalties for incomplete critical tasks.");
+        Debug.Log("===== TIMER EXPIRED =====");
+        Debug.Log("Checking which tasks were incomplete...");
         
-        // Apply -10 penalty for each incomplete task (representing critical safety violations)
+        // Track which specific tasks were not completed
+        if (!fireExtinguisherUsed)
+        {
+            Debug.Log("❌ Fire extinguisher was NOT used!");
+            safetyViolations++;
+        }
+        
+        if (!fireAlarmPulled)
+        {
+            Debug.Log("❌ Fire alarm was NOT pulled!");
+            safetyViolations++;
+        }
+        
+        if (!fireDoorClosed)
+        {
+            Debug.Log("❌ Fire door was NOT closed!");
+            safetyViolations++;
+        }
+        
+        if (!npcEvacuated)
+        {
+            Debug.Log("❌ NPC was NOT evacuated!");
+            safetyViolations++;
+        }
+        
+        // Apply penalties for incomplete tasks
         int incompleteTasks = totalTasks - completedTasks;
         int timeExpiredPenalty = incompleteTasks * safetyViolationPenalty;
         
         currentScore += timeExpiredPenalty;
-        safetyViolations += incompleteTasks;
         currentScore = Mathf.Max(0, currentScore);
         
         Debug.Log($"Time expired penalties: {timeExpiredPenalty} points for {incompleteTasks} incomplete tasks");
+        Debug.Log($"Total safety violations: {safetyViolations}");
         
         ShowResultsScreen();
     }
@@ -326,8 +433,22 @@ public class FireScoreTracker : MonoBehaviour
                 ScoreDataManager.Instance.SaveFireLevelData();
             }
             
-            Debug.Log($"Fire Training Complete! Final Score: {currentScore}, " +
-                     $"Tasks: {completedTasks}/{totalTasks}, Errors: {errorCount + safetyViolations}");
+            // Log detailed results
+            Debug.Log($"===== FIRE TRAINING COMPLETE =====");
+            Debug.Log($"Final Score: {currentScore}");
+            Debug.Log($"Tasks: {completedTasks}/{totalTasks}");
+            Debug.Log($"Total Errors: {errorCount}");
+            Debug.Log($"Safety Violations: {safetyViolations}");
+            Debug.Log($"--- Task Completion Status ---");
+            Debug.Log($"Fire Extinguisher Used: {fireExtinguisherUsed}");
+            Debug.Log($"Fire Alarm Pulled: {fireAlarmPulled}");
+            Debug.Log($"Fire Door Closed: {fireDoorClosed}");
+            Debug.Log($"NPC Evacuated: {npcEvacuated}");
+            Debug.Log($"--- Error Breakdown ---");
+            Debug.Log($"Wrong NPC Responses: {wrongNPCResponseErrors}");
+            Debug.Log($"Fire Extinguisher Errors: {fireExtinguisherErrors}");
+            Debug.Log($"PASS Method Errors: {passMethodErrors}");
+            Debug.Log($"==================================");
         }
     }
 
@@ -364,6 +485,45 @@ public class FireScoreTracker : MonoBehaviour
     public int GetErrorCount() => errorCount;
     public int GetSafetyViolations() => safetyViolations;
     public float GetCompletionPercentage() => totalTasks > 0 ? (float)completedTasks / totalTasks * 100f : 0f;
+    
+    // NEW: Getters for specific task completion status
+    public bool WasFireExtinguisherUsed() => fireExtinguisherUsed;
+    public bool WasFireAlarmPulled() => fireAlarmPulled;
+    public bool WasFireDoorClosed() => fireDoorClosed;
+    public bool WasNPCEvacuated() => npcEvacuated;
+    
+    // NEW: Getters for specific error counts
+    public int GetWrongNPCResponseErrors() => wrongNPCResponseErrors;
+    public int GetFireExtinguisherErrors() => fireExtinguisherErrors;
+    public int GetPASSMethodErrors() => passMethodErrors;
+    
+    /// <summary>
+    /// Get a breakdown of all incomplete tasks
+    /// </summary>
+    public Dictionary<string, bool> GetTaskCompletionBreakdown()
+    {
+        return new Dictionary<string, bool>
+        {
+            { "Fire Extinguisher", fireExtinguisherUsed },
+            { "Fire Alarm", fireAlarmPulled },
+            { "Fire Door", fireDoorClosed },
+            { "NPC Evacuation", npcEvacuated }
+        };
+    }
+    
+    /// <summary>
+    /// Get a breakdown of all error types
+    /// </summary>
+    public Dictionary<string, int> GetErrorBreakdown()
+    {
+        return new Dictionary<string, int>
+        {
+            { "Wrong NPC Response", wrongNPCResponseErrors },
+            { "Fire Extinguisher Errors", fireExtinguisherErrors },
+            { "PASS Method Errors", passMethodErrors },
+            { "Safety Violations", safetyViolations }
+        };
+    }
 
     void OnDestroy()
     {
