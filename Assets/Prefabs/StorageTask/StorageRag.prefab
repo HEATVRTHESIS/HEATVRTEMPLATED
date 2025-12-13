@@ -378,7 +378,7 @@ MonoBehaviour:
   uniqueTriggerId: 
   indicatorTarget: {fileID: 0}
   indicatorText: STORE
-  audioMessageTTS: Store this item in the storage room shelf
+  audioMessageTTS: Store this item in the storage room box
   audioClip: {fileID: 0}
   hideIndicatorOnDrop: 1
   onlyShowWhileGrabbed: 1
