@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8572999489937784640}
+  - component: {fileID: 6117859545347963901}
   - component: {fileID: 541932573850314595}
-  - component: {fileID: 4721897691601803553}
   - component: {fileID: 6928681811649403069}
   - component: {fileID: 2058031286583196332}
+  - component: {fileID: 4721897691601803553}
   - component: {fileID: 4750755355247295779}
-  - component: {fileID: 6117859545347963901}
   m_Layer: 0
   m_Name: CleaningRagOrigin
   m_TagString: Untagged
@@ -38,6 +38,21 @@ Transform:
   - {fileID: 5212332607390097987}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6117859545347963901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313362288245994188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f18a554d0b0ce4bac45f0163d0c1fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storableType: CleaningRags
+  parentTaskController: {fileID: 0}
+  hasBeenProcessed: 0
 --- !u!65 &541932573850314595
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57,24 +72,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.3, y: 0.05, z: 0.3}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4721897691601803553
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 313362288245994188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bcb408f6a71a8b43aa0a367deb1740c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controllerButtonImage: {fileID: 21300000, guid: c9af42a5c7f74b24489fa5f633bf03f4, type: 3}
-  tooltipDescription: Grab!
-  actionCooldown: 0.15
-  hideWhenGrabbed: 1
+  m_Size: {x: 0.3, y: 0.11344781, z: 0.3}
+  m_Center: {x: 0, y: -0.017992746, z: 0}
 --- !u!54 &6928681811649403069
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -248,6 +247,22 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 0
+--- !u!114 &4721897691601803553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 313362288245994188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bcb408f6a71a8b43aa0a367deb1740c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controllerButtonImage: {fileID: 21300000, guid: c9af42a5c7f74b24489fa5f633bf03f4, type: 3}
+  tooltipDescription: Grab!
+  actionCooldown: 0.15
+  hideWhenGrabbed: 1
 --- !u!114 &4750755355247295779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,21 +282,6 @@ MonoBehaviour:
   audioClip: {fileID: 0}
   hideIndicatorOnDrop: 1
   onlyShowWhileGrabbed: 1
---- !u!114 &6117859545347963901
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 313362288245994188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2f18a554d0b0ce4bac45f0163d0c1fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  storableType: CleaningRags
-  parentTaskController: {fileID: 0}
-  hasBeenProcessed: 0
 --- !u!1001 &6909254575979654154
 PrefabInstance:
   m_ObjectHideFlags: 0
