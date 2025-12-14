@@ -24,6 +24,12 @@ EditorBuildSettings:
     path: Assets/Scenes/SimulationScenes/ERSImulations/SimulationFireER.unity
     guid: a83c9ae5e874d2c45a44e10ca0bd68d3
   - enabled: 1
+    path: Assets/Scenes/TrainingScenes/Dietary/FireDietaryTraining.unity
+    guid: 95688cb0776f5624ba0526c496cb65c7
+  - enabled: 1
+    path: Assets/Scenes/TrainingScenes/Dietary/DietaryRRTraining.unity
+    guid: 05d5947c45e3b604b9235f808aadf97f
+  - enabled: 1
     path: Assets/Scenes/TrainingScenes/ERDepartment/ERDeptTrainingRR.unity
     guid: 9f0f53fd02d40ea4d96a6fd7814e0558
   - enabled: 1
@@ -35,6 +41,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SimulationScenes/MedTechSimulations/SimulationFireMedTech.unity
     guid: 42adfb96d177cb148a4ab5d3c1feae3d
+  - enabled: 1
+    path: Assets/Scenes/SimulationScenes/DietarySimulation/DietaryRRSimulation.unity
+    guid: a951f5e6a9b2bc24594997cd1e37ef52
+  - enabled: 1
+    path: Assets/Scenes/SimulationScenes/DietarySimulation/FireDietarySimulation.unity
+    guid: c9f9b67f923b01649b8c73a0d82b9b18
   - enabled: 1
     path: Assets/Scenes/SimulationScenes/SimulationEvac.unity
     guid: 484ee4b20efbded40b8b9d1ac6ea6b71
