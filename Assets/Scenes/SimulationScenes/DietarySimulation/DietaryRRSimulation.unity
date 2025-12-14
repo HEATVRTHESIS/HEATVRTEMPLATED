@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6604313
 Transform:
   m_ObjectHideFlags: 0
@@ -208,7 +208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &105545452
 Transform:
   m_ObjectHideFlags: 0
@@ -1027,8 +1027,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Ref Cord
   taskDescription: Check the Refridgerator cord for damages
-  taskCompletionDialogue:
-  - Faulty wiring can spark nearby objects on fire
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:
@@ -1256,10 +1255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Burner
   taskDescription: Check if the Burner is clean
-  taskCompletionDialogue:
-  - A greasy burner can lead to oil related fires
-  - these are mort dangerous as they cannot be extinguished
-  - by water and dry powder fire extinguishers
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:
@@ -1736,7 +1732,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskCompletionDialogue.Array.size
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskCompletionDialogue.Array.data[0]
@@ -2230,8 +2226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Cooking Oil Storage
   taskDescription: 
-  taskCompletionDialogue:
-  - Nice
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:
@@ -3336,11 +3331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: lpghose
   taskDescription: Check if the LPG hose is still good
-  taskCompletionDialogue:
-  - A worn-out LPG hose is a major safety hazard
-  - that can lead to gas leaks, fires, or explosions.
-  - If you discover a worn-out hose, you must stop using it immediately and replace
-    it.
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:
@@ -24566,8 +24557,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Disposal
   taskDescription: Throw away the Alcohol-soaked rags
-  taskCompletionDialogue:
-  - Congrats!
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
@@ -28862,8 +28852,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Dispose Rubber tubes
   taskDescription: Dispose this
-  taskCompletionDialogue:
-  - Dispose
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
@@ -34061,7 +34050,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskCompletionDialogue.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskCompletionDialogue.Array.data[0]
@@ -43510,8 +43499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Cleaning Rags
   taskDescription: Place the rags in the box
-  taskCompletionDialogue:
-  - Nice!
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:
@@ -72185,8 +72173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Biohazard Waste
   taskDescription: Throw away the LPG Hose and Alcohol
-  taskCompletionDialogue:
-  - test
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
@@ -87543,9 +87530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Document Storage
   taskDescription: Store the Documents in the filing cabinet
-  taskCompletionDialogue:
-  - Paper documents are not just important to store for safe keeping
-  - But also to prevent fire starters
+  taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:
