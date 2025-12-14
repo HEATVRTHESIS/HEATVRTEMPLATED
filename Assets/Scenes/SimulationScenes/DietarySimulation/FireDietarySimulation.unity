@@ -6449,7 +6449,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000000820728, y: 0.00853485, z: 0.0000000081138625}
+  m_ConnectedAnchor: {x: 0.000000011845259, y: 0.008534844, z: 0.000000008113863}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -6745,7 +6745,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000082615894, y: -0.009999672, z: 0.000000006121469}
+  m_ConnectedAnchor: {x: 0.00008261665, y: -0.009999682, z: 0.000000006121469}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -16756,7 +16756,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.000000026288035, y: 0.009057837, z: 0.000000007630602}
+  m_ConnectedAnchor: {x: 0.000000020125299, y: 0.00905784, z: 0.000000007630607}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -18219,7 +18219,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.00000001915032, y: 0.00935966, z: 0.000000008952145}
+  m_ConnectedAnchor: {x: -0.000000020925654, y: 0.009359656, z: 0.000000008952145}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -18803,7 +18803,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000002636807, y: 0.0099999895, z: 0.000000006868504}
+  m_ConnectedAnchor: {x: -0.000000020081643, y: 0.009999985, z: 0.000000006868504}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:
@@ -23738,7 +23738,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000000014755644, y: 0.010557052, z: 0.000000009629512}
+  m_ConnectedAnchor: {x: 0.000000014901163, y: 0.010557059, z: 0.0000000096295105}
   serializedVersion: 2
   m_UseSpring: 0
   m_Spring:

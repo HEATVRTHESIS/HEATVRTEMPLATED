@@ -588,7 +588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c8f038eddda8d45bd0ec290025e880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialEnabled: 1
+  tutorialEnabled: 0
   indicatorPrefab: {fileID: 4907332757756480362, guid: 944f3ca349fa49949bd6923e38a95a8f, type: 3}
   cameraTransform: {fileID: 9054167324086753903}
   followSpeed: 5
@@ -2225,7 +2225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskName: Cooking Oil Storage
-  taskDescription: 
+  taskDescription: Place the Cooking Oil on the shelf
   taskCompletionDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
@@ -2778,7 +2778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a273c96d3fdb449428a9303fe8d1572c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipsEnabled: 1
+  tooltipsEnabled: 0
   tooltipPrefab: {fileID: 4828560702101013700, guid: 6d4d4d9262df726469869621adbd99b9, type: 3}
   buttonImageObjectName: ButtonIcon
   textObjectName: DescriptionText
@@ -9471,7 +9471,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &503027789471433143
 GameObject:
   m_ObjectHideFlags: 0
