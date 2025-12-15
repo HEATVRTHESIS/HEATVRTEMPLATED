@@ -40,6 +40,10 @@ public class VRVideoIntroController : MonoBehaviour
     
     [Tooltip("Script types to keep enabled (class names)")]
     public List<string> scriptExclusionList = new List<string> { "AudioListener", "Camera" };
+
+    [Header("Initialization")]
+    [Tooltip("Wait this many seconds starting video (allows scene to initialize)")]
+    public float initializationDelay = 0.2f ;
     
     // Private variables
     private VideoPlayer videoPlayer;
@@ -69,9 +73,6 @@ public class VRVideoIntroController : MonoBehaviour
                 return;
             }
         }
-        
-        // Freeze game state before other scripts run
-        FreezeGameState();
     }
     
     void Start()
@@ -80,12 +81,23 @@ public class VRVideoIntroController : MonoBehaviour
         if (introVideo == null)
         {
             Debug.LogWarning("VRVideoIntroController: No video assigned. Starting level.");
-            UnfreezeGameState();
             return;
         }
         
         // Play video
-        StartCoroutine(PlayVideoIntro());
+        StartCoroutine(DelayedVideoIntro());
+    }
+
+        private IEnumerator DelayedVideoIntro()
+    {
+        Debug.Log("VRVideoIntroController: Waiting for scene initialization...");
+        
+        // Wait for scene to initialize
+        yield return new WaitForSeconds(initializationDelay);
+        
+        // NOW freeze and play video
+        FreezeGameState();
+        yield return StartCoroutine(PlayVideoIntro());
     }
     
     private void FreezeGameState()
