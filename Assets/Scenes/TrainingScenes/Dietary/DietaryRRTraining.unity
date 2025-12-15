@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6604313
 Transform:
   m_ObjectHideFlags: 0
@@ -208,7 +208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &105545452
 Transform:
   m_ObjectHideFlags: 0
@@ -2149,9 +2149,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskName: Cooking Oil Storage
-  taskDescription: 
+  taskDescription: Store the Cooking Oil bottle in the storage room shelf
   taskCompletionDialogue:
-  - Nice
+  - Cooking oil is a class K fire risk
+  - Keeping them in a cool dry place away from the burners and other risks
+  - can minimize uncontrollable mixed fire classes
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   OnProgressUpdated:

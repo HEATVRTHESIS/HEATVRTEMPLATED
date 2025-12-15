@@ -19262,11 +19262,8 @@ MonoBehaviour:
   smoothFollow: 1
   heightOffset: 0.91
   distanceFromObject: 0.18
-  useRTVoice: 1
+  ttsSpeaker: {fileID: 0}
   audioSource: {fileID: 0}
-  voiceName: 
-  speechRate: 1
-  speechVolume: 1
 --- !u!1 &1360266301
 GameObject:
   m_ObjectHideFlags: 0
@@ -23948,6 +23945,10 @@ MonoBehaviour:
     departmentImage: {fileID: 21300000, guid: e20ddc0676f853647b065c7482080f39, type: 3}
     shortDescription: Immerse yourself in a scenario to test your fire preparedness
     sceneToLoad: ERDeptSimulationRR
+  - departmentName: Dietary Department
+    departmentImage: {fileID: 21300000, guid: e20ddc0676f853647b065c7482080f39, type: 3}
+    shortDescription: Immerse yourself in a scenario to test your fire preparedness
+    sceneToLoad: DietaryRRSimulation
 --- !u!114 &1819535881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25371,6 +25372,11 @@ MonoBehaviour:
     shortDescription: Learn the various risks, hazards, and procedures for the ER
       Department
     sceneToLoad: ERDeptTrainingRR
+  - departmentName: Dietary Department
+    departmentImage: {fileID: 21300000, guid: e20ddc0676f853647b065c7482080f39, type: 3}
+    shortDescription: Learn the various risks, hazards, and procedures for the Dietary
+      Department
+    sceneToLoad: DietaryRRTraining
 --- !u!1 &2042934888
 GameObject:
   m_ObjectHideFlags: 0
