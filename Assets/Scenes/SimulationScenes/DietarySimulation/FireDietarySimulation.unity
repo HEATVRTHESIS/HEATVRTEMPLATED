@@ -2563,6 +2563,7 @@ MonoBehaviour:
   scriptExclusionList:
   - AudioListener
   - Camera
+  initializationFrameDelay: 3
 --- !u!4 &1063436078
 Transform:
   m_ObjectHideFlags: 0

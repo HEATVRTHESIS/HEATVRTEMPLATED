@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 /// <summary>
 /// Plays a video full-screen in VR before starting level scripts.
-/// Uses a Canvas overlay to display video in VR (both eyes).
+/// Uses camera rendering directly - most reliable method.
 /// </summary>
 [DefaultExecutionOrder(-100)]
 public class VRVideoIntroController : MonoBehaviour
@@ -42,17 +42,18 @@ public class VRVideoIntroController : MonoBehaviour
     public List<string> scriptExclusionList = new List<string> { "AudioListener", "Camera" };
 
     [Header("Initialization")]
-    [Tooltip("Wait this many seconds starting video (allows scene to initialize)")]
-    public float initializationDelay = 0.2f ;
+    [Tooltip("Wait this many frames before starting video (allows scene to initialize)")]
+    public int initializationFrameDelay = 3;
     
     // Private variables
     private VideoPlayer videoPlayer;
     private RenderTexture renderTexture;
     private bool videoComplete = false;
     
-    // UI Elements
-    private GameObject videoCanvas;
+    // UI Canvas approach - back to basics but done RIGHT
+    private GameObject canvas;
     private RawImage videoImage;
+    private Image backgroundImage;
     private Image fadeImage;
     
     // State management
@@ -60,9 +61,13 @@ public class VRVideoIntroController : MonoBehaviour
     private Dictionary<MonoBehaviour, bool> scriptOriginalStates = new Dictionary<MonoBehaviour, bool>();
     private float originalTimeScale;
     
+    // Camera state
+    private CameraClearFlags originalClearFlags;
+    private Color originalBackgroundColor;
+    private int originalCullingMask;
+    
     void Awake()
     {
-        // Find camera if not assigned
         if (playerCamera == null)
         {
             playerCamera = Camera.main;
@@ -77,25 +82,24 @@ public class VRVideoIntroController : MonoBehaviour
     
     void Start()
     {
-        // Check if video is assigned
         if (introVideo == null)
         {
             Debug.LogWarning("VRVideoIntroController: No video assigned. Starting level.");
             return;
         }
         
-        // Play video
         StartCoroutine(DelayedVideoIntro());
     }
 
-        private IEnumerator DelayedVideoIntro()
+    private IEnumerator DelayedVideoIntro()
     {
         Debug.Log("VRVideoIntroController: Waiting for scene initialization...");
         
-        // Wait for scene to initialize
-        yield return new WaitForSeconds(initializationDelay);
+        for (int i = 0; i < initializationFrameDelay; i++)
+        {
+            yield return null;
+        }
         
-        // NOW freeze and play video
         FreezeGameState();
         yield return StartCoroutine(PlayVideoIntro());
     }
@@ -110,6 +114,16 @@ public class VRVideoIntroController : MonoBehaviour
         {
             Time.timeScale = 0f;
         }
+        
+        // Save and modify camera settings to hide scene
+        originalClearFlags = playerCamera.clearFlags;
+        originalBackgroundColor = playerCamera.backgroundColor;
+        originalCullingMask = playerCamera.cullingMask;
+        
+        // Make camera render nothing but UI
+        playerCamera.clearFlags = CameraClearFlags.SolidColor;
+        playerCamera.backgroundColor = Color.black;
+        playerCamera.cullingMask = 1 << LayerMask.NameToLayer("UI"); // Only render UI layer
         
         if (autoDisableAllScripts)
         {
@@ -141,6 +155,11 @@ public class VRVideoIntroController : MonoBehaviour
             Time.timeScale = originalTimeScale;
         }
         
+        // Restore camera settings
+        playerCamera.clearFlags = originalClearFlags;
+        playerCamera.backgroundColor = originalBackgroundColor;
+        playerCamera.cullingMask = originalCullingMask;
+        
         foreach (MonoBehaviour script in disabledScripts)
         {
             if (script != null && scriptOriginalStates.ContainsKey(script))
@@ -149,21 +168,20 @@ public class VRVideoIntroController : MonoBehaviour
             }
         }
         
+        disabledScripts.Clear();
+        scriptOriginalStates.Clear();
+        
         Debug.Log("Level started!");
     }
     
     private IEnumerator PlayVideoIntro()
     {
-        // Create UI canvas
-        CreateVideoCanvas();
-        
-        // Setup video player
+        CreateCanvas();
         SetupVideoPlayer();
         
         // Start with black screen
         fadeImage.color = Color.black;
         
-        // Wait for video to prepare
         videoPlayer.Prepare();
         while (!videoPlayer.isPrepared)
         {
@@ -172,7 +190,6 @@ public class VRVideoIntroController : MonoBehaviour
         
         Debug.Log($"Playing video: {introVideo.name} ({videoPlayer.length}s)");
         
-        // Play video
         videoPlayer.Play();
         
         // Fade in from black
@@ -205,10 +222,7 @@ public class VRVideoIntroController : MonoBehaviour
         }
         fadeImage.color = Color.black;
         
-        // Cleanup
         CleanupVideo();
-        
-        // Unfreeze game
         UnfreezeGameState();
         
         // Fade back in
@@ -221,47 +235,59 @@ public class VRVideoIntroController : MonoBehaviour
             yield return null;
         }
         
-        // Destroy canvas
-        if (videoCanvas != null)
+        if (canvas != null)
         {
-            Destroy(videoCanvas);
+            Destroy(canvas);
         }
         
         Debug.Log("Video intro complete!");
     }
     
-    private void CreateVideoCanvas()
+    private void CreateCanvas()
     {
-        // Create canvas - CRITICAL: Use ScreenSpaceCamera for VR to render in both eyes
-        videoCanvas = new GameObject("VideoIntroCanvas");
-        Canvas canvas = videoCanvas.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceCamera;
-        canvas.worldCamera = playerCamera; // Assign the VR camera
-        canvas.planeDistance = 1f; // Distance from camera (adjust if needed)
-        canvas.sortingOrder = 999;
+        canvas = new GameObject("VideoCanvas");
+        canvas.layer = LayerMask.NameToLayer("UI");
         
-        CanvasScaler scaler = videoCanvas.AddComponent<CanvasScaler>();
+        Canvas c = canvas.AddComponent<Canvas>();
+        c.renderMode = RenderMode.ScreenSpaceOverlay; // Simplest mode - always on top
+        c.sortingOrder = 32767;
+        
+        CanvasScaler scaler = canvas.AddComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(1920, 1080);
         
-        videoCanvas.AddComponent<GraphicRaycaster>();
+        canvas.AddComponent<GraphicRaycaster>();
         
-        // Create video display
-        GameObject videoObj = new GameObject("VideoDisplay");
-        videoObj.transform.SetParent(videoCanvas.transform, false);
+        // Black background (blocks everything)
+        GameObject bgObj = new GameObject("Background");
+        bgObj.transform.SetParent(canvas.transform, false);
+        bgObj.layer = LayerMask.NameToLayer("UI");
         
-        videoImage = videoObj.AddComponent<RawImage>();
+        backgroundImage = bgObj.AddComponent<Image>();
+        backgroundImage.color = Color.black;
+        
+        RectTransform bgRect = bgObj.GetComponent<RectTransform>();
+        bgRect.anchorMin = Vector2.zero;
+        bgRect.anchorMax = Vector2.one;
+        bgRect.sizeDelta = Vector2.zero;
+        
+        // Video display
+        GameObject vidObj = new GameObject("Video");
+        vidObj.transform.SetParent(canvas.transform, false);
+        vidObj.layer = LayerMask.NameToLayer("UI");
+        
+        videoImage = vidObj.AddComponent<RawImage>();
         videoImage.color = Color.white;
         
-        RectTransform videoRect = videoObj.GetComponent<RectTransform>();
-        videoRect.anchorMin = Vector2.zero;
-        videoRect.anchorMax = Vector2.one;
-        videoRect.sizeDelta = Vector2.zero;
-        videoRect.anchoredPosition = Vector2.zero;
+        RectTransform vidRect = vidObj.GetComponent<RectTransform>();
+        vidRect.anchorMin = Vector2.zero;
+        vidRect.anchorMax = Vector2.one;
+        vidRect.sizeDelta = Vector2.zero;
         
-        // Create fade overlay
-        GameObject fadeObj = new GameObject("FadeOverlay");
-        fadeObj.transform.SetParent(videoCanvas.transform, false);
+        // Fade overlay
+        GameObject fadeObj = new GameObject("Fade");
+        fadeObj.transform.SetParent(canvas.transform, false);
+        fadeObj.layer = LayerMask.NameToLayer("UI");
         
         fadeImage = fadeObj.AddComponent<Image>();
         fadeImage.color = Color.black;
@@ -270,15 +296,14 @@ public class VRVideoIntroController : MonoBehaviour
         fadeRect.anchorMin = Vector2.zero;
         fadeRect.anchorMax = Vector2.one;
         fadeRect.sizeDelta = Vector2.zero;
-        fadeRect.anchoredPosition = Vector2.zero;
         
-        // Put fade on top
         fadeObj.transform.SetAsLastSibling();
+        
+        Debug.Log("Canvas created with ScreenSpaceOverlay");
     }
     
     private void SetupVideoPlayer()
     {
-        // Create video player
         videoPlayer = gameObject.AddComponent<VideoPlayer>();
         videoPlayer.playOnAwake = false;
         videoPlayer.clip = introVideo;
@@ -287,25 +312,20 @@ public class VRVideoIntroController : MonoBehaviour
         videoPlayer.audioOutputMode = VideoAudioOutputMode.Direct;
         videoPlayer.SetDirectAudioVolume(0, videoVolume);
         
-        // Create render texture
         renderTexture = new RenderTexture(
             (int)introVideo.width,
             (int)introVideo.height,
             0
         );
         videoPlayer.targetTexture = renderTexture;
-        
-        // Assign to UI
         videoImage.texture = renderTexture;
         
-        // Subscribe to events
         videoPlayer.loopPointReached += OnVideoComplete;
     }
     
     private void OnVideoComplete(VideoPlayer vp)
     {
         videoComplete = true;
-        Debug.Log("Video reached end");
     }
     
     private void CleanupVideo()
@@ -327,10 +347,9 @@ public class VRVideoIntroController : MonoBehaviour
     void OnDestroy()
     {
         CleanupVideo();
-        
-        if (videoCanvas != null)
+        if (canvas != null)
         {
-            Destroy(videoCanvas);
+            Destroy(canvas);
         }
     }
 }
