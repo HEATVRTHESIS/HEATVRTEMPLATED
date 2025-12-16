@@ -1330,6 +1330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 578363229}
   - component: {fileID: 578363230}
+  - component: {fileID: 578363231}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1378,6 +1379,19 @@ MonoBehaviour:
   followSpeed: 5
   smoothFollow: 1
   creationCooldown: 0.2
+--- !u!114 &578363231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578363228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da34b5428ec75044bd4d898f81b591f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueSystem: {fileID: 1601573823}
 --- !u!1 &602192925 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
