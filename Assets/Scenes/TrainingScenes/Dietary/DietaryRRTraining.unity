@@ -3276,7 +3276,7 @@ MonoBehaviour:
   yesAnswerImage: {fileID: 21300000, guid: 3c9a0567cac846e4e96e28e9a98d2e5c, type: 3}
   noAnswerImage: {fileID: 21300000, guid: 3c9a0567cac846e4e96e28e9a98d2e5c, type: 3}
   isYesTheCorrectAnswer: 1
-  targetObject: {fileID: 7295518410163569726}
+  targetObject: {fileID: 4319811138151552401}
   targetGameObject: {fileID: 2374506582468932702}
   magnifyingGlassIcon: {fileID: 2925773371957866777}
   popupManager: {fileID: 7830208495215971711}
@@ -9237,7 +9237,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &503027789471433143
 GameObject:
   m_ObjectHideFlags: 0
@@ -29211,8 +29211,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPrefabs:
   - {fileID: 1087520105305034028, guid: c7ba806321d32634bb551726ae626f79, type: 3}
-  - {fileID: 6986418479339866841, guid: 7f3efea37d80a954a883dcd22ae2135a, type: 3}
-  spawnCount: 1
+  - {fileID: 6986418479339866841, guid: 0cafceb8d32e50f45b7f02a1c3abc756, type: 3}
+  spawnCount: 2
   spawnArea: {fileID: 8047480855220265155}
   tutorialIndicatorTarget: {fileID: 5849423899988957688}
   overrideIndicatorText: 
@@ -70333,6 +70333,7 @@ GameObject:
   - component: {fileID: 7295518410163569729}
   - component: {fileID: 7295518410163569728}
   - component: {fileID: 7295518410163569727}
+  - component: {fileID: 7295518410163569731}
   m_Layer: 0
   m_Name: Object_10.005
   m_TagString: Untagged
@@ -70606,6 +70607,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.012769222, y: 0.011306794, z: 0.014588176}
   m_Center: {x: -0.001563509, y: -0.00000933674, z: -0.0046325484}
+--- !u!114 &7295518410163569731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7295518410163569724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 986ae63fb662d8a4c82bd79820609a36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightColor: {r: 0.6627813, g: 0.7735849, b: 0.25907797, a: 1}
+  highlightWidth: 5
 --- !u!23 &7296959662463869680
 MeshRenderer:
   m_ObjectHideFlags: 0

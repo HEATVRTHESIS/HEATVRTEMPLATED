@@ -21,6 +21,7 @@ public class FireExtinguisherController : CustomTaskController
     // Private variables
     private bool isBeingUsed = false;
     private bool hasSubscribedToSuccessMonitor = false;
+    private bool taskCompletedByThisController = false;
     
     void Start()
     {
@@ -39,10 +40,25 @@ public class FireExtinguisherController : CustomTaskController
             useAction.action.Enable();
         }
         
-        // Find success monitor if not assigned
+        // IMPORTANT: Do NOT auto-find success monitor - it must be manually assigned
+        // to prevent multiple controllers from sharing the same monitor
         if (successMonitor == null)
         {
-            successMonitor = FindObjectOfType<FireExtinguishSuccessMonitor>();
+            Debug.LogError($"FireExtinguisherController on {gameObject.name}: No FireExtinguishSuccessMonitor assigned! " +
+                          "Each fire extinguisher controller MUST have its own dedicated success monitor assigned in the inspector.");
+        }
+        else
+        {
+            // Verify this monitor isn't already used by another controller
+            var allControllers = FindObjectsOfType<FireExtinguisherController>();
+            foreach (var controller in allControllers)
+            {
+                if (controller != this && controller.successMonitor == successMonitor)
+                {
+                    Debug.LogError($"DUPLICATE MONITOR DETECTED! Both {gameObject.name} and {controller.gameObject.name} " +
+                                  "are using the same FireExtinguishSuccessMonitor. Each controller needs its own monitor!");
+                }
+            }
         }
         
         // Subscribe to success monitor
@@ -70,15 +86,12 @@ public class FireExtinguisherController : CustomTaskController
     {
         if (successMonitor != null && !hasSubscribedToSuccessMonitor)
         {
-            // We'll override the OnAllFiresExtinguished method in the success monitor
-            // or we can use reflection to hook into it, but the cleaner approach is to
-            // modify the success monitor to have a UnityEvent or delegate
             hasSubscribedToSuccessMonitor = true;
-            Debug.Log("Subscribed to FireExtinguishSuccessMonitor");
+            Debug.Log($"{gameObject.name}: Subscribed to FireExtinguishSuccessMonitor on {successMonitor.gameObject.name}");
         }
         else if (successMonitor == null)
         {
-            Debug.LogWarning("FireExtinguishSuccessMonitor not found! Task completion will not work properly.");
+            Debug.LogWarning($"{gameObject.name}: FireExtinguishSuccessMonitor not found! Task completion will not work properly.");
         }
     }
     
@@ -107,12 +120,12 @@ public class FireExtinguisherController : CustomTaskController
     public override void InitializeTask()
     {
         base.InitializeTask();
-        Debug.Log($"Fire extinguisher task '{taskName}' initialized.");
+        Debug.Log($"Fire extinguisher task '{taskName}' on {gameObject.name} initialized.");
         
-        // Ensure we have a success monitor reference
+        // Do NOT auto-find - must be manually assigned
         if (successMonitor == null)
         {
-            successMonitor = FindObjectOfType<FireExtinguishSuccessMonitor>();
+            Debug.LogError($"{gameObject.name}: No success monitor assigned during initialization!");
         }
     }
     
@@ -128,7 +141,7 @@ public class FireExtinguisherController : CustomTaskController
             targetObject.SetHighlight(true);
         }
 
-        Debug.Log($"Started fire extinguisher task '{taskName}'.");
+        Debug.Log($"Started fire extinguisher task '{taskName}' on {gameObject.name}.");
         
         if (popupManager != null)
         {
@@ -141,7 +154,7 @@ public class FireExtinguisherController : CustomTaskController
     /// </summary>
     public override void EndTask()
     {
-        Debug.Log($"Ending fire extinguisher task '{taskName}' and turning off highlights.");
+        Debug.Log($"Ending fire extinguisher task '{taskName}' on {gameObject.name} and turning off highlights.");
 
         if (targetObject != null)
         {
@@ -153,12 +166,18 @@ public class FireExtinguisherController : CustomTaskController
     /// This method should be called by the FireExtinguishSuccessMonitor when all fires are extinguished
     /// </summary>
     public void OnAllFiresExtinguished()
-{
-    if (!IsTaskCompleted())
     {
+        // Prevent double-completion
+        if (taskCompletedByThisController || IsTaskCompleted())
+        {
+            Debug.Log($"{gameObject.name}: Already completed, ignoring duplicate completion call.");
+            return;
+        }
+        
+        taskCompletedByThisController = true;
         CompleteTask();
         
-        // Add this line
+        // Notify fire score tracker
         if (FireScoreTracker.Instance != null)
         {
             FireScoreTracker.Instance.OnFireExtinguisherCompleted();
@@ -166,12 +185,11 @@ public class FireExtinguisherController : CustomTaskController
         
         OnExtinguisherCompleted();
     }
-}
     
     // Event methods
     protected virtual void OnExtinguisherActivated()
     {
-        Debug.Log("Fire extinguisher activated");
+        Debug.Log($"{gameObject.name}: Fire extinguisher activated");
         if (popupManager != null)
         {
             popupManager.ShowMessage("Fire extinguisher activated!");
@@ -180,12 +198,12 @@ public class FireExtinguisherController : CustomTaskController
     
     protected virtual void OnExtinguisherDeactivated()
     {
-        Debug.Log("Fire extinguisher deactivated");
+        Debug.Log($"{gameObject.name}: Fire extinguisher deactivated");
     }
     
     protected virtual void OnExtinguisherCompleted()
     {
-        Debug.Log("Fire extinguisher task completed - all fires extinguished!");
+        Debug.Log($"{gameObject.name}: Fire extinguisher task completed - all fires extinguished!");
         if (popupManager != null)
         {
             popupManager.ShowMessage("All fires extinguished! Task completed!");
@@ -206,11 +224,15 @@ public class FireExtinguisherController : CustomTaskController
     [ContextMenu("Force Complete Task")]
     public void ForceCompleteTask()
     {
-        if (!IsTaskCompleted())
+        if (!IsTaskCompleted() && !taskCompletedByThisController)
         {
+            taskCompletedByThisController = true;
             CompleteTask();
             OnExtinguisherCompleted();
-            FireScoreTracker.Instance.OnCorrectAction("Correct extinguisher selected");
+            if (FireScoreTracker.Instance != null)
+            {
+                FireScoreTracker.Instance.OnCorrectAction("Correct extinguisher selected");
+            }
         }
     }
     
@@ -220,11 +242,12 @@ public class FireExtinguisherController : CustomTaskController
     [ContextMenu("Reset Task")]
     public void ResetTask()
     {
-        // Reset base task - use the proper public method if available
-        // If CustomTaskController has a Reset method, use it, otherwise we'll need to work around this
+        // Reset completion flag
+        taskCompletedByThisController = false;
+        
+        // Reset base task
         try
         {
-            // Try to call a public reset method if it exists
             var resetMethod = GetType().BaseType.GetMethod("ResetTask", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
             if (resetMethod != null)
             {
@@ -232,13 +255,11 @@ public class FireExtinguisherController : CustomTaskController
             }
             else
             {
-                // Fallback: Re-initialize the task which should reset it
                 InitializeTask();
             }
         }
         catch
         {
-            // If reflection fails, just reinitialize
             InitializeTask();
         }
         
@@ -254,7 +275,7 @@ public class FireExtinguisherController : CustomTaskController
             targetObject.SetHighlight(true);
         }
         
-        Debug.Log($"Fire extinguisher task '{taskName}' reset.");
+        Debug.Log($"Fire extinguisher task '{taskName}' on {gameObject.name} reset.");
     }
     
     void OnDisable()
@@ -283,6 +304,12 @@ public class FireExtinguisherController : CustomTaskController
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawLine(transform.position, successMonitor.transform.position);
+        }
+        else
+        {
+            // Draw warning if no monitor assigned
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(transform.position + Vector3.up * 2f, Vector3.one * 0.3f);
         }
         
         // Show extinguisher usage state

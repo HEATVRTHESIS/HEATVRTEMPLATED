@@ -3344,7 +3344,7 @@ MonoBehaviour:
   yesAnswerImage: {fileID: 21300000, guid: 3c9a0567cac846e4e96e28e9a98d2e5c, type: 3}
   noAnswerImage: {fileID: 21300000, guid: 3c9a0567cac846e4e96e28e9a98d2e5c, type: 3}
   isYesTheCorrectAnswer: 1
-  targetObject: {fileID: 7295518410163569726}
+  targetObject: {fileID: 4319811138151552401}
   targetGameObject: {fileID: 2374506582468932702}
   magnifyingGlassIcon: {fileID: 2925773371957866777}
   popupManager: {fileID: 7830208495215971711}
@@ -29386,7 +29386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPrefabs:
   - {fileID: 1087520105305034028, guid: c7ba806321d32634bb551726ae626f79, type: 3}
-  - {fileID: 6986418479339866841, guid: 7f3efea37d80a954a883dcd22ae2135a, type: 3}
+  - {fileID: 6986418479339866841, guid: 0cafceb8d32e50f45b7f02a1c3abc756, type: 3}
   spawnCount: 1
   spawnArea: {fileID: 8047480855220265155}
   tutorialIndicatorTarget: {fileID: 5849423899988957688}
