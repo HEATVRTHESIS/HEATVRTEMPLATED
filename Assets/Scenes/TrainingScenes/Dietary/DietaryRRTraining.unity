@@ -24324,7 +24324,8 @@ MonoBehaviour:
   taskName: Disposal
   taskDescription: Throw away the Alcohol-soaked rags
   taskCompletionDialogue:
-  - Congrats!
+  - Alcohol soaked rags can be diluted with water first
+  - to lessen the risk of an easily flammable rag
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
@@ -71956,9 +71957,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   taskName: Biohazard Waste
-  taskDescription: Throw away the LPG Hose and Alcohol
+  taskDescription: Throw away the LPG Hose or Alcohol Bottle
   taskCompletionDialogue:
-  - test
+  - LPG Hose or Alcohol are needed to be thrown away
+  - properly to avoid them being accidentally used
+  - when they are not up to standard anymore
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
