@@ -2664,11 +2664,15 @@ PrefabInstance:
     - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
       propertyPath: audioSource
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5373646681556592961}
     - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
       propertyPath: popupManager
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: successMonitor
+      value: 
+      objectReference: {fileID: 1867228382}
     - target: {fileID: 6176834025734505685, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
       propertyPath: m_Name
       value: FireExtinguisherFixedHose

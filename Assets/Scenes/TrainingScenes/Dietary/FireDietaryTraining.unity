@@ -385,6 +385,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1557387017}
     - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: successMonitor
+      value: 
+      objectReference: {fileID: 1867228382}
+    - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
       propertyPath: taskDescription
       value: Use the Dry Powder Extinguisher to Extinguish the Class A fire
       objectReference: {fileID: 0}
@@ -10372,8 +10376,8 @@ MonoBehaviour:
   OnTaskCompleted:
     m_PersistentCalls:
       m_Calls: []
-  targetObject: {fileID: 0}
-  successMonitor: {fileID: 0}
+  targetObject: {fileID: 3913119258145762242}
+  successMonitor: {fileID: 428033473}
   useAction:
     m_UseReference: 0
     m_Action:
@@ -10386,7 +10390,7 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
-  popupManager: {fileID: 0}
+  popupManager: {fileID: 1557387017}
 --- !u!136 &3316832633141000573
 CapsuleCollider:
   m_ObjectHideFlags: 0
