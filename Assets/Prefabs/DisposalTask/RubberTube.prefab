@@ -96,6 +96,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: d951fe3d700e46e47ae9bfffa27fc29d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -5998004595915773402, guid: 1e983a820c548e94c86ec376e61bd90c, type: 3}
     - target: {fileID: 919132149155446097, guid: d951fe3d700e46e47ae9bfffa27fc29d, type: 3}
       propertyPath: m_Name
       value: rubber tubings

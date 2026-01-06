@@ -67,9 +67,17 @@ public class PullDownTrigger : CustomTaskController
                 onPullSuccess?.Invoke();
                 _isPulled = true;
 
+                
                 // Complete the task
-                CompleteTask();
-                FireScoreTracker.Instance.OnSafetyCompliance("Fire alarm activated");
+CompleteTask();
+
+// Track that fire alarm was pulled
+if (FireScoreTracker.Instance != null)
+{
+    FireScoreTracker.Instance.OnFireAlarmPulled();
+}
+
+FireScoreTracker.Instance.OnSafetyCompliance("Fire alarm activated");
             }
         }
     }

@@ -933,11 +933,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8782843ddde9cde4a81bf74f9cfa5fd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  extinguisherType: 0
   extinguishingParticles: {fileID: 3391151936550128629}
   extinguishAmount: 0.5
   particleExtinguishRadius: 0.1
   useSpherecastMethod: 0
   spherecastRadius: 2
+  popupManager: {fileID: 0}
+  errorMessageCooldown: 3
 --- !u!114 &18253756832524062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1004,7 +1007,7 @@ GameObject:
   - component: {fileID: 7268819646211874498}
   - component: {fileID: 3391151936550128629}
   - component: {fileID: 8769008782814684733}
-  - component: {fileID: 5402197434222654008}
+  - component: {fileID: 5987655286739846111}
   m_Layer: 6
   m_Name: Water
   m_TagString: Untagged
@@ -5836,7 +5839,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &5402197434222654008
+--- !u!114 &5987655286739846111
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5845,11 +5848,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 6432350609832178663}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 433614c4cd7e4ce44b13e031a1cef19b, type: 3}
+  m_Script: {fileID: 11500000, guid: f5eeed97cee03ca428bab14777efc91c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  extinguisherType: 0
   particleExtinquishRadius: 0.1
   incrementalPower: 0.0005
+  popupManager: {fileID: 0}
+  errorMessageCooldown: 3
 --- !u!1 &6488190828419531955
 GameObject:
   m_ObjectHideFlags: 0

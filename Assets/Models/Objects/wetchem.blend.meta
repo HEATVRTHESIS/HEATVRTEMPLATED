@@ -3,7 +3,17 @@ guid: 30d2b48cb8045bc40b53d915ea4006d0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wet_Chemical_Fire_Extinguisher_Glass
+    second: {fileID: 2100000, guid: 59bc3cf89b7819447b4ed36df86083f7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1.001
+    second: {fileID: 2100000, guid: a9e9c2334fe99f44ea4054b87901f7d1, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

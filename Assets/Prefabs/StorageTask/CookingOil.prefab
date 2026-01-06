@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 6066404261093186987}
   - component: {fileID: 8200634915991869834}
   - component: {fileID: 4145953189998953063}
+  - component: {fileID: 6174394225669050208}
   m_Layer: 0
   m_Name: CookingOil
   m_TagString: Untagged
@@ -345,7 +346,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bcb408f6a71a8b43aa0a367deb1740c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controllerButtonImage: {fileID: 0}
-  tooltipDescription: Press to grab
+  controllerButtonImage: {fileID: 21300000, guid: c9af42a5c7f74b24489fa5f633bf03f4, type: 3}
+  tooltipDescription: Grab!
   actionCooldown: 0.15
   hideWhenGrabbed: 1
+--- !u!114 &6174394225669050208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4142976078555239977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9b30d1f303b324e90639c2aad6f4fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueTriggerId: 
+  indicatorTarget: {fileID: 0}
+  indicatorText: STORE
+  audioMessageTTS: Store this item in the shelf
+  audioClip: {fileID: 0}
+  hideIndicatorOnDrop: 1
+  onlyShowWhileGrabbed: 1

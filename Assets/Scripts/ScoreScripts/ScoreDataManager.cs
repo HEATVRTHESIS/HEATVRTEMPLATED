@@ -5,6 +5,7 @@ using System.Collections.Generic;
 /// Enhanced persistent data manager that stores score data between scenes.
 /// Supports ScoreTracker, FireScoreTracker, and FireEvacuationScoreTracker.
 /// Updated with additional metrics for comprehensive BFP evaluation.
+/// NOW INCLUDES: Categorized error tracking for ALL phases (storage, maintenance, disposal, fire tasks)
 /// </summary>
 public class ScoreDataManager : MonoBehaviour
 {
@@ -25,11 +26,27 @@ public class ScoreDataManager : MonoBehaviour
         public int perfectScore;
         public int mistakeCount;
         public float accuracyPercentage;
-        public int safetyViolations; // Added for Phase 1
+        public int safetyViolations;
+        
+        // NEW: Categorized error tracking for Standard levels
+        public int storageErrors;
+        public int maintenanceErrors;
+        public int disposalErrors;
         
         // Fire level specific
         public int errorCount;
         public float timeRemaining;
+        
+        // NEW: Fire phase task completion tracking
+        public bool fireExtinguisherUsed;
+        public bool fireAlarmPulled;
+        public bool fireDoorClosed;
+        public bool npcEvacuated;
+        
+        // NEW: Fire phase error type tracking
+        public int wrongNPCResponseErrors;
+        public int fireExtinguisherErrors;
+        public int passMethodErrors;
         
         // Fire Evacuation specific
         public bool usedWetCloth;
@@ -83,6 +100,7 @@ public class ScoreDataManager : MonoBehaviour
 
     /// <summary>
     /// Save data from standard ScoreTracker levels (Phase 1)
+    /// NOW INCLUDES: Categorized error tracking
     /// </summary>
     public void SaveCurrentLevelData()
     {
@@ -102,6 +120,12 @@ public class ScoreDataManager : MonoBehaviour
             safetyViolations = ScoreTracker.Instance.GetSafetyViolations(),
             completionPercentage = ScoreTracker.Instance.GetCompletionPercentage(),
             accuracyPercentage = ScoreTracker.Instance.GetAccuracyPercentage(),
+            
+            // NEW: Save categorized errors
+            storageErrors = ScoreTracker.Instance.GetStorageErrors(),
+            maintenanceErrors = ScoreTracker.Instance.GetMaintenanceErrors(),
+            disposalErrors = ScoreTracker.Instance.GetDisposalErrors(),
+            
             timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
         };
 
@@ -112,12 +136,17 @@ public class ScoreDataManager : MonoBehaviour
         Debug.Log($"Tasks: {currentLevelData.completedTasks}/{currentLevelData.totalTasks}");
         Debug.Log($"Mistakes: {currentLevelData.mistakeCount}");
         Debug.Log($"Safety Violations: {currentLevelData.safetyViolations}");
+        Debug.Log($"--- Error Breakdown ---");
+        Debug.Log($"Storage Errors: {currentLevelData.storageErrors}");
+        Debug.Log($"Maintenance Errors: {currentLevelData.maintenanceErrors}");
+        Debug.Log($"Disposal Errors: {currentLevelData.disposalErrors}");
         Debug.Log($"Accuracy: {currentLevelData.accuracyPercentage:F1}%");
         Debug.Log($"================================");
     }
 
     /// <summary>
     /// Save data from FireScoreTracker levels (Phase 2)
+    /// NOW INCLUDES: Task completion status and categorized error tracking
     /// </summary>
     public void SaveFireLevelData()
     {
@@ -137,6 +166,18 @@ public class ScoreDataManager : MonoBehaviour
             safetyViolations = FireScoreTracker.Instance.GetSafetyViolations(),
             completionPercentage = FireScoreTracker.Instance.GetCompletionPercentage(),
             timeRemaining = timer != null ? timer.GetTimeRemaining() : 0f,
+            
+            // NEW: Save task completion status
+            fireExtinguisherUsed = FireScoreTracker.Instance.WasFireExtinguisherUsed(),
+            fireAlarmPulled = FireScoreTracker.Instance.WasFireAlarmPulled(),
+            fireDoorClosed = FireScoreTracker.Instance.WasFireDoorClosed(),
+            npcEvacuated = FireScoreTracker.Instance.WasNPCEvacuated(),
+            
+            // NEW: Save categorized errors
+            wrongNPCResponseErrors = FireScoreTracker.Instance.GetWrongNPCResponseErrors(),
+            fireExtinguisherErrors = FireScoreTracker.Instance.GetFireExtinguisherErrors(),
+            passMethodErrors = FireScoreTracker.Instance.GetPASSMethodErrors(),
+            
             timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
         };
 
@@ -148,6 +189,15 @@ public class ScoreDataManager : MonoBehaviour
         Debug.Log($"Errors: {currentLevelData.errorCount}");
         Debug.Log($"Safety Violations: {currentLevelData.safetyViolations}");
         Debug.Log($"Time Remaining: {currentLevelData.timeRemaining:F1}s");
+        Debug.Log($"--- Task Completion Status ---");
+        Debug.Log($"Fire Extinguisher Used: {currentLevelData.fireExtinguisherUsed}");
+        Debug.Log($"Fire Alarm Pulled: {currentLevelData.fireAlarmPulled}");
+        Debug.Log($"Fire Door Closed: {currentLevelData.fireDoorClosed}");
+        Debug.Log($"NPC Evacuated: {currentLevelData.npcEvacuated}");
+        Debug.Log($"--- Error Breakdown ---");
+        Debug.Log($"Wrong NPC Responses: {currentLevelData.wrongNPCResponseErrors}");
+        Debug.Log($"Fire Extinguisher Errors: {currentLevelData.fireExtinguisherErrors}");
+        Debug.Log($"PASS Method Errors: {currentLevelData.passMethodErrors}");
         Debug.Log($"============================");
     }
 
@@ -274,5 +324,127 @@ public class ScoreDataManager : MonoBehaviour
             total += data.safetyViolations;
         }
         return total;
+    }
+    
+    // NEW: Categorized error getters across all STANDARD levels
+    
+    /// <summary>
+    /// Get total storage errors across all standard levels
+    /// </summary>
+    public int GetTotalStorageErrors()
+    {
+        int total = 0;
+        foreach (var data in levelScores)
+        {
+            if (data.levelType == "Standard")
+            {
+                total += data.storageErrors;
+            }
+        }
+        return total;
+    }
+    
+    /// <summary>
+    /// Get total maintenance errors across all standard levels
+    /// </summary>
+    public int GetTotalMaintenanceErrors()
+    {
+        int total = 0;
+        foreach (var data in levelScores)
+        {
+            if (data.levelType == "Standard")
+            {
+                total += data.maintenanceErrors;
+            }
+        }
+        return total;
+    }
+    
+    /// <summary>
+    /// Get total disposal errors across all standard levels
+    /// </summary>
+    public int GetTotalDisposalErrors()
+    {
+        int total = 0;
+        foreach (var data in levelScores)
+        {
+            if (data.levelType == "Standard")
+            {
+                total += data.disposalErrors;
+            }
+        }
+        return total;
+    }
+    
+    // NEW: Fire phase specific getters
+    
+    /// <summary>
+    /// Get total wrong NPC response errors across all fire levels
+    /// </summary>
+    public int GetTotalWrongNPCResponseErrors()
+    {
+        int total = 0;
+        foreach (var data in levelScores)
+        {
+            if (data.levelType == "Fire")
+            {
+                total += data.wrongNPCResponseErrors;
+            }
+        }
+        return total;
+    }
+    
+    /// <summary>
+    /// Get total fire extinguisher errors across all fire levels
+    /// </summary>
+    public int GetTotalFireExtinguisherErrors()
+    {
+        int total = 0;
+        foreach (var data in levelScores)
+        {
+            if (data.levelType == "Fire")
+            {
+                total += data.fireExtinguisherErrors;
+            }
+        }
+        return total;
+    }
+    
+    /// <summary>
+    /// Get total PASS method errors across all fire levels
+    /// </summary>
+    public int GetTotalPASSMethodErrors()
+    {
+        int total = 0;
+        foreach (var data in levelScores)
+        {
+            if (data.levelType == "Fire")
+            {
+                total += data.passMethodErrors;
+            }
+        }
+        return total;
+    }
+    
+    /// <summary>
+    /// Get a comprehensive breakdown of all error types across all levels
+    /// </summary>
+    public Dictionary<string, int> GetComprehensiveErrorBreakdown()
+    {
+        return new Dictionary<string, int>
+        {
+            // Phase 1 errors
+            { "Storage", GetTotalStorageErrors() },
+            { "Maintenance", GetTotalMaintenanceErrors() },
+            { "Disposal", GetTotalDisposalErrors() },
+            
+            // Phase 2 errors
+            { "Wrong NPC Response", GetTotalWrongNPCResponseErrors() },
+            { "Fire Extinguisher", GetTotalFireExtinguisherErrors() },
+            { "PASS Method", GetTotalPASSMethodErrors() },
+            
+            // Overall
+            { "Safety Violations", GetTotalSafetyViolations() }
+        };
     }
 }

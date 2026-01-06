@@ -129,13 +129,19 @@ public class GarageDoorController : MonoBehaviour
     /// Called when door movement is complete
     /// </summary>
     private void CompleteDoorMovement()
+{
+    isMoving = false;
+    isDoorClosed = true;
+    
+    // Add this line
+    if (FireScoreTracker.Instance != null)
     {
-        isMoving = false;
-        isDoorClosed = true;
-        
-        Debug.Log("Garage door closed successfully!");
-        OnDoorFinishedMoving?.Invoke();
+        FireScoreTracker.Instance.OnFireDoorClosed();
     }
+    
+    Debug.Log("Garage door closed successfully!");
+    OnDoorFinishedMoving?.Invoke();
+}
 
     /// <summary>
     /// Reset the door to its original position (useful for restarting scenarios)

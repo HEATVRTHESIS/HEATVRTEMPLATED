@@ -321,7 +321,7 @@ public class NPCInteraction : CustomTaskController
             // Track the error in FireScoreTracker
             if (FireScoreTracker.Instance != null)
             {
-                FireScoreTracker.Instance.OnTaskError("Wrong NPC evacuation advice");
+                FireScoreTracker.Instance.OnWrongNPCResponse(); // This already calls OnTaskError internally
             }
             
             StartCoroutine(ResetDialogueAfterDelay());
@@ -424,6 +424,12 @@ public class NPCInteraction : CustomTaskController
 
         // COMPLETE THE TASK
         CompleteTask();
+
+        // Add this line to track NPC evacuation completion
+if (FireScoreTracker.Instance != null)
+{
+    FireScoreTracker.Instance.OnNPCEvacuated();
+}
 
         // Stop any ongoing speech before destroying
         if (enableTTS && isSpeaking && ttsSpeaker != null)
