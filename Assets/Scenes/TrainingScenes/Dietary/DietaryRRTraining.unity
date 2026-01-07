@@ -2006,6 +2006,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7213262384671763790, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8780896447573500414, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2037,6 +2041,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d50fe7ef78e1ff488e4cd72a1ab476b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &743513131 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5471569756412525413, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 743513128}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &743513132 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7213262384671763790, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 743513128}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &744823902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3053,8 +3073,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeInTime: 1
-  fadeInOnStart: 1
-  alwaysFadeInWhenTesting: 1
 --- !u!114 &1113032074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39268,6 +39286,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: FireDietaryTraining
+  loadingScreen: {fileID: 743513132}
+  progressBarImage: {fileID: 743513131}
 --- !u!23 &3713025189781502747
 MeshRenderer:
   m_ObjectHideFlags: 0

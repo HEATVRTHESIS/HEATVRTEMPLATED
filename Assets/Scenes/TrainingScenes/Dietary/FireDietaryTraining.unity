@@ -6104,6 +6104,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+--- !u!114 &757874634987369197 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5471569756412525413, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 757874634987369196}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &757874634987369198 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7213262384671763790, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 757874634987369196}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &768151695383776830
 GameObject:
   m_ObjectHideFlags: 0
@@ -19367,6 +19383,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneToLoad: EvacPoint
   departmentName: Dietary
+  loadingScreen: {fileID: 757874634987369198}
+  progressBarImage: {fileID: 757874634987369197}
 --- !u!4 &5881402312907559013
 Transform:
   m_ObjectHideFlags: 0
@@ -23027,6 +23045,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: FireMedTech
+  loadingScreen: {fileID: 0}
+  progressBarImage: {fileID: 0}
 --- !u!1 &8412932768041126393
 GameObject:
   m_ObjectHideFlags: 0

@@ -2788,6 +2788,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: MainMenu
+  loadingScreen: {fileID: 0}
+  progressBarImage: {fileID: 0}
 --- !u!114 &632168072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11051,6 +11053,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1986513326}
   - component: {fileID: 1986513325}
+  - component: {fileID: 1986513327}
   m_Layer: 0
   m_Name: BGMPlayer
   m_TagString: Untagged
@@ -11169,6 +11172,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1986513327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986513324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4d8fb5d66f0a3a4bb533bbdb93972e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeInTime: 7
 --- !u!1 &1996246964
 GameObject:
   m_ObjectHideFlags: 0
