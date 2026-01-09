@@ -2450,7 +2450,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5e1ca5c77d9b9d3468fe31a41d1710dd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 79d73234107c4044ba1e95b31f76cbf5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4698,7 +4698,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5e1ca5c77d9b9d3468fe31a41d1710dd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 79d73234107c4044ba1e95b31f76cbf5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12673,6 +12673,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneToLoad: EvacPoint
   departmentName: EmergencyRoom
+  loadingScreen: {fileID: 0}
+  progressBarImage: {fileID: 0}
 --- !u!4 &5881402312907559013
 Transform:
   m_ObjectHideFlags: 0
@@ -15685,6 +15687,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: FireMedTech
+  loadingScreen: {fileID: 0}
+  progressBarImage: {fileID: 0}
 --- !u!1 &8412932768041126393
 GameObject:
   m_ObjectHideFlags: 0
