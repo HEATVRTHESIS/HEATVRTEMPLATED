@@ -1,15 +1,20 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Collections;
 
 public class SceneLoader : MonoBehaviour
 {
-    // The [SerializeField] attribute exposes the private 'sceneToLoad' string to the Inspector.
-    // This allows you to set the scene name directly in Unity's properties panel.
     [SerializeField]
     private string sceneToLoad;
 
-    // A public function that can be called by a button or another script.
+    [Header("Loading Screen")]
+    [SerializeField]
+    private GameObject loadingScreen; // Your loading screen UI panel
+    
+    [SerializeField]
+    private Image progressBarImage; // The progress bar image (will fill left to right)
+
     public void LoadNewLevel()
     {
         StartCoroutine(LoadSceneCoroutine());
@@ -19,30 +24,46 @@ public class SceneLoader : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(sceneToLoad))
         {
-            // Start loading the scene but don't activate it yet
+            // Show loading screen
+            if (loadingScreen != null)
+                loadingScreen.SetActive(true);
+
+            // Set image to fill type
+            if (progressBarImage != null)
+            {
+                progressBarImage.type = Image.Type.Filled;
+                progressBarImage.fillMethod = Image.FillMethod.Horizontal;
+                progressBarImage.fillOrigin = (int)Image.OriginHorizontal.Left;
+                progressBarImage.fillAmount = 0f;
+            }
+
+            // Start loading the scene
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneToLoad);
             asyncLoad.allowSceneActivation = false;
 
+            // Update progress bar while loading
             while (asyncLoad.progress < 0.9f)
             {
+                if (progressBarImage != null)
+                    progressBarImage.fillAmount = asyncLoad.progress / 0.9f;
+                
                 yield return null;
             }
 
-            // Scene is loaded but not activated - give it a few frames
-            // This helps heavy initialization spread across frames
+            // Set to full
+            if (progressBarImage != null)
+                progressBarImage.fillAmount = 1f;
+
             yield return new WaitForSeconds(0.1f);
 
-            // Now activate the scene
+            // Activate the scene
             asyncLoad.allowSceneActivation = true;
 
-            // Wait for actual activation to complete
             while (!asyncLoad.isDone)
             {
                 yield return null;
             }
 
-            // Give the scene extra time after activation for initialization
-            // This is crucial for heavy scenes like yours with FlameEngine
             yield return new WaitForSeconds(0.2f);
             System.GC.Collect();
         }

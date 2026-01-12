@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Collections;
 
 public class DepartmentSceneLoader : MonoBehaviour
@@ -11,6 +12,13 @@ public class DepartmentSceneLoader : MonoBehaviour
     [Tooltip("The department name to pass to the next scene (e.g., 'ER', 'MedTech', 'Dietary')")]
     [SerializeField]
     private string departmentName;
+
+    [Header("Loading Screen")]
+    [SerializeField]
+    private GameObject loadingScreen; // Your loading screen UI panel
+    
+    [SerializeField]
+    private Image progressBarImage; // The progress bar image (will fill left to right)
 
     public void LoadLevelWithDepartment()
     {
@@ -40,21 +48,39 @@ public class DepartmentSceneLoader : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(sceneToLoad))
         {
+            // Show loading screen
+            if (loadingScreen != null)
+                loadingScreen.SetActive(true);
+
+            // Set image to fill type
+            if (progressBarImage != null)
+            {
+                progressBarImage.type = Image.Type.Filled;
+                progressBarImage.fillMethod = Image.FillMethod.Horizontal;
+                progressBarImage.fillOrigin = (int)Image.OriginHorizontal.Left;
+                progressBarImage.fillAmount = 0f;
+            }
+
             // Start loading the scene but don't activate it yet
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneToLoad);
             asyncLoad.allowSceneActivation = false;
 
-            // Wait for scene to be almost ready (0.9 = 90%)
+            // Update progress bar while loading
             while (asyncLoad.progress < 0.9f)
             {
+                if (progressBarImage != null)
+                    progressBarImage.fillAmount = asyncLoad.progress / 0.9f;
+                
                 yield return null;
             }
 
-            // Scene is loaded but not activated - give it a few frames
-            // This helps heavy initialization spread across frames
+            // Set to full
+            if (progressBarImage != null)
+                progressBarImage.fillAmount = 1f;
+
             yield return new WaitForSeconds(0.1f);
 
-            // Now activate the scene
+            // Activate the scene
             asyncLoad.allowSceneActivation = true;
 
             // Wait for actual activation to complete
@@ -64,7 +90,6 @@ public class DepartmentSceneLoader : MonoBehaviour
             }
 
             // Give the scene extra time after activation for initialization
-            // This is crucial for heavy scenes like yours with FlameEngine
             yield return new WaitForSeconds(0.2f);
             System.GC.Collect();
         }

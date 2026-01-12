@@ -1141,6 +1141,7 @@ GameObject:
   m_Component:
   - component: {fileID: 578363229}
   - component: {fileID: 578363230}
+  - component: {fileID: 578363231}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1190,6 +1191,19 @@ MonoBehaviour:
   followSpeed: 5
   smoothFollow: 1
   creationCooldown: 0.2
+--- !u!114 &578363231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578363228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4d8fb5d66f0a3a4bb533bbdb93972e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeInTime: 7
 --- !u!1001 &581415249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1651,7 +1665,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5e1ca5c77d9b9d3468fe31a41d1710dd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 79d73234107c4044ba1e95b31f76cbf5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5086,7 +5100,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5e1ca5c77d9b9d3468fe31a41d1710dd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 79d73234107c4044ba1e95b31f76cbf5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6788,11 +6802,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7213262384671763790, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+--- !u!114 &757874634987369197 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5471569756412525413, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 757874634987369196}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &757874634987369198 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7213262384671763790, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 757874634987369196}
+  m_PrefabAsset: {fileID: 0}
 --- !u!65 &772799406650345276
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22570,6 +22604,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneToLoad: EvacPoint
   departmentName: MedTech
+  loadingScreen: {fileID: 757874634987369198}
+  progressBarImage: {fileID: 757874634987369197}
 --- !u!4 &5815458925409045358
 Transform:
   m_ObjectHideFlags: 0
@@ -30062,6 +30098,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: FireMedTech
+  loadingScreen: {fileID: 0}
+  progressBarImage: {fileID: 0}
 --- !u!23 &8334736382260003888
 MeshRenderer:
   m_ObjectHideFlags: 0
