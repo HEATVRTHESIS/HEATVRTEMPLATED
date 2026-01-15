@@ -7055,6 +7055,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1080686595}
     m_Modifications:
+    - target: {fileID: 1692925981285150990, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 240781323}
+    - target: {fileID: 1692925981285150990, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartSceneButton
+      objectReference: {fileID: 0}
     - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: loopVideo
       value: 0
@@ -7267,6 +7275,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueBox
       objectReference: {fileID: 0}
+    - target: {fileID: 5749740888527722038, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5749740888527722038, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5749740888527722038, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6402032355436464013, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: speechAudioSource
       value: 
@@ -7311,7 +7331,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8607038538147380267, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8607038538147380267, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9150101833041015829, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: bgmAudioSource
+      value: 
+      objectReference: {fileID: 931463639}
+    m_RemovedComponents:
+    - {fileID: 3202519862741884234, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -7330,6 +7363,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 619c65b33dfe8504892944bf9f896f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &240781323 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9150101833041015829, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 230723050}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c85e7a9b639a374894407bdd22f56b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &245730313
@@ -14042,7 +14086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b92354beeabc56244bd80c9197d1bc8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: MedTechDepartment
+  sceneToLoad: MainMenu
   loadingScreen: {fileID: 75373386}
   progressBarImage: {fileID: 1601444991}
 --- !u!4 &949515422
