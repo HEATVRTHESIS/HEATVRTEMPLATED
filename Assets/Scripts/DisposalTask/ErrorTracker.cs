@@ -13,6 +13,14 @@ public class ErrorTracker : MonoBehaviour
     public int fireSmokeDoorErrors = 0;
     public int fireExtinguisherErrors = 0;
     public int fireWrongExtinguisherErrors = 0;
+    
+    // Fire evacuation errors
+    public int evacuationTimeExpiredErrors = 0;
+    public int evacuationFireObstacleErrors = 0;
+    public int evacuationOxygenErrors = 0;
+    public int evacuationNPCLeftBehindErrors = 0;
+    public int evacuationNPCNotRescuedErrors = 0;
+    public int evacuationNoWetClothErrors = 0;
 
     void Awake()
     {
@@ -75,6 +83,42 @@ public class ErrorTracker : MonoBehaviour
         Debug.Log($"[ErrorTracker] Fire wrong extinguisher errors: {fireWrongExtinguisherErrors}");
     }
 
+    public void RecordEvacuationTimeExpiredError()
+    {
+        evacuationTimeExpiredErrors++;
+        Debug.Log($"[ErrorTracker] Evacuation time expired errors: {evacuationTimeExpiredErrors}");
+    }
+
+    public void RecordEvacuationFireObstacleError()
+    {
+        evacuationFireObstacleErrors++;
+        Debug.Log($"[ErrorTracker] Evacuation fire obstacle errors: {evacuationFireObstacleErrors}");
+    }
+
+    public void RecordEvacuationOxygenError()
+    {
+        evacuationOxygenErrors++;
+        Debug.Log($"[ErrorTracker] Evacuation oxygen errors: {evacuationOxygenErrors}");
+    }
+
+    public void RecordEvacuationNPCLeftBehindError()
+    {
+        evacuationNPCLeftBehindErrors++;
+        Debug.Log($"[ErrorTracker] Evacuation NPC left behind errors: {evacuationNPCLeftBehindErrors}");
+    }
+
+    public void RecordEvacuationNPCNotRescuedError()
+    {
+        evacuationNPCNotRescuedErrors++;
+        Debug.Log($"[ErrorTracker] Evacuation NPC not rescued errors: {evacuationNPCNotRescuedErrors}");
+    }
+
+    public void RecordEvacuationNoWetClothError()
+    {
+        evacuationNoWetClothErrors++;
+        Debug.Log($"[ErrorTracker] Evacuation no wet cloth errors: {evacuationNoWetClothErrors}");
+    }
+
     public void ResetAllErrors()
     {
         disposalErrors = 0;
@@ -85,5 +129,11 @@ public class ErrorTracker : MonoBehaviour
         fireSmokeDoorErrors = 0;
         fireExtinguisherErrors = 0;
         fireWrongExtinguisherErrors = 0;
+        evacuationTimeExpiredErrors = 0;
+        evacuationFireObstacleErrors = 0;
+        evacuationOxygenErrors = 0;
+        evacuationNPCLeftBehindErrors = 0;
+        evacuationNPCNotRescuedErrors = 0;
+        evacuationNoWetClothErrors = 0;
     }
 }

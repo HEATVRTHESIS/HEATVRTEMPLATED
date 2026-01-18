@@ -872,6 +872,63 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 203015056}
   m_Mesh: {fileID: 2003126154647920913, guid: 13ad110fc254f0047bfd804318e3f2a5, type: 3}
+--- !u!1001 &230034277
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_Name
+      value: XR Device Simulator
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
 --- !u!1 &252204674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1556,6 +1613,11 @@ MonoBehaviour:
   maxHealth: 5
   healthImage: {fileID: 45177945}
   failureCanvas: {fileID: 358108412}
+  fireObstacleDialogue:
+  - Constantly monitor your oxygen and health status
+  - 'to ensure you remain conscious during the evacuation. '
+  audioSource: {fileID: 9207420083164560832}
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   damageCooldown: 1
   damageFlashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.2
@@ -3950,6 +4012,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 97406881364485125, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: errorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
+    - target: {fileID: 97406881364485125, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
       propertyPath: ttsSpeaker
       value: 
       objectReference: {fileID: 4598410587691705966}
@@ -3977,6 +4043,18 @@ PrefabInstance:
       propertyPath: rightControllerTransform
       value: 
       objectReference: {fileID: 4221990225890602452}
+    - target: {fileID: 97406881364485125, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: leftBehindDialogue.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 97406881364485125, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: leftBehindDialogue.Array.data[0]
+      value: "The IV pole needs to stay right at the patient\u2019s side"
+      objectReference: {fileID: 0}
+    - target: {fileID: 97406881364485125, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
+      propertyPath: leftBehindDialogue.Array.data[1]
+      value: keep the equipment moving with their hip
+      objectReference: {fileID: 0}
     - target: {fileID: 805717225813456152, guid: cb8f4416f9975e54893adf28369255ab, type: 3}
       propertyPath: m_LocalPosition.x
       value: -25.5
@@ -4530,6 +4608,12 @@ MonoBehaviour:
   oxygenText: {fileID: 1618743961}
   oxygenBarFill: {fileID: 1548652859}
   failureCanvas: {fileID: 358108412}
+  oxygenDepletedDialogue:
+  - Constantly monitor your oxygen
+  - 'and health status to ensure '
+  - 'you remain conscious during the evacuation. '
+  audioSource: {fileID: 9207420083164560832}
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   highOxygenColor: {r: 0, g: 1, b: 0, a: 1}
   mediumOxygenColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   lowOxygenColor: {r: 1, g: 0, b: 0, a: 1}
@@ -11129,6 +11213,11 @@ MonoBehaviour:
   targetEvacuationTime: 120
   timerText: {fileID: 703605617}
   failureCanvas: {fileID: 358108412}
+  timeExpiredDialogue:
+  - You ran out of time. You moved too slowly
+  - nd failed to clear the danger zone before the clock hit zero
+  audioSource: {fileID: 9207420083164560832}
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   xrRig: {fileID: 6292095195506263863}
   OnTimeExpired:
     m_PersistentCalls:
@@ -12510,7 +12599,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5e1ca5c77d9b9d3468fe31a41d1710dd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 79d73234107c4044ba1e95b31f76cbf5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -33836,8 +33925,17 @@ MonoBehaviour:
     m_Reference: {fileID: 0}
   initialDialogue: I don't know where to go! Can you help me?
   followingDialogue: Okay, I'll follow you!
+  leftBehindDialogue:
+  - You can't just walk off and leave civilians behind
+  - you have to stay with them to make sure
+  - they can exit safely
+  wrongAnswerDialogue: []
+  audioSource: {fileID: 9207420083164560832}
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   npcAnimator: {fileID: 5368670657153546207}
   playerTransform: {fileID: 9218719975206061688}
+  maxFollowDistance: 15
+  leftBehindDelay: 5
   enableTTS: 1
   ttsSpeaker: {fileID: 4598410587691705966}
   voicePresetName: WITSCODY
@@ -46613,3 +46711,4 @@ SceneRoots:
   - {fileID: 2132988213}
   - {fileID: 1113032068}
   - {fileID: 1807014593}
+  - {fileID: 230034277}

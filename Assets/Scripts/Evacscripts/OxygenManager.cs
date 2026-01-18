@@ -7,33 +7,27 @@ using System.Collections.Generic;
 public class OxygenManager : MonoBehaviour
 {
     [Header("Oxygen Settings")]
-    [Tooltip("Maximum oxygen value")]
     public float maxOxygen = 100f;
-    
-    [Tooltip("How fast oxygen decreases per second without protection")]
     public float oxygenDecreaseRate = 5f;
-    
-    [Tooltip("How fast oxygen regenerates per second with wet cloth")]
     public float oxygenRegenerationRate = 15f;
     
     [Header("Current State")]
-    [Tooltip("Current oxygen level (read-only in inspector)")]
     [SerializeField] private float currentOxygen = 100f;
-    
     [SerializeField] private bool isProtected = false;
     
     [Header("UI References")]
-    [Tooltip("UI Slider to show oxygen level")]
     public Slider oxygenSlider;
-    
-    [Tooltip("TextMeshPro text to show oxygen percentage")]
     public TextMeshProUGUI oxygenText;
-    
-    [Tooltip("Optional: Image that changes color based on oxygen")]
     public Image oxygenBarFill;
-    
-    [Tooltip("Canvas to show when oxygen depleted")]
     public GameObject failureCanvas;
+    
+    [Header("Error Dialogue")]
+    [Tooltip("The dialogue lines to display when oxygen runs out.")]
+    public string[] oxygenDepletedDialogue;
+
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip errorSound;
     
     [Header("Color Gradient")]
     public Color highOxygenColor = Color.green;
@@ -41,10 +35,7 @@ public class OxygenManager : MonoBehaviour
     public Color lowOxygenColor = Color.red;
     
     [Header("Warning Settings")]
-    [Tooltip("Oxygen level at which warnings start")]
     public float warningThreshold = 30f;
-    
-    [Tooltip("Oxygen level at which player suffocates")]
     public float suffocationThreshold = 0f;
     
     [Header("Audio (Optional)")]
@@ -59,8 +50,6 @@ public class OxygenManager : MonoBehaviour
     
     private bool hasWarned = false;
     private bool hasSuffocated = false;
-    
-    // Track which cloths are providing protection
     private HashSet<WetCloth> protectingCloths = new HashSet<WetCloth>();
     
     void Start()
@@ -71,17 +60,13 @@ public class OxygenManager : MonoBehaviour
     
     void Update()
     {
-        // Check if ANY cloth is providing protection
         isProtected = protectingCloths.Count > 0;
         
-        // Decrease or regenerate oxygen based on protection
         if (isProtected)
         {
-            // Regenerate oxygen when protected with wet cloth
             currentOxygen += oxygenRegenerationRate * Time.deltaTime;
             currentOxygen = Mathf.Min(currentOxygen, maxOxygen);
             
-            // Reset warning flags when oxygen is restored
             if (currentOxygen > warningThreshold)
             {
                 if (hasWarned)
@@ -96,12 +81,10 @@ public class OxygenManager : MonoBehaviour
         }
         else
         {
-            // Decrease oxygen when not protected
             currentOxygen -= oxygenDecreaseRate * Time.deltaTime;
             currentOxygen = Mathf.Max(currentOxygen, 0f);
         }
         
-        // Check for warning threshold
         if (currentOxygen <= warningThreshold && currentOxygen > suffocationThreshold && !hasWarned)
         {
             hasWarned = true;
@@ -112,7 +95,6 @@ public class OxygenManager : MonoBehaviour
             Debug.LogWarning("OXYGEN LOW! Find wet cloth!");
         }
         
-        // Check for suffocation
         if (currentOxygen <= suffocationThreshold && !hasSuffocated)
         {
             hasSuffocated = true;
@@ -120,62 +102,48 @@ public class OxygenManager : MonoBehaviour
             {
                 OnOxygenDepleted.Invoke();
             }
-            Debug.LogError("SUFFOCATION! Player needs oxygen!");
             HandleSuffocation();
         }
         
-        // Update breathing sounds based on oxygen level
         UpdateBreathingSound();
-        
-        // Update UI
         UpdateUI();
     }
     
-    // NEW METHOD: Register/unregister individual cloths
     public void RegisterClothProtection(WetCloth cloth, bool isProtecting)
     {
         if (isProtecting)
         {
             if (protectingCloths.Add(cloth))
             {
-                Debug.Log(cloth.gameObject.name + " is now protecting! Total protecting cloths: " + protectingCloths.Count);
+                Debug.Log(cloth.gameObject.name + " is now protecting! Total: " + protectingCloths.Count);
             }
         }
         else
         {
             if (protectingCloths.Remove(cloth))
             {
-                Debug.Log(cloth.gameObject.name + " stopped protecting. Total protecting cloths: " + protectingCloths.Count);
+                Debug.Log(cloth.gameObject.name + " stopped protecting. Total: " + protectingCloths.Count);
             }
         }
     }
     
-    // DEPRECATED: Keep for backwards compatibility but not recommended
     public void SetClothProtection(bool protectionActive)
     {
         isProtected = protectionActive;
-        
-        if (protectionActive)
-        {
-            Debug.Log("Player is protected with wet cloth! (Legacy method)");
-        }
     }
     
     void UpdateUI()
     {
-        // Update slider
         if (oxygenSlider != null)
         {
             oxygenSlider.value = currentOxygen / maxOxygen;
         }
         
-        // Update text
         if (oxygenText != null)
         {
             oxygenText.text = "Oxygen: " + Mathf.RoundToInt(currentOxygen) + "%";
         }
         
-        // Update color
         if (oxygenBarFill != null)
         {
             float oxygenPercent = currentOxygen / maxOxygen;
@@ -201,7 +169,6 @@ public class OxygenManager : MonoBehaviour
         
         float oxygenPercent = currentOxygen / maxOxygen;
         
-        // Switch to labored breathing when oxygen is low
         if (oxygenPercent < 0.3f)
         {
             if (labordBreathing != null && breathingSound.clip != labordBreathing)
@@ -222,49 +189,34 @@ public class OxygenManager : MonoBehaviour
     
     void HandleSuffocation()
     {
-        Debug.Log("HANDLE SUFFOCATION - Opening failure canvas and stopping time");
+        Debug.Log("HANDLE SUFFOCATION");
+
+        if (ErrorTracker.Instance != null)
+            ErrorTracker.Instance.RecordEvacuationOxygenError();
+
+        if (audioSource != null && errorSound != null)
+            audioSource.PlayOneShot(errorSound);
+
+        VRDialogueSystem dialogueSystem = FindObjectOfType<VRDialogueSystem>();
+        if (dialogueSystem != null && oxygenDepletedDialogue != null && oxygenDepletedDialogue.Length > 0)
+        {
+            dialogueSystem.StartDialog(oxygenDepletedDialogue);
+        }
         
-        // Stop time
         Time.timeScale = 0f;
         
-        // Show the assigned failure canvas
         if (failureCanvas != null)
         {
             failureCanvas.SetActive(true);
         }
-        else
-        {
-            Debug.LogWarning("Failure canvas not assigned to OxygenManager!");
-        }
     }
     
-    // Public methods for external access
-    public float GetCurrentOxygen()
-    {
-        return currentOxygen;
-    }
+    public float GetCurrentOxygen() => currentOxygen;
+    public float GetOxygenPercentage() => (currentOxygen / maxOxygen) * 100f;
+    public bool IsOxygenLow() => currentOxygen <= warningThreshold;
+    public bool HasSuffocated() => currentOxygen <= suffocationThreshold;
+    public int GetProtectingClothCount() => protectingCloths.Count;
     
-    public float GetOxygenPercentage()
-    {
-        return (currentOxygen / maxOxygen) * 100f;
-    }
-    
-    public bool IsOxygenLow()
-    {
-        return currentOxygen <= warningThreshold;
-    }
-    
-    public bool HasSuffocated()
-    {
-        return currentOxygen <= suffocationThreshold;
-    }
-    
-    public int GetProtectingClothCount()
-    {
-        return protectingCloths.Count;
-    }
-    
-    // Optional: Reset oxygen (for testing or respawn)
     [ContextMenu("Reset Oxygen")]
     public void ResetOxygen()
     {
@@ -275,7 +227,6 @@ public class OxygenManager : MonoBehaviour
         UpdateUI();
     }
     
-    // Optional: Instantly deplete oxygen (for testing)
     [ContextMenu("Deplete Oxygen")]
     public void DepleteOxygen()
     {

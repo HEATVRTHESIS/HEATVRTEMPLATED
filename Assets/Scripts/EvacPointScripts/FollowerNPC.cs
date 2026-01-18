@@ -4,8 +4,8 @@ using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.AI;
-using Meta.WitAi.TTS.Utilities; // Meta Voice SDK namespace
-using Meta.WitAi.TTS.Data; // For TTSClipData
+using Meta.WitAi.TTS.Utilities;
+using Meta.WitAi.TTS.Data;
 
 public class FollowerNPC : MonoBehaviour
 {
@@ -13,7 +13,6 @@ public class FollowerNPC : MonoBehaviour
     public NavMeshAgent navAgent;
     
     [Header("Task Settings")]
-    [Tooltip("The NPC object to highlight (usually this same GameObject)")]
     public HighlightableObject targetObject;
     
     [Header("VR Interaction")]
@@ -27,16 +26,31 @@ public class FollowerNPC : MonoBehaviour
     [TextArea(2, 4)]
     public string followingDialogue = "Okay, I'll follow you!";
     
+    [Header("Error Dialogue")]
+    [Tooltip("The dialogue lines to display when NPC is left too far behind.")]
+    public string[] leftBehindDialogue;
+
+    [Tooltip("The dialogue lines to display when player gives wrong answer.")]
+    public string[] wrongAnswerDialogue;
+
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip errorSound;
+    
     [Header("NPC Settings")]
     public Animator npcAnimator;
     public Transform playerTransform;
 
+    [Header("Distance Tracking")]
+    [Tooltip("Distance at which NPC is considered left behind")]
+    public float maxFollowDistance = 15f;
+    
+    [Tooltip("Time player must be far before triggering left behind")]
+    public float leftBehindDelay = 5f;
+
     [Header("Meta Voice TTS Settings")]
-    [Tooltip("Enable text-to-speech for this NPC")]
     public bool enableTTS = true;
-    [Tooltip("Shared TTSSpeaker component for Meta Voice SDK speech output")]
     public TTSSpeaker ttsSpeaker;
-    [Tooltip("Voice preset name for this NPC (e.g., WITSREBECCA, WITSCODY)")]
     public string voicePresetName = "WITSCODY";
     
     private bool isPlayerPointingAtNPC = false;
@@ -44,31 +58,29 @@ public class FollowerNPC : MonoBehaviour
     private bool isFollowing = false;
     private bool isSpeaking = false;
     private string currentSpeechText;
+    private bool hasPlayedLeftBehindDialogue = false;
+    private bool hasPlayedWrongAnswerDialogue = false;
+    private float distanceTimer = 0f;
 
     void Start()
     {
         interactionIndicator.SetActive(false);
-        
         talkAction.action.Enable();
 
-        // Task controller setup
         if (targetObject == null)
         {
-            // Try to find HighlightableObject on this GameObject if not assigned
             targetObject = GetComponent<HighlightableObject>();
         }
 
-        // Setup TTSSpeaker if not assigned
         if (ttsSpeaker == null && enableTTS)
         {
             ttsSpeaker = GetComponent<TTSSpeaker>();
             if (ttsSpeaker == null)
             {
-                Debug.LogError($"FollowerNPC on {gameObject.name}: TTSSpeaker component not found! Please add a TTSSpeaker component or assign it in the inspector.");
+                Debug.LogError($"FollowerNPC on {gameObject.name}: TTSSpeaker not found!");
             }
         }
 
-        // Subscribe to Meta Voice TTS events if TTS is enabled
         if (enableTTS && ttsSpeaker != null)
         {
             ttsSpeaker.Events.OnPlaybackStart.AddListener(OnSpeechStart);
@@ -79,7 +91,6 @@ public class FollowerNPC : MonoBehaviour
 
     void OnDestroy()
     {
-        // Unsubscribe from Meta Voice TTS events
         if (enableTTS && ttsSpeaker != null)
         {
             ttsSpeaker.Events.OnPlaybackStart.RemoveListener(OnSpeechStart);
@@ -89,9 +100,6 @@ public class FollowerNPC : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Meta Voice TTS event: Called when speech playback starts
-    /// </summary>
     private void OnSpeechStart(TTSSpeaker speaker, TTSClipData clipData)
     {
         if (clipData.textToSpeak == currentSpeechText)
@@ -100,9 +108,6 @@ public class FollowerNPC : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Meta Voice TTS event: Called when speech playback completes
-    /// </summary>
     private void OnSpeechComplete(TTSSpeaker speaker, TTSClipData clipData)
     {
         if (clipData.textToSpeak == currentSpeechText)
@@ -111,9 +116,6 @@ public class FollowerNPC : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Meta Voice TTS event: Called when speech playback is cancelled
-    /// </summary>
     private void OnSpeechCancelled(TTSSpeaker speaker, TTSClipData clipData, string reason)
     {
         if (clipData.textToSpeak == currentSpeechText)
@@ -122,40 +124,25 @@ public class FollowerNPC : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Starts speech using Meta Voice SDK
-    /// </summary>
     private void StartSpeech(string text)
     {
         if (!enableTTS || ttsSpeaker == null || string.IsNullOrEmpty(text.Trim()))
             return;
 
-        // Check if TTS is muted globally (from VRPauseMenu)
         if (VRDialogueSystem.IsTTSMuted)
             return;
 
-        // Stop any ongoing speech first
         if (isSpeaking)
         {
             ttsSpeaker.Stop();
         }
 
-        // Set the voice preset for this NPC before speaking
         if (!string.IsNullOrEmpty(voicePresetName))
         {
-            Debug.Log($"[{gameObject.name}] Setting voice to: '{voicePresetName}'");
             ttsSpeaker.VoiceID = voicePresetName;
-            Debug.Log($"[{gameObject.name}] Voice now set to: '{ttsSpeaker.VoiceID}'");
-        }
-        else
-        {
-            Debug.LogWarning($"[{gameObject.name}] voicePresetName is empty!");
         }
 
-        // Store current speech text for tracking
         currentSpeechText = text;
-
-        // Use Speak() for immediate playback
         ttsSpeaker.Speak(text);
     }
 
@@ -164,6 +151,7 @@ public class FollowerNPC : MonoBehaviour
         if (isFollowing)
         {
             FollowPlayer();
+            CheckIfLeftBehind();
         }
         else
         {
@@ -173,6 +161,44 @@ public class FollowerNPC : MonoBehaviour
             {
                 ShowInitialDialogue();
             }
+        }
+    }
+
+    void CheckIfLeftBehind()
+    {
+        if (playerTransform == null || hasPlayedLeftBehindDialogue) return;
+
+        float distance = Vector3.Distance(transform.position, playerTransform.position);
+
+        if (distance > maxFollowDistance)
+        {
+            distanceTimer += Time.deltaTime;
+
+            if (distanceTimer >= leftBehindDelay)
+            {
+                OnNPCLeftBehind();
+            }
+        }
+        else
+        {
+            distanceTimer = 0f;
+        }
+    }
+
+    void OnNPCLeftBehind()
+    {
+        hasPlayedLeftBehindDialogue = true;
+
+        if (ErrorTracker.Instance != null)
+            ErrorTracker.Instance.RecordEvacuationNPCLeftBehindError();
+
+        if (audioSource != null && errorSound != null)
+            audioSource.PlayOneShot(errorSound);
+
+        VRDialogueSystem dialogueSystem = FindObjectOfType<VRDialogueSystem>();
+        if (dialogueSystem != null && leftBehindDialogue != null && leftBehindDialogue.Length > 0)
+        {
+            dialogueSystem.StartDialog(leftBehindDialogue);
         }
     }
 
@@ -203,53 +229,40 @@ public class FollowerNPC : MonoBehaviour
     {
         if (QuestionUIManager.Instance == null)
         {
-            Debug.LogError("QuestionUIManager.Instance is null! Make sure QuestionUIManager is in the scene.");
+            Debug.LogError("QuestionUIManager.Instance is null!");
             return;
         }
 
-        // SAFETY CHECK: Don't show if another NPC is already using the UI
         if (QuestionUIManager.Instance.questionCanvas.activeSelf && !isDialogueActive)
         {
-            Debug.LogWarning($"{gameObject.name}: Question UI is already active. Wait for it to close.");
+            Debug.LogWarning($"{gameObject.name}: Question UI already active.");
             return;
         }
 
         isDialogueActive = true;
         interactionIndicator.SetActive(false);
-
-        // Speak the initial dialogue
         StartSpeech(initialDialogue);
-
-        // Show the question UI using the QuestionUIManager
         ShowFollowerQuestion();
     }
 
-    /// <summary>
-    /// Shows the follower question using the QuestionUIManager
-    /// </summary>
     private void ShowFollowerQuestion()
     {
         if (QuestionUIManager.Instance == null)
         {
-            Debug.LogError("Cannot show follower question: QuestionUIManager.Instance is null!");
+            Debug.LogError("Cannot show follower question!");
             return;
         }
 
-        // Set the question text
         if (QuestionUIManager.Instance.questionTextUI != null)
         {
             QuestionUIManager.Instance.questionTextUI.text = initialDialogue;
         }
 
-        // Hide the image for NPC dialogue (it's only used for maintenance tasks)
         if (QuestionUIManager.Instance.questionImage != null)
         {
             QuestionUIManager.Instance.questionImage.gameObject.SetActive(false);
         }
 
-        // Set up button listeners for this specific follower interaction
-        // Yes button = "Follow" (help the NPC)
-        // No button = "Cancel" (don't help)
         if (QuestionUIManager.Instance.yesButton != null)
         {
             QuestionUIManager.Instance.yesButton.onClick.RemoveAllListeners();
@@ -262,13 +275,9 @@ public class FollowerNPC : MonoBehaviour
             QuestionUIManager.Instance.noButton.onClick.AddListener(OnCancelButtonClicked);
         }
 
-        // Position and show the canvas
         ShowQuestionForNPC();
     }
 
-    /// <summary>
-    /// Helper method to position and show the question UI for this NPC
-    /// </summary>
     private void ShowQuestionForNPC()
     {
         if (QuestionUIManager.Instance == null || QuestionUIManager.Instance.questionCanvas == null)
@@ -278,7 +287,6 @@ public class FollowerNPC : MonoBehaviour
         
         QuestionUIManager.Instance.questionCanvas.SetActive(true);
         
-        // Manually position the canvas
         if (QuestionUIManager.Instance.cameraTransform != null)
         {
             Vector3 basePosition = target.position + Vector3.up * QuestionUIManager.Instance.heightOffset;
@@ -287,7 +295,6 @@ public class FollowerNPC : MonoBehaviour
             
             QuestionUIManager.Instance.questionCanvas.transform.position = uiPosition;
             
-            // Make UI face the camera
             Vector3 lookDirection = QuestionUIManager.Instance.cameraTransform.position - QuestionUIManager.Instance.questionCanvas.transform.position;
             lookDirection.y = 0;
             
@@ -302,32 +309,42 @@ public class FollowerNPC : MonoBehaviour
 
     void OnFollowButtonClicked()
     {
-        // Update the dialogue text to show feedback
         if (QuestionUIManager.Instance != null && QuestionUIManager.Instance.questionTextUI != null)
         {
             QuestionUIManager.Instance.questionTextUI.text = followingDialogue;
         }
 
-        // Speak the following dialogue
         StartSpeech(followingDialogue);
-        
         StartCoroutine(StartFollowingAfterDelay(1.5f));
     }
 
     void OnCancelButtonClicked()
     {
-        // Stop any ongoing speech
+        if (ErrorTracker.Instance != null)
+            ErrorTracker.Instance.RecordEvacuationNPCNotRescuedError();
+
+        if (audioSource != null && errorSound != null)
+            audioSource.PlayOneShot(errorSound);
+
+        if (!hasPlayedWrongAnswerDialogue)
+        {
+            hasPlayedWrongAnswerDialogue = true;
+            VRDialogueSystem dialogueSystem = FindObjectOfType<VRDialogueSystem>();
+            if (dialogueSystem != null && wrongAnswerDialogue != null && wrongAnswerDialogue.Length > 0)
+            {
+                dialogueSystem.StartDialog(wrongAnswerDialogue);
+            }
+        }
+
         if (enableTTS && isSpeaking && ttsSpeaker != null)
         {
             ttsSpeaker.Stop();
         }
 
-        // Hide the question UI
         if (QuestionUIManager.Instance != null)
         {
             QuestionUIManager.Instance.HideQuestion();
             
-            // Re-enable the image for future maintenance tasks
             if (QuestionUIManager.Instance.questionImage != null)
             {
                 QuestionUIManager.Instance.questionImage.gameObject.SetActive(true);
@@ -341,12 +358,10 @@ public class FollowerNPC : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         
-        // Hide the question UI
         if (QuestionUIManager.Instance != null)
         {
             QuestionUIManager.Instance.HideQuestion();
             
-            // Re-enable the image for future maintenance tasks
             if (QuestionUIManager.Instance.questionImage != null)
             {
                 QuestionUIManager.Instance.questionImage.gameObject.SetActive(true);
@@ -355,8 +370,6 @@ public class FollowerNPC : MonoBehaviour
         
         isDialogueActive = false;
         isFollowing = true;
-        
-        Debug.Log($"{gameObject.name} is now following the player");
     }
 
     void FollowPlayer()
@@ -369,13 +382,10 @@ public class FollowerNPC : MonoBehaviour
 
         if (navAgent != null)
         {
-            // Set destination to player
             navAgent.SetDestination(playerTransform.position);
             
-            // Check if agent has reached the destination (within stopping distance)
             if (!navAgent.pathPending && navAgent.remainingDistance <= navAgent.stoppingDistance)
             {
-                // Reached destination - idle
                 if (npcAnimator != null)
                 {
                     npcAnimator.SetTrigger("Idle");
@@ -383,7 +393,6 @@ public class FollowerNPC : MonoBehaviour
             }
             else
             {
-                // Still moving - walk
                 if (npcAnimator != null)
                 {
                     npcAnimator.SetTrigger("Walk");
@@ -392,9 +401,6 @@ public class FollowerNPC : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Call this to make the NPC stop following (e.g., when they reach the exit)
-    /// </summary>
     public void StopFollowing()
     {
         isFollowing = false;
@@ -409,18 +415,12 @@ public class FollowerNPC : MonoBehaviour
             npcAnimator.SetTrigger("Idle");
         }
 
-        // Stop any ongoing speech
         if (enableTTS && isSpeaking && ttsSpeaker != null)
         {
             ttsSpeaker.Stop();
         }
-        
-        Debug.Log($"{gameObject.name} stopped following");
     }
 
-    /// <summary>
-    /// Optional: Auto-detect player if not assigned
-    /// </summary>
     void OnValidate()
     {
         if (playerTransform == null)
@@ -433,16 +433,6 @@ public class FollowerNPC : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Check if NPC is currently speaking
-    /// </summary>
-    public bool IsSpeaking()
-    {
-        return isSpeaking;
-    }
-
-    public bool IsFollowing()
-    {
-        return isFollowing;
-    }
+    public bool IsSpeaking() => isSpeaking;
+    public bool IsFollowing() => isFollowing;
 }
