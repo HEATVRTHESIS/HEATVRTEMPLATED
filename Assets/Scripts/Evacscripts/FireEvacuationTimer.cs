@@ -23,6 +23,14 @@ public class FireEvacuationTimer : MonoBehaviour
     [Tooltip("Canvas to show when time runs out")]
     public GameObject failureCanvas;
     
+    [Header("Error Dialogue")]
+    [Tooltip("The dialogue lines to display when timer expires.")]
+    public string[] timeExpiredDialogue;
+
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip errorSound;
+    
     [Header("XR Rig Reference")]
     [Tooltip("Reference to XR Rig or player movement controller - NOT REQUIRED")]
     public GameObject xrRig;
@@ -67,7 +75,6 @@ public class FireEvacuationTimer : MonoBehaviour
         
         timerText.text = string.Format("Time: {0:00}:{1:00}", minutes, seconds);
         
-        // Change color based on time remaining
         if (currentTime <= 30f)
         {
             timerText.color = Color.red;
@@ -87,20 +94,28 @@ public class FireEvacuationTimer : MonoBehaviour
         Debug.Log("TIME EXPIRED! Evacuation failed.");
         
         isTimerRunning = false;
+
+        if (ErrorTracker.Instance != null)
+            ErrorTracker.Instance.RecordEvacuationTimeExpiredError();
+
+        if (audioSource != null && errorSound != null)
+            audioSource.PlayOneShot(errorSound);
+
+        VRDialogueSystem dialogueSystem = FindObjectOfType<VRDialogueSystem>();
+        if (dialogueSystem != null && timeExpiredDialogue != null && timeExpiredDialogue.Length > 0)
+        {
+            dialogueSystem.StartDialog(timeExpiredDialogue);
+        }
         
-        // Stop time (this will prevent player movement)
         Time.timeScale = 0f;
         
-        // Show failure canvas
         if (failureCanvas != null)
         {
             failureCanvas.SetActive(true);
         }
         
-        // Invoke event
         OnTimeExpired?.Invoke();
         
-        // Record failure in scoring system
         var scoreTracker = FindObjectOfType<FireEvacuationScoreTracker>();
         if (scoreTracker != null)
         {
@@ -139,12 +154,10 @@ public class FireEvacuationTimer : MonoBehaviour
         
         if (elapsedTime <= targetEvacuationTime)
         {
-            // +1 point per second under target
             return targetEvacuationTime - elapsedTime;
         }
         else
         {
-            // -0.5 points per second over target
             return (targetEvacuationTime - elapsedTime) * 0.5f;
         }
     }

@@ -11177,6 +11177,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: FireMedTech
+  loadingScreen: {fileID: 0}
+  progressBarImage: {fileID: 0}
 --- !u!1 &7432722973014813538
 GameObject:
   m_ObjectHideFlags: 0

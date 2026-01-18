@@ -18,11 +18,20 @@ public class PlayerFireHealth : MonoBehaviour
     [Tooltip("Canvas to show when player dies")]
     public GameObject failureCanvas;
     
+    [Header("Error Dialogue")]
+    [Tooltip("The dialogue lines to display on first fire obstacle hit.")]
+    public string[] fireObstacleDialogue;
+
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip errorSound;
+    
     [Header("Damage Settings")]
     [Tooltip("Cooldown between damage instances (prevents rapid damage)")]
     public float damageCooldown = 1f;
     
     private float lastDamageTime;
+    private bool hasPlayedFireObstacleDialogue = false;
     
     [Header("Visual Feedback")]
     [Tooltip("Color to flash when taking damage")]
@@ -58,8 +67,6 @@ public class PlayerFireHealth : MonoBehaviour
         {
             Debug.LogError("PlayerFireHealth: Health Image not assigned!");
         }
-        
-        Debug.Log("PlayerFireHealth initialized. Max Health: " + maxHealth);
     }
 
     void OnTriggerEnter(Collider other)
@@ -77,31 +84,25 @@ public class PlayerFireHealth : MonoBehaviour
         if (Time.time - lastDamageTime < damageCooldown)
             return;
 
-        // Check if we hit a FireTrigger
         FireTrigger fireTrigger = other.GetComponent<FireTrigger>();
         if (fireTrigger != null && fireTrigger.flameObj != null && fireTrigger.flameObj.onFire)
         {
-            Debug.Log("Hit FireTrigger for: " + fireTrigger.flameObj.gameObject.name);
             TakeDamage(fireTrigger.flameObj);
             return;
         }
 
-        // Check if we hit the FlammableObject directly
         FlammableObject flammable = other.GetComponent<FlammableObject>();
         if (flammable != null && flammable.onFire)
         {
-            Debug.Log("Hit FlammableObject: " + flammable.gameObject.name + " OnFire: " + flammable.onFire);
             TakeDamage(flammable);
             return;
         }
 
-        // Check parent for FlammableObject
         if (other.transform.parent != null)
         {
             FlammableObject parentFlammable = other.transform.parent.GetComponent<FlammableObject>();
             if (parentFlammable != null && parentFlammable.onFire)
             {
-                Debug.Log("Hit child of FlammableObject: " + parentFlammable.gameObject.name);
                 TakeDamage(parentFlammable);
                 return;
             }
@@ -115,6 +116,22 @@ public class PlayerFireHealth : MonoBehaviour
 
         currentHealth--;
         lastDamageTime = Time.time;
+        
+        if (ErrorTracker.Instance != null)
+            ErrorTracker.Instance.RecordEvacuationFireObstacleError();
+
+        if (audioSource != null && errorSound != null)
+            audioSource.PlayOneShot(errorSound);
+
+        if (!hasPlayedFireObstacleDialogue)
+        {
+            hasPlayedFireObstacleDialogue = true;
+            VRDialogueSystem dialogueSystem = FindObjectOfType<VRDialogueSystem>();
+            if (dialogueSystem != null && fireObstacleDialogue != null && fireObstacleDialogue.Length > 0)
+            {
+                dialogueSystem.StartDialog(fireObstacleDialogue);
+            }
+        }
         
         UpdateHealthDisplay();
         StartCoroutine(DamageFlash());
@@ -168,38 +185,17 @@ public class PlayerFireHealth : MonoBehaviour
     {
         if (!useHaptics)
             return;
-        
-        // Uncomment for XR Interaction Toolkit:
-        /*
-        UnityEngine.XR.InputDevice leftDevice;
-        UnityEngine.XR.InputDevice rightDevice;
-        
-        if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.LeftHand, out leftDevice))
-        {
-            leftDevice.SendHapticImpulse(0, hapticIntensity, hapticDuration);
-        }
-        if (UnityEngine.XR.InputDevices.GetDeviceAtXRNode(UnityEngine.XR.XRNode.RightHand, out rightDevice))
-        {
-            rightDevice.SendHapticImpulse(0, hapticIntensity, hapticDuration);
-        }
-        */
     }
 
     void OnPlayerDeath()
     {
-        Debug.Log("<color=red>PLAYER DIED FROM FIRE! Opening failure canvas and stopping time.</color>");
+        Debug.Log("<color=red>PLAYER DIED FROM FIRE!</color>");
         
-        // Stop time
         Time.timeScale = 0f;
         
-        // Show the assigned failure canvas
         if (failureCanvas != null)
         {
             failureCanvas.SetActive(true);
-        }
-        else
-        {
-            Debug.LogWarning("Failure canvas not assigned to PlayerFireHealth!");
         }
     }
 
@@ -208,14 +204,12 @@ public class PlayerFireHealth : MonoBehaviour
         currentHealth = maxHealth;
         UpdateHealthDisplay();
         healthImage.color = originalImageColor;
-        Debug.Log("Player health reset!");
     }
 
     public void Heal(int amount)
     {
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
         UpdateHealthDisplay();
-        Debug.Log($"Player healed! Health: {currentHealth}/{maxHealth}");
     }
 
     public int GetCurrentHealth()

@@ -741,6 +741,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueBox
       objectReference: {fileID: 0}
+    - target: {fileID: 5749740888527722038, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5749740888527722038, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5749740888527722038, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6402032355436464013, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: speechAudioSource
       value: 
@@ -793,6 +805,14 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2243276073627277798}
+    - target: {fileID: 8607038538147380267, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8607038538147380267, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1045,6 +1065,7 @@ Transform:
   - {fileID: 1901065334}
   - {fileID: 71580079}
   - {fileID: 1644027606}
+  - {fileID: 1744156442}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1113032072
@@ -1067,7 +1088,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1113032067}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6158dc665843d6498f0bfa8a8617d64, type: 3}
   m_Name: 
@@ -1440,6 +1461,110 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1001 &1659527690
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_Name
+      value: XR Device Simulator
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+--- !u!1 &1744156441
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1744156442}
+  - component: {fileID: 1744156443}
+  m_Layer: 0
+  m_Name: ErrorTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1744156442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744156441}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1113032068}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1744156443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744156441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f2867a602fa18419e7669d99099fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disposalErrors: 0
+  maintenanceErrors: 0
+  storageErrors: 0
 --- !u!1 &1901065333
 GameObject:
   m_ObjectHideFlags: 0
@@ -6430,7 +6555,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0b05b33c09df643409fbb0dad25ed9e9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a4a476eadc4474348881cd6570cb10d1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7139,7 +7264,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0b05b33c09df643409fbb0dad25ed9e9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a4a476eadc4474348881cd6570cb10d1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7477,6 +7602,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+      propertyPath: errorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
+    - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 5329925472940090969}
@@ -7515,6 +7644,22 @@ PrefabInstance:
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: isYesTheCorrectAnswer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+      propertyPath: taskErrorDialogue.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[0]
+      value: An expired extinguisher may fail during an emergency.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[1]
+      value: 'Regular serviceability checks '
+      objectReference: {fileID: 0}
+    - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[2]
+      value: ensure that fire protection equipment is ready
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskCompletionDialogue.Array.size
@@ -8152,9 +8297,33 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3675965850302881260, guid: 900a7b9583edd914db894778aa3f2cff, type: 3}
+      propertyPath: errorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
+    - target: {fileID: 3675965850302881260, guid: 900a7b9583edd914db894778aa3f2cff, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 5329925472940090969}
+    - target: {fileID: 3675965850302881260, guid: 900a7b9583edd914db894778aa3f2cff, type: 3}
+      propertyPath: taskErrorDialogue.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675965850302881260, guid: 900a7b9583edd914db894778aa3f2cff, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[0]
+      value: Chemical trash can be volatile or reactive
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675965850302881260, guid: 900a7b9583edd914db894778aa3f2cff, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[1]
+      value: improper disposal increases fire risk.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675965850302881260, guid: 900a7b9583edd914db894778aa3f2cff, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[2]
+      value: ' Ensure they are placed in the designated Yellow w/ Black Band  Trashcan'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3675965850302881260, guid: 900a7b9583edd914db894778aa3f2cff, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[3]
+      value: to prevent hazardous reactions.
+      objectReference: {fileID: 0}
     - target: {fileID: 5713260504478304848, guid: 900a7b9583edd914db894778aa3f2cff, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.916
@@ -8624,7 +8793,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2970713413493090064, guid: 35e76eec589ec2149b246e69bda43714, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3148698563466704850, guid: 35e76eec589ec2149b246e69bda43714, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8667,9 +8836,29 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5599157070200658929, guid: 35e76eec589ec2149b246e69bda43714, type: 3}
+      propertyPath: errorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
+    - target: {fileID: 5599157070200658929, guid: 35e76eec589ec2149b246e69bda43714, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 5329925472940090969}
+    - target: {fileID: 5599157070200658929, guid: 35e76eec589ec2149b246e69bda43714, type: 3}
+      propertyPath: taskErrorDialogue.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599157070200658929, guid: 35e76eec589ec2149b246e69bda43714, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[0]
+      value: Paper is highly flammable
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599157070200658929, guid: 35e76eec589ec2149b246e69bda43714, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[1]
+      value: Store all documents in the filing cabinet
+      objectReference: {fileID: 0}
+    - target: {fileID: 5599157070200658929, guid: 35e76eec589ec2149b246e69bda43714, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[2]
+      value: to keep the environment clear of potential fire loads.
+      objectReference: {fileID: 0}
     - target: {fileID: 9211203595280462145, guid: 35e76eec589ec2149b246e69bda43714, type: 3}
       propertyPath: popupManager
       value: 
@@ -10457,9 +10646,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 717893879}
     - target: {fileID: 8750927660838627274, guid: 4e914f7174e0fe245826178698e99794, type: 3}
+      propertyPath: errorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
+    - target: {fileID: 8750927660838627274, guid: 4e914f7174e0fe245826178698e99794, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 5329925472940090969}
+    - target: {fileID: 8750927660838627274, guid: 4e914f7174e0fe245826178698e99794, type: 3}
+      propertyPath: taskErrorDialogue.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8750927660838627274, guid: 4e914f7174e0fe245826178698e99794, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[0]
+      value: 'Improper storage presents a fire hazard. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 8750927660838627274, guid: 4e914f7174e0fe245826178698e99794, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[1]
+      value: Organize masks in boxes reduce loose flammable material.
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11649,9 +11854,29 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7900027310455678042, guid: 921cc256057e7ad489e46a1e60723001, type: 3}
+      propertyPath: errorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
+    - target: {fileID: 7900027310455678042, guid: 921cc256057e7ad489e46a1e60723001, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 5329925472940090969}
+    - target: {fileID: 7900027310455678042, guid: 921cc256057e7ad489e46a1e60723001, type: 3}
+      propertyPath: taskErrorDialogue.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7900027310455678042, guid: 921cc256057e7ad489e46a1e60723001, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[0]
+      value: 'Sharp wastes must be secured in the Red bin. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 7900027310455678042, guid: 921cc256057e7ad489e46a1e60723001, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[1]
+      value: Proper containment prevents punctures to waste bags
+      objectReference: {fileID: 0}
+    - target: {fileID: 7900027310455678042, guid: 921cc256057e7ad489e46a1e60723001, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[2]
+      value: 'which could lead to chemical leaks and fire hazards. '
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13644,7 +13869,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0b05b33c09df643409fbb0dad25ed9e9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a4a476eadc4474348881cd6570cb10d1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13939,6 +14164,10 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2849985074940863052, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: errorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
+    - target: {fileID: 2849985074940863052, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 5329925472940090969}
@@ -13954,6 +14183,30 @@ PrefabInstance:
       propertyPath: magnifyingGlassIcon
       value: 
       objectReference: {fileID: 2925773371957866777}
+    - target: {fileID: 2849985074940863052, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: taskErrorDialogue.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2849985074940863052, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[0]
+      value: Cracked beakers can shatter when exposed to heat
+      objectReference: {fileID: 0}
+    - target: {fileID: 2849985074940863052, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[1]
+      value: spilling flammable or reactive contents.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2849985074940863052, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[2]
+      value: 'Regular inspection is critical '
+      objectReference: {fileID: 0}
+    - target: {fileID: 2849985074940863052, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[3]
+      value: to prevent laboratory fires.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3994310791346735890, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: errorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
     - target: {fileID: 3994310791346735890, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
       propertyPath: audioSource
       value: 
@@ -13970,6 +14223,26 @@ PrefabInstance:
       propertyPath: magnifyingGlassIcon
       value: 
       objectReference: {fileID: 2925773371957866777}
+    - target: {fileID: 3994310791346735890, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: taskErrorDialogue.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3994310791346735890, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[0]
+      value: Cracked beakers can shatter when exposed to heat
+      objectReference: {fileID: 0}
+    - target: {fileID: 3994310791346735890, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[1]
+      value: spilling flammable or reactive contents.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3994310791346735890, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[2]
+      value: Regular inspection is critical
+      objectReference: {fileID: 0}
+    - target: {fileID: 3994310791346735890, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[3]
+      value: 'to prevent laboratory fires. '
+      objectReference: {fileID: 0}
     - target: {fileID: 5293413233763613120, guid: c7903068685ca0c46a9c9fefe4f0d3e3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.8897974
@@ -14177,12 +14450,32 @@ PrefabInstance:
     m_TransformParent: {fileID: 6604313}
     m_Modifications:
     - target: {fileID: 233047086883666176, guid: ed41c4040ff2af642a81a67c4a73dd68, type: 3}
+      propertyPath: errorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
+    - target: {fileID: 233047086883666176, guid: ed41c4040ff2af642a81a67c4a73dd68, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 5329925472940090969}
     - target: {fileID: 233047086883666176, guid: ed41c4040ff2af642a81a67c4a73dd68, type: 3}
       propertyPath: taskDescription
       value: Throw away the used gloves
+      objectReference: {fileID: 0}
+    - target: {fileID: 233047086883666176, guid: ed41c4040ff2af642a81a67c4a73dd68, type: 3}
+      propertyPath: taskErrorDialogue.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 233047086883666176, guid: ed41c4040ff2af642a81a67c4a73dd68, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[0]
+      value: 'Used gloves are flammable and may carry infectious residues. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 233047086883666176, guid: ed41c4040ff2af642a81a67c4a73dd68, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[1]
+      value: 'Dispose of them in the Yellow Trashcan '
+      objectReference: {fileID: 0}
+    - target: {fileID: 233047086883666176, guid: ed41c4040ff2af642a81a67c4a73dd68, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[2]
+      value: 'o maintain a clear, fire-safe workspace. '
       objectReference: {fileID: 0}
     - target: {fileID: 233047086883666176, guid: ed41c4040ff2af642a81a67c4a73dd68, type: 3}
       propertyPath: taskCompletionDialogue.Array.size
@@ -14725,16 +15018,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2184900982935911202, guid: bbedb994c16533845b65edae0e227307, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3422457952063957748, guid: bbedb994c16533845b65edae0e227307, type: 3}
       propertyPath: tutorialIndicatorTarget
       value: 
       objectReference: {fileID: 1467820727}
     - target: {fileID: 4077524751004088819, guid: bbedb994c16533845b65edae0e227307, type: 3}
+      propertyPath: errorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
+    - target: {fileID: 4077524751004088819, guid: bbedb994c16533845b65edae0e227307, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 5329925472940090969}
+    - target: {fileID: 4077524751004088819, guid: bbedb994c16533845b65edae0e227307, type: 3}
+      propertyPath: taskErrorDialogue.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4077524751004088819, guid: bbedb994c16533845b65edae0e227307, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[0]
+      value: 'Improper storage presents a fire hazard. '
+      objectReference: {fileID: 0}
+    - target: {fileID: 4077524751004088819, guid: bbedb994c16533845b65edae0e227307, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[1]
+      value: 'Organize  test tubes in racks to reduce loose flammable material. '
+      objectReference: {fileID: 0}
     - target: {fileID: 6154571055237574367, guid: bbedb994c16533845b65edae0e227307, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.8897974
@@ -15181,9 +15490,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 662609026}
     - target: {fileID: 3844453523848452519, guid: 79e746d997cca1b448f56e4f201365ef, type: 3}
+      propertyPath: errorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
+    - target: {fileID: 3844453523848452519, guid: 79e746d997cca1b448f56e4f201365ef, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 5329925472940090969}
+    - target: {fileID: 3844453523848452519, guid: 79e746d997cca1b448f56e4f201365ef, type: 3}
+      propertyPath: taskErrorDialogue.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3844453523848452519, guid: 79e746d997cca1b448f56e4f201365ef, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[0]
+      value: Clipboards are non-biodegradable fuel sources
+      objectReference: {fileID: 0}
+    - target: {fileID: 3844453523848452519, guid: 79e746d997cca1b448f56e4f201365ef, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[1]
+      value: Dispose of them in the Black Trashcan
+      objectReference: {fileID: 0}
+    - target: {fileID: 3844453523848452519, guid: 79e746d997cca1b448f56e4f201365ef, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[2]
+      value: o prevent unnecessary fuel buildup in high-risk areas.
+      objectReference: {fileID: 0}
     - target: {fileID: 3844453523848452519, guid: 79e746d997cca1b448f56e4f201365ef, type: 3}
       propertyPath: taskCompletionDialogue.Array.size
       value: 3
@@ -15544,7 +15873,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0b05b33c09df643409fbb0dad25ed9e9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a4a476eadc4474348881cd6570cb10d1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -16982,3 +17311,4 @@ SceneRoots:
   - {fileID: 1113032068}
   - {fileID: 314236168}
   - {fileID: 926649565}
+  - {fileID: 1659527690}

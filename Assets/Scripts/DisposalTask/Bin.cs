@@ -1,10 +1,8 @@
-
 using UnityEngine;
 using System.Collections;
 
 public class Bin : MonoBehaviour
 {
-    // Public enum to define the types of bins, must match the TrashItem enum
     public enum BinType
     {
         Red,
@@ -26,17 +24,21 @@ public class Bin : MonoBehaviour
             if ((int)trashItem.trashType == (int)binType)
             {
                 popupManager.ShowMessage("Correct! Well done.");
-
-                // Notify the TrashItem that it was correctly disposed of.
                 trashItem.OnCorrectlyDisposed();
-
-                // Destroy the trash object
                 Destroy(other.gameObject);
             }
             else
             {
                 popupManager.ShowMessage("Wrong bin! That doesn't go there.");
-                 ScoreTracker.Instance.OnTaskError();
+                ScoreTracker.Instance.OnTaskError();
+
+                // Track the error
+                if (ErrorTracker.Instance != null)
+                    ErrorTracker.Instance.RecordDisposalError();
+
+                // Call the TRASH ITEM's parent task controller, not the bin's
+                if (trashItem.parentTaskController != null)
+                    trashItem.parentTaskController.OnDisposalError(trashItem.trashType, binType);
             }
         }
     }
