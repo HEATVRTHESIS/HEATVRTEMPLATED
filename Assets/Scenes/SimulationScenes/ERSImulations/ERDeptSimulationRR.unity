@@ -553,8 +553,10 @@ MonoBehaviour:
   taskName: Mask Storage
   taskDescription: Place the Masks in the box
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 0}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []
@@ -1626,8 +1628,10 @@ MonoBehaviour:
   taskName: "MgSO\u2084 Maint"
   taskDescription: "Check the MgSO\u2084 bottle"
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 0}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []
@@ -3052,8 +3056,10 @@ MonoBehaviour:
   taskName: Document Storage
   taskDescription: Store the Documents in the filing cabinet
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 0}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []
@@ -4018,8 +4024,10 @@ MonoBehaviour:
   taskName: IV Disposal
   taskDescription: Throw away the used IV Bags
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 0}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   totalItems: 0
   OnProgressUpdated:
     m_PersistentCalls:
@@ -4308,6 +4316,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1616236190}
   - {fileID: 6553051742120217990}
   - {fileID: 698831974}
   - {fileID: 1025889403}
@@ -4489,8 +4498,10 @@ MonoBehaviour:
   taskName: MedicineDisposal
   taskDescription: Throw away the medicine boxes
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 0}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   totalItems: 0
   OnProgressUpdated:
     m_PersistentCalls:
@@ -4778,8 +4789,10 @@ MonoBehaviour:
   taskName: Dispose Rubber tubes
   taskDescription: DIspose the old rubber tubes
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 0}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   totalItems: 0
   OnProgressUpdated:
     m_PersistentCalls:
@@ -4946,8 +4959,10 @@ MonoBehaviour:
   taskName: Disposal
   taskDescription: Throw away the cotton swab
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 0}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   totalItems: 0
   OnProgressUpdated:
     m_PersistentCalls:
@@ -5565,6 +5580,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1616236189
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1616236190}
+  - component: {fileID: 1616236191}
+  m_Layer: 0
+  m_Name: ErrorTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1616236190
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616236189}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1113032068}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1616236191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616236189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f2867a602fa18419e7669d99099fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disposalErrors: 0
+  maintenanceErrors: 0
+  storageErrors: 0
+  fireNPCErrors: 0
+  fireLeverErrors: 0
+  fireSmokeDoorErrors: 0
+  fireExtinguisherErrors: 0
+  fireWrongExtinguisherErrors: 0
+  evacuationTimeExpiredErrors: 0
+  evacuationFireObstacleErrors: 0
+  evacuationOxygenErrors: 0
+  evacuationNPCLeftBehindErrors: 0
+  evacuationNPCNotRescuedErrors: 0
+  evacuationNoWetClothErrors: 0
 --- !u!1 &1634505017
 GameObject:
   m_ObjectHideFlags: 0
@@ -5614,8 +5687,10 @@ MonoBehaviour:
   taskName: Alcohol Storage
   taskDescription: Store the bottles of alcohol in the shelves
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 0}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []
@@ -6695,8 +6770,10 @@ MonoBehaviour:
   taskName: Medicine Box Storage
   taskDescription: Store the Medicine Boxes in the shelves
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 0}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []
@@ -6770,8 +6847,10 @@ MonoBehaviour:
   taskName: ECG Cord Maint
   taskDescription: Check the ECG machine cord for damages
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 0}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []

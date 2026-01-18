@@ -597,6 +597,64 @@ MonoBehaviour:
   distanceFromObject: 0.18
   ttsSpeaker: {fileID: 743513129}
   audioSource: {fileID: 5329925472940090969}
+--- !u!1 &236588946
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 236588947}
+  - component: {fileID: 236588948}
+  m_Layer: 0
+  m_Name: ErrorTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &236588947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236588946}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1113032068}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &236588948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236588946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f2867a602fa18419e7669d99099fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disposalErrors: 0
+  maintenanceErrors: 0
+  storageErrors: 0
+  fireNPCErrors: 0
+  fireLeverErrors: 0
+  fireSmokeDoorErrors: 0
+  fireExtinguisherErrors: 0
+  fireWrongExtinguisherErrors: 0
+  evacuationTimeExpiredErrors: 0
+  evacuationFireObstacleErrors: 0
+  evacuationOxygenErrors: 0
+  evacuationNPCLeftBehindErrors: 0
+  evacuationNPCNotRescuedErrors: 0
+  evacuationNoWetClothErrors: 0
 --- !u!1 &301696320
 GameObject:
   m_ObjectHideFlags: 0
@@ -1028,8 +1086,10 @@ MonoBehaviour:
   taskName: Ref Cord
   taskDescription: Check the Refridgerator cord for damages
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []
@@ -1256,8 +1316,10 @@ MonoBehaviour:
   taskName: Burner
   taskDescription: Check if the Burner is clean
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []
@@ -2371,8 +2433,10 @@ MonoBehaviour:
   taskName: Cooking Oil Storage
   taskDescription: Place the Cooking Oil on the shelf
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []
@@ -3235,6 +3299,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 236588947}
   - {fileID: 6553051742120217990}
   - {fileID: 698831974}
   - {fileID: 1025889403}
@@ -3475,8 +3540,10 @@ MonoBehaviour:
   taskName: lpghose
   taskDescription: Check if the LPG hose is still good
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []
@@ -24644,8 +24711,10 @@ MonoBehaviour:
   taskName: Disposal
   taskDescription: Throw away the Alcohol-soaked rags
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   totalItems: 0
   OnProgressUpdated:
     m_PersistentCalls:
@@ -28939,8 +29008,10 @@ MonoBehaviour:
   taskName: Dispose Rubber tubes
   taskDescription: Dispose this
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   totalItems: 0
   OnProgressUpdated:
     m_PersistentCalls:
@@ -43588,8 +43659,10 @@ MonoBehaviour:
   taskName: Cleaning Rags
   taskDescription: Place the rags in the box
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []
@@ -64718,8 +64791,10 @@ MonoBehaviour:
   taskName: NonBioDisposal
   taskDescription: Throw away the clipboards
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   totalItems: 0
   OnProgressUpdated:
     m_PersistentCalls:
@@ -72262,8 +72337,10 @@ MonoBehaviour:
   taskName: Biohazard Waste
   taskDescription: Throw away the LPG Hose and Alcohol
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   totalItems: 0
   OnProgressUpdated:
     m_PersistentCalls:
@@ -87619,8 +87696,10 @@ MonoBehaviour:
   taskName: Document Storage
   taskDescription: Store the Documents in the filing cabinet
   taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []

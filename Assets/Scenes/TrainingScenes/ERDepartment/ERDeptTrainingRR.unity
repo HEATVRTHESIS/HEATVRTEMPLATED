@@ -826,8 +826,12 @@ MonoBehaviour:
   taskDescription: Check the ECG machine cord for damages
   taskCompletionDialogue:
   - Faulty wiring can spark nearby objects on fire
+  taskErrorDialogue:
+  - 'Damaged cords may cause electrical fires. '
+  - 'Inspect regularly and report defects immediately. '
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []
@@ -1605,8 +1609,11 @@ MonoBehaviour:
   taskCompletionDialogue:
   - 'Arrange remaining medication boxes neatly in closed shelves '
   - '(not near direct sunlight). '
+  taskErrorDialogue:
+  - 'Store securely and away from ignition sources. '
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []
@@ -1689,8 +1696,12 @@ MonoBehaviour:
   taskCompletionDialogue:
   - 'Store in a cool, ventilated cabinet away from electrical '
   - outlets and ignition sources.
+  taskErrorDialogue:
+  - Alcohol is highly flammable.
+  - 'Store securely and away from ignition sources. '
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 0}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []
@@ -2714,6 +2725,7 @@ Transform:
   - {fileID: 1323707638}
   - {fileID: 436312805}
   - {fileID: 669112629}
+  - {fileID: 2035205023}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1113032072
@@ -3917,6 +3929,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2035205022
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2035205023}
+  - component: {fileID: 2035205024}
+  m_Layer: 0
+  m_Name: ErrorTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2035205023
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035205022}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1113032068}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2035205024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035205022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7f2867a602fa18419e7669d99099fa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disposalErrors: 0
+  maintenanceErrors: 0
+  storageErrors: 0
+  fireNPCErrors: 0
+  fireLeverErrors: 0
+  fireSmokeDoorErrors: 0
+  fireExtinguisherErrors: 0
+  fireWrongExtinguisherErrors: 0
+  evacuationTimeExpiredErrors: 0
+  evacuationFireObstacleErrors: 0
+  evacuationOxygenErrors: 0
+  evacuationNPCLeftBehindErrors: 0
+  evacuationNPCNotRescuedErrors: 0
+  evacuationNoWetClothErrors: 0
 --- !u!1 &2107047443
 GameObject:
   m_ObjectHideFlags: 0
@@ -3952,8 +4022,12 @@ MonoBehaviour:
   - "Exposed MgSO\u2084 is bad as this can"
   - make fires worse even if itself
   - is not actually flammable
+  taskErrorDialogue:
+  - 'Improper storage may pose fire risk. '
+  - 'Inspect containers and store properly. '
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []
@@ -8170,8 +8244,13 @@ MonoBehaviour:
   taskCompletionDialogue:
   - Used cotton swabs may still contain
   - traces of alcohol that may lead to possible fires
+  taskErrorDialogue:
+  - Cotton swabs are flammable and may contain chemicals or bodily fluids.
+  - Dispose of them immediately in the designated medical waste bin
+  - 'to reduce fire and contamination risks. '
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   totalItems: 0
   OnProgressUpdated:
     m_PersistentCalls:
@@ -9628,8 +9707,13 @@ MonoBehaviour:
   - Old rubber tubes can cause leaks
   - which can lead to nearby short circuits
   - or fuel to a fire source nearby
+  taskErrorDialogue:
+  - Rubber tubes are combustible and should be disposed
+  - n the proper biohazard or medical waste container
+  - to prevent fire hazards and infection risks.
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   totalItems: 0
   OnProgressUpdated:
     m_PersistentCalls:
@@ -10553,6 +10637,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+      propertyPath: errorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
+    - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 5329925472940090969}
@@ -10587,6 +10675,22 @@ PrefabInstance:
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: isYesTheCorrectAnswer
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+      propertyPath: taskErrorDialogue.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[0]
+      value: An expired extinguisher may fail during an emergency.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[1]
+      value: 'Regular serviceability checks '
+      objectReference: {fileID: 0}
+    - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[2]
+      value: ensure that fire protection equipment is ready
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskCompletionDialogue.Array.size
@@ -12588,8 +12692,12 @@ MonoBehaviour:
   taskCompletionDialogue:
   - Storing excess supplies in safe spaces
   - Can help avoid unecessary items being at risk of fire
+  taskErrorDialogue:
+  - 'Improper storage presents a fire hazard. '
+  - Organize masks in boxes reduce loose flammable material.
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []
@@ -16270,8 +16378,13 @@ MonoBehaviour:
   - for disposal of old expired medications
   - The boxes or raw materials may be a fuel source
   - for a potential fire
+  taskErrorDialogue:
+  - 'Medicine boxes are made of flammable materials. '
+  - 'Dispose of them in designated waste bins away from ignition '
+  - 'sources to prevent potential fire hazards. '
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   totalItems: 0
   OnProgressUpdated:
     m_PersistentCalls:
@@ -17803,8 +17916,13 @@ MonoBehaviour:
   - Used IV bags can cause a short circuit
   - to nearby electrical equipment
   - Immediately dispose to reduce the risk
+  taskErrorDialogue:
+  - IV bottles and bags may contain flammable residues
+  - Dispose of them in the proper medical waste containers
+  - 'to ensure safe handling and fire prevention. '
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   totalItems: 0
   OnProgressUpdated:
     m_PersistentCalls:
@@ -20368,8 +20486,12 @@ MonoBehaviour:
   taskCompletionDialogue:
   - Paper documents are not just important to store for safe keeping
   - But also to prevent fire starters
+  taskErrorDialogue:
+  - Paper materials are highly flammable.
+  - 'Store properly to reduce fire risk. '
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   OnProgressUpdated:
     m_PersistentCalls:
       m_Calls: []

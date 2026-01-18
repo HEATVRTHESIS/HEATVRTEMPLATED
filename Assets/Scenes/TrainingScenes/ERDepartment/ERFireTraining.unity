@@ -1224,9 +1224,37 @@ PrefabInstance:
     m_TransformParent: {fileID: 1589487302}
     m_Modifications:
     - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: errorSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
+    - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 5373646681556592961}
+    - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: popupManager
+      value: 
+      objectReference: {fileID: 1557387017}
+    - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
       propertyPath: successMonitor
       value: 
       objectReference: {fileID: 1867228382}
+    - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: wrongExtinguisherSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
+    - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: taskErrorDialogue.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[0]
+      value: Fire extinguishers control small fires.
+      objectReference: {fileID: 0}
+    - target: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: taskErrorDialogue.Array.data[1]
+      value: 'Use immediately if safe to do so. '
+      objectReference: {fileID: 0}
     - target: {fileID: 6176834025734505685, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
       propertyPath: m_Name
       value: FireExtinguisherFixedHose
@@ -2362,6 +2390,10 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   targetObject: {fileID: 826505476}
+  taskErrorDialogue:
+  - Activating the alarm alerts occupants
+  - 'and emergency responders. '
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   popupManager: {fileID: 1557387017}
 --- !u!114 &1109092742
 MonoBehaviour:
@@ -13829,6 +13861,9 @@ MonoBehaviour:
         m_CallState: 2
   targetObject: {fileID: 3210234054247406529}
   requiredItems: 2
+  taskErrorDialogue:
+  - Fire shutters help contain fire and smoke spread.
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   popupManager: {fileID: 1557387017}
 --- !u!114 &6684058335795942942
 MonoBehaviour:
@@ -16301,6 +16336,10 @@ MonoBehaviour:
   evacuationPoint: {fileID: 0}
   targetObject: {fileID: 150923306049703589}
   isOption1Correct: 1
+  taskErrorDialogue:
+  - Ensure that all personnel and patients
+  - 'in the area are evacuated '
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   popupManager: {fileID: 1557387017}
   talkAction:
     m_UseReference: 0
