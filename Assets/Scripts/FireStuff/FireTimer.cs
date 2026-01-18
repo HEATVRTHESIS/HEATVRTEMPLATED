@@ -1,40 +1,32 @@
 using UnityEngine;
 using TMPro;
 using System;
+using System.Collections;
 
-/// <summary>
-/// Countdown timer for fire training scenarios.
-/// Counts down from 3 minutes and triggers completion when time expires.
-/// </summary>
 public class FireTimer : MonoBehaviour
 {
     [Header("Timer Settings")]
-    [SerializeField] private float totalTime = 180f; // 3 minutes in seconds
+    [SerializeField] private float totalTime = 180f;
     
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI timerDisplay;
     
     [Header("Visual Feedback")]
     [SerializeField] private Color normalColor = Color.white;
-    [SerializeField] private Color warningColor = Color.yellow; // Last 30 seconds
-    [SerializeField] private Color criticalColor = Color.red;   // Last 10 seconds
+    [SerializeField] private Color warningColor = Color.yellow;
+    [SerializeField] private Color criticalColor = Color.red;
     
-    // Timer state
     private float currentTime;
     private bool isRunning = false;
     private bool isPaused = false;
     private bool hasExpired = false;
     
-    // Events
     public event Action OnTimerExpired;
-    public event Action<float> OnTimerTick; // Passes remaining time
+    public event Action<float> OnTimerTick;
     
     void Start()
     {
-        // Initialize timer
         ResetTimer();
-        
-        // Start the timer automatically
         StartTimer();
     }
     
@@ -42,16 +34,10 @@ public class FireTimer : MonoBehaviour
     {
         if (isRunning && !isPaused && !hasExpired)
         {
-            // Update timer
             currentTime -= Time.deltaTime;
-            
-            // Trigger tick event
             OnTimerTick?.Invoke(currentTime);
-            
-            // Update display
             UpdateTimerDisplay();
             
-            // Check for expiration
             if (currentTime <= 0f)
             {
                 TimerExpired();
@@ -59,53 +45,34 @@ public class FireTimer : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Start the timer
-    /// </summary>
     public void StartTimer()
     {
         if (!hasExpired)
         {
             isRunning = true;
             isPaused = false;
-            Debug.Log($"Fire timer started: {FormatTime(currentTime)}");
         }
     }
     
-    /// <summary>
-    /// Pause the timer
-    /// </summary>
     public void PauseTimer()
     {
         isPaused = true;
-        Debug.Log($"Fire timer paused at: {FormatTime(currentTime)}");
     }
     
-    /// <summary>
-    /// Resume the timer
-    /// </summary>
     public void ResumeTimer()
     {
         if (!hasExpired)
         {
             isPaused = false;
-            Debug.Log($"Fire timer resumed at: {FormatTime(currentTime)}");
         }
     }
     
-    /// <summary>
-    /// Stop the timer completely
-    /// </summary>
     public void StopTimer()
     {
         isRunning = false;
         isPaused = false;
-        Debug.Log("Fire timer stopped");
     }
     
-    /// <summary>
-    /// Reset the timer to full time
-    /// </summary>
     public void ResetTimer()
     {
         currentTime = totalTime;
@@ -113,25 +80,17 @@ public class FireTimer : MonoBehaviour
         isRunning = false;
         isPaused = false;
         UpdateTimerDisplay();
-        Debug.Log($"Fire timer reset to: {FormatTime(currentTime)}");
     }
     
-    /// <summary>
-    /// Add time to the current timer (bonus time)
-    /// </summary>
     public void AddTime(float seconds)
     {
         if (!hasExpired)
         {
             currentTime += seconds;
-            Debug.Log($"Added {seconds}s to timer. New time: {FormatTime(currentTime)}");
             UpdateTimerDisplay();
         }
     }
     
-    /// <summary>
-    /// Remove time from the current timer (penalty time)
-    /// </summary>
     public void RemoveTime(float seconds)
     {
         if (!hasExpired)
@@ -143,15 +102,11 @@ public class FireTimer : MonoBehaviour
             }
             else
             {
-                Debug.Log($"Removed {seconds}s from timer. New time: {FormatTime(currentTime)}");
                 UpdateTimerDisplay();
             }
         }
     }
     
-    /// <summary>
-    /// Called when timer reaches zero
-    /// </summary>
     private void TimerExpired()
     {
         currentTime = 0f;
@@ -160,152 +115,123 @@ public class FireTimer : MonoBehaviour
         
         UpdateTimerDisplay();
         
-        Debug.Log("Fire timer expired!");
+        // Check incomplete tasks and trigger error dialogues
+        StartCoroutine(TriggerIncompleteTaskDialogues());
         
-        // Trigger expiration event
         OnTimerExpired?.Invoke();
     }
-    
+
     /// <summary>
-    /// Update the timer display UI
+    /// Triggers error dialogues for incomplete tasks sequentially with delays
     /// </summary>
+    private IEnumerator TriggerIncompleteTaskDialogues()
+    {
+        // Find all incomplete fire tasks
+        PullDownTrigger[] levers = FindObjectsOfType<PullDownTrigger>();
+        SmokeDoorLeverController[] smokeDoors = FindObjectsOfType<SmokeDoorLeverController>();
+        FireExtinguisherController[] extinguishers = FindObjectsOfType<FireExtinguisherController>();
+
+        // Wait a moment before starting dialogues
+        yield return new WaitForSeconds(1f);
+
+        // Track if VRDialogueSystem is available
+        VRDialogueSystem dialogueSystem = FindObjectOfType<VRDialogueSystem>();
+        if (dialogueSystem == null)
+        {
+            Debug.LogWarning("VRDialogueSystem not found - error dialogues cannot play");
+            yield break;
+        }
+
+        // Trigger fire alarm lever error dialogues
+        foreach (var lever in levers)
+        {
+            if (!lever.IsTaskCompleted())
+            {
+                lever.OnTimerExpiredIncomplete();
+                yield return new WaitForSeconds(3f);
+            }
+        }
+
+        // Trigger smoke door lever error dialogues
+        foreach (var smokeDoor in smokeDoors)
+        {
+            if (!smokeDoor.IsTaskCompleted())
+            {
+                smokeDoor.OnTimerExpiredIncomplete();
+                yield return new WaitForSeconds(3f);
+            }
+        }
+
+        // Trigger extinguisher error dialogues
+        foreach (var extinguisher in extinguishers)
+        {
+            if (!extinguisher.IsTaskCompleted())
+            {
+                extinguisher.OnTimerExpiredIncomplete();
+                yield return new WaitForSeconds(3f);
+            }
+        }
+    }
+    
     private void UpdateTimerDisplay()
     {
         if (timerDisplay != null)
         {
-            // Format the time
             string timeText = FormatTime(currentTime);
             timerDisplay.text = timeText;
-            
-            // Update color based on remaining time
             UpdateTimerColor();
         }
     }
     
-    /// <summary>
-    /// Update timer color based on remaining time
-    /// </summary>
     private void UpdateTimerColor()
     {
         if (timerDisplay != null)
         {
-            if (currentTime <= 10f) // Critical - last 10 seconds
+            if (currentTime <= 10f)
             {
                 timerDisplay.color = criticalColor;
             }
-            else if (currentTime <= 30f) // Warning - last 30 seconds
+            else if (currentTime <= 30f)
             {
                 timerDisplay.color = warningColor;
             }
-            else // Normal
+            else
             {
                 timerDisplay.color = normalColor;
             }
         }
     }
     
-    /// <summary>
-    /// Format time as MM:SS
-    /// </summary>
     private string FormatTime(float seconds)
     {
-        // Ensure we don't show negative time
         seconds = Mathf.Max(0f, seconds);
-        
         int minutes = Mathf.FloorToInt(seconds / 60f);
         int secs = Mathf.FloorToInt(seconds % 60f);
         return $"{minutes:00}:{secs:00}";
     }
     
-    // Public getters
-    
-    /// <summary>
-    /// Get remaining time in seconds
-    /// </summary>
-    public float GetTimeRemaining()
-    {
-        return Mathf.Max(0f, currentTime);
-    }
-    
-    /// <summary>
-    /// Get elapsed time in seconds
-    /// </summary>
-    public float GetTimeElapsed()
-    {
-        return totalTime - currentTime;
-    }
-    
-    /// <summary>
-    /// Get progress as percentage (0-1)
-    /// </summary>
-    public float GetProgress()
-    {
-        return (totalTime - currentTime) / totalTime;
-    }
-    
-    /// <summary>
-    /// Check if timer is currently running
-    /// </summary>
-    public bool IsRunning()
-    {
-        return isRunning && !isPaused;
-    }
-    
-    /// <summary>
-    /// Check if timer is paused
-    /// </summary>
-    public bool IsPaused()
-    {
-        return isPaused;
-    }
-    
-    /// <summary>
-    /// Check if timer has expired
-    /// </summary>
-    public bool HasExpired()
-    {
-        return hasExpired;
-    }
-    
-    /// <summary>
-    /// Get formatted time string for display
-    /// </summary>
-    public string GetFormattedTime()
-    {
-        return FormatTime(currentTime);
-    }
-    
-    // Context menu methods for testing
+    public float GetTimeRemaining() => Mathf.Max(0f, currentTime);
+    public float GetTimeElapsed() => totalTime - currentTime;
+    public float GetProgress() => (totalTime - currentTime) / totalTime;
+    public bool IsRunning() => isRunning && !isPaused;
+    public bool IsPaused() => isPaused;
+    public bool HasExpired() => hasExpired;
+    public string GetFormattedTime() => FormatTime(currentTime);
     
     [ContextMenu("Start Timer")]
-    private void TestStartTimer()
-    {
-        StartTimer();
-    }
+    private void TestStartTimer() => StartTimer();
     
     [ContextMenu("Pause Timer")]
-    private void TestPauseTimer()
-    {
-        PauseTimer();
-    }
+    private void TestPauseTimer() => PauseTimer();
     
     [ContextMenu("Resume Timer")]
-    private void TestResumeTimer()
-    {
-        ResumeTimer();
-    }
+    private void TestResumeTimer() => ResumeTimer();
     
     [ContextMenu("Add 30 seconds")]
-    private void TestAddTime()
-    {
-        AddTime(30f);
-    }
+    private void TestAddTime() => AddTime(30f);
     
     [ContextMenu("Remove 30 seconds")]
-    private void TestRemoveTime()
-    {
-        RemoveTime(30f);
-    }
+    private void TestRemoveTime() => RemoveTime(30f);
     
     [ContextMenu("Force Expire")]
     private void TestExpireTimer()
@@ -315,33 +241,23 @@ public class FireTimer : MonoBehaviour
     }
     
     [ContextMenu("Reset Timer")]
-    private void TestResetTimer()
-    {
-        ResetTimer();
-    }
+    private void TestResetTimer() => ResetTimer();
     
-    // Visual debugging
     void OnDrawGizmosSelected()
     {
-        // Draw a visual representation of timer progress
         Vector3 center = transform.position;
         float radius = 2f;
         
-        // Draw full circle
         Gizmos.color = Color.gray;
         Gizmos.DrawWireSphere(center, radius);
         
-        // Draw progress arc
         if (totalTime > 0)
         {
             float progress = GetProgress();
             Gizmos.color = hasExpired ? Color.red : (currentTime <= 30f ? Color.yellow : Color.green);
-            
-            // Simple visual feedback - could be enhanced with actual arc drawing
             Gizmos.DrawWireSphere(center, radius * progress);
         }
         
-        // Show timer state
         Gizmos.color = isRunning ? (isPaused ? Color.yellow : Color.green) : Color.red;
         Gizmos.DrawWireCube(center + Vector3.up * 3f, Vector3.one * 0.5f);
     }

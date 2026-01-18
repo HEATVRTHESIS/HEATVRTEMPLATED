@@ -5,66 +5,53 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 
-/// <summary>
-/// Manages the highlighting, progress, and question-answering for a specific maintenance task.
-/// Attach this script to the root of your prefab for maintenance tasks.
-/// </summary>
 public class MaintenanceTaskController : MonoBehaviour
 {
-    // Public fields to define the task
     public string taskName;
     public string taskDescription;
 
-    // A public array for the dialogue lines to display on task completion.
-    // This allows you to set the dialogue directly in the Unity Inspector.
     [Tooltip("The dialogue lines to display when this task is completed.")]
     public string[] taskCompletionDialogue;
     
-    // Public fields for the success sound clip.
+    [Header("Error Dialogue")]
+    [Tooltip("The dialogue lines to display on first error.")]
+    public string[] taskErrorDialogue;
+    
     [Header("Audio")]
-    [Tooltip("The AudioSource component that will play the sound.")]
     public AudioSource audioSource;
-    [Tooltip("The audio clip to play when the task is completed.")]
     public AudioClip successSound;
+    public AudioClip errorSound;
 
-    // Events to notify other scripts of progress and completion
     public UnityEvent<int, int> OnProgressUpdated;
     public UnityEvent OnTaskCompleted;
 
-    // A private counter for completed items (always 1 for maintenance tasks)
     private int completedItems = 0;
-    
-    // A private total items (always 1 for maintenance tasks)
     private int totalItems = 1;
     private bool isTaskCompleted = false;
-    private bool isHovering = false; // Track if object is being hovered
+    private bool isHovering = false;
+    private bool hasPlayedErrorDialogue = false;
 
-    // Maintenance task-specific fields
     [Header("Maintenance Task Fields")]
     public string questionText;
     public Sprite yesAnswerImage;
     public Sprite noAnswerImage;
     public bool isYesTheCorrectAnswer;
-    public HighlightableObject targetObject; // The object to look at (e.g., the fire extinguisher)
-    public GameObject targetGameObject; // Backup GameObject reference that won't be destroyed
+    public HighlightableObject targetObject;
+    public GameObject targetGameObject;
     public GameObject magnifyingGlassIcon;
 
-    // A reference to the PopupManager, consistent with your Bin.cs
     public PopupManager popupManager;
 
-    // Add a public InputAction reference for the button you want to map.
     [Header("Input Mapping")]
     public InputActionProperty playerAction;
 
     void Awake()
     {
-        // Initially hide the magnifying glass icon
         if (magnifyingGlassIcon != null)
         {
             magnifyingGlassIcon.SetActive(false);
         }
         
-        // If targetGameObject is not set but targetObject is, get the GameObject from it
         if (targetGameObject == null && targetObject != null)
         {
             targetGameObject = targetObject.gameObject;
@@ -73,35 +60,27 @@ public class MaintenanceTaskController : MonoBehaviour
 
     void OnEnable()
     {
-        // Subscribe to the action's 'performed' event.
-        // This method will be called whenever the button is pressed.
         playerAction.action.performed += OnPlayerActionPerformed;
         playerAction.action.Enable();
     }
     
     void OnDisable()
     {
-        // Unsubscribe to prevent memory leaks and unexpected behavior.
         playerAction.action.performed -= OnPlayerActionPerformed;
         playerAction.action.Disable();
     }
 
-    /// <summary>
-    /// This is the entry point for the task, called by the TaskListManager.
-    /// </summary>
     public void InitializeTask()
     {
         OnProgressUpdated.Invoke(0, totalItems);
     }
     
-    // Public methods for VR interactions
     public void OnGazeEnter()
     {
         if (!isTaskCompleted && magnifyingGlassIcon != null)
         {
-            isHovering = true; // Set hover state
+            isHovering = true;
             magnifyingGlassIcon.SetActive(true);
-            // Use the unified TaskListManager instead of MaintenanceTaskListManager
             if (TaskListManager.Instance != null)
             {
                 TaskListManager.Instance.SelectMaintenanceTask(this);
@@ -111,31 +90,22 @@ public class MaintenanceTaskController : MonoBehaviour
     
     public void OnGazeExit()
     {
-        isHovering = false; // Clear hover state
+        isHovering = false;
         if (magnifyingGlassIcon != null)
         {
             magnifyingGlassIcon.SetActive(false);
         }
     }
 
-    /// <summary>
-    /// This method is called by the InputAction when the button is pressed.
-    /// </summary>
     private void OnPlayerActionPerformed(InputAction.CallbackContext context)
     {
-        // Only show the question if the player is currently gazing at the object
-        // and if this is the currently selected task by the manager.
         if (isHovering && 
             TaskListManager.Instance != null && TaskListManager.Instance.IsThisMaintenanceTaskSelected(this))
         {
-            // Tell the central QuestionUIManager to show the question for THIS task.
             QuestionUIManager.Instance.ShowQuestion(this);
         }
     }
 
-    /// <summary>
-    /// Called by the QuestionUIManager after the user has answered the question.
-    /// </summary>
     public void AnswerQuestion(bool isCorrect)
     {
         if (isCorrect)
@@ -147,35 +117,45 @@ public class MaintenanceTaskController : MonoBehaviour
             OnTaskCompleted.Invoke();
             EndTask();
 
-            // Play the success sound
             if (audioSource != null && successSound != null)
             {
                 audioSource.PlayOneShot(successSound);
             }
 
-            // Get the VRDialogueSystem instance and display the completion dialogue
-            // We find the object in the scene, assuming there's only one.
             VRDialogueSystem dialogueSystem = FindObjectOfType<VRDialogueSystem>();
             if (dialogueSystem != null && taskCompletionDialogue != null && taskCompletionDialogue.Length > 0)
             {
-                // The correct method to call is StartDialog.
                 dialogueSystem.StartDialog(taskCompletionDialogue);
             }
         }
         else
         {
             Debug.Log($"Task '{taskName}': Answered incorrectly.");
+            
             if (popupManager != null)
             {
                 popupManager.ShowMessage("That's not the right answer. Try again!");
                 ScoreTracker.Instance.OnTaskError();
             }
+
+            if (ErrorTracker.Instance != null)
+                ErrorTracker.Instance.RecordMaintenanceError();
+
+            if (audioSource != null && errorSound != null)
+                audioSource.PlayOneShot(errorSound);
+
+            if (!hasPlayedErrorDialogue)
+            {
+                hasPlayedErrorDialogue = true;
+                VRDialogueSystem dialogueSystem = FindObjectOfType<VRDialogueSystem>();
+                if (dialogueSystem != null && taskErrorDialogue != null && taskErrorDialogue.Length > 0)
+                {
+                    dialogueSystem.StartDialog(taskErrorDialogue);
+                }
+            }
         }
     }
 
-    /// <summary>
-    /// Starts the highlighting for this task.
-    /// </summary>
     public void StartTask()
     {
         if (isTaskCompleted) return;
@@ -186,9 +166,6 @@ public class MaintenanceTaskController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Ends the highlighting for this task.
-    /// </summary>
     public void EndTask()
     {
         Debug.Log($"Ending task '{taskName}' and turning off highlights.");
