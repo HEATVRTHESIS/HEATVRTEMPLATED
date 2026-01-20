@@ -1066,6 +1066,37 @@ MonoBehaviour:
         m_Flags: 0
       m_Flags: 0
     m_Reference: {fileID: 0}
+--- !u!1 &487830664
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 487830665}
+  m_Layer: 0
+  m_Name: FilingCabinetCoords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &487830665
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487830664}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.305, y: 0.478, z: -1.077}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2961137092360122493}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &504988914
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32422,6 +32453,7 @@ Transform:
   m_Children:
   - {fileID: 2206156901078194777}
   - {fileID: 6935919477204207811}
+  - {fileID: 487830665}
   m_Father: {fileID: 1933364764072717195}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!33 &2965046715047848161
@@ -66268,7 +66300,7 @@ MonoBehaviour:
   - {fileID: 5668489214020365865, guid: 9b5d44ed974c8844882ce655e1e2e009, type: 3}
   spawnCount: 2
   spawnArea: {fileID: 6490294015389734522}
-  tutorialIndicatorTarget: {fileID: 2961137092360122493}
+  tutorialIndicatorTarget: {fileID: 487830665}
   overrideIndicatorText: 
   overrideAudioMessage: 
 --- !u!23 &6829431752401323334
