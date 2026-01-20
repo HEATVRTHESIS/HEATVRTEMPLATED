@@ -2678,7 +2678,7 @@ Transform:
   m_GameObject: {fileID: 1111367673}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 2.297, y: 0.556, z: -1.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3568,6 +3568,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: newER123
       objectReference: {fileID: 0}
+    - target: {fileID: 1384225101684879120, guid: 8d1c456e7b47958469c9c4d5817cd909, type: 3}
+      propertyPath: m_InteractionManager
+      value: 
+      objectReference: {fileID: 1479137390}
+    - target: {fileID: 1384225101684879120, guid: 8d1c456e7b47958469c9c4d5817cd909, type: 3}
+      propertyPath: m_TeleportationProvider
+      value: 
+      objectReference: {fileID: 8845447453863264798}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7241411175197258182, guid: 8d1c456e7b47958469c9c4d5817cd909, type: 3}

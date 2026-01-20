@@ -16333,7 +16333,7 @@ MonoBehaviour:
   rightControllerTransform: {fileID: 1135981716361476437}
   npcAnimator: {fileID: 1205240432}
   evacuationSpeed: 2
-  evacuationPoint: {fileID: 0}
+  evacuationPoint: {fileID: 1696267470}
   targetObject: {fileID: 150923306049703589}
   isOption1Correct: 1
   taskErrorDialogue:
