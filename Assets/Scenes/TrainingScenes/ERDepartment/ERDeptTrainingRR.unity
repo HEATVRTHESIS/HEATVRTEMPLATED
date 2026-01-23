@@ -1416,6 +1416,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueBox
       objectReference: {fileID: 0}
+    - target: {fileID: 5749740888527722038, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5749740888527722038, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5749740888527722038, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6402032355436464013, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: speechAudioSource
       value: 
@@ -1462,6 +1474,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7213262384671763790, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8607038538147380267, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8607038538147380267, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -2037,7 +2057,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 07e9076fd2a094f41a9b9aeb6c835e00, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.189
+      value: 0.37
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 07e9076fd2a094f41a9b9aeb6c835e00, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2045,7 +2065,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 07e9076fd2a094f41a9b9aeb6c835e00, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.435
+      value: 0.023
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 07e9076fd2a094f41a9b9aeb6c835e00, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2769,7 +2789,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1113032067}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fb2a910d28cd3d41869c38f5e08a9a8, type: 3}
   m_Name: 
@@ -2968,7 +2988,7 @@ Transform:
   m_GameObject: {fileID: 1222583303}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.025662232, z: -0, w: 0.99967074}
-  m_LocalPosition: {x: -3.22, y: 0.79, z: 2.95}
+  m_LocalPosition: {x: -3.22, y: 0.909, z: 2.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3824,6 +3844,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9054167324086753903}
     m_Modifications:
+    - target: {fileID: 990326918647938102, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5975969674770549835, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3866,7 +3890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5975969674770549835, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.441
+      value: 0.5203
       objectReference: {fileID: 0}
     - target: {fileID: 5975969674770549835, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14543,7 +14567,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.9976102
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -15369,7 +15393,7 @@ MonoBehaviour:
   m_XROrigin: {fileID: 1132705982235236530}
   m_BodyPositionEvaluatorObject: {fileID: 0}
   m_ConstrainedBodyManipulatorObject: {fileID: 0}
-  m_UseCharacterControllerIfExists: 1
+  m_UseCharacterControllerIfExists: 0
 --- !u!23 &5725934355528187395
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -18651,7 +18675,7 @@ Transform:
   m_GameObject: {fileID: 7385798305010138683}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 4.523, y: 2.457, z: 1.209}
+  m_LocalPosition: {x: 4.523, y: 2.65, z: 1.209}
   m_LocalScale: {x: 1.9717854, y: 1.9717857, z: 1.9717854}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -20470,7 +20494,7 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.36144
+  m_Height: 1
   m_Radius: 0.1
   m_SlopeLimit: 45
   m_StepOffset: 0.5

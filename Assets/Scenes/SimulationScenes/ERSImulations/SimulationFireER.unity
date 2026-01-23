@@ -1388,6 +1388,8 @@ MonoBehaviour:
         m_CallState: 2
   targetObject: {fileID: 1141922953}
   requiredItems: 2
+  taskErrorDialogue: []
+  errorSound: {fileID: 0}
   popupManager: {fileID: 0}
 --- !u!59 &607780604
 HingeJoint:
@@ -3052,6 +3054,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   targetObject: {fileID: 1384951126}
+  taskErrorDialogue: []
+  errorSound: {fileID: 0}
   popupManager: {fileID: 0}
 --- !u!59 &1384951130
 HingeJoint:
@@ -3913,6 +3917,8 @@ MonoBehaviour:
   evacuationPoint: {fileID: 468645731}
   targetObject: {fileID: 1293879732}
   isOption1Correct: 1
+  taskErrorDialogue: []
+  errorSound: {fileID: 0}
   popupManager: {fileID: 0}
   talkAction:
     m_UseReference: 0
@@ -13613,7 +13619,7 @@ MonoBehaviour:
   m_XROrigin: {fileID: 926786886046980010}
   m_BodyPositionEvaluatorObject: {fileID: 0}
   m_ConstrainedBodyManipulatorObject: {fileID: 0}
-  m_UseCharacterControllerIfExists: 1
+  m_UseCharacterControllerIfExists: 0
 --- !u!4 &5611256886099441884
 Transform:
   m_ObjectHideFlags: 0
