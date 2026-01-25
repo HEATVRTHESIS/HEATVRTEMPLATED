@@ -32,6 +32,10 @@ public class FireEvacuationScoreTracker : MonoBehaviour
     private bool hasRecordedTimeExpired = false;
     private bool hasRecordedOxygenDepletion = false;
     
+    // Task tracking
+    private int completedTasks = 0;
+    private int totalTasks = 3; // wet cloth, NPC rescue, on-time completion
+    
     [Header("UI References")]
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI safetyViolationsText;
@@ -59,7 +63,6 @@ public class FireEvacuationScoreTracker : MonoBehaviour
     
     void Start()
     {
-        // Auto-find references if not assigned
         if (oxygenManager == null)
             oxygenManager = FindObjectOfType<OxygenManager>();
         
@@ -81,7 +84,6 @@ public class FireEvacuationScoreTracker : MonoBehaviour
     
     void Update()
     {
-        // Monitor wet cloth usage (only count once)
         if (!hasUsedWetCloth && oxygenManager != null)
         {
             if (oxygenManager.GetProtectingClothCount() > 0)
@@ -90,7 +92,6 @@ public class FireEvacuationScoreTracker : MonoBehaviour
             }
         }
         
-        // Monitor fire damage
         if (playerFireHealth != null)
         {
             int currentHealth = playerFireHealth.GetCurrentHealth();
@@ -106,14 +107,12 @@ public class FireEvacuationScoreTracker : MonoBehaviour
             
             lastPlayerHealth = currentHealth;
             
-            // Check if player died
             if (!playerFireHealth.IsAlive())
             {
                 RecordPlayerDeath();
             }
         }
         
-        // Monitor oxygen depletion
         if (!hasRecordedOxygenDepletion && oxygenManager != null)
         {
             if (oxygenManager.HasSuffocated())
@@ -131,6 +130,7 @@ public class FireEvacuationScoreTracker : MonoBehaviour
         
         hasUsedWetCloth = true;
         currentScore += wetClothBonus;
+        completedTasks++;
         
         Debug.Log($"<color=green>+{wetClothBonus} points: Used wet cloth for protection</color>");
     }
@@ -139,28 +139,31 @@ public class FireEvacuationScoreTracker : MonoBehaviour
     {
         if (hasRescuedNPC) return;
         
-        // Check if any FollowerNPC is currently following
         FollowerNPC[] npcs = FindObjectsOfType<FollowerNPC>();
+        IVPoleFollowerNPC[] ivNpcs = FindObjectsOfType<IVPoleFollowerNPC>();
         bool hasFollowingNPC = false;
         
+        // Check regular follower NPCs
         foreach (var npc in npcs)
         {
-            // Check if NPC has IsFollowing method (add this to your FollowerNPC.cs)
             if (npc.gameObject.activeInHierarchy)
             {
-                // Try to get IsFollowing status if the method exists
-                // If you added the IsFollowing() method to FollowerNPC, uncomment this:
-                // if (npc.IsFollowing())
-                // {
-                //     hasFollowingNPC = true;
-                //     break;
-                // }
-                
-                // Temporary: Check if NPC is close to player (fallback method)
-                if (npc.playerTransform != null)
+                if (npc.IsFollowing())
                 {
-                    float distance = Vector3.Distance(npc.transform.position, npc.playerTransform.position);
-                    if (distance < 5f) // NPC is close to player
+                    hasFollowingNPC = true;
+                    break;
+                }
+            }
+        }
+        
+        // Check IV pole follower NPCs
+        if (!hasFollowingNPC)
+        {
+            foreach (var npc in ivNpcs)
+            {
+                if (npc.gameObject.activeInHierarchy)
+                {
+                    if (npc.IsFollowing())
                     {
                         hasFollowingNPC = true;
                         break;
@@ -173,6 +176,7 @@ public class FireEvacuationScoreTracker : MonoBehaviour
         {
             hasRescuedNPC = true;
             currentScore += npcRescueBonus;
+            completedTasks++;
             
             Debug.Log($"<color=green>+{npcRescueBonus} points: Evacuated with NPC</color>");
         }
@@ -198,7 +202,6 @@ public class FireEvacuationScoreTracker : MonoBehaviour
         
         Debug.Log($"<color=red>{oxygenDepletionPenalty} points: Oxygen depleted</color>");
         
-        // Trigger failure state
         HandleFailure();
     }
     
@@ -211,24 +214,21 @@ public class FireEvacuationScoreTracker : MonoBehaviour
         
         Debug.Log("<color=red>Evacuation failed: Time expired</color>");
         
-        // No score change, just record the failure
         SaveScoreData();
     }
     
     public void RecordSuccessfulExit()
     {
-        // Check if NPC is following at exit
         RecordNPCRescue();
         
-        // Check time completion
         if (evacuationTimer != null && !evacuationTimer.HasTimeExpired())
         {
             completedOnTime = true;
             currentScore += timeCompletionBonus;
+            completedTasks++;
             
             Debug.Log($"<color=green>+{timeCompletionBonus} points: Completed evacuation on time</color>");
             
-            // Add time bonus
             float timeBonus = evacuationTimer.GetTimeBonus();
             if (timeBonus > 0)
             {
@@ -244,7 +244,6 @@ public class FireEvacuationScoreTracker : MonoBehaviour
             }
         }
         
-        // Save score and proceed to next scene
         SaveScoreData();
     }
     
@@ -256,13 +255,11 @@ public class FireEvacuationScoreTracker : MonoBehaviour
     
     void HandleFailure()
     {
-        // Stop the timer
         if (evacuationTimer != null)
         {
             evacuationTimer.StopTimer();
         }
         
-        // Open failure canvas and stop time
         var timer = FindObjectOfType<FireEvacuationTimer>();
         if (timer != null && timer.failureCanvas != null)
         {
@@ -270,30 +267,27 @@ public class FireEvacuationScoreTracker : MonoBehaviour
             timer.failureCanvas.SetActive(true);
         }
         
-        // Save score data even on failure
         SaveScoreData();
     }
     
     void SaveScoreData()
-{
-    if (ScoreDataManager.Instance == null)
     {
-        Debug.LogWarning("ScoreDataManager not found! Cannot save score data.");
-        return;
+        if (ScoreDataManager.Instance == null)
+        {
+            Debug.LogWarning("ScoreDataManager not found! Cannot save score data.");
+            return;
+        }
+        
+        Debug.Log($"===== EVACUATION COMPLETE =====");
+        Debug.Log($"Final Score: {currentScore}");
+        Debug.Log($"Completed Tasks: {completedTasks}/{totalTasks}");
+        Debug.Log($"Safety Violations: {safetyViolations}");
+        Debug.Log($"Errors: {errorCount}");
+        Debug.Log($"Completed On Time: {completedOnTime}");
+        Debug.Log($"Used Wet Cloth: {hasUsedWetCloth}");
+        Debug.Log($"Rescued NPC: {hasRescuedNPC}");
+        Debug.Log($"==============================");
     }
-    
-    Debug.Log($"===== EVACUATION COMPLETE =====");
-    Debug.Log($"Final Score: {currentScore}");
-    Debug.Log($"Safety Violations: {safetyViolations}");
-    Debug.Log($"Errors: {errorCount}");
-    Debug.Log($"Completed On Time: {completedOnTime}");
-    Debug.Log($"Used Wet Cloth: {hasUsedWetCloth}");
-    Debug.Log($"Rescued NPC: {hasRescuedNPC}");
-    Debug.Log($"==============================");
-    
-    // The actual saving is done by ScoreDataManager.SaveFireEvacuationData()
-    // which is called from the FireEvacuationExitPoint
-}
     
     void UpdateUI()
     {
@@ -320,4 +314,9 @@ public class FireEvacuationScoreTracker : MonoBehaviour
     public bool HasUsedWetCloth() => hasUsedWetCloth;
     public bool HasRescuedNPC() => hasRescuedNPC;
     public bool CompletedOnTime() => completedOnTime;
+    
+    // Task tracking getters
+    public int GetCompletedTasks() => completedTasks;
+    public int GetTotalTasks() => totalTasks;
+    public float GetCompletionPercentage() => totalTasks > 0 ? (float)completedTasks / totalTasks * 100f : 0f;
 }

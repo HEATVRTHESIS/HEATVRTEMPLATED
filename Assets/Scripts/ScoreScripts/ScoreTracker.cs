@@ -1,47 +1,36 @@
 using UnityEngine;
-using TMPro; // Required for TextMeshPro
+using TMPro;
 
 /// <summary>
 /// Enhanced centralized score tracking system for Phase 1: Risk Identification and Mitigation
-/// Focus: Task Accuracy & Safety Compliance
-/// +10 points for correct actions, -5 points for errors
-/// Now includes detailed categorization for BFP evaluation metrics
+/// Uses ErrorTracker for accurate error counting
 /// </summary>
 public class ScoreTracker : MonoBehaviour
 {
-    // Singleton pattern
     public static ScoreTracker Instance { get; private set; }
 
     [Header("UI References")]
     public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI scoreValueText; // New: separate text object for the numerical score
+    public TextMeshProUGUI scoreValueText;
     
-    [Header("Summary Screen")]
-    public GameObject summaryCanvas; // Canvas to show when level is complete
-    public TextMeshProUGUI summaryCompletedTasksText; // Shows completed tasks count
-    public TextMeshProUGUI summaryMistakesText; // Shows mistakes count
-    public TextMeshProUGUI summaryAccuracyText; // Shows accuracy percentage
+    [Header("Evaluation Canvas")]
+    public GameObject evaluationCanvas;
+    
+    [Header("Short Info Fields (4)")]
+    public TextMeshProUGUI evalScoreText;           // "Score: 45/50"
+    public TextMeshProUGUI evalPercentageText;      // "90%"
+    public TextMeshProUGUI evalLevelText;           // "Expert"
+    public TextMeshProUGUI evalTasksText;           // "Tasks: 5/5"
+    
+    [Header("Large Evaluation Box")]
+    public TextMeshProUGUI evalMessageText;         // Full evaluation + improvement feedback
 
     [Header("Scoring Settings")]
     [SerializeField] private int pointsPerCompletion = 10;
     [SerializeField] private int pointsPerError = -5;
-    [SerializeField] private int safetyViolationPenalty = -10;
 
-    // The score counters
     private int completedTasks = 0;
     private int totalTasks = 0;
-    private int currentScore = 0;
-    private int perfectScore = 0; // Will be calculated as totalTasks * pointsPerCompletion
-    private int mistakeCount = 0; // Track number of mistakes made
-    private int safetyViolations = 0; // Track safety protocol violations
-    
-    // Enhanced tracking for BFP metrics
-    private int storageTasksCompleted = 0;
-    private int maintenanceTasksCompleted = 0;
-    private int disposalTasksCompleted = 0;
-    private int storageErrors = 0;
-    private int maintenanceErrors = 0;
-    private int disposalErrors = 0;
 
     void Awake()
     {
@@ -57,44 +46,29 @@ public class ScoreTracker : MonoBehaviour
 
     void Start()
     {
-        // Find and register all tasks at the start of the game.
         FindAndRegisterAllTasks();
-
-        // Calculate perfect score
-        perfectScore = totalTasks * pointsPerCompletion;
-
-        // Initialize the score display
         UpdateScoreDisplay();
         
-        // Ensure summary canvas is hidden at start
-        if (summaryCanvas != null)
+        if (evaluationCanvas != null)
         {
-            summaryCanvas.SetActive(false);
+            evaluationCanvas.SetActive(false);
         }
-        
-        Debug.Log($"ScoreTracker initialized. Total tasks: {totalTasks}, Perfect score: {perfectScore}");
     }
 
-    /// <summary>
-    /// Finds all task controllers in the scene and registers them.
-    /// </summary>
     private void FindAndRegisterAllTasks()
     {
-        // Find all standard tasks
         TaskController[] standardTasks = FindObjectsOfType<TaskController>();
         foreach (var task in standardTasks)
         {
             RegisterTask(task.OnTaskCompleted);
         }
 
-        // Find all maintenance tasks
         MaintenanceTaskController[] maintenanceTasks = FindObjectsOfType<MaintenanceTaskController>();
         foreach (var task in maintenanceTasks)
         {
             RegisterTask(task.OnTaskCompleted);
         }
 
-        // Find all storage tasks
         StorageTaskController[] storageTasks = FindObjectsOfType<StorageTaskController>();
         foreach (var task in storageTasks)
         {
@@ -102,203 +76,224 @@ public class ScoreTracker : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Registers a single task's completion event to the score tracker.
-    /// </summary>
     private void RegisterTask(UnityEngine.Events.UnityEvent completionEvent)
     {
         totalTasks++;
         completionEvent.AddListener(OnTaskCompleted);
     }
 
-    /// <summary>
-    /// This method is called whenever any registered task is completed.
-    /// Adds +10 points for task completion.
-    /// </summary>
     private void OnTaskCompleted()
     {
         completedTasks++;
-        currentScore += pointsPerCompletion;
-        
-        Debug.Log($"Task completed! +{pointsPerCompletion} points. Current score: {currentScore} ({completedTasks}/{totalTasks} tasks)");
         UpdateScoreDisplay();
         
-        // Check if all tasks are completed
         if (completedTasks >= totalTasks)
         {
-            ShowSummaryScreen();
+            ShowEvaluationCanvas();
         }
     }
-    
-    /// <summary>
-    /// Track storage task completion
-    /// </summary>
-    public void OnStorageTaskCompleted()
-    {
-        storageTasksCompleted++;
-        OnTaskCompleted();
-    }
-    
-    /// <summary>
-    /// Track maintenance task completion
-    /// </summary>
-    public void OnMaintenanceTaskCompleted()
-    {
-        maintenanceTasksCompleted++;
-        OnTaskCompleted();
-    }
-    
-    /// <summary>
-    /// Track disposal task completion
-    /// </summary>
-    public void OnDisposalTaskCompleted()
-    {
-        disposalTasksCompleted++;
-        OnTaskCompleted();
-    }
 
-    /// <summary>
-    /// Public method to be called by other scripts when an error occurs.
-    /// Deducts -5 points for mistakes.
-    /// </summary>
+    // Backward compatibility - legacy scripts still call this
     public void OnTaskError()
     {
-        mistakeCount++; // Increment mistake counter
-        currentScore += pointsPerError; // pointsPerError is already negative (-5)
-        
-        // Ensure score doesn't go below 0
-        currentScore = Mathf.Max(0, currentScore);
-        
-        Debug.Log($"Task error! {pointsPerError} points. Mistakes: {mistakeCount}. Current score: {currentScore}");
-        UpdateScoreDisplay();
-    }
-    
-    /// <summary>
-    /// Track storage-specific errors
-    /// </summary>
-    public void OnStorageError()
-    {
-        storageErrors++;
-        OnTaskError();
-    }
-    
-    /// <summary>
-    /// Track maintenance-specific errors
-    /// </summary>
-    public void OnMaintenanceError()
-    {
-        maintenanceErrors++;
-        OnTaskError();
-    }
-    
-    /// <summary>
-    /// Track disposal-specific errors
-    /// </summary>
-    public void OnDisposalError()
-    {
-        disposalErrors++;
-        OnTaskError();
-    }
-    
-    /// <summary>
-    /// Called when a safety protocol is violated
-    /// </summary>
-    public void OnSafetyViolation(string violationType)
-    {
-        safetyViolations++;
-        currentScore += safetyViolationPenalty;
-        currentScore = Mathf.Max(0, currentScore);
-        
-        Debug.Log($"Safety violation: {violationType}. {safetyViolationPenalty} points. Total violations: {safetyViolations}");
-        UpdateScoreDisplay();
+        // Do nothing - errors are now tracked by ErrorTracker
+        // This method exists only for backward compatibility
     }
 
-    /// <summary>
-    /// Updates the UI text to display the current score and progress.
-    /// </summary>
     private void UpdateScoreDisplay()
     {
-        // Update the main score text (tasks completed)
         if (scoreText != null)
         {
             scoreText.text = $"Tasks: {completedTasks} / {totalTasks}";
         }
 
-        // Update the numerical score display
         if (scoreValueText != null)
         {
+            int currentScore = CalculateFinalScore();
             scoreValueText.text = $"Score: {currentScore}";
         }
     }
 
-    /// <summary>
-    /// Shows the summary screen when all tasks are completed.
-    /// </summary>
-    private void ShowSummaryScreen()
+    private int CalculateFinalScore()
     {
-        if (summaryCanvas != null)
+        int maxScore = completedTasks * pointsPerCompletion;
+        
+        if (ErrorTracker.Instance != null)
         {
-            // Update summary text elements
-            if (summaryCompletedTasksText != null)
-            {
-                summaryCompletedTasksText.text = $"Tasks Completed: {completedTasks}/{totalTasks}";
-            }
+            int totalErrors = ErrorTracker.Instance.disposalErrors +
+                            ErrorTracker.Instance.maintenanceErrors +
+                            ErrorTracker.Instance.storageErrors;
             
-            if (summaryMistakesText != null)
-            {
-                summaryMistakesText.text = $"Mistakes: {mistakeCount}";
-            }
+            int errorPenalty = totalErrors * Mathf.Abs(pointsPerError);
+            return Mathf.Max(0, maxScore - errorPenalty);
+        }
+        
+        return maxScore;
+    }
+
+    public int GetPerfectScore()
+    {
+        return totalTasks * pointsPerCompletion;
+    }
+
+    public int GetTotalErrors()
+    {
+        if (ErrorTracker.Instance != null)
+        {
+            return ErrorTracker.Instance.disposalErrors +
+                   ErrorTracker.Instance.maintenanceErrors +
+                   ErrorTracker.Instance.storageErrors;
+        }
+        return 0;
+    }
+
+    private string GetImprovementFeedback()
+    {
+        if (ErrorTracker.Instance == null) return "";
+
+        int disposal = ErrorTracker.Instance.disposalErrors;
+        int maintenance = ErrorTracker.Instance.maintenanceErrors;
+        int storage = ErrorTracker.Instance.storageErrors;
+
+        var errors = new System.Collections.Generic.List<(string type, int count)>
+        {
+            ("Disposal", disposal),
+            ("Maintenance", maintenance),
+            ("Storage", storage)
+        };
+
+        errors.Sort((a, b) => b.count.CompareTo(a.count));
+
+        string feedback = "";
+        int feedbackCount = 0;
+
+        if (errors[0].count > 0)
+        {
+            feedback += GetErrorTypeFeedback(errors[0].type, errors[0].count);
+            feedbackCount++;
+        }
+
+        if (errors[1].count > 0 && feedbackCount < 2)
+        {
+            if (feedbackCount > 0) feedback += "\n\n";
+            feedback += GetErrorTypeFeedback(errors[1].type, errors[1].count);
+        }
+
+        return feedback;
+    }
+
+    private string GetErrorTypeFeedback(string errorType, int count)
+    {
+        switch (errorType)
+        {
+            case "Disposal":
+                return $"<b>Disposal Issues ({count} errors):</b> Review the correct color coding for each trash type. Red for infectious waste, yellow for hazardous materials, green for general waste, and blue for recyclables.";
             
-            if (summaryAccuracyText != null)
-            {
-                float accuracy = GetAccuracyPercentage();
-                summaryAccuracyText.text = $"Accuracy: {accuracy:F1}%";
-            }
+            case "Maintenance":
+                return $"<b>Maintenance Issues ({count} errors):</b> Pay closer attention to equipment inspection criteria. Check expiration dates carefully, look for visible damage like cracks or leaks, and verify all safety certifications.";
             
-            // Show the summary canvas
-            summaryCanvas.SetActive(true);
+            case "Storage":
+                return $"<b>Storage Issues ({count} errors):</b> Ensure items are stored in their designated locations. Flammable materials need proper cabinets, chemicals require specific storage conditions, and equipment must be organized by type.";
             
-            // Automatically save score data when level is complete
-            if (ScoreDataManager.Instance != null)
-            {
-                ScoreDataManager.Instance.SaveCurrentLevelData();
-            }
-            
-            Debug.Log($"===== PHASE 1 COMPLETE =====");
-            Debug.Log($"Tasks: {completedTasks}/{totalTasks}");
-            Debug.Log($"Mistakes: {mistakeCount}");
-            Debug.Log($"Safety Violations: {safetyViolations}");
-            Debug.Log($"Final Score: {currentScore}/{perfectScore}");
-            Debug.Log($"Accuracy: {GetAccuracyPercentage():F1}%");
-            Debug.Log($"============================");
+            default:
+                return "";
         }
     }
 
-    // PUBLIC GETTERS for evaluation system
-    public int GetCurrentScore() => currentScore;
-    public int GetPerfectScore() => perfectScore;
-    public int GetMistakeCount() => mistakeCount;
-    public int GetSafetyViolations() => safetyViolations;
+    private void ShowEvaluationCanvas()
+    {
+        if (evaluationCanvas == null) return;
+
+        int finalScore = CalculateFinalScore();
+        int perfectScore = GetPerfectScore();
+        float percentage = perfectScore > 0 ? (float)finalScore / perfectScore * 100f : 0f;
+        int totalErrors = GetTotalErrors();
+
+        string evalLevel;
+        string evalStatement;
+
+        if (percentage >= 85f)
+        {
+            evalLevel = "Expert";
+            evalStatement = "<b>Exceptional performance.</b> You demonstrated mastery in identifying cracked beakers, checking extinguisher expirations, and segregating complex waste like chemical trash and sharps into their correct bins.";
+        }
+        else if (percentage >= 70f)
+        {
+            evalLevel = "Proficient";
+            evalStatement = "<b>Minor improvements needed.</b> Accuracy was high, but ensure all items are placed correctly every time to avoid minor point deductions.";
+        }
+        else if (percentage >= 50f)
+        {
+            evalLevel = "Intermediate";
+            evalStatement = "<b>Critical errors identified.</b> You did not correctly evaluate the condition of the equipment or incorrectly sorted hazardous materials, resulting in breaches of safety protocols.";
+        }
+        else
+        {
+            evalLevel = "Beginner";
+            evalStatement = "<b>Unsatisfactory.</b> Significant failure in protocol. You must review the Waste Segregation Guide to ensure hospital safety.";
+        }
+
+        // Short info fields
+        if (evalScoreText != null)
+            evalScoreText.text = $"Score: {finalScore}/{perfectScore}";
+        
+        if (evalPercentageText != null)
+            evalPercentageText.text = $"Accuracy: {percentage:F0}%";
+        
+        if (evalLevelText != null)
+            evalLevelText.text = $"Level: {evalLevel}";
+        
+        if (evalTasksText != null)
+            evalTasksText.text = $"Tasks: {completedTasks}/{totalTasks}";
+
+        // Large message box - combine everything
+        if (evalMessageText != null)
+        {
+            string fullMessage = evalStatement;
+            
+            // Add error breakdown
+            if (ErrorTracker.Instance != null && totalErrors > 0)
+            {
+                fullMessage += $"\n\n<b>Errors ({totalErrors}):</b>";
+                fullMessage += $"\n• Disposal: {ErrorTracker.Instance.disposalErrors}";
+                fullMessage += $"\n• Maintenance: {ErrorTracker.Instance.maintenanceErrors}";
+                fullMessage += $"\n• Storage: {ErrorTracker.Instance.storageErrors}";
+            }
+            
+            // Add improvement feedback
+            string improvement = GetImprovementFeedback();
+            if (!string.IsNullOrEmpty(improvement))
+            {
+                fullMessage += "\n\n" + improvement;
+            }
+            else if (totalErrors == 0)
+            {
+                fullMessage += "\n\n<b>Perfect execution!</b> No errors detected.";
+            }
+            
+            evalMessageText.text = fullMessage;
+        }
+
+        evaluationCanvas.SetActive(true);
+
+        if (ScoreDataManager.Instance != null)
+        {
+            ScoreDataManager.Instance.SaveCurrentLevelData();
+        }
+    }
+
+    // PUBLIC GETTERS
+    public int GetCurrentScore() => CalculateFinalScore();
+    public int GetPerfectScoreValue() => GetPerfectScore();
+    public int GetMistakeCount() => GetTotalErrors();
     public int GetCompletedTasks() => completedTasks;
     public int GetTotalTasks() => totalTasks;
+    public float GetCompletionPercentage() => totalTasks > 0 ? (float)completedTasks / totalTasks * 100f : 0f;
+    public float GetAccuracyPercentage() => GetPerfectScore() > 0 ? (float)GetCurrentScore() / GetPerfectScore() * 100f : 0f;
     
-    public float GetCompletionPercentage()
-    {
-        if (totalTasks == 0) return 0f;
-        return (float)completedTasks / totalTasks * 100f;
-    }
-    
-    public float GetAccuracyPercentage()
-    {
-        if (perfectScore == 0) return 100f;
-        return (float)currentScore / perfectScore * 100f;
-    }
-    
-    // Detailed task breakdown getters
-    public int GetStorageTasksCompleted() => storageTasksCompleted;
-    public int GetMaintenanceTasksCompleted() => maintenanceTasksCompleted;
-    public int GetDisposalTasksCompleted() => disposalTasksCompleted;
-    public int GetStorageErrors() => storageErrors;
-    public int GetMaintenanceErrors() => maintenanceErrors;
-    public int GetDisposalErrors() => disposalErrors;
+    // Legacy compatibility methods
+    public int GetStorageErrors() => ErrorTracker.Instance != null ? ErrorTracker.Instance.storageErrors : 0;
+    public int GetMaintenanceErrors() => ErrorTracker.Instance != null ? ErrorTracker.Instance.maintenanceErrors : 0;
+    public int GetDisposalErrors() => ErrorTracker.Instance != null ? ErrorTracker.Instance.disposalErrors : 0;
+    public int GetSafetyViolations() => 0; // Not tracked in Phase 1
 }

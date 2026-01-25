@@ -5,57 +5,35 @@ using System.Collections.Generic;
 using System.Linq;
 
 /// <summary>
-/// Final evaluation screen that calculates BFP-compliant scores across all phases.
-/// Uses the weighted formula: Total Score = (Task Accuracy × 0.5) + (Speed Efficiency × 0.3) + (Safety Compliance × 0.2)
+/// Simplified final evaluation screen with scrollable summary
 /// </summary>
 public class FinalEvaluationScreen : MonoBehaviour
 {
-    [Header("Overall Summary UI")]
-    public TextMeshProUGUI totalScoreText;
-    public TextMeshProUGUI certificationLevelText;
-    public TextMeshProUGUI overallFeedbackText;
-    public Image certificationBadge; // Optional: visual badge
+    [Header("Outside Scroll View")]
+    public TextMeshProUGUI certificationLevelText;  // "EXPERT" / "PROFICIENT" etc
+    public Image certificationBadge;                // Medal/badge image
     
-    [Header("Phase Breakdown UI")]
-    public TextMeshProUGUI phase1ScoreText;
-    public TextMeshProUGUI phase2ScoreText;
-    public TextMeshProUGUI phase3ScoreText;
-    
-    [Header("Metric Breakdown UI")]
-    public TextMeshProUGUI taskAccuracyScoreText;
-    public TextMeshProUGUI taskAccuracyPercentageText;
-    public TextMeshProUGUI speedEfficiencyScoreText;
-    public TextMeshProUGUI speedEfficiencyPercentageText;
-    public TextMeshProUGUI safetyComplianceScoreText;
-    public TextMeshProUGUI safetyCompliancePercentageText;
-    
-    [Header("Detailed Statistics UI")]
-    public TextMeshProUGUI totalTasksCompletedText;
-    public TextMeshProUGUI totalMistakesText;
-    public TextMeshProUGUI totalSafetyViolationsText;
-    public TextMeshProUGUI totalTimeText;
+    [Header("Inside Scroll View")]
+    public TextMeshProUGUI summaryText;             // Full scrollable summary
     
     [Header("Certification Colors")]
-    public Color expertColor = new Color(1f, 0.84f, 0f); // Gold
-    public Color proficientColor = new Color(0.75f, 0.75f, 0.75f); // Silver
-    public Color intermediateColor = new Color(0.8f, 0.5f, 0.2f); // Bronze
-    public Color beginnerColor = new Color(0.5f, 0.5f, 0.5f); // Gray
+    public Color expertColor = new Color(1f, 0.84f, 0f);        // Gold
+    public Color proficientColor = new Color(0.75f, 0.75f, 0.75f);  // Silver
+    public Color intermediateColor = new Color(0.8f, 0.5f, 0.2f);   // Bronze
+    public Color beginnerColor = new Color(0.5f, 0.5f, 0.5f);       // Gray
     
     [Header("Retry Button")]
     public Button retryButton;
     public string mainMenuSceneName = "MainMenu";
     
-    // BFP Weight Constants
     private const float TASK_ACCURACY_WEIGHT = 0.5f;
     private const float SPEED_EFFICIENCY_WEIGHT = 0.3f;
     private const float SAFETY_COMPLIANCE_WEIGHT = 0.2f;
     
-    // Certification thresholds
     private const float EXPERT_THRESHOLD = 85f;
     private const float PROFICIENT_THRESHOLD = 70f;
     private const float INTERMEDIATE_THRESHOLD = 50f;
     
-    // Score calculation variables
     private float finalWeightedScore = 0f;
     private float taskAccuracyScore = 0f;
     private float speedEfficiencyScore = 0f;
@@ -69,14 +47,11 @@ public class FinalEvaluationScreen : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// Main method to calculate and display all results
-    /// </summary>
     public void CalculateAndDisplayResults()
     {
-        if (ScoreDataManager.Instance == null)
+        if (ScoreDataManager.Instance == null || ErrorTracker.Instance == null)
         {
-            Debug.LogError("ScoreDataManager not found! Cannot display evaluation.");
+            Debug.LogError("ScoreDataManager or ErrorTracker not found!");
             return;
         }
         
@@ -88,42 +63,21 @@ public class FinalEvaluationScreen : MonoBehaviour
             return;
         }
         
-        Debug.Log($"===== CALCULATING FINAL EVALUATION =====");
-        Debug.Log($"Total levels completed: {allLevels.Count}");
-        
-        // Calculate each metric category
         CalculateTaskAccuracy(allLevels);
         CalculateSpeedEfficiency(allLevels);
-        CalculateSafetyCompliance(allLevels);
+        CalculateSafetyCompliance();
         
-        // Calculate final weighted score
         finalWeightedScore = (taskAccuracyScore * TASK_ACCURACY_WEIGHT) +
                             (speedEfficiencyScore * SPEED_EFFICIENCY_WEIGHT) +
                             (safetyComplianceScore * SAFETY_COMPLIANCE_WEIGHT);
         
-        Debug.Log($"Task Accuracy: {taskAccuracyScore:F2}");
-        Debug.Log($"Speed Efficiency: {speedEfficiencyScore:F2}");
-        Debug.Log($"Safety Compliance: {safetyComplianceScore:F2}");
-        Debug.Log($"Final Weighted Score: {finalWeightedScore:F2}");
-        
-        // Display all results
-        DisplayOverallSummary();
-        DisplayPhaseBreakdown(allLevels);
-        DisplayMetricBreakdown();
-        DisplayDetailedStatistics(allLevels);
-        
-        Debug.Log($"========================================");
+        DisplayResults(allLevels);
     }
     
-    /// <summary>
-    /// Calculate Task Accuracy Score (0-100)
-    /// Based on: correct actions, completion rate, and errors
-    /// </summary>
     private void CalculateTaskAccuracy(List<ScoreDataManager.LevelScoreData> allLevels)
     {
         int totalTasksCompleted = 0;
         int totalTasksPossible = 0;
-        int totalErrors = 0;
         int totalPointsEarned = 0;
         int totalPointsPossible = 0;
         
@@ -131,53 +85,34 @@ public class FinalEvaluationScreen : MonoBehaviour
         {
             totalTasksCompleted += level.completedTasks;
             totalTasksPossible += level.totalTasks;
+            totalPointsEarned += level.finalScore;
             
             if (level.levelType == "Standard")
             {
-                // Phase 1: Use mistake count and score
-                totalErrors += level.mistakeCount;
-                totalPointsEarned += level.finalScore;
                 totalPointsPossible += level.perfectScore;
             }
             else if (level.levelType == "Fire")
             {
-                // Phase 2: Use error count
-                totalErrors += level.errorCount;
-                // For fire levels, estimate perfect score based on completed tasks
-                totalPointsEarned += level.finalScore;
-                totalPointsPossible += level.completedTasks * 10; // Assume +10 per task
+                totalPointsPossible += level.completedTasks * 10;
             }
             else if (level.levelType == "Fire Evacuation")
             {
-                // Phase 3: Use error count
-                totalErrors += level.errorCount;
-                totalPointsEarned += level.finalScore;
-                // Evacuation has fixed bonuses
-                totalPointsPossible += 45; // 15 (wet cloth) + 15 (NPC) + 15 (time)
+                totalPointsPossible += 45;
             }
         }
         
-        // Calculate task completion percentage
         float completionRate = totalTasksPossible > 0 
             ? (float)totalTasksCompleted / totalTasksPossible * 100f 
             : 0f;
         
-        // Calculate accuracy based on errors (fewer errors = higher accuracy)
-        float errorPenalty = totalErrors * 5f; // Each error worth 5 points penalty
-        float maxPossibleWithErrors = totalPointsPossible > 0 ? totalPointsPossible : 100f;
-        float accuracyFromErrors = Mathf.Clamp((maxPossibleWithErrors - errorPenalty) / maxPossibleWithErrors * 100f, 0f, 100f);
+        float accuracyRate = totalPointsPossible > 0 
+            ? (float)totalPointsEarned / totalPointsPossible * 100f 
+            : 0f;
         
-        // Combined task accuracy: 70% completion rate + 30% error-based accuracy
-        taskAccuracyScore = (completionRate * 0.7f) + (accuracyFromErrors * 0.3f);
+        taskAccuracyScore = (completionRate * 0.3f) + (accuracyRate * 0.7f);
         taskAccuracyScore = Mathf.Clamp(taskAccuracyScore, 0f, 100f);
-        
-        Debug.Log($"Task Accuracy Calculation: Completed {totalTasksCompleted}/{totalTasksPossible}, Errors: {totalErrors}");
     }
     
-    /// <summary>
-    /// Calculate Speed Efficiency Score (0-100)
-    /// Based on: time remaining, evacuation speed, and completion time
-    /// </summary>
     private void CalculateSpeedEfficiency(List<ScoreDataManager.LevelScoreData> allLevels)
     {
         float totalTimeScore = 0f;
@@ -187,340 +122,297 @@ public class FinalEvaluationScreen : MonoBehaviour
         {
             if (level.levelType == "Fire")
             {
-                // Phase 2: Time remaining is a positive indicator
-                // More time left = better efficiency
                 float timeRemainingMinutes = level.timeRemaining / 60f;
-                float timeScore = Mathf.Clamp(timeRemainingMinutes * 20f, 0f, 100f); // Scale time to 0-100
+                float timeScore = Mathf.Clamp(timeRemainingMinutes * 20f, 0f, 100f);
                 totalTimeScore += timeScore;
                 levelsWithTime++;
-                
-                Debug.Log($"Fire level time score: {timeScore:F2} (Time left: {level.timeRemaining:F1}s)");
             }
             else if (level.levelType == "Fire Evacuation")
             {
-                // Phase 3: Completion on time is critical
                 if (level.completedOnTime)
                 {
-                    // Faster evacuation = higher score
-                    float evacuationMinutes = level.evacuationTime / 60f;
-                    float targetTime = 5f; // Assume 5 minute target
-                    
-                    if (evacuationMinutes <= targetTime)
-                    {
-                        // Under target: 80-100 points
-                        float speedBonus = (targetTime - evacuationMinutes) / targetTime * 20f;
-                        totalTimeScore += Mathf.Clamp(80f + speedBonus, 80f, 100f);
-                    }
-                    else
-                    {
-                        // Over target but still completed: 50-80 points
-                        float overTime = evacuationMinutes - targetTime;
-                        float penalty = Mathf.Min(overTime * 5f, 30f); // Max 30 point penalty
-                        totalTimeScore += Mathf.Clamp(80f - penalty, 50f, 80f);
-                    }
+                    float evacuationScore = Mathf.Clamp((180f - level.evacuationTime) / 180f * 100f, 50f, 100f);
+                    totalTimeScore += evacuationScore;
                 }
                 else
                 {
-                    // Failed to complete on time: 0-30 points
-                    totalTimeScore += 15f; // Participation credit
+                    totalTimeScore += 0f;
                 }
-                
                 levelsWithTime++;
-                
-                Debug.Log($"Evacuation time score: Completed={level.completedOnTime}, Time={level.evacuationTime:F1}s");
             }
         }
         
-        speedEfficiencyScore = levelsWithTime > 0 ? totalTimeScore / levelsWithTime : 0f;
+        speedEfficiencyScore = levelsWithTime > 0 ? totalTimeScore / levelsWithTime : 50f;
         speedEfficiencyScore = Mathf.Clamp(speedEfficiencyScore, 0f, 100f);
-        
-        Debug.Log($"Speed Efficiency Calculation: Total={totalTimeScore:F2}, Levels={levelsWithTime}");
     }
     
-    /// <summary>
-    /// Calculate Safety Compliance Score (0-100)
-    /// Based on: safety violations, fire damage, protocol adherence
-    /// </summary>
-    private void CalculateSafetyCompliance(List<ScoreDataManager.LevelScoreData> allLevels)
+    private void CalculateSafetyCompliance()
     {
-        int totalSafetyViolations = 0;
-        int safetyBonusPoints = 0;
-        int maxSafetyBonus = 0;
+        int totalErrors = ErrorTracker.Instance.disposalErrors + ErrorTracker.Instance.maintenanceErrors + 
+                         ErrorTracker.Instance.storageErrors + ErrorTracker.Instance.fireNPCErrors + 
+                         ErrorTracker.Instance.fireLeverErrors + ErrorTracker.Instance.fireSmokeDoorErrors + 
+                         ErrorTracker.Instance.fireExtinguisherErrors + ErrorTracker.Instance.fireWrongExtinguisherErrors +
+                         ErrorTracker.Instance.evacuationTimeExpiredErrors + ErrorTracker.Instance.evacuationFireObstacleErrors +
+                         ErrorTracker.Instance.evacuationOxygenErrors + ErrorTracker.Instance.evacuationNPCLeftBehindErrors +
+                         ErrorTracker.Instance.evacuationNPCNotRescuedErrors + ErrorTracker.Instance.evacuationNoWetClothErrors;
         
-        foreach (var level in allLevels)
-        {
-            totalSafetyViolations += level.safetyViolations;
-            
-            if (level.levelType == "Fire Evacuation")
-            {
-                // Phase 3: Track safety protocol adherence
-                if (level.usedWetCloth)
-                {
-                    safetyBonusPoints += 15;
-                }
-                if (level.rescuedNPC)
-                {
-                    safetyBonusPoints += 15;
-                }
-                maxSafetyBonus += 30; // Max possible safety bonus
-            }
-            else if (level.levelType == "Fire")
-            {
-                // Phase 2: Assume some safety compliance points were possible
-                // Estimate based on completed tasks (alarm, door closure, etc.)
-                maxSafetyBonus += level.completedTasks * 15;
-                // Award points based on low violation count
-                int estimatedSafetyPoints = Mathf.Max(0, level.completedTasks * 15 - level.safetyViolations * 10);
-                safetyBonusPoints += estimatedSafetyPoints;
-            }
-        }
-        
-        // Calculate safety score
-        // Base score starts at 100, deduct for violations
-        float violationPenalty = totalSafetyViolations * 10f;
-        float baseScore = Mathf.Clamp(100f - violationPenalty, 0f, 100f);
-        
-        // Bonus for protocol adherence
-        float bonusScore = maxSafetyBonus > 0 ? (float)safetyBonusPoints / maxSafetyBonus * 100f : 100f;
-        
-        // Combined: 60% violation-based, 40% bonus-based
-        safetyComplianceScore = (baseScore * 0.6f) + (bonusScore * 0.4f);
-        safetyComplianceScore = Mathf.Clamp(safetyComplianceScore, 0f, 100f);
-        
-        Debug.Log($"Safety Compliance Calculation: Violations={totalSafetyViolations}, Base={baseScore:F2}, Bonus={bonusScore:F2}");
+        float errorPenalty = totalErrors * 5f;
+        safetyComplianceScore = Mathf.Clamp(100f - errorPenalty, 0f, 100f);
     }
     
-    /// <summary>
-    /// Display overall summary with certification level
-    /// </summary>
-    private void DisplayOverallSummary()
+    private void DisplayResults(List<ScoreDataManager.LevelScoreData> allLevels)
     {
-        // Total Score
-        if (totalScoreText != null)
-        {
-            totalScoreText.text = $"Final Score: {finalWeightedScore:F1}/100";
-        }
-        
-        // Determine certification level
-        string certLevel = "";
-        string feedback = "";
-        Color certColor = beginnerColor;
+        string certLevel;
+        Color certColor;
         
         if (finalWeightedScore >= EXPERT_THRESHOLD)
         {
             certLevel = "EXPERT";
-            feedback = "Exceptional performance! You have mastered fire safety protocols and emergency response procedures. You demonstrate excellent judgment, speed, and adherence to safety standards.";
             certColor = expertColor;
         }
         else if (finalWeightedScore >= PROFICIENT_THRESHOLD)
         {
             certLevel = "PROFICIENT";
-            feedback = "Strong performance with minor areas for improvement. You have a solid understanding of fire safety procedures. Focus on refining your speed and reducing minor errors to reach expert level.";
             certColor = proficientColor;
         }
         else if (finalWeightedScore >= INTERMEDIATE_THRESHOLD)
         {
             certLevel = "INTERMEDIATE";
-            feedback = "Adequate performance with critical areas needing improvement. Review safety protocols, practice faster response times, and focus on accuracy. Additional training recommended before real-world application.";
             certColor = intermediateColor;
         }
         else
         {
             certLevel = "BEGINNER";
-            feedback = "Unsatisfactory performance. Significant improvement needed across all metrics. Strongly recommended to repeat all training phases and study fire safety procedures before proceeding.";
             certColor = beginnerColor;
         }
         
-        // Certification Level
+        // Set certification level and badge color
         if (certificationLevelText != null)
         {
-            certificationLevelText.text = $"Certification: {certLevel}";
+            certificationLevelText.text = certLevel;
             certificationLevelText.color = certColor;
         }
         
-        // Feedback
-        if (overallFeedbackText != null)
-        {
-            overallFeedbackText.text = feedback;
-        }
-        
-        // Badge color
         if (certificationBadge != null)
         {
             certificationBadge.color = certColor;
         }
+        
+        // Build full summary text
+        if (summaryText != null)
+        {
+            summaryText.text = BuildSummaryText(allLevels, certLevel);
+        }
     }
     
-    /// <summary>
-    /// Display individual phase scores
-    /// </summary>
-    private void DisplayPhaseBreakdown(List<ScoreDataManager.LevelScoreData> allLevels)
+    private string BuildSummaryText(List<ScoreDataManager.LevelScoreData> allLevels, string certLevel)
     {
+        string summary = "";
+        
+        // Header
+        summary += "<size=24><b>FIRE SAFETY TRAINING EVALUATION</b></size>\n\n";
+        
+        // Overall Score
+        summary += $"<b>Final Score:</b> {finalWeightedScore:F1}/100\n";
+        summary += $"<b>Certification Level:</b> {certLevel}\n\n";
+        
+        // Certification Message
+        summary += "<b>Evaluation:</b>\n";
+        if (finalWeightedScore >= EXPERT_THRESHOLD)
+        {
+            summary += "Outstanding performance! You've mastered all aspects of hospital fire safety protocols. Your accuracy in risk identification, speed in emergency response, and adherence to safety procedures demonstrate exceptional competency. Certified for independent operation.\n\n";
+        }
+        else if (finalWeightedScore >= PROFICIENT_THRESHOLD)
+        {
+            summary += "Good performance with minor room for improvement. You've shown solid understanding of fire safety protocols. With attention to the areas noted below, you'll achieve expert-level certification. Certified with supervisor oversight recommended.\n\n";
+        }
+        else if (finalWeightedScore >= INTERMEDIATE_THRESHOLD)
+        {
+            summary += "Moderate performance. While you completed most tasks, critical errors in safety protocols and emergency response were identified. Additional training required in the areas noted below before full certification. Recommend repeating relevant phases.\n\n";
+        }
+        else
+        {
+            summary += "Unsatisfactory performance. Significant improvement needed across all metrics. Strongly recommended to repeat all training phases and study fire safety procedures before proceeding. Not yet certified for hospital operations.\n\n";
+        }
+        
+        // Performance Breakdown
+        summary += "<b>━━━ PERFORMANCE BREAKDOWN ━━━</b>\n\n";
+        summary += $"<b>Task Accuracy:</b> {taskAccuracyScore:F1}/100 (Weight: 50%)\n";
+        summary += $"  → Contribution: {taskAccuracyScore * TASK_ACCURACY_WEIGHT:F1} points\n\n";
+        
+        summary += $"<b>Speed & Efficiency:</b> {speedEfficiencyScore:F1}/100 (Weight: 30%)\n";
+        summary += $"  → Contribution: {speedEfficiencyScore * SPEED_EFFICIENCY_WEIGHT:F1} points\n\n";
+        
+        summary += $"<b>Safety Compliance:</b> {safetyComplianceScore:F1}/100 (Weight: 20%)\n";
+        summary += $"  → Contribution: {safetyComplianceScore * SAFETY_COMPLIANCE_WEIGHT:F1} points\n\n";
+        
+        // Phase Breakdown
+        summary += "<b>━━━ PHASE BREAKDOWN ━━━</b>\n\n";
+        
         var phase1Levels = allLevels.Where(l => l.levelType == "Standard").ToList();
         var phase2Levels = allLevels.Where(l => l.levelType == "Fire").ToList();
         var phase3Levels = allLevels.Where(l => l.levelType == "Fire Evacuation").ToList();
         
-        // Phase 1
-        if (phase1ScoreText != null)
+        if (phase1Levels.Count > 0)
         {
-            if (phase1Levels.Count > 0)
-            {
-                int totalScore = phase1Levels.Sum(l => l.finalScore);
-                int totalPossible = phase1Levels.Sum(l => l.perfectScore);
-                float percentage = totalPossible > 0 ? (float)totalScore / totalPossible * 100f : 0f;
-                phase1ScoreText.text = $"Phase 1 - Risk Identification: {totalScore}/{totalPossible} ({percentage:F1}%)";
-            }
-            else
-            {
-                phase1ScoreText.text = "Phase 1 - Risk Identification: Not Completed";
-            }
+            int totalScore = phase1Levels.Sum(l => l.finalScore);
+            int totalPerfectScore = phase1Levels.Sum(l => l.perfectScore);
+            float percentage = totalPerfectScore > 0 ? (float)totalScore / totalPerfectScore * 100f : 0f;
+            summary += $"<b>Phase 1 - Risk Identification:</b> {totalScore}/{totalPerfectScore} ({percentage:F1}%)\n";
+        }
+        else
+        {
+            summary += "<b>Phase 1 - Risk Identification:</b> Not Completed\n";
         }
         
-        // Phase 2
-        if (phase2ScoreText != null)
+        if (phase2Levels.Count > 0)
         {
-            if (phase2Levels.Count > 0)
-            {
-                int totalScore = phase2Levels.Sum(l => l.finalScore);
-                int tasksCompleted = phase2Levels.Sum(l => l.completedTasks);
-                int totalTasks = phase2Levels.Sum(l => l.totalTasks);
-                phase2ScoreText.text = $"Phase 2 - Fire Response: Score {totalScore} | Tasks {tasksCompleted}/{totalTasks}";
-            }
-            else
-            {
-                phase2ScoreText.text = "Phase 2 - Fire Response: Not Completed";
-            }
+            int totalScore = phase2Levels.Sum(l => l.finalScore);
+            int tasksCompleted = phase2Levels.Sum(l => l.completedTasks);
+            int totalTasks = phase2Levels.Sum(l => l.totalTasks);
+            summary += $"<b>Phase 2 - Fire Response:</b> Score {totalScore} | Tasks {tasksCompleted}/{totalTasks}\n";
+        }
+        else
+        {
+            summary += "<b>Phase 2 - Fire Response:</b> Not Completed\n";
         }
         
-        // Phase 3
-        if (phase3ScoreText != null)
+        if (phase3Levels.Count > 0)
         {
-            if (phase3Levels.Count > 0)
-            {
-                var evacLevel = phase3Levels[0]; // Should only be one evacuation level
-                string status = evacLevel.completedOnTime ? "SUCCESS" : "FAILED";
-                phase3ScoreText.text = $"Phase 3 - Evacuation: {status} | Score {evacLevel.finalScore} | Time {evacLevel.evacuationTime:F1}s";
-            }
-            else
-            {
-                phase3ScoreText.text = "Phase 3 - Evacuation: Not Completed";
-            }
+            var evacLevel = phase3Levels[0];
+            string status = evacLevel.completedOnTime ? "SUCCESS" : "FAILED";
+            summary += $"<b>Phase 3 - Evacuation:</b> {status} | Score {evacLevel.finalScore} | Time {evacLevel.evacuationTime:F1}s\n\n";
         }
-    }
-    
-    /// <summary>
-    /// Display metric breakdown scores
-    /// </summary>
-    private void DisplayMetricBreakdown()
-    {
-        // Task Accuracy
-        if (taskAccuracyScoreText != null)
+        else
         {
-            taskAccuracyScoreText.text = $"Task Accuracy: {taskAccuracyScore:F1}/100";
-        }
-        if (taskAccuracyPercentageText != null)
-        {
-            taskAccuracyPercentageText.text = $"Weight: 50% | Contribution: {taskAccuracyScore * TASK_ACCURACY_WEIGHT:F1}";
+            summary += "<b>Phase 3 - Evacuation:</b> Not Completed\n\n";
         }
         
-        // Speed Efficiency
-        if (speedEfficiencyScoreText != null)
-        {
-            speedEfficiencyScoreText.text = $"Speed & Efficiency: {speedEfficiencyScore:F1}/100";
-        }
-        if (speedEfficiencyPercentageText != null)
-        {
-            speedEfficiencyPercentageText.text = $"Weight: 30% | Contribution: {speedEfficiencyScore * SPEED_EFFICIENCY_WEIGHT:F1}";
-        }
-        
-        // Safety Compliance
-        if (safetyComplianceScoreText != null)
-        {
-            safetyComplianceScoreText.text = $"Safety Compliance: {safetyComplianceScore:F1}/100";
-        }
-        if (safetyCompliancePercentageText != null)
-        {
-            safetyCompliancePercentageText.text = $"Weight: 20% | Contribution: {safetyComplianceScore * SAFETY_COMPLIANCE_WEIGHT:F1}";
-        }
-    }
-    
-    /// <summary>
-    /// Display detailed statistics
-    /// </summary>
-    private void DisplayDetailedStatistics(List<ScoreDataManager.LevelScoreData> allLevels)
-    {
+        // Detailed Statistics
         int totalCompleted = allLevels.Sum(l => l.completedTasks);
         int totalPossible = allLevels.Sum(l => l.totalTasks);
-        int totalMistakes = allLevels.Sum(l => l.levelType == "Standard" ? l.mistakeCount : l.errorCount);
-        int totalViolations = allLevels.Sum(l => l.safetyViolations);
         
-        // Calculate total time spent
-        float totalTime = 0f;
-        foreach (var level in allLevels)
+        int totalMistakes = ErrorTracker.Instance.disposalErrors + ErrorTracker.Instance.maintenanceErrors + 
+                           ErrorTracker.Instance.storageErrors + ErrorTracker.Instance.fireNPCErrors + 
+                           ErrorTracker.Instance.fireLeverErrors + ErrorTracker.Instance.fireSmokeDoorErrors + 
+                           ErrorTracker.Instance.fireExtinguisherErrors + ErrorTracker.Instance.fireWrongExtinguisherErrors +
+                           ErrorTracker.Instance.evacuationTimeExpiredErrors + ErrorTracker.Instance.evacuationFireObstacleErrors +
+                           ErrorTracker.Instance.evacuationOxygenErrors + ErrorTracker.Instance.evacuationNPCLeftBehindErrors +
+                           ErrorTracker.Instance.evacuationNPCNotRescuedErrors + ErrorTracker.Instance.evacuationNoWetClothErrors;
+        
+        summary += "<b>━━━ OVERALL STATISTICS ━━━</b>\n\n";
+        summary += $"<b>Tasks Completed:</b> {totalCompleted}/{totalPossible}\n";
+        summary += $"<b>Total Errors:</b> {totalMistakes}\n\n";
+        
+        // Improvement Feedback
+        string improvement = GetImprovementFeedback();
+        if (!string.IsNullOrEmpty(improvement))
         {
-            if (level.levelType == "Fire Evacuation")
+            summary += "<b>━━━ AREAS FOR IMPROVEMENT ━━━</b>\n\n";
+            summary += improvement;
+        }
+        
+        return summary;
+    }
+    
+    private string GetImprovementFeedback()
+    {
+        var errors = new List<(string type, int count)>
+        {
+            ("Disposal", ErrorTracker.Instance.disposalErrors),
+            ("Maintenance", ErrorTracker.Instance.maintenanceErrors),
+            ("Storage", ErrorTracker.Instance.storageErrors),
+            ("Fire NPC Evacuation", ErrorTracker.Instance.fireNPCErrors),
+            ("Fire Alarm Activation", ErrorTracker.Instance.fireLeverErrors),
+            ("Smoke Door Closure", ErrorTracker.Instance.fireSmokeDoorErrors),
+            ("Fire Extinguisher Usage", ErrorTracker.Instance.fireExtinguisherErrors + ErrorTracker.Instance.fireWrongExtinguisherErrors),
+            ("Evacuation Time Management", ErrorTracker.Instance.evacuationTimeExpiredErrors),
+            ("Fire Obstacle Avoidance", ErrorTracker.Instance.evacuationFireObstacleErrors),
+            ("Oxygen Management", ErrorTracker.Instance.evacuationOxygenErrors),
+            ("NPC Rescue", ErrorTracker.Instance.evacuationNPCLeftBehindErrors + ErrorTracker.Instance.evacuationNPCNotRescuedErrors),
+            ("Wet Cloth Usage", ErrorTracker.Instance.evacuationNoWetClothErrors)
+        };
+
+        errors.Sort((a, b) => b.count.CompareTo(a.count));
+
+        string feedback = "";
+        int feedbackCount = 0;
+
+        for (int i = 0; i < errors.Count && feedbackCount < 3; i++)
+        {
+            if (errors[i].count > 0)
             {
-                totalTime += level.evacuationTime;
+                if (feedbackCount > 0) feedback += "\n";
+                feedback += GetDetailedErrorFeedback(errors[i].type, errors[i].count);
+                feedbackCount++;
             }
         }
-        
-        if (totalTasksCompletedText != null)
+
+        if (feedbackCount == 0)
         {
-            totalTasksCompletedText.text = $"Tasks Completed: {totalCompleted}/{totalPossible}";
+            return "<b>Excellent work!</b> No significant errors detected. Keep maintaining this level of performance!";
         }
-        
-        if (totalMistakesText != null)
+
+        return feedback;
+    }
+
+    private string GetDetailedErrorFeedback(string errorType, int count)
+    {
+        switch (errorType)
         {
-            totalMistakesText.text = $"Total Errors: {totalMistakes}";
-        }
-        
-        if (totalSafetyViolationsText != null)
-        {
-            totalSafetyViolationsText.text = $"Safety Violations: {totalViolations}";
-        }
-        
-        if (totalTimeText != null)
-        {
-            int minutes = Mathf.FloorToInt(totalTime / 60f);
-            int seconds = Mathf.FloorToInt(totalTime % 60f);
-            totalTimeText.text = $"Total Training Time: {minutes:00}:{seconds:00}";
+            case "Disposal":
+                return $"<b>• Waste Disposal ({count} errors):</b>\nReview color-coded bin system: Red = infectious waste, Yellow = hazardous chemicals, Green = general waste, Blue = recyclables.";
+            
+            case "Maintenance":
+                return $"<b>• Equipment Maintenance ({count} errors):</b>\nCheck expiration dates, inspect for cracks/damage, and verify safety certifications.";
+            
+            case "Storage":
+                return $"<b>• Chemical Storage ({count} errors):</b>\nFlammable materials require designated cabinets. Review storage protocols for different chemical classes.";
+            
+            case "Fire NPC Evacuation":
+                return $"<b>• NPC Evacuation Guidance ({count} errors):</b>\nGuide individuals away from danger zones toward designated assembly points.";
+            
+            case "Fire Alarm Activation":
+                return $"<b>• Fire Alarm Response ({count} errors):</b>\nActivate pull stations immediately upon discovering fire. Early warning saves lives.";
+            
+            case "Smoke Door Closure":
+                return $"<b>• Smoke Door Operation ({count} errors):</b>\nClose smoke doors to contain fire spread and protect evacuation routes.";
+            
+            case "Fire Extinguisher Usage":
+                return $"<b>• Fire Extinguisher Operation ({count} errors):</b>\nReview PASS method: Pull pin, Aim low, Squeeze handle, Sweep side to side.";
+            
+            case "Evacuation Time Management":
+                return $"<b>• Evacuation Speed ({count} errors):</b>\nPractice faster decision-making. Know evacuation routes beforehand.";
+            
+            case "Fire Obstacle Avoidance":
+                return $"<b>• Fire Hazard Navigation ({count} errors):</b>\nAvoid direct contact with flames. Stay low to avoid smoke inhalation.";
+            
+            case "Oxygen Management":
+                return $"<b>• Oxygen Preservation ({count} errors):</b>\nAlways use wet cloth over nose/mouth in smoky environments.";
+            
+            case "NPC Rescue":
+                return $"<b>• Patient/NPC Assistance ({count} errors):</b>\nDon't leave vulnerable individuals behind. Adjust pace to ensure everyone evacuates safely.";
+            
+            case "Wet Cloth Usage":
+                return $"<b>• Smoke Protection ({count} errors):</b>\nWet cloth is essential in smoke-filled environments. Always wet and apply before entering smoky areas.";
+            
+            default:
+                return "";
         }
     }
     
-    /// <summary>
-    /// Handle retry button click
-    /// </summary>
     private void OnRetryClicked()
     {
-        // Clear all data for fresh start
         if (ScoreDataManager.Instance != null)
         {
             ScoreDataManager.Instance.ClearAllData();
         }
         
-        // Load main menu or first level
+        if (ErrorTracker.Instance != null)
+        {
+            ErrorTracker.Instance.ResetAllErrors();
+        }
+        
         UnityEngine.SceneManagement.SceneManager.LoadScene(mainMenuSceneName);
-    }
-    
-    /// <summary>
-    /// Get detailed performance report as string (useful for logging or saving)
-    /// </summary>
-    public string GetPerformanceReport()
-    {
-        return $"=== FIRE SAFETY TRAINING EVALUATION ===\n" +
-               $"Final Score: {finalWeightedScore:F2}/100\n" +
-               $"Task Accuracy: {taskAccuracyScore:F2}/100 (Weight: 50%)\n" +
-               $"Speed Efficiency: {speedEfficiencyScore:F2}/100 (Weight: 30%)\n" +
-               $"Safety Compliance: {safetyComplianceScore:F2}/100 (Weight: 20%)\n" +
-               $"Certification Level: {GetCertificationLevel()}\n" +
-               $"======================================";
-    }
-    
-    private string GetCertificationLevel()
-    {
-        if (finalWeightedScore >= EXPERT_THRESHOLD) return "EXPERT";
-        if (finalWeightedScore >= PROFICIENT_THRESHOLD) return "PROFICIENT";
-        if (finalWeightedScore >= INTERMEDIATE_THRESHOLD) return "INTERMEDIATE";
-        return "BEGINNER";
     }
 }
