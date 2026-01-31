@@ -4964,14 +4964,14 @@ PrefabInstance:
     - target: {fileID: 1183521968904363684, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 9150101833041015829}
+      objectReference: {fileID: 4092871868998549831}
     - target: {fileID: 1183521968904363684, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: RestartSceneButton
+      value: RestartScene
       objectReference: {fileID: 0}
     - target: {fileID: 1183521968904363684, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: VRPauseMenu, Assembly-CSharp
+      value: RestartCurrentScene, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1689463864969055731, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
       propertyPath: m_Type
@@ -5048,6 +5048,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 205647256817676757, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
   m_PrefabInstance: {fileID: 509695933134253994}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4092871868998549831 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4602116451375296237, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
+  m_PrefabInstance: {fileID: 509695933134253994}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62b9eece4fd8fdf4699bafd8e975252c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8367512544536157538 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8290473338805842632, guid: 625fc8522fb44f84f9421228bd3214ba, type: 3}
