@@ -256,6 +256,14 @@ public class NPCInteraction : CustomTaskController
             UpdateDialogueText(correctDialogue);
             StartSpeech(correctDialogue);
             questionAnswered = true;
+            
+            // ✅ SOLUTION 2: Complete task IMMEDIATELY when correct answer is given
+            CompleteTask();
+            if (FireScoreTracker.Instance != null)
+            {
+                FireScoreTracker.Instance.OnNPCEvacuated();
+            }
+            
             StartCoroutine(DelayedEvacuation());
         }
         else
@@ -273,6 +281,14 @@ public class NPCInteraction : CustomTaskController
             UpdateDialogueText(correctDialogue);
             StartSpeech(correctDialogue);
             questionAnswered = true;
+            
+            // ✅ SOLUTION 2: Complete task IMMEDIATELY when correct answer is given
+            CompleteTask();
+            if (FireScoreTracker.Instance != null)
+            {
+                FireScoreTracker.Instance.OnNPCEvacuated();
+            }
+            
             StartCoroutine(DelayedEvacuation());
         }
         else
@@ -363,20 +379,17 @@ public class NPCInteraction : CustomTaskController
             yield return null;
         }
 
-        CompleteTask();
-
-        if (FireScoreTracker.Instance != null)
-        {
-            FireScoreTracker.Instance.OnNPCEvacuated();
-        }
-        
+        // Task already completed when correct answer was given
+        // Just clean up TTS and hide the NPC
         if (enableTTS && isSpeaking && ttsSpeaker != null)
         {
             ttsSpeaker.Stop();
         }
 
         yield return new WaitForSeconds(0.5f);
-        Destroy(gameObject);
+        
+        // Hide instead of destroy to prevent evaluation errors
+        gameObject.SetActive(false);
     }
 
     public override void StartTask()

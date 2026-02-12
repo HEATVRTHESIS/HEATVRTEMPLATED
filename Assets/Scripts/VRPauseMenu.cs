@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.XR;
 
 public class VRPauseMenu : MonoBehaviour
 {
@@ -30,12 +31,24 @@ public class VRPauseMenu : MonoBehaviour
     private float timeScaleBeforePause = 1f;
 
     private void Awake()
-    {
-        pauseAction = new InputAction(
-            name: "Pause",
-            binding: "<XRController>{LeftHand}/menuButton"
-        );
-    }
+{
+    pauseAction = new InputAction(
+        name: "Pause",
+        type: InputActionType.Button
+    );
+    
+    // Meta Quest 2 / Oculus specific bindings
+    pauseAction.AddBinding("<XRController>{LeftHand}/menuButton");
+
+    
+    // Oculus Touch Controller specific
+    pauseAction.AddBinding("<OculusTouchController>{LeftHand}/menu");
+ 
+    
+    // Generic XR bindings
+    pauseAction.AddBinding("<XRController>/menuButton");
+    pauseAction.AddBinding("<XRController>/start");
+}
 
     private void OnEnable()
     {

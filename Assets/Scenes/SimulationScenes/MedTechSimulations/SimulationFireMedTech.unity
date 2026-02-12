@@ -2771,6 +2771,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7177315462333056187, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
   m_PrefabInstance: {fileID: 1495825020}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1495825022 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3312803887559014608, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+  m_PrefabInstance: {fileID: 1495825020}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ccfc1a177e6e5c47af0a57e751780ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1497694319
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3293,8 +3304,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
-  audioSource: {fileID: 0}
-  fireExtinguisherController: {fileID: 0}
+  audioSource: {fileID: 5373646681556592961}
+  fireExtinguisherController: {fileID: 1495825022}
   OnAllFiresExtinguishedEvent:
     m_PersistentCalls:
       m_Calls: []
