@@ -12826,7 +12826,7 @@ MonoBehaviour:
   m_XROrigin: {fileID: 926786886046980010}
   m_BodyPositionEvaluatorObject: {fileID: 0}
   m_ConstrainedBodyManipulatorObject: {fileID: 0}
-  m_UseCharacterControllerIfExists: 0
+  m_UseCharacterControllerIfExists: 1
 --- !u!4 &5611256886099441884
 Transform:
   m_ObjectHideFlags: 0

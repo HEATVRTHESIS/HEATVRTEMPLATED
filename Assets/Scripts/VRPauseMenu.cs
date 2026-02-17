@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using UnityEngine.XR;
+using System.Collections.Generic;
 
 public class VRPauseMenu : MonoBehaviour
 {
@@ -22,45 +22,14 @@ public class VRPauseMenu : MonoBehaviour
     [Tooltip("Reference to the dialogue system for TTS control")]
     [SerializeField] private VRDialogueSystem dialogueSystem;
     
-    private InputAction pauseAction;
-    
     private bool isPaused = false;
     private float currentVolume = 1f;
     private float currentBGMVolume = 1f;
     private bool isTTSMuted = false;
     private float timeScaleBeforePause = 1f;
-
-    private void Awake()
-{
-    pauseAction = new InputAction(
-        name: "Pause",
-        type: InputActionType.Button
-    );
     
-    // Meta Quest 2 / Oculus specific bindings
-    pauseAction.AddBinding("<XRController>{LeftHand}/menuButton");
-
-    
-    // Oculus Touch Controller specific
-    pauseAction.AddBinding("<OculusTouchController>{LeftHand}/menu");
- 
-    
-    // Generic XR bindings
-    pauseAction.AddBinding("<XRController>/menuButton");
-    pauseAction.AddBinding("<XRController>/start");
-}
-
-    private void OnEnable()
-    {
-        pauseAction.Enable();
-        pauseAction.performed += OnPauseButtonPressed;
-    }
-
-    private void OnDisable()
-    {
-        pauseAction.performed -= OnPauseButtonPressed;
-        pauseAction.Disable();
-    }
+    // For menu button detection
+    private bool wasMenuButtonPressed = false;
 
     void Start()
     {
@@ -111,16 +80,31 @@ public class VRPauseMenu : MonoBehaviour
 
     void Update()
     {
+        // Check for menu button press using XR Input (works on Quest 2)
+        bool isMenuButtonPressed = false;
+        
+        var leftHandDevices = new List<InputDevice>();
+        InputDevices.GetDevicesAtXRNode(XRNode.LeftHand, leftHandDevices);
+        
+        if (leftHandDevices.Count > 0)
+        {
+            InputDevice device = leftHandDevices[0];
+            device.TryGetFeatureValue(CommonUsages.menuButton, out isMenuButtonPressed);
+        }
+        
+        // Detect button press (not hold) - only trigger on button down
+        if (isMenuButtonPressed && !wasMenuButtonPressed)
+        {
+            Debug.Log("Menu button pressed!");
+            TogglePauseMenu();
+        }
+        wasMenuButtonPressed = isMenuButtonPressed;
+        
         if (isPaused)
         {
             ApplyVolume();
             ApplyBGMVolume();
         }
-    }
-
-    private void OnPauseButtonPressed(InputAction.CallbackContext context)
-    {
-        TogglePauseMenu();
     }
 
     void TogglePauseMenu()
@@ -161,6 +145,8 @@ public class VRPauseMenu : MonoBehaviour
         {
             muteTTSToggle.isOn = isTTSMuted;
         }
+        
+        Debug.Log("Pause menu opened");
     }
 
     void ClosePauseMenu()
@@ -235,14 +221,11 @@ public class VRPauseMenu : MonoBehaviour
         ClosePauseMenu();
     }
 
-    // NEW: Method to call before restarting scene
     public void RestartSceneButton()
     {
-        // Restore time scale BEFORE restarting
         Time.timeScale = 1f;
         isPaused = false;
         
-        // Now call your RestartCurrentScene script
         RestartCurrentScene restarter = FindObjectOfType<RestartCurrentScene>();
         if (restarter != null)
         {
@@ -254,14 +237,11 @@ public class VRPauseMenu : MonoBehaviour
         }
     }
 
-    // NEW: Method to call before loading a new scene
     public void LoadSceneButton()
     {
-        // Restore time scale BEFORE loading new scene
         Time.timeScale = 1f;
         isPaused = false;
         
-        // Now call your SceneLoader script
         SceneLoader loader = FindObjectOfType<SceneLoader>();
         if (loader != null)
         {
