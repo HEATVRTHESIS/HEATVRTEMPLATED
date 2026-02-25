@@ -918,6 +918,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeInTime: 1
+  distanceFromCamera: 0.5
+  planeSize: 4
 --- !u!114 &252204677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2155,7 +2157,7 @@ MonoBehaviour:
     - Far ER Exit
     - Near Dietary Exit
     totalObstaclesToSpawn: 51
-  - departmentName: EmergencyRoom
+  - departmentName: ER
     spawnPoint: {fileID: 633739084}
     assignedPathNumbers: 010000000200000003000000070000000800000009000000
     roadblockPoints:
@@ -2195,7 +2197,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 470235795}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e59fe3d58172b141a1cd0f1bb422a67, type: 3}
   m_Name: 
@@ -2393,6 +2395,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeInTime: 1
+  distanceFromCamera: 0.5
+  planeSize: 4
 --- !u!114 &541157382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9997,6 +10001,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeInTime: 7
+  distanceFromCamera: 0.5
+  planeSize: 4
 --- !u!1 &1124808795
 GameObject:
   m_ObjectHideFlags: 0
@@ -10900,6 +10906,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeInTime: 1
+  distanceFromCamera: 0.5
+  planeSize: 4
 --- !u!1 &1448783501
 GameObject:
   m_ObjectHideFlags: 0
@@ -19046,6 +19054,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeInTime: 1
+  distanceFromCamera: 0.5
+  planeSize: 4
 --- !u!114 &2084289362
 MonoBehaviour:
   m_ObjectHideFlags: 0
