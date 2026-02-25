@@ -759,7 +759,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -109.3, y: 277.3}
+  m_AnchoredPosition: {x: -109.3, y: 690}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &144185655
@@ -2255,6 +2255,7 @@ GameObject:
   - component: {fileID: 362600646}
   - component: {fileID: 362600645}
   - component: {fileID: 362600650}
+  - component: {fileID: 362600651}
   m_Layer: 5
   m_Name: EvalScreen
   m_TagString: Untagged
@@ -2385,6 +2386,20 @@ MonoBehaviour:
   beginnerColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   retryButton: {fileID: 0}
   mainMenuSceneName: MainMenu
+--- !u!114 &362600651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362600643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02a6f42bfb79f3644928504c1446ac86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTrainingResultScene: 1
+  departmentNameOverride: 
 --- !u!1 &401688547
 GameObject:
   m_ObjectHideFlags: 0
@@ -4756,7 +4771,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.00009826234, y: 0}
-  m_SizeDelta: {x: -0.59, y: 603.65}
+  m_SizeDelta: {x: -0.59, y: 1500}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1022348503
 GameObject:
@@ -4916,7 +4931,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1675344911}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.18053508
+  m_Size: 0.07265334
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11351,6 +11366,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeInTime: 7
+  distanceFromCamera: 0.5
+  planeSize: 4
 --- !u!1 &1996246964
 GameObject:
   m_ObjectHideFlags: 0

@@ -380,4 +380,9 @@ public class ScoreDataManager : MonoBehaviour
             { "Evacuation", GetTotalEvacuationErrors() }
         };
     }
+    public void ClearAllLevelData()
+{
+    levelScores.Clear();
+    Debug.Log("Cleared all level data");
+}
 }

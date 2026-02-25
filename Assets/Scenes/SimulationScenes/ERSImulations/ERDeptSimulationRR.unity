@@ -16285,7 +16285,7 @@ MonoBehaviour:
   m_XROrigin: {fileID: 1132705982235236530}
   m_BodyPositionEvaluatorObject: {fileID: 0}
   m_ConstrainedBodyManipulatorObject: {fileID: 0}
-  m_UseCharacterControllerIfExists: 0
+  m_UseCharacterControllerIfExists: 1
 --- !u!23 &5725934355528187395
 MeshRenderer:
   m_ObjectHideFlags: 0

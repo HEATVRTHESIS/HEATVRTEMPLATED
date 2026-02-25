@@ -872,63 +872,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 203015056}
   m_Mesh: {fileID: 2003126154647920913, guid: 13ad110fc254f0047bfd804318e3f2a5, type: 3}
---- !u!1001 &230034277
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187027, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
-      propertyPath: m_Name
-      value: XR Device Simulator
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
 --- !u!1 &252204674
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,6 +918,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeInTime: 1
+  distanceFromCamera: 0.5
+  planeSize: 4
 --- !u!114 &252204677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2212,7 +2157,7 @@ MonoBehaviour:
     - Far ER Exit
     - Near Dietary Exit
     totalObstaclesToSpawn: 51
-  - departmentName: EmergencyRoom
+  - departmentName: ER
     spawnPoint: {fileID: 633739084}
     assignedPathNumbers: 010000000200000003000000070000000800000009000000
     roadblockPoints:
@@ -2252,7 +2197,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 470235795}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e59fe3d58172b141a1cd0f1bb422a67, type: 3}
   m_Name: 
@@ -2450,6 +2395,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeInTime: 1
+  distanceFromCamera: 0.5
+  planeSize: 4
 --- !u!114 &541157382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10054,6 +10001,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeInTime: 7
+  distanceFromCamera: 0.5
+  planeSize: 4
 --- !u!1 &1124808795
 GameObject:
   m_ObjectHideFlags: 0
@@ -10957,6 +10906,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeInTime: 1
+  distanceFromCamera: 0.5
+  planeSize: 4
 --- !u!1 &1448783501
 GameObject:
   m_ObjectHideFlags: 0
@@ -19103,6 +19054,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeInTime: 1
+  distanceFromCamera: 0.5
+  planeSize: 4
 --- !u!114 &2084289362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46767,4 +46720,3 @@ SceneRoots:
   - {fileID: 2132988213}
   - {fileID: 1113032068}
   - {fileID: 1807014593}
-  - {fileID: 230034277}

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Manages the entire tutorial sequence for the VR game.
 /// Handles progression through various tutorial stages with conditions and triggers.
+/// NOW WITH SAVE FUNCTIONALITY - skips tutorial if already completed.
 /// </summary>
 public class TutorialManager : MonoBehaviour
 {
@@ -68,6 +69,14 @@ public class TutorialManager : MonoBehaviour
             return;
         }
         
+        // Check if tutorial has already been completed
+        if (TutorialSaveData.Instance != null && TutorialSaveData.Instance.IsTutorialCompleted())
+        {
+            Debug.Log("Tutorial already completed - skipping tutorial");
+            SkipTutorialSequence();
+            return;
+        }
+        
         // Subscribe to input actions
         if (thumbstickAction.action != null)
         {
@@ -97,6 +106,53 @@ public class TutorialManager : MonoBehaviour
         
         // Start the tutorial
         StartTutorial();
+    }
+    
+    /// <summary>
+    /// Skip the tutorial sequence - disables all tutorial elements
+    /// </summary>
+    void SkipTutorialSequence()
+    {
+        tutorialComplete = true;
+        
+        // Disable all tutorial trigger zones
+        if (movementTriggerZone != null)
+        {
+            movementTriggerZone.gameObject.SetActive(false);
+        }
+        
+        if (teleportZone != null)
+        {
+            teleportZone.gameObject.SetActive(false);
+        }
+        
+        if (investigationObject != null)
+        {
+            HighlightableObject highlight = investigationObject.GetComponent<HighlightableObject>();
+            if (highlight != null)
+            {
+                highlight.SetHighlight(false);
+            }
+        }
+        
+        if (grippingTask != null)
+        {
+            grippingTask.gameObject.SetActive(false);
+        }
+        
+        // Make sure movement is enabled
+        if (moveAction.action != null)
+        {
+            moveAction.action.Enable();
+        }
+        
+        if (movementProvider != null)
+        {
+            movementProvider.enabled = true;
+        }
+        
+        // Disable this script since tutorial is done
+        this.enabled = false;
     }
     
     void OnEnable()
@@ -244,7 +300,7 @@ public class TutorialManager : MonoBehaviour
         
         dialogueSystem.StartDialog(movementLines);
         
-        // Enable the movement trigger zone
+        // Enable/highlight the movement trigger zone
         if (movementTriggerZone != null)
         {
             movementTriggerZone.gameObject.SetActive(true);
@@ -260,7 +316,7 @@ public class TutorialManager : MonoBehaviour
         
         hasEnteredMovementZone = true;
         
-        // Disable the trigger zone
+        // Disable the movement zone
         if (movementTriggerZone != null)
         {
             movementTriggerZone.gameObject.SetActive(false);
@@ -274,69 +330,29 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     void StartTurningTutorial()
     {
+        turningStep = 1; // Start with right turn
+        
         string[] turningLines = new string[]
         {
-            "Excellent! You can move around the environment.",
+            "Perfect! You know how to move.",
             "",
-            "Now let's learn how to turn using the right thumbstick.",
+            "Now let's learn how to turn.",
             "Push the right thumbstick to the RIGHT to turn right."
         };
         
         dialogueSystem.StartDialog(turningLines);
-        turningStep = 1;
     }
     
     /// <summary>
-    /// PUBLIC METHOD: Call this when player turns right with the thumbstick
-    /// Hook this up to your input system
+    /// Called when player turns right
+    /// PUBLIC so TutorialInputHelper can call it
     /// </summary>
     public void OnTurnedRight()
     {
-        if (!hasEnteredMovementZone || hasLearnedTurning) return;
+        if (turningStep != 1) return;
         
-        if (turningStep == 1)
-        {
-            turningStep = 2;
-            ShowTurningLeft();
-            Debug.Log("Tutorial: Player turned right - showing left instruction");
-        }
-    }
-    
-    /// <summary>
-    /// PUBLIC METHOD: Call this when player turns left with the thumbstick
-    /// Hook this up to your input system
-    /// </summary>
-    public void OnTurnedLeft()
-    {
-        if (!hasEnteredMovementZone || hasLearnedTurning) return;
+        turningStep = 2; // Move to left turn
         
-        if (turningStep == 2)
-        {
-            turningStep = 3;
-            ShowTurningDown();
-            Debug.Log("Tutorial: Player turned left - showing down instruction");
-        }
-    }
-    
-    /// <summary>
-    /// PUBLIC METHOD: Call this when player turns down/around with the thumbstick
-    /// Hook this up to your input system
-    /// </summary>
-    public void OnTurnedDown()
-    {
-        if (!hasEnteredMovementZone || hasLearnedTurning) return;
-        
-        if (turningStep == 3)
-        {
-            turningStep = 4;
-            hasLearnedTurning = true;
-            StartTeleportationTutorial();
-            Debug.Log("Tutorial: Player turned down - moving to teleportation stage");
-        }
-    }
-    
-    void ShowTurningLeft()
-    {
         string[] lines = new string[]
         {
             "Good! Now push the right thumbstick to the LEFT to turn left."
@@ -345,14 +361,36 @@ public class TutorialManager : MonoBehaviour
         dialogueSystem.StartDialog(lines);
     }
     
-    void ShowTurningDown()
+    /// <summary>
+    /// Called when player turns left
+    /// PUBLIC so TutorialInputHelper can call it
+    /// </summary>
+    public void OnTurnedLeft()
     {
+        if (turningStep != 2) return;
+        
+        turningStep = 3; // Move to turn around
+        
         string[] lines = new string[]
         {
-            "Perfect! Now push the right thumbstick DOWN to turn around."
+            "Excellent! Now push the right thumbstick DOWN to turn around."
         };
         
         dialogueSystem.StartDialog(lines);
+    }
+    
+    /// <summary>
+    /// Called when player turns down (around)
+    /// PUBLIC so TutorialInputHelper can call it
+    /// </summary>
+    public void OnTurnedDown()
+    {
+        if (turningStep != 3) return;
+        
+        turningStep = 4; // Complete
+        hasLearnedTurning = true;
+        
+        StartTeleportationTutorial();
     }
     
     /// <summary>
@@ -545,11 +583,17 @@ public class TutorialManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Completes the tutorial
+    /// Completes the tutorial and SAVES completion status
     /// </summary>
     void CompleteTutorial()
     {
         tutorialComplete = true;
+        
+        // SAVE TUTORIAL COMPLETION
+        if (TutorialSaveData.Instance != null)
+        {
+            TutorialSaveData.Instance.CompleteTutorial();
+        }
         
         string[] completionLines = new string[]
         {
