@@ -4771,7 +4771,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -0.00009826234, y: 0}
-  m_SizeDelta: {x: -0.59, y: 603.65}
+  m_SizeDelta: {x: -0.59, y: 1500}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1022348503
 GameObject:
@@ -4931,7 +4931,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1675344911}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.18053508
+  m_Size: 0.07265334
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11366,6 +11366,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeInTime: 7
+  distanceFromCamera: 0.5
+  planeSize: 4
 --- !u!1 &1996246964
 GameObject:
   m_ObjectHideFlags: 0

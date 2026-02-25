@@ -11,7 +11,7 @@ public class DepartmentCompletionHandler : MonoBehaviour
     [SerializeField] private bool isTrainingResultScene = true; // Set to TRUE for training results, FALSE for simulation results
     
     [Header("Auto-Detect Department")]
-    [Tooltip("Leave empty to auto-detect from completed levels")]
+    [Tooltip("Leave empty to use department selected from DepartmentSelector")]
     [SerializeField] private string departmentNameOverride = ""; // Optional: manually specify department name
     
     private FinalEvaluationScreen evaluationScreen;
@@ -64,15 +64,18 @@ public class DepartmentCompletionHandler : MonoBehaviour
             return;
         }
 
-        // Auto-detect department name from the level scene names
-        string detectedDepartment = DetectDepartmentName(allLevels);
+        // Get department name from DepartmentSelector (which the player just selected)
+        string departmentName = DepartmentSelector.LastSelectedDepartment;
         
-        // Use override if provided, otherwise use detected name
-        string departmentName = string.IsNullOrEmpty(departmentNameOverride) ? detectedDepartment : departmentNameOverride;
+        // Use override if provided, otherwise use the selected department
+        if (!string.IsNullOrEmpty(departmentNameOverride))
+        {
+            departmentName = departmentNameOverride;
+        }
         
         if (string.IsNullOrEmpty(departmentName))
         {
-            Debug.LogError("Could not determine department name! Set departmentNameOverride in inspector.");
+            Debug.LogError("Could not determine department name! Either select a department through DepartmentSelector or set departmentNameOverride in inspector.");
             return;
         }
 
@@ -138,35 +141,6 @@ public class DepartmentCompletionHandler : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Auto-detect department name from level scene names
-    /// Looks for common patterns like "MedTech", "ER", "Dietary" in scene names
-    /// </summary>
-    private string DetectDepartmentName(System.Collections.Generic.List<ScoreDataManager.LevelScoreData> levels)
-    {
-        if (levels.Count == 0) return "";
-
-        // Get the first level's name to analyze
-        string firstLevelName = levels[0].levelName;
-
-        // Common department name patterns
-        if (firstLevelName.Contains("MedTech") || firstLevelName.Contains("medtech"))
-            return "MedTech";
-        
-        if (firstLevelName.Contains("ER") || firstLevelName.Contains("Emergency"))
-            return "ER";
-        
-        if (firstLevelName.Contains("Dietary") || firstLevelName.Contains("dietary"))
-            return "Dietary";
-
-        // If no pattern found, try to extract from scene name
-        // Example: "MedTechDepartment" -> "MedTech"
-        // Example: "ERDeptTraining" -> "ER"
-        
-        Debug.LogWarning($"Could not auto-detect department from scene name: {firstLevelName}");
-        return "";
-    }
-
     // Optional: Call this manually if you want to trigger the save at a specific time
     public void ManualSaveTrigger()
     {
@@ -174,19 +148,13 @@ public class DepartmentCompletionHandler : MonoBehaviour
         SaveDepartmentCompletion();
     }
 
-    // Helper method to get the detected or overridden department name
+    // Helper method to get the department name being used
     public string GetDepartmentName()
     {
         if (!string.IsNullOrEmpty(departmentNameOverride))
             return departmentNameOverride;
 
-        if (ScoreDataManager.Instance != null)
-        {
-            var levels = ScoreDataManager.Instance.GetAllLevelData();
-            return DetectDepartmentName(levels);
-        }
-
-        return "";
+        return DepartmentSelector.LastSelectedDepartment;
     }
 
     // Helper to check if simulation was unlocked

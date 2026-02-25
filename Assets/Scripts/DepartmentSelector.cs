@@ -37,6 +37,10 @@ public class DepartmentSelector : MonoBehaviour
     [SerializeField] private Department[] departments;
 
     private int currentDepartmentIndex = 0;
+    
+    // Static field to store the last selected department name - persists across scenes
+    private static string lastSelectedDepartment = "";
+    public static string LastSelectedDepartment => lastSelectedDepartment;
 
     private void Start()
     {
@@ -139,6 +143,10 @@ public class DepartmentSelector : MonoBehaviour
                 fieldInfo.SetValue(sceneLoader, sceneToLoad);
             }
         }
+
+        // Store the selected department name for later use
+        lastSelectedDepartment = currentDept.departmentName;
+        Debug.Log($"Selected department: {lastSelectedDepartment}");
     }
 
     private void UpdateLockStatus(Department currentDept)
