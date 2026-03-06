@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 4868602341258685070}
   - component: {fileID: 3985828302623647627}
   - component: {fileID: 434304001101771812}
+  - component: {fileID: 9165447414630975758}
   m_Layer: 0
   m_Name: alcoholbot
   m_TagString: Untagged
@@ -479,6 +480,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9166257131569266225, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 434304001101771812}
+    - targetCorrespondingSourceObject: {fileID: 9166257131569266225, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9165447414630975758}
   m_SourcePrefab: {fileID: 100100000, guid: 59c23f9a023c5934998221b2e3aea3a4, type: 3}
 --- !u!114 &133443135826022377
 MonoBehaviour:
@@ -559,3 +563,19 @@ MonoBehaviour:
   audioClip: {fileID: 0}
   hideIndicatorOnDrop: 1
   onlyShowWhileGrabbed: 1
+--- !u!114 &9165447414630975758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2429628482725024022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f18a554d0b0ce4bac45f0163d0c1fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storableType: Trash
+  parentTaskController: {fileID: 0}
+  hasBeenProcessed: 0
+  hasTriggeredError: 0

@@ -115,6 +115,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cba6e9bef99e2f64985f4c4af226430f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3638283641788349943}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cba6e9bef99e2f64985f4c4af226430f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5976660250762206528}
   m_SourcePrefab: {fileID: 100100000, guid: cba6e9bef99e2f64985f4c4af226430f, type: 3}
 --- !u!1 &7028531067968006109 stripped
 GameObject:
@@ -408,6 +411,22 @@ MonoBehaviour:
   audioClip: {fileID: 0}
   hideIndicatorOnDrop: 1
   onlyShowWhileGrabbed: 1
+--- !u!114 &5976660250762206528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7028531067968006109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f18a554d0b0ce4bac45f0163d0c1fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  storableType: Trash
+  parentTaskController: {fileID: 0}
+  hasBeenProcessed: 0
+  hasTriggeredError: 0
 --- !u!4 &7692582921172417895 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cba6e9bef99e2f64985f4c4af226430f, type: 3}

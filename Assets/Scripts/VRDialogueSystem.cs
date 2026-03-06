@@ -25,6 +25,10 @@ public class VRDialogueSystem : MonoBehaviour
     [Tooltip("The speed at which characters are typed out. A smaller value is faster.")]
     public float typingSpeed = 0.05f;
 
+    [Header("Skip Controls")]
+    [Tooltip("How long the next-line button must be held to skip the entire current dialogue.")]
+    public float holdToSkipDuration = 0.75f;
+
     [Header("Time Control")]
     [Tooltip("Should the game time be paused while dialogue is displayed?")]
     public bool pauseTimeScale = true;
@@ -58,8 +62,10 @@ public class VRDialogueSystem : MonoBehaviour
     private string _currentLine;
     private Coroutine _typingCoroutine;
     private Coroutine _mouthAnimationCoroutine;
+    private Coroutine _holdToSkipCoroutine;
     private float _originalTimeScale = 1f;
     private string _currentSpeechText; // Track current speech text for stop operations
+    private bool _isNextLineHeld = false;
 
     // Static mute state that can be controlled by VRPauseMenu
     public static bool IsTTSMuted { get; set; } = false;
@@ -95,6 +101,8 @@ public class VRDialogueSystem : MonoBehaviour
         if (nextLineAction.action != null)
         {
             nextLineAction.action.performed += OnNextLineButtonPressed;
+            nextLineAction.action.started += OnNextLineButtonStarted;
+            nextLineAction.action.canceled += OnNextLineButtonCanceled;
         }
     }
 
@@ -120,6 +128,13 @@ public class VRDialogueSystem : MonoBehaviour
         {
             nextLineAction.action.Disable();
         }
+
+        if (_holdToSkipCoroutine != null)
+        {
+            StopCoroutine(_holdToSkipCoroutine);
+            _holdToSkipCoroutine = null;
+        }
+        _isNextLineHeld = false;
 
         // Unsubscribe from Meta Voice TTS events
         if (enableTTS && ttsSpeaker != null)
@@ -300,6 +315,53 @@ public class VRDialogueSystem : MonoBehaviour
 
         // Otherwise, show the next line
         DisplayNextLine();
+    }
+
+    /// <summary>
+    /// Handles next-line button hold start for skip-all behavior.
+    /// </summary>
+    private void OnNextLineButtonStarted(InputAction.CallbackContext context)
+    {
+        if (!_isDisplaying)
+            return;
+
+        _isNextLineHeld = true;
+
+        if (_holdToSkipCoroutine != null)
+        {
+            StopCoroutine(_holdToSkipCoroutine);
+        }
+        _holdToSkipCoroutine = StartCoroutine(HoldToSkipRoutine());
+    }
+
+    /// <summary>
+    /// Handles next-line button hold release for skip-all behavior.
+    /// </summary>
+    private void OnNextLineButtonCanceled(InputAction.CallbackContext context)
+    {
+        _isNextLineHeld = false;
+
+        if (_holdToSkipCoroutine != null)
+        {
+            StopCoroutine(_holdToSkipCoroutine);
+            _holdToSkipCoroutine = null;
+        }
+    }
+
+    /// <summary>
+    /// Waits for hold duration and skips all remaining dialogue if still held.
+    /// Uses unscaled time so it works while game time is paused.
+    /// </summary>
+    private IEnumerator HoldToSkipRoutine()
+    {
+        yield return new WaitForSecondsRealtime(holdToSkipDuration);
+
+        if (_isDisplaying && _isNextLineHeld)
+        {
+            ForceEndDialog();
+        }
+
+        _holdToSkipCoroutine = null;
     }
 
     /// <summary>
@@ -509,11 +571,19 @@ public class VRDialogueSystem : MonoBehaviour
         if (_typingCoroutine != null)
         {
             StopCoroutine(_typingCoroutine);
+            _typingCoroutine = null;
         }
         if (_mouthAnimationCoroutine != null)
         {
             StopCoroutine(_mouthAnimationCoroutine);
+            _mouthAnimationCoroutine = null;
         }
+        if (_holdToSkipCoroutine != null)
+        {
+            StopCoroutine(_holdToSkipCoroutine);
+            _holdToSkipCoroutine = null;
+        }
+        _isNextLineHeld = false;
 
         // Stop speech
         if (enableTTS && ttsSpeaker != null)
@@ -548,6 +618,14 @@ public class VRDialogueSystem : MonoBehaviour
         if (_isDisplaying && pauseTimeScale)
         {
             RestoreTimeScale();
+        }
+
+        // Unsubscribe from input action callbacks
+        if (nextLineAction.action != null)
+        {
+            nextLineAction.action.performed -= OnNextLineButtonPressed;
+            nextLineAction.action.started -= OnNextLineButtonStarted;
+            nextLineAction.action.canceled -= OnNextLineButtonCanceled;
         }
 
         // Stop any ongoing speech
