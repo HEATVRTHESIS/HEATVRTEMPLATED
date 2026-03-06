@@ -1514,7 +1514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7411709752703492097, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.0006676361
+      value: 0.0006494212
       objectReference: {fileID: 0}
     - target: {fileID: 7547683545074253672, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1593,17 +1593,6 @@ MonoBehaviour:
 --- !u!114 &743513132 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4278921278522341827, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-  m_PrefabInstance: {fileID: 743513128}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &743513133 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2722904898256313663, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
   m_PrefabInstance: {fileID: 743513128}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -2890,7 +2879,7 @@ MonoBehaviour:
   scoreValueText: {fileID: 3085921282335627590}
   evaluationCanvas: {fileID: 743513135}
   evalScoreText: {fileID: 743513134}
-  evalPercentageText: {fileID: 743513133}
+  evalPercentageText: {fileID: 0}
   evalLevelText: {fileID: 743513132}
   evalTasksText: {fileID: 743513131}
   evalMessageText: {fileID: 743513130}
@@ -2903,7 +2892,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1113032067}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fb2a910d28cd3d41869c38f5e08a9a8, type: 3}
   m_Name: 
@@ -2935,7 +2924,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 12, y: 9, z: 9}
+  m_LocalScale: {x: 11.68176, y: 8.76132, z: 8.76132}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 914256590}
@@ -2969,15 +2958,15 @@ RectTransform:
   m_GameObject: {fileID: 1162476588}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.12840025, y: 0.5505088, z: 0.50503}
+  m_LocalScale: {x: 0.21964005, y: 0.496779, z: 0.45573893}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 512979257}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -12.6, y: -10.4}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -2.704, y: -10.19}
+  m_SizeDelta: {x: 382.001, y: 50.58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1162476590
 MonoBehaviour:
@@ -3008,8 +2997,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -3026,14 +3015,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15
-  m_fontSizeBase: 15
+  m_fontSize: 13
+  m_fontSizeBase: 13
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -3062,7 +3051,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -196.72528, w: 20.194502}
+  m_margin: {x: 0, y: 0, z: -0.36061096, w: 20.194502}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
