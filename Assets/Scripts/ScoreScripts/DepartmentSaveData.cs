@@ -34,6 +34,10 @@ public class DepartmentSaveData : MonoBehaviour
     [SerializeField] private int minimumScoreRequired = 70; // Minimum score percentage to unlock simulation
     [SerializeField] private float minimumCompletionRequired = 80f; // Minimum completion percentage
 
+    [Header("Debug / Build Overrides")]
+    [Tooltip("If enabled, all department simulations are treated as unlocked regardless of saved progress.")]
+    [SerializeField] private bool bypassSimulationLocks = false;
+
     void Awake()
     {
         if (Instance == null)
@@ -97,6 +101,11 @@ public class DepartmentSaveData : MonoBehaviour
     /// </summary>
     public bool IsSimulationUnlocked(string departmentName)
     {
+        if (bypassSimulationLocks)
+        {
+            return true;
+        }
+
         if (!departmentProgress.ContainsKey(departmentName))
         {
             return false;
