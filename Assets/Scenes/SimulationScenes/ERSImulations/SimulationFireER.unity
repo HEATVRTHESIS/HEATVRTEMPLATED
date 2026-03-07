@@ -1282,9 +1282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Close Smoke Door
   taskDescription: Pull down the fire shutter lever
-  taskCompletionDialogue:
-  - Fire shutters can help contain the fire
-  - This would slow down the spread of the fire
+  taskCompletionDialogue: []
   audioSource: {fileID: 0}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 1
@@ -2814,10 +2812,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Pull Fire Alarm
   taskDescription: Pull down the fire alarm lever to activate it
-  taskCompletionDialogue:
-  - Sounding the alarm lets everyone know
-  - That a fire has broken out in the building
-  - This lets them evacuate and be safe
+  taskCompletionDialogue: []
   audioSource: {fileID: 0}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
@@ -3702,11 +3697,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Help the Civilian
   taskDescription: Talk to the Civilian
-  taskCompletionDialogue:
-  - Evacuating others is important
-  - In order to minimize casualties
-  - And alert others of the ongoing fire
-  audioSource: {fileID: 0}
+  taskCompletionDialogue: []
+  audioSource: {fileID: 5373646681556592961}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   totalItems: 0
   OnProgressUpdated:
@@ -3715,15 +3707,15 @@ MonoBehaviour:
   OnTaskCompleted:
     m_PersistentCalls:
       m_Calls: []
-  interactionIndicator: {fileID: 0}
-  rightControllerTransform: {fileID: 0}
+  interactionIndicator: {fileID: 3170211657559129601}
+  rightControllerTransform: {fileID: 1135981716361476437}
   npcAnimator: {fileID: 1852950282}
   evacuationSpeed: 2
   evacuationPoint: {fileID: 468645731}
   targetObject: {fileID: 1293879732}
   isOption1Correct: 1
   taskErrorDialogue: []
-  errorSound: {fileID: 0}
+  errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
   popupManager: {fileID: 0}
   talkAction:
     m_UseReference: 0
@@ -3746,7 +3738,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 0}
   enableTTS: 1
-  ttsSpeaker: {fileID: 0}
+  ttsSpeaker: {fileID: 757874634987369199}
 --- !u!143 &1566340350
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3925,9 +3917,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: SimulationEvac
-  departmentName: ER
-  loadingScreen: {fileID: 0}
-  progressBarImage: {fileID: 0}
+  departmentName: EmergencyRoom
+  loadingScreen: {fileID: 1984043279}
+  progressBarImage: {fileID: 1984043278}
 --- !u!1 &1751468009
 GameObject:
   m_ObjectHideFlags: 0
@@ -4376,6 +4368,22 @@ MonoBehaviour:
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 4492234704656947174, guid: 8bb3483af1088804aa0972edb8ee4ebc, type: 3}
   m_PrefabInstance: {fileID: 989564479}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1984043278 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5471569756412525413, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 757874634987369196}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1984043279 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7213262384671763790, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 757874634987369196}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &2007908117 stripped
 Transform:
@@ -6287,7 +6295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7411709752703492097, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00089751015
+      value: 0.0007996408
       objectReference: {fileID: 0}
     - target: {fileID: 7547683545074253672, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.x
