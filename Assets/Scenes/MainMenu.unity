@@ -17614,6 +17614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minimumScoreRequired: 70
   minimumCompletionRequired: 80
+  bypassSimulationLocks: 1
 --- !u!1 &1182667099
 GameObject:
   m_ObjectHideFlags: 0
