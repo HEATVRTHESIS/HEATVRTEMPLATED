@@ -477,7 +477,7 @@ public class TutorialManager : MonoBehaviour
             "Excellent teleportation!",
             "",
             "During gameplay, you'll need to complete various tasks.",
-            "Press the Y button on your right controller to open the task list."
+            "Press the Y button on your left controller to open the task list."
         };
         
         dialogueSystem.StartDialog(taskListLines);
@@ -506,7 +506,7 @@ public class TutorialManager : MonoBehaviour
             "",
             "Now let's learn about investigation.",
             "Look at the highlighted object and press the X button",
-            "on your right controller to investigate it.",
+            "on your left controller to investigate it.",
             "Then answer the question correctly to proceed."
         };
         
@@ -557,7 +557,7 @@ public class TutorialManager : MonoBehaviour
             "",
             "Now let's learn how to grab and store items.",
             "Look at the highlighted cube on your right.",
-            "Hold the grip button on your right controller to grab it,",
+            "Hold the grip button on your left or right controller to grab it,",
             "then place it in the highlighted box to complete the task."
         };
         
