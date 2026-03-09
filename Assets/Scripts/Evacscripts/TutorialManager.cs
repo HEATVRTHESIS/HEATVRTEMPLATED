@@ -295,7 +295,7 @@ public class TutorialManager : MonoBehaviour
             "Great! You've learned how to progress through dialogue.",
             "",
             "Now let's learn how to move around.",
-            "Please walk to the green highlighted area to continue."
+            "Please walk to the yellow highlighted area to continue."
         };
         
         dialogueSystem.StartDialog(movementLines);
