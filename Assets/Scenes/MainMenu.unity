@@ -14941,6 +14941,7 @@ GameObject:
   - component: {fileID: 1019927426}
   - component: {fileID: 1019927425}
   - component: {fileID: 1019927424}
+  - component: {fileID: 1019927427}
   m_Layer: 0
   m_Name: Exitbutt
   m_TagString: Untagged
@@ -15011,7 +15012,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1019927425}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1019927427}
+        m_TargetAssemblyTypeName: MainMenuHandler, Assembly-CSharp
+        m_MethodName: ExitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1019927425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15050,6 +15063,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1019927422}
   m_CullTransparentMesh: 1
+--- !u!114 &1019927427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019927422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5379499d0bca4f0498665a0ff1c646d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1023876619
 GameObject:
   m_ObjectHideFlags: 0
@@ -21897,7 +21922,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1486860078
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25203,19 +25228,19 @@ MonoBehaviour:
   rightArrowButton: {fileID: 1720019158}
   departments:
   - departmentName: MedTech
-    departmentImage: {fileID: 21300000, guid: e20ddc0676f853647b065c7482080f39, type: 3}
+    departmentImage: {fileID: 21300000, guid: 5313c96485cef2848a1c7f6463709440, type: 3}
     shortDescription: Immerse yourself in a scenario to test your fire preparedness
     trainingSceneToLoad: 
     simulationSceneToLoad: SimulationMedTechRiskReduc
     isSimulationMode: 1
   - departmentName: ER
-    departmentImage: {fileID: 21300000, guid: e20ddc0676f853647b065c7482080f39, type: 3}
+    departmentImage: {fileID: 21300000, guid: 29caa11e666465b4792b5cf8165d10d4, type: 3}
     shortDescription: Immerse yourself in a scenario to test your fire preparedness
     trainingSceneToLoad: 
     simulationSceneToLoad: ERDeptSimulationRR
     isSimulationMode: 1
   - departmentName: Dietary
-    departmentImage: {fileID: 21300000, guid: e20ddc0676f853647b065c7482080f39, type: 3}
+    departmentImage: {fileID: 21300000, guid: 77a10b45c011a8140a2685f501ec5e3b, type: 3}
     shortDescription: Immerse yourself in a scenario to test your fire preparedness
     trainingSceneToLoad: 
     simulationSceneToLoad: DietaryRRSimulation
@@ -26774,22 +26799,22 @@ MonoBehaviour:
   leftArrowButton: {fileID: 1780767788}
   rightArrowButton: {fileID: 1844349049}
   departments:
-  - departmentName: MedTech Department
-    departmentImage: {fileID: 21300000, guid: e20ddc0676f853647b065c7482080f39, type: 3}
+  - departmentName: MedTech Dept
+    departmentImage: {fileID: 21300000, guid: 5313c96485cef2848a1c7f6463709440, type: 3}
     shortDescription: Learn the various risks, hazards, and procedures for the MedTech
       Department
     trainingSceneToLoad: MedTechDepartment
     simulationSceneToLoad: 
     isSimulationMode: 0
   - departmentName: ER Department
-    departmentImage: {fileID: 21300000, guid: e20ddc0676f853647b065c7482080f39, type: 3}
+    departmentImage: {fileID: 21300000, guid: 29caa11e666465b4792b5cf8165d10d4, type: 3}
     shortDescription: Learn the various risks, hazards, and procedures for the ER
       Department
     trainingSceneToLoad: ERDeptTrainingRR
     simulationSceneToLoad: 
     isSimulationMode: 0
   - departmentName: Dietary Department
-    departmentImage: {fileID: 21300000, guid: e20ddc0676f853647b065c7482080f39, type: 3}
+    departmentImage: {fileID: 21300000, guid: 77a10b45c011a8140a2685f501ec5e3b, type: 3}
     shortDescription: Learn the various risks, hazards, and procedures for the Dietary
       Department
     trainingSceneToLoad: DietaryRRTraining

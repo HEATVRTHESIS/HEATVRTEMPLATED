@@ -1379,6 +1379,14 @@ PrefabInstance:
       value: SimulationFireER
       objectReference: {fileID: 0}
     - target: {fileID: 6402032355436464013, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mouthOpenSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: eb26d8bccdb40c8488341be256ba8543, type: 3}
+    - target: {fileID: 6402032355436464013, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mouthClosedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: eb26d8bccdb40c8488341be256ba8543, type: 3}
+    - target: {fileID: 6402032355436464013, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: speechAudioSource
       value: 
       objectReference: {fileID: 5329925472940090969}
@@ -1428,7 +1436,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7411709752703492097, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00058387325
+      value: 0.00010252592
       objectReference: {fileID: 0}
     - target: {fileID: 7547683545074253672, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.x

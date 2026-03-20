@@ -34970,6 +34970,14 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6402032355436464013, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mouthOpenSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 07e587caa97b95c4897790c732de3ef4, type: 3}
+    - target: {fileID: 6402032355436464013, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mouthClosedSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 07e587caa97b95c4897790c732de3ef4, type: 3}
+    - target: {fileID: 6402032355436464013, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: speechAudioSource
       value: 
       objectReference: {fileID: 9207420083164560832}
