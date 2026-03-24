@@ -2166,7 +2166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7411709752703492097, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00043308304
+      value: 0.000042751657
       objectReference: {fileID: 0}
     - target: {fileID: 7547683545074253672, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2338,6 +2338,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5069462267981956421, guid: 0dbe8084c6a42f94897e1f9cbf19ed34, type: 3}
   m_PrefabInstance: {fileID: 744823902}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &824204804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 824204805}
+  - component: {fileID: 824204806}
+  m_Layer: 0
+  m_Name: IntroScript
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &824204805
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824204804}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1113032068}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &824204806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824204804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61dc84fcac3a7d9499a7a9c4cdb67f15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueSystem: {fileID: 743513130}
 --- !u!1 &887493808
 GameObject:
   m_ObjectHideFlags: 0
@@ -3309,7 +3354,6 @@ GameObject:
   - component: {fileID: 1113032068}
   - component: {fileID: 1113032072}
   - component: {fileID: 1113032074}
-  - component: {fileID: 1113032075}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -3339,6 +3383,7 @@ Transform:
   - {fileID: 2114946138}
   - {fileID: 206334198}
   - {fileID: 1926454835}
+  - {fileID: 824204805}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1113032072
@@ -3378,19 +3423,6 @@ MonoBehaviour:
   evalMessageText: {fileID: 743513131}
   pointsPerCompletion: 10
   pointsPerError: -5
---- !u!114 &1113032075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1113032067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61dc84fcac3a7d9499a7a9c4cdb67f15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueSystem: {fileID: 743513130}
 --- !u!1 &1132185366 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8066848626963029615, guid: 30d2b48cb8045bc40b53d915ea4006d0, type: 3}
@@ -67190,6 +67222,7 @@ GameObject:
   - component: {fileID: 4474693593505989029}
   - component: {fileID: 3600909822093321890}
   - component: {fileID: 5329925472940090969}
+  - component: {fileID: 8993580547819386216}
   m_Layer: 2
   m_Name: Checklistplayer
   m_TagString: Player
@@ -85729,6 +85762,28 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.76072, z: 0}
+--- !u!114 &8993580547819386216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7017419712344857774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3524139ff40216c42830139d07e2b2c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  introCenter: {fileID: 0}
+  rotationSpeed: 30
+  introHeight: 4
+  lookDownAngle: 25
+  cameraTrackingBehavioursToDisable: []
+  hardLockHeadTracking: 1
+  playerController: {fileID: 0}
+  gameplayBehavioursToDisable: []
+  disablePlayerObjectDuringIntro: 0
+  dialogueObjectToEnable: {fileID: 824204804}
 --- !u!114 &8994513208917477288
 MonoBehaviour:
   m_ObjectHideFlags: 0

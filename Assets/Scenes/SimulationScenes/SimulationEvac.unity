@@ -2644,6 +2644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSystem: {fileID: 0}
+  playOnStart: 1
 --- !u!1 &475850956
 GameObject:
   m_ObjectHideFlags: 0
@@ -10327,6 +10328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSystem: {fileID: 4598410587691705967}
+  playOnStart: 1
 --- !u!114 &1113032071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34805,6 +34807,66 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mediaTriggers.Array.size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mediaTriggers.Array.data[14].matchMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mediaTriggers.Array.data[14].mediaType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mediaTriggers.Array.data[14].videoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: 55e4c1e025d21364e96244e9428ffea6, type: 3}
+    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mediaTriggers.Array.data[14].dialogueLine
+      value: Oh no. No, no, no. The entire hospital is on fire.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mediaTriggers.Array.data[14].imageTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: bb457d896a329d54682bf52927f144e7, type: 3}
+    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mediaTriggers.Array.data[14].dialogueLines.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mediaTriggers.Array.data[14].dialogueLines.Array.data[0]
+      value: 'Next, the PASS technique for using fire extinguishers safely:'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mediaTriggers.Array.data[14].dialogueLines.Array.data[1]
+      value: 'P - PULL: Pull the safety pin from the fire extinguisher.'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mediaTriggers.Array.data[14].dialogueLines.Array.data[2]
+      value: 'A - AIM: Aim the nozzle at the BASE of the flames,'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mediaTriggers.Array.data[14].dialogueLines.Array.data[3]
+      value: not at the top. Target the fuel source, not the smoke.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mediaTriggers.Array.data[14].dialogueLines.Array.data[4]
+      value: 'S - SQUEEZE: Squeeze the handle to release the'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mediaTriggers.Array.data[14].dialogueLines.Array.data[5]
+      value: extinguishing agent in controlled bursts.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mediaTriggers.Array.data[14].dialogueLines.Array.data[6]
+      value: 'S - SWEEP: Sweep the nozzle side to side at the base'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2091064551252122857, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: mediaTriggers.Array.data[14].dialogueLines.Array.data[7]
+      value: of the fire until it appears to be completely out.
+      objectReference: {fileID: 0}
     - target: {fileID: 2242382834724990875, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -34969,6 +35031,22 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 5749740888527722038, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5749740888527722038, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5749740888527722038, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6402032355436464013, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: pauseTimeScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6402032355436464013, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: mouthOpenSprite
       value: 
@@ -35084,6 +35162,14 @@ PrefabInstance:
     - target: {fileID: 8490701027357072462, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_SizeDelta.y
       value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 8607038538147380267, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8607038538147380267, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8655732284981589955, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_Layer

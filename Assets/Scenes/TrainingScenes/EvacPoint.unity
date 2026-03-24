@@ -913,6 +913,51 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 203015056}
   m_Mesh: {fileID: 2003126154647920913, guid: 13ad110fc254f0047bfd804318e3f2a5, type: 3}
+--- !u!1 &237079678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 237079679}
+  - component: {fileID: 237079680}
+  m_Layer: 0
+  m_Name: IntroScript
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &237079679
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237079678}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1113032068}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &237079680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237079678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e59fe3d58172b141a1cd0f1bb422a67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueSystem: {fileID: 715641708}
 --- !u!1 &252204674
 GameObject:
   m_ObjectHideFlags: 0
@@ -1852,7 +1897,6 @@ GameObject:
   m_Component:
   - component: {fileID: 470235796}
   - component: {fileID: 470235797}
-  - component: {fileID: 470235798}
   m_Layer: 0
   m_Name: EvacManager
   m_TagString: Untagged
@@ -2020,19 +2064,6 @@ MonoBehaviour:
     m_Bits: 256
   obstacleHeightOffset: 0.1
   debugMode: 0
---- !u!114 &470235798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 470235795}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e59fe3d58172b141a1cd0f1bb422a67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueSystem: {fileID: 715641708}
 --- !u!1 &541157379
 GameObject:
   m_ObjectHideFlags: 0
@@ -9728,6 +9759,7 @@ Transform:
   - {fileID: 470235796}
   - {fileID: 1578128483}
   - {fileID: 881851302}
+  - {fileID: 237079679}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1113032069
