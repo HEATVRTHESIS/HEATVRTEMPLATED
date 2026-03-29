@@ -824,11 +824,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: ECG Cord Maint
   taskDescription: Check the ECG machine cord for damages
-  taskCompletionDialogue:
-  - Faulty wiring can spark nearby objects on fire
-  taskErrorDialogue:
-  - 'Damaged cords may cause electrical fires. '
-  - 'Inspect regularly and report defects immediately. '
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
@@ -910,7 +907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c8f038eddda8d45bd0ec290025e880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialEnabled: 1
+  tutorialEnabled: 0
   indicatorPrefab: {fileID: 4907332757756480362, guid: 944f3ca349fa49949bd6923e38a95a8f, type: 3}
   cameraTransform: {fileID: 9054167324086753903}
   followSpeed: 5
@@ -1400,6 +1397,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3304105840423082348, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 743513138}
+    - target: {fileID: 3304105840423082348, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadNextUsingOverrideOrDefault
+      objectReference: {fileID: 0}
+    - target: {fileID: 3304105840423082348, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PracticeFlowSceneLoader, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3499221271688127884, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1410,7 +1419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4039088231058447306, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: sceneToLoad
-      value: ERDeptRRPrac
+      value: ERFirePrac
       objectReference: {fileID: 0}
     - target: {fileID: 4039088231058447306, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: loadingScreen
@@ -1420,6 +1429,14 @@ PrefabInstance:
       propertyPath: progressBarImage
       value: 
       objectReference: {fileID: 743513133}
+    - target: {fileID: 4039088231058447306, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: clearScoreDataOnEnterPractice
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039088231058447306, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: resetErrorTrackerOnEnterPractice
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4358504411257075815, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1526,7 +1543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7411709752703492097, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.0009794403
+      value: 0.0005861019
       objectReference: {fileID: 0}
     - target: {fileID: 7547683545074253672, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1566,10 +1583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 9005087051135397640, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      insertIndex: 4
-      addedObject: {fileID: 1540625262}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
 --- !u!114 &743513129 stripped
@@ -1646,11 +1660,6 @@ GameObject:
 --- !u!1 &743513136 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7213262384671763790, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-  m_PrefabInstance: {fileID: 743513128}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &743513137 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 9005087051135397640, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
   m_PrefabInstance: {fileID: 743513128}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &743513138 stripped
@@ -1774,11 +1783,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Medicine Box Storage
   taskDescription: Store the Medicine Boxes in the shelves
-  taskCompletionDialogue:
-  - 'Arrange remaining medication boxes neatly in closed shelves '
-  - '(not near direct sunlight). '
-  taskErrorDialogue:
-  - 'Store securely and away from ignition sources. '
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
@@ -1861,12 +1867,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Alcohol Storage
   taskDescription: Store the bottles of alcohol in the shelves
-  taskCompletionDialogue:
-  - 'Store in a cool, ventilated cabinet away from electrical '
-  - outlets and ignition sources.
-  taskErrorDialogue:
-  - Alcohol is highly flammable.
-  - 'Store securely and away from ignition sources. '
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 0}
@@ -2173,7 +2175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a273c96d3fdb449428a9303fe8d1572c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipsEnabled: 1
+  tooltipsEnabled: 0
   tooltipPrefab: {fileID: 4828560702101013700, guid: 6d4d4d9262df726469869621adbd99b9, type: 3}
   buttonImageObjectName: ButtonIcon
   textObjectName: DescriptionText
@@ -3616,155 +3618,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1525568866}
   m_CullTransparentMesh: 1
---- !u!1 &1540625261
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1540625262}
-  - component: {fileID: 1540625266}
-  - component: {fileID: 1540625265}
-  - component: {fileID: 1540625264}
-  - component: {fileID: 1540625263}
-  m_Layer: 0
-  m_Name: PracticeMode
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1540625262
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1540625261}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
-  m_LocalScale: {x: 0.14455758, y: 0.18296576, z: 0.18296576}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1849175903}
-  m_Father: {fileID: 743513137}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.1, y: -29.9}
-  m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1540625263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1540625261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92354beeabc56244bd80c9197d1bc8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneToLoad: ERFireTraining
-  loadingScreen: {fileID: 743513136}
-  progressBarImage: {fileID: 743513133}
---- !u!114 &1540625264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1540625261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1540625265}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 743513138}
-        m_TargetAssemblyTypeName: PracticeFlowSceneLoader, Assembly-CSharp
-        m_MethodName: LoadSceneAndSetNextOverride
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: ERDeptTrainingRR
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1540625265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1540625261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a4a476eadc4474348881cd6570cb10d1, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1540625266
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1540625261}
-  m_CullTransparentMesh: 1
 --- !u!1001 &1545807460
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3995,7 +3848,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694368275}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fb2a910d28cd3d41869c38f5e08a9a8, type: 3}
   m_Name: 
@@ -4032,140 +3885,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2288953963070056304}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1849175902
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1849175903}
-  - component: {fileID: 1849175905}
-  - component: {fileID: 1849175904}
-  m_Layer: 0
-  m_Name: Text (TMP)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1849175903
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1849175902}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1540625262}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1849175904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1849175902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: Practice
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: cc9f00fdede685849a9f95008e00e12b, type: 2}
-  m_sharedMaterial: {fileID: 3315380329311723261, guid: cc9f00fdede685849a9f95008e00e12b, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 1
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &1849175905
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1849175902}
-  m_CullTransparentMesh: 1
 --- !u!1 &1914934341
 GameObject:
   m_ObjectHideFlags: 0
@@ -4350,7 +4069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7368568741755371755, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8379253376636852891, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -4464,15 +4183,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 814bdb70dce96c04582254abe8dbf660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taskName: "MgSO\u2084 Maint"
+  taskName: MgSO4 Maint
   taskDescription: Check the MgSO4 bottle
-  taskCompletionDialogue:
-  - Exposed MgSO4 is bad as this can
-  - make fires worse even if itself
-  - is not actually flammable
-  taskErrorDialogue:
-  - 'Improper storage may pose fire risk. '
-  - 'Inspect containers and store properly. '
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
@@ -7490,6 +7204,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PopupManager
       objectReference: {fileID: 0}
+    - target: {fileID: 4248496847388952874, guid: 0987d4c71ec75b442b5f09e9d519df63, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7250837405048601241, guid: 0987d4c71ec75b442b5f09e9d519df63, type: 3}
       propertyPath: m_LocalPosition.x
       value: 680.1115
@@ -8343,13 +8061,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Disposal
   taskDescription: Throw away the cotton swab
-  taskCompletionDialogue:
-  - Used cotton swabs may still contain
-  - traces of alcohol that may lead to possible fires
-  taskErrorDialogue:
-  - Cotton swabs are flammable and may contain chemicals or bodily fluids.
-  - Dispose of them immediately in the designated medical waste bin
-  - 'to reduce fire and contamination risks. '
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
@@ -9643,14 +9356,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Dispose Rubber tubes
   taskDescription: DIspose the old rubber tubes
-  taskCompletionDialogue:
-  - Old rubber tubes can cause leaks
-  - which can lead to nearby short circuits
-  - or fuel to a fire source nearby
-  taskErrorDialogue:
-  - Rubber tubes are combustible and should be disposed
-  - n the proper biohazard or medical waste container
-  - to prevent fire hazards and infection risks.
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
@@ -10598,7 +10305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskErrorDialogue.Array.size
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskErrorDialogue.Array.data[0]
@@ -10614,7 +10321,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskCompletionDialogue.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskCompletionDialogue.Array.data[0]
@@ -12553,12 +12260,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Mask Storage
   taskDescription: Place the Masks in the box
-  taskCompletionDialogue:
-  - Storing excess supplies in safe spaces
-  - Can help avoid unecessary items being at risk of fire
-  taskErrorDialogue:
-  - 'Improper storage presents a fire hazard. '
-  - Organize masks in boxes reduce loose flammable material.
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
@@ -16016,15 +15719,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: MedicineDisposal
   taskDescription: Throw away the medicine boxes
-  taskCompletionDialogue:
-  - Pharmacies usually have a designated bin
-  - for disposal of old expired medications
-  - The boxes or raw materials may be a fuel source
-  - for a potential fire
-  taskErrorDialogue:
-  - 'Medicine boxes are made of flammable materials. '
-  - 'Dispose of them in designated waste bins away from ignition '
-  - 'sources to prevent potential fire hazards. '
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
@@ -17506,14 +17202,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: IV Disposal
   taskDescription: Throw away the used IV Bags
-  taskCompletionDialogue:
-  - Used IV bags can cause a short circuit
-  - to nearby electrical equipment
-  - Immediately dispose to reduce the risk
-  taskErrorDialogue:
-  - IV bottles and bags may contain flammable residues
-  - Dispose of them in the proper medical waste containers
-  - 'to ensure safe handling and fire prevention. '
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
@@ -19959,7 +19649,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7017419712344857774}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3524139ff40216c42830139d07e2b2c3, type: 3}
   m_Name: 
@@ -19988,12 +19678,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Document Storage
   taskDescription: Store the Documents in the filing cabinet
-  taskCompletionDialogue:
-  - Paper documents are not just important to store for safe keeping
-  - But also to prevent fire starters
-  taskErrorDialogue:
-  - Paper materials are highly flammable.
-  - 'Store properly to reduce fire risk. '
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}

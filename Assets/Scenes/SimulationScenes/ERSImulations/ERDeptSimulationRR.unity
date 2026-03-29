@@ -1436,7 +1436,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7411709752703492097, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00010252592
+      value: 0.00088288117
       objectReference: {fileID: 0}
     - target: {fileID: 7547683545074253672, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4397,8 +4397,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 814bdb70dce96c04582254abe8dbf660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  taskName: "MgSO\u2084 Maint"
-  taskDescription: "Check the MgSO\u2084 bottle"
+  taskName: MgSO4 Maint
+  taskDescription: Check the MgSO4 bottle
   taskCompletionDialogue: []
   taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
@@ -4410,7 +4410,7 @@ MonoBehaviour:
   OnTaskCompleted:
     m_PersistentCalls:
       m_Calls: []
-  questionText: "Is the bottle of MgSO\u2084 sealed properly?"
+  questionText: Is the bottle of MgSO4 sealed properly?
   yesAnswerImage: {fileID: 21300000, guid: 18e6697c4ec6c5148bb9b76a75294e65, type: 3}
   noAnswerImage: {fileID: 21300000, guid: 18e6697c4ec6c5148bb9b76a75294e65, type: 3}
   isYesTheCorrectAnswer: 0

@@ -585,7 +585,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c8f038eddda8d45bd0ec290025e880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialEnabled: 1
+  tutorialEnabled: 0
   indicatorPrefab: {fileID: 4907332757756480362, guid: 944f3ca349fa49949bd6923e38a95a8f, type: 3}
   cameraTransform: {fileID: 9054167324086753903}
   followSpeed: 5
@@ -1094,10 +1094,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Ref Cord
   taskDescription: Check the Refridgerator cord for damages
-  taskCompletionDialogue:
-  - Faulty wiring can spark nearby objects on fire
-  taskErrorDialogue:
-  - 'Faulty wiring  are critical fire risks that require regular checks. '
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
@@ -1235,140 +1233,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f416de0242f6f9842924345b22146886, type: 3}
---- !u!1 &518868314
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 518868315}
-  - component: {fileID: 518868317}
-  - component: {fileID: 518868316}
-  m_Layer: 0
-  m_Name: Text (TMP)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &518868315
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 518868314}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1001169942}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &518868316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 518868314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_text: Practice
-  m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: cc9f00fdede685849a9f95008e00e12b, type: 2}
-  m_sharedMaterial: {fileID: 3315380329311723261, guid: cc9f00fdede685849a9f95008e00e12b, type: 2}
-  m_fontSharedMaterials: []
-  m_fontMaterial: {fileID: 0}
-  m_fontMaterials: []
-  m_fontColor32:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
-  m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
-  m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
-  m_tintAllSprites: 0
-  m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
-  m_overrideHtmlColors: 0
-  m_faceColor:
-    serializedVersion: 2
-    rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
-  m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
-  m_textAlignment: 65535
-  m_characterSpacing: 0
-  m_wordSpacing: 0
-  m_lineSpacing: 0
-  m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
-  m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
-  m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
-  m_linkedTextComponent: {fileID: 0}
-  parentLinkedComponent: {fileID: 0}
-  m_enableKerning: 1
-  m_enableExtraPadding: 0
-  checkPaddingRequired: 0
-  m_isRichText: 1
-  m_parseCtrlCharacters: 1
-  m_isOrthographic: 1
-  m_isCullingEnabled: 0
-  m_horizontalMapping: 0
-  m_verticalMapping: 0
-  m_uvLineOffset: 0
-  m_geometrySortingOrder: 0
-  m_IsTextObjectScaleStatic: 0
-  m_VertexBufferAutoSizeReduction: 0
-  m_useMaxVisibleDescender: 1
-  m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
-  m_isUsingLegacyAnimationComponent: 0
-  m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
-  m_baseMaterial: {fileID: 0}
-  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!222 &518868317
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 518868314}
-  m_CullTransparentMesh: 1
 --- !u!1 &521039107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1416,13 +1280,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Burner
   taskDescription: Check if the Burner is clean
-  taskCompletionDialogue:
-  - A greasy burner can lead to oil related fires
-  - these are mort dangerous as they cannot be extinguished
-  - by water and dry powder fire extinguishers
-  taskErrorDialogue:
-  - Misidentifying greasy burners or stoves as clean is a critical fire risk
-  - as hidden oil residue can ignite instantly and cause uncontrollable kitchen fires.
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
@@ -1904,7 +1763,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskErrorDialogue.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskErrorDialogue.Array.data[0]
@@ -1917,7 +1776,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskCompletionDialogue.Array.size
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskCompletionDialogue.Array.data[0]
@@ -2146,6 +2005,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3304105840423082348, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1557210559}
+    - target: {fileID: 3304105840423082348, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadNextUsingOverrideOrDefault
+      objectReference: {fileID: 0}
+    - target: {fileID: 3304105840423082348, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PracticeFlowSceneLoader, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3499221271688127884, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2156,16 +2027,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4039088231058447306, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: sceneToLoad
-      value: DietaryRRPrac
+      value: FireDietaryPrac
       objectReference: {fileID: 0}
     - target: {fileID: 4039088231058447306, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: loadingScreen
       value: 
-      objectReference: {fileID: 1871977174}
+      objectReference: {fileID: 1557210558}
     - target: {fileID: 4039088231058447306, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: progressBarImage
       value: 
-      objectReference: {fileID: 1871977173}
+      objectReference: {fileID: 1557210557}
+    - target: {fileID: 4039088231058447306, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: clearScoreDataOnEnterPractice
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039088231058447306, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+      propertyPath: resetErrorTrackerOnEnterPractice
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4358504411257075815, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2312,7 +2191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7411709752703492097, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00061791425
+      value: 0.0008199646
       objectReference: {fileID: 0}
     - target: {fileID: 7547683545074253672, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2348,10 +2227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 9005087051135397640, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-      insertIndex: 4
-      addedObject: {fileID: 1001169942}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
 --- !u!114 &743513129 stripped
@@ -2526,7 +2402,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 824204804}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61dc84fcac3a7d9499a7a9c4cdb67f15, type: 3}
   m_Name: 
@@ -2652,13 +2528,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Cooking Oil Storage
   taskDescription: Store the Cooking Oil bottle in the storage room shelf
-  taskCompletionDialogue:
-  - Cooking oil is a class K fire risk
-  - Keeping them in a cool dry place away from the burners and other risks
-  - can minimize uncontrollable mixed fire classes
-  taskErrorDialogue:
-  - Improper storage of cooking oil increases the risk of grease fires.
-  - 'Always store oil back on the designated rack after use. '
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
@@ -2716,155 +2587,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3622756384415376388}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1001169941
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1001169942}
-  - component: {fileID: 1001169946}
-  - component: {fileID: 1001169945}
-  - component: {fileID: 1001169944}
-  - component: {fileID: 1001169943}
-  m_Layer: 0
-  m_Name: PracticeButt
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1001169942
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001169941}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
-  m_LocalScale: {x: 0.14455758, y: 0.18296576, z: 0.18296576}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 518868315}
-  m_Father: {fileID: 1871977175}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.19, y: -29.9}
-  m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1001169943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001169941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92354beeabc56244bd80c9197d1bc8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneToLoad: FireDietaryTraining
-  loadingScreen: {fileID: 1871977174}
-  progressBarImage: {fileID: 1871977173}
---- !u!114 &1001169944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001169941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1001169945}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1871977176}
-        m_TargetAssemblyTypeName: PracticeFlowSceneLoader, Assembly-CSharp
-        m_MethodName: LoadSceneAndSetNextOverride
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: FireDietaryTraining
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &1001169945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001169941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a4a476eadc4474348881cd6570cb10d1, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1001169946
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001169941}
-  m_CullTransparentMesh: 1
 --- !u!1001 &1014688403
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3360,7 +3082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a273c96d3fdb449428a9303fe8d1572c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipsEnabled: 1
+  tooltipsEnabled: 0
   tooltipPrefab: {fileID: 4828560702101013700, guid: 6d4d4d9262df726469869621adbd99b9, type: 3}
   buttonImageObjectName: ButtonIcon
   textObjectName: DescriptionText
@@ -3652,6 +3374,7 @@ GameObject:
   - component: {fileID: 1113032068}
   - component: {fileID: 1113032072}
   - component: {fileID: 1113032074}
+  - component: {fileID: 1113032075}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -3721,6 +3444,18 @@ MonoBehaviour:
   evalMessageText: {fileID: 743513131}
   pointsPerCompletion: 10
   pointsPerError: -5
+--- !u!114 &1113032075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113032067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f9573bf5374da24686b8b54fe38d7d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1132185366 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8066848626963029615, guid: 30d2b48cb8045bc40b53d915ea4006d0, type: 3}
@@ -3892,15 +3627,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: lpghose
   taskDescription: Check if the LPG hose is still good
-  taskCompletionDialogue:
-  - A worn-out LPG hose is a major safety hazard
-  - that can lead to gas leaks, fires, or explosions.
-  - If you discover a worn-out hose, you must stop using it immediately and replace
-    it.
-  taskErrorDialogue:
-  - Cracked, brittle, or uncertified LPG hoses are severe safety risks
-  - that can lead to gas leaks and explosions, requiring regular inspection and timely
-    replacement.
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
@@ -4240,6 +3968,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1557210557 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5471569756412525413, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 743513128}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1557210558 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7213262384671763790, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 743513128}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1557210559 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4039088231058447306, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
+  m_PrefabInstance: {fileID: 743513128}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d50665685e1a12438d38fccdfa5aa1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1565820110
 GameObject:
   m_ObjectHideFlags: 0
@@ -4394,38 +4149,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1862024896}
   m_CullTransparentMesh: 1
---- !u!114 &1871977173 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5471569756412525413, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-  m_PrefabInstance: {fileID: 743513128}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &1871977174 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7213262384671763790, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-  m_PrefabInstance: {fileID: 743513128}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &1871977175 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 9005087051135397640, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-  m_PrefabInstance: {fileID: 743513128}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1871977176 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4039088231058447306, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
-  m_PrefabInstance: {fileID: 743513128}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d50665685e1a12438d38fccdfa5aa1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1914934341
 GameObject:
   m_ObjectHideFlags: 0
@@ -4730,7 +4453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7368568741755371755, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8379253376636852891, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
       propertyPath: m_PresetInfoIsWorld
@@ -33653,7 +33376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskErrorDialogue.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskErrorDialogue.Array.data[0]
@@ -33662,7 +33385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskCompletionDialogue.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1160804694180415947, guid: af578c62e52857b4d865ffc88649658f, type: 3}
       propertyPath: taskCompletionDialogue.Array.data[0]
@@ -43019,12 +42742,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Cleaning Rags
   taskDescription: Place the rags in the box
-  taskCompletionDialogue:
-  - Cleaning rags are still flammable even without residue
-  - Ensuring they are free of solvents promotes further safety
-  taskErrorDialogue:
-  - 'Fabrics are primary fuels for fire. '
-  - Store rags in boxes to keep the kitchen safe.
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
@@ -71039,14 +70758,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Biohazard Waste
   taskDescription: Throw away the LPG Hose or Alcohol Bottle
-  taskCompletionDialogue:
-  - LPG Hose or Alcohol are needed to be thrown away
-  - properly to avoid them being accidentally used
-  - when they are not up to standard anymore
-  taskErrorDialogue:
-  - LPG components and alcohol are major fire hazards.
-  - Dispose of them in the Yellow Trashcan
-  - for proper fire safety handling.
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}
@@ -86099,7 +85812,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7017419712344857774}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3524139ff40216c42830139d07e2b2c3, type: 3}
   m_Name: 
@@ -86128,13 +85841,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   taskName: Document Storage
   taskDescription: Store the Documents in the filing cabinet
-  taskCompletionDialogue:
-  - Paper documents are not just important to store for safe keeping
-  - But also to prevent fire starters
-  taskErrorDialogue:
-  - Paper is highly flammable.
-  - Store all documents in the filing cabinet
-  - Store all documents in the filing cabinet
+  taskCompletionDialogue: []
+  taskErrorDialogue: []
   audioSource: {fileID: 5329925472940090969}
   successSound: {fileID: 8300000, guid: 00cc3457124dac94abf08d0f07fc4d29, type: 3}
   errorSound: {fileID: 8300000, guid: d008b07d5bc98d34b82c29baf3144075, type: 3}

@@ -136,4 +136,30 @@ public class ErrorTracker : MonoBehaviour
         evacuationNPCNotRescuedErrors = 0;
         evacuationNoWetClothErrors = 0;
     }
+
+    public void ResetStandardErrors()
+    {
+        disposalErrors = 0;
+        maintenanceErrors = 0;
+        storageErrors = 0;
+    }
+
+    public void ResetFireErrors()
+    {
+        fireNPCErrors = 0;
+        fireLeverErrors = 0;
+        fireSmokeDoorErrors = 0;
+        fireExtinguisherErrors = 0;
+        fireWrongExtinguisherErrors = 0;
+    }
+
+    public void ResetEvacuationErrors()
+    {
+        evacuationTimeExpiredErrors = 0;
+        evacuationFireObstacleErrors = 0;
+        evacuationOxygenErrors = 0;
+        evacuationNPCLeftBehindErrors = 0;
+        evacuationNPCNotRescuedErrors = 0;
+        evacuationNoWetClothErrors = 0;
+    }
 }

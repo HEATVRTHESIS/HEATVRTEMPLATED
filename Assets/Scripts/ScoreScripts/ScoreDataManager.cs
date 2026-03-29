@@ -219,6 +219,33 @@ public class ScoreDataManager : MonoBehaviour
         levelScores.Clear();
         currentLevelData = null;
     }
+
+    public int ClearLevelDataByType(string levelType)
+    {
+        if (string.IsNullOrEmpty(levelType)) return 0;
+
+        int removedCount = 0;
+        for (int i = levelScores.Count - 1; i >= 0; i--)
+        {
+            if (levelScores[i].levelType == levelType)
+            {
+                levelScores.RemoveAt(i);
+                removedCount++;
+            }
+        }
+
+        if (currentLevelData != null && currentLevelData.levelType == levelType)
+        {
+            currentLevelData = null;
+        }
+
+        if (removedCount > 0)
+        {
+            Debug.Log($"Cleared {removedCount} saved level entries for type '{levelType}'");
+        }
+
+        return removedCount;
+    }
     
     public int GetTotalScore()
     {
