@@ -924,6 +924,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
       insertIndex: -1
       addedObject: {fileID: 602192930}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 602192931}
   m_SourcePrefab: {fileID: 100100000, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
 --- !u!1 &267936961
 GameObject:
@@ -1663,6 +1666,34 @@ MonoBehaviour:
   fireClass: 0
   fireColor: {r: 1, g: 0, b: 0, a: 1}
   applyColorTint: 0
+--- !u!114 &602192931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602192925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b8951a8290315347b964717d13bc9a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flammableObject: {fileID: 602192927}
+  indicatorPrefab: {fileID: 3907455318825745328, guid: 687cee4d1e578b84bb347a54de08d9d5, type: 3}
+  cameraTransform: {fileID: 9133978305784354167}
+  heightOffset: 0.5
+  followSpeed: 8
+  smoothFollow: 1
+  keepUpright: 1
+  showOnlyWhenOnFire: 1
+  hideWhenExtinguished: 1
+  scaleTarget: {fileID: 0}
+  useChunkedFill: 1
+  chunkCount: 4
+  preBurnoutWeight: 0.78
+  smoothScale: 1
+  scaleLerpSpeed: 4
+  minVisibleScaleWhileBurning: 0.25
 --- !u!1 &618878982
 GameObject:
   m_ObjectHideFlags: 0
@@ -3060,6 +3091,7 @@ GameObject:
   - component: {fileID: 1167863985}
   - component: {fileID: 1167863984}
   - component: {fileID: 1167863983}
+  - component: {fileID: 1167863987}
   m_Layer: 0
   m_Name: Oil
   m_TagString: Untagged
@@ -3262,6 +3294,34 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0000001, y: 1.9999999, z: 1.0000002}
   m_Center: {x: -0.000001847744, y: -0.000045776367, z: -0.0000019967556}
+--- !u!114 &1167863987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167863978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b8951a8290315347b964717d13bc9a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flammableObject: {fileID: 1167863985}
+  indicatorPrefab: {fileID: 3907455318825745328, guid: 687cee4d1e578b84bb347a54de08d9d5, type: 3}
+  cameraTransform: {fileID: 9133978305784354167}
+  heightOffset: 0.5
+  followSpeed: 8
+  smoothFollow: 1
+  keepUpright: 1
+  showOnlyWhenOnFire: 1
+  hideWhenExtinguished: 1
+  scaleTarget: {fileID: 0}
+  useChunkedFill: 1
+  chunkCount: 4
+  preBurnoutWeight: 0.78
+  smoothScale: 1
+  scaleLerpSpeed: 4
+  minVisibleScaleWhileBurning: 0.25
 --- !u!114 &1197433113 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8544066915533953005, guid: 5af986cb5644fed4398258de8ff2fcb9, type: 3}
@@ -6157,7 +6217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7411709752703492097, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.00063788146
+      value: 0.000030659692
       objectReference: {fileID: 0}
     - target: {fileID: 7547683545074253672, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.x
@@ -10214,6 +10274,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetObject: {fileID: 3913119258145762242}
+  fireExtinguisher: {fileID: 0}
   successMonitor: {fileID: 428033473}
   useAction:
     m_UseReference: 0
@@ -19139,6 +19200,14 @@ MonoBehaviour:
   incrementalPower: 0.0005
   popupManager: {fileID: 1557387017}
   errorMessageCooldown: 3
+  collisionBlobPrefab: {fileID: 1314433292669953739, guid: 22840e4732bb1d14e8cb17567fa260d2, type: 3}
+  blobLifetime: 2.5
+  blobFadeDuration: 2.5
+  maxActiveBlobs: 120
+  spawnEveryNthCollision: 4
+  minSpawnDistance: 0.16
+  maxSpawnsPerCollisionCall: 3
+  sideSurfaceScaleRandomRange: {x: 0.7, y: 1.1}
 --- !u!33 &5994270196046670593
 MeshFilter:
   m_ObjectHideFlags: 0

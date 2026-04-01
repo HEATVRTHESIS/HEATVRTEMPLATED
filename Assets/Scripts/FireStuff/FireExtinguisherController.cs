@@ -6,6 +6,10 @@ public class FireExtinguisherController : CustomTaskController
     [Header("Fire Extinguisher Settings")]
     public HighlightableObject targetObject;
     
+    [Header("Fire Extinguisher")]
+    [Tooltip("Reference to the FireExtinguisher component that controls particle spray")]
+    public FireExtinguisher fireExtinguisher;
+    
     [Header("Success Monitor")]
     public FireExtinguishSuccessMonitor successMonitor;
     
@@ -204,6 +208,11 @@ public class FireExtinguisherController : CustomTaskController
     
     protected virtual void OnExtinguisherActivated()
     {
+        if (fireExtinguisher != null)
+        {
+            fireExtinguisher.StartExtinguishing();
+        }
+        
         if (popupManager != null)
         {
             popupManager.ShowMessage("Fire extinguisher activated!");
@@ -212,6 +221,10 @@ public class FireExtinguisherController : CustomTaskController
     
     protected virtual void OnExtinguisherDeactivated()
     {
+        if (fireExtinguisher != null)
+        {
+            fireExtinguisher.StopExtinguishing();
+        }
     }
     
     protected virtual void OnExtinguisherCompleted()

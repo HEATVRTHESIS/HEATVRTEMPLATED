@@ -982,6 +982,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetObject: {fileID: 3913119259256011933}
+  fireExtinguisher: {fileID: 0}
   successMonitor: {fileID: 0}
   useAction:
     m_UseReference: 0
@@ -995,6 +996,10 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
+  taskErrorDialogue: []
+  wrongExtinguisherDialogue: []
+  errorSound: {fileID: 0}
+  wrongExtinguisherSound: {fileID: 0}
   popupManager: {fileID: 0}
 --- !u!1 &6432350609832178663
 GameObject:
@@ -5856,6 +5861,14 @@ MonoBehaviour:
   incrementalPower: 0.0005
   popupManager: {fileID: 0}
   errorMessageCooldown: 3
+  collisionBlobPrefab: {fileID: 1314433292669953739, guid: 22840e4732bb1d14e8cb17567fa260d2, type: 3}
+  blobLifetime: 2.5
+  blobFadeDuration: 2.5
+  maxActiveBlobs: 120
+  spawnEveryNthCollision: 4
+  minSpawnDistance: 0.16
+  maxSpawnsPerCollisionCall: 3
+  sideSurfaceScaleRandomRange: {x: 0.7, y: 1.1}
 --- !u!1 &6488190828419531955
 GameObject:
   m_ObjectHideFlags: 0

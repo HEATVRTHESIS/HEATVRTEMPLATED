@@ -6385,7 +6385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7411709752703492097, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.0006708724
+      value: 0.0007058603
       objectReference: {fileID: 0}
     - target: {fileID: 7547683545074253672, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.x
@@ -10436,6 +10436,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetObject: {fileID: 3913119258145762242}
+  fireExtinguisher: {fileID: 0}
   successMonitor: {fileID: 428033473}
   useAction:
     m_UseReference: 0
@@ -10877,7 +10878,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.4811321, g: 0.98988914, b: 1, a: 0.92156863}
+      maxColor: {r: 0.9433962, g: 0.9433962, b: 0.9433962, a: 0.92156863}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -19355,6 +19356,14 @@ MonoBehaviour:
   incrementalPower: 0.0005
   popupManager: {fileID: 1557387017}
   errorMessageCooldown: 3
+  collisionBlobPrefab: {fileID: 1314433292669953739, guid: 22840e4732bb1d14e8cb17567fa260d2, type: 3}
+  blobLifetime: 2.5
+  blobFadeDuration: 2.5
+  maxActiveBlobs: 120
+  spawnEveryNthCollision: 4
+  minSpawnDistance: 0.16
+  maxSpawnsPerCollisionCall: 3
+  sideSurfaceScaleRandomRange: {x: 0.7, y: 1.1}
 --- !u!33 &5994270196046670593
 MeshFilter:
   m_ObjectHideFlags: 0

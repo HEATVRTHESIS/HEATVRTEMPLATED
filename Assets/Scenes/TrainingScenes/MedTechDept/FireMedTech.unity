@@ -635,6 +635,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
       insertIndex: -1
       addedObject: {fileID: 602192930}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 602192931}
   m_SourcePrefab: {fileID: 100100000, guid: 7a07c33dd61f7894195174f16f921249, type: 3}
 --- !u!114 &259483564 stripped
 MonoBehaviour:
@@ -1612,6 +1615,10 @@ PrefabInstance:
       propertyPath: CollisionModule.multiplyColliderForceByParticleSpeed
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5987655286739846111, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: popupManager
+      value: 
+      objectReference: {fileID: 1557387017}
     - target: {fileID: 6176834025734505685, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
       propertyPath: m_Name
       value: FireExtinguisherFixedHose
@@ -1663,6 +1670,18 @@ PrefabInstance:
     - target: {fileID: 7177315462333056187, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7268819646211874498, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0587
+      objectReference: {fileID: 0}
+    - target: {fileID: 7268819646211874498, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0393
+      objectReference: {fileID: 0}
+    - target: {fileID: 7268819646211874498, guid: 7cbc08390c741de4bb40ac0e673453ed, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.0234
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -1826,6 +1845,34 @@ MonoBehaviour:
   fireClass: 0
   fireColor: {r: 1, g: 0, b: 0, a: 1}
   applyColorTint: 0
+--- !u!114 &602192931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602192925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b8951a8290315347b964717d13bc9a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flammableObject: {fileID: 602192927}
+  indicatorPrefab: {fileID: 3907455318825745328, guid: 687cee4d1e578b84bb347a54de08d9d5, type: 3}
+  cameraTransform: {fileID: 9133978305784354167}
+  heightOffset: 0.5
+  followSpeed: 8
+  smoothFollow: 1
+  keepUpright: 1
+  showOnlyWhenOnFire: 1
+  hideWhenExtinguished: 1
+  scaleTarget: {fileID: 0}
+  useChunkedFill: 1
+  chunkCount: 4
+  preBurnoutWeight: 0.78
+  smoothScale: 1
+  scaleLerpSpeed: 4
+  minVisibleScaleWhileBurning: 0.25
 --- !u!1 &715467237
 GameObject:
   m_ObjectHideFlags: 0
@@ -7002,7 +7049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7411709752703492097, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.0000131169945
+      value: 0.000048497233
       objectReference: {fileID: 0}
     - target: {fileID: 7547683545074253672, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.x
