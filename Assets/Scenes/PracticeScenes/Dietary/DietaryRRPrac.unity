@@ -2191,7 +2191,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7411709752703492097, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.0008199646
+      value: 0.00041360653
       objectReference: {fileID: 0}
     - target: {fileID: 7547683545074253672, guid: 684f8a90a2fe4a344aaa840496e61092, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2373,13 +2373,14 @@ GameObject:
   m_Component:
   - component: {fileID: 824204805}
   - component: {fileID: 824204806}
+  - component: {fileID: 824204807}
   m_Layer: 0
   m_Name: IntroScript
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &824204805
 Transform:
   m_ObjectHideFlags: 0
@@ -2405,6 +2406,19 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61dc84fcac3a7d9499a7a9c4cdb67f15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueSystem: {fileID: 743513130}
+--- !u!114 &824204807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824204804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2644ce9425c4b04489aecf74357afd0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueSystem: {fileID: 743513130}

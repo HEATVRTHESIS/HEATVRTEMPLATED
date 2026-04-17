@@ -9375,19 +9375,19 @@ MonoBehaviour:
     shortDescription: Practice without help or indicators
     phase1PracticeScene: RRMTPrac
     phase2PracticeScene: FireMTPrac
-    phase3PracticeScene: EvacPoint
+    phase3PracticeScene: EvacPointPrac
   - departmentName: ER
     departmentImage: {fileID: 21300000, guid: 29caa11e666465b4792b5cf8165d10d4, type: 3}
     shortDescription: Practice without help or indicators
     phase1PracticeScene: ERDeptRRPrac
     phase2PracticeScene: ERFirePrac
-    phase3PracticeScene: EvacPoint
+    phase3PracticeScene: EvacPointPrac
   - departmentName: Dietary
     departmentImage: {fileID: 21300000, guid: 77a10b45c011a8140a2685f501ec5e3b, type: 3}
     shortDescription: Practice without help or indicators
     phase1PracticeScene: DietaryRRPrac
     phase2PracticeScene: FireDietaryPrac
-    phase3PracticeScene: EvacPoint
+    phase3PracticeScene: EvacPointPrac
   defaultDepartmentIndex: 0
   useFallbackIfDepartmentNotMapped: 0
   fallbackPhase1PracticeScene: 

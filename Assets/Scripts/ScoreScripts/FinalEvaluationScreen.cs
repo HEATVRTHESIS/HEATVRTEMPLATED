@@ -49,9 +49,9 @@ public class FinalEvaluationScreen : MonoBehaviour
     
     public void CalculateAndDisplayResults()
     {
-        if (ScoreDataManager.Instance == null || ErrorTracker.Instance == null)
+        if (ScoreDataManager.Instance == null)
         {
-            Debug.LogError("ScoreDataManager or ErrorTracker not found!");
+            Debug.LogError("ScoreDataManager not found!");
             return;
         }
         
@@ -65,7 +65,7 @@ public class FinalEvaluationScreen : MonoBehaviour
         
         CalculateTaskAccuracy(allLevels);
         CalculateSpeedEfficiency(allLevels);
-        CalculateSafetyCompliance();
+        CalculateSafetyCompliance(allLevels);
         
         finalWeightedScore = (taskAccuracyScore * TASK_ACCURACY_WEIGHT) +
                             (speedEfficiencyScore * SPEED_EFFICIENCY_WEIGHT) +
@@ -87,18 +87,7 @@ public class FinalEvaluationScreen : MonoBehaviour
             totalTasksPossible += level.totalTasks;
             totalPointsEarned += level.finalScore;
             
-            if (level.levelType == "Standard")
-            {
-                totalPointsPossible += level.perfectScore;
-            }
-            else if (level.levelType == "Fire")
-            {
-                totalPointsPossible += level.completedTasks * 10;
-            }
-            else if (level.levelType == "Fire Evacuation")
-            {
-                totalPointsPossible += 45;
-            }
+            totalPointsPossible += GetLevelPerfectScore(level);
         }
         
         float completionRate = totalTasksPossible > 0 
@@ -146,21 +135,72 @@ public class FinalEvaluationScreen : MonoBehaviour
         speedEfficiencyScore = Mathf.Clamp(speedEfficiencyScore, 0f, 100f);
     }
     
-    private void CalculateSafetyCompliance()
+    private void CalculateSafetyCompliance(List<ScoreDataManager.LevelScoreData> allLevels)
     {
-        int totalErrors = ErrorTracker.Instance.disposalErrors + ErrorTracker.Instance.maintenanceErrors + 
-                         ErrorTracker.Instance.storageErrors + ErrorTracker.Instance.fireNPCErrors + 
-                         ErrorTracker.Instance.fireLeverErrors + ErrorTracker.Instance.fireSmokeDoorErrors + 
-                         ErrorTracker.Instance.fireExtinguisherErrors + ErrorTracker.Instance.fireWrongExtinguisherErrors +
-                         ErrorTracker.Instance.evacuationTimeExpiredErrors + ErrorTracker.Instance.evacuationFireObstacleErrors +
-                         ErrorTracker.Instance.evacuationOxygenErrors + ErrorTracker.Instance.evacuationNPCLeftBehindErrors +
-                         ErrorTracker.Instance.evacuationNPCNotRescuedErrors + ErrorTracker.Instance.evacuationNoWetClothErrors;
+        int totalErrors = GetTotalSavedErrors(allLevels);
         
         float errorPenalty = totalErrors * 5f;
         safetyComplianceScore = Mathf.Clamp(100f - errorPenalty, 0f, 100f);
     }
     
     private void DisplayResults(List<ScoreDataManager.LevelScoreData> allLevels)
+    {
+        if (allLevels.Count == 1)
+        {
+            DisplaySinglePhaseResults(allLevels[0]);
+            return;
+        }
+
+        DisplayAggregateResults(allLevels);
+    }
+
+    private void DisplaySinglePhaseResults(ScoreDataManager.LevelScoreData level)
+    {
+        float perfectScore = GetLevelPerfectScore(level);
+        float percentage = perfectScore > 0f ? Mathf.Clamp((float)level.finalScore / perfectScore * 100f, 0f, 100f) : 0f;
+
+        string certLevel;
+        Color certColor;
+
+        if (percentage >= EXPERT_THRESHOLD)
+        {
+            certLevel = "EXPERT";
+            certColor = expertColor;
+        }
+        else if (percentage >= PROFICIENT_THRESHOLD)
+        {
+            certLevel = "PROFICIENT";
+            certColor = proficientColor;
+        }
+        else if (percentage >= INTERMEDIATE_THRESHOLD)
+        {
+            certLevel = "INTERMEDIATE";
+            certColor = intermediateColor;
+        }
+        else
+        {
+            certLevel = "BEGINNER";
+            certColor = beginnerColor;
+        }
+
+        if (certificationLevelText != null)
+        {
+            certificationLevelText.text = certLevel;
+            certificationLevelText.color = certColor;
+        }
+
+        if (certificationBadge != null)
+        {
+            certificationBadge.color = certColor;
+        }
+
+        if (summaryText != null)
+        {
+            summaryText.text = BuildSinglePhaseSummary(level, certLevel, percentage, perfectScore);
+        }
+    }
+
+    private void DisplayAggregateResults(List<ScoreDataManager.LevelScoreData> allLevels)
     {
         string certLevel;
         Color certColor;
@@ -203,6 +243,33 @@ public class FinalEvaluationScreen : MonoBehaviour
         {
             summaryText.text = BuildSummaryText(allLevels, certLevel);
         }
+    }
+
+    private string BuildSinglePhaseSummary(ScoreDataManager.LevelScoreData level, string certLevel, float percentage, float perfectScore)
+    {
+        string phaseTitle = GetPhaseTitle(level.levelType);
+        string evaluationStatement = GetPhaseEvaluationStatement(level, percentage);
+        int totalErrors = GetSavedErrorCount(level);
+
+        string summary = "";
+        summary += $"<size=24><b>{phaseTitle}</b></size>\n\n";
+        summary += $"<b>Final Score:</b> {level.finalScore}/{Mathf.RoundToInt(perfectScore)}\n";
+        summary += $"<b>Certification Level:</b> {certLevel}\n\n";
+        summary += "<b>Evaluation:</b>\n";
+        summary += evaluationStatement + "\n\n";
+        summary += "<b>━━━ PERFORMANCE BREAKDOWN ━━━</b>\n\n";
+        summary += $"<b>Task Completion:</b> {level.completedTasks}/{level.totalTasks} ({level.completionPercentage:F1}%)\n";
+        summary += $"<b>Score Accuracy:</b> {percentage:F1}%\n";
+        summary += $"<b>Total Errors:</b> {totalErrors}\n\n";
+
+        string improvement = GetImprovementFeedbackForSinglePhase(level);
+        if (!string.IsNullOrEmpty(improvement))
+        {
+            summary += "<b>━━━ AREAS FOR IMPROVEMENT ━━━</b>\n\n";
+            summary += improvement;
+        }
+
+        return summary;
     }
     
     private string BuildSummaryText(List<ScoreDataManager.LevelScoreData> allLevels, string certLevel)
@@ -256,7 +323,7 @@ public class FinalEvaluationScreen : MonoBehaviour
         if (phase1Levels.Count > 0)
         {
             int totalScore = phase1Levels.Sum(l => l.finalScore);
-            int totalPerfectScore = phase1Levels.Sum(l => l.perfectScore);
+            int totalPerfectScore = phase1Levels.Sum(GetLevelPerfectScore);
             float percentage = totalPerfectScore > 0 ? (float)totalScore / totalPerfectScore * 100f : 0f;
             summary += $"<b>Phase 1 - Risk Identification:</b> {totalScore}/{totalPerfectScore} ({percentage:F1}%)\n";
         }
@@ -292,20 +359,14 @@ public class FinalEvaluationScreen : MonoBehaviour
         int totalCompleted = allLevels.Sum(l => l.completedTasks);
         int totalPossible = allLevels.Sum(l => l.totalTasks);
         
-        int totalMistakes = ErrorTracker.Instance.disposalErrors + ErrorTracker.Instance.maintenanceErrors + 
-                           ErrorTracker.Instance.storageErrors + ErrorTracker.Instance.fireNPCErrors + 
-                           ErrorTracker.Instance.fireLeverErrors + ErrorTracker.Instance.fireSmokeDoorErrors + 
-                           ErrorTracker.Instance.fireExtinguisherErrors + ErrorTracker.Instance.fireWrongExtinguisherErrors +
-                           ErrorTracker.Instance.evacuationTimeExpiredErrors + ErrorTracker.Instance.evacuationFireObstacleErrors +
-                           ErrorTracker.Instance.evacuationOxygenErrors + ErrorTracker.Instance.evacuationNPCLeftBehindErrors +
-                           ErrorTracker.Instance.evacuationNPCNotRescuedErrors + ErrorTracker.Instance.evacuationNoWetClothErrors;
+        int totalMistakes = GetTotalSavedErrors(allLevels);
         
         summary += "<b>━━━ OVERALL STATISTICS ━━━</b>\n\n";
         summary += $"<b>Tasks Completed:</b> {totalCompleted}/{totalPossible}\n";
         summary += $"<b>Total Errors:</b> {totalMistakes}\n\n";
         
         // Improvement Feedback
-        string improvement = GetImprovementFeedback();
+        string improvement = GetImprovementFeedback(allLevels);
         if (!string.IsNullOrEmpty(improvement))
         {
             summary += "<b>━━━ AREAS FOR IMPROVEMENT ━━━</b>\n\n";
@@ -315,23 +376,9 @@ public class FinalEvaluationScreen : MonoBehaviour
         return summary;
     }
     
-    private string GetImprovementFeedback()
+    private string GetImprovementFeedback(List<ScoreDataManager.LevelScoreData> allLevels)
     {
-        var errors = new List<(string type, int count)>
-        {
-            ("Disposal", ErrorTracker.Instance.disposalErrors),
-            ("Maintenance", ErrorTracker.Instance.maintenanceErrors),
-            ("Storage", ErrorTracker.Instance.storageErrors),
-            ("Fire NPC Evacuation", ErrorTracker.Instance.fireNPCErrors),
-            ("Fire Alarm Activation", ErrorTracker.Instance.fireLeverErrors),
-            ("Smoke Door Closure", ErrorTracker.Instance.fireSmokeDoorErrors),
-            ("Fire Extinguisher Usage", ErrorTracker.Instance.fireExtinguisherErrors + ErrorTracker.Instance.fireWrongExtinguisherErrors),
-            ("Evacuation Time Management", ErrorTracker.Instance.evacuationTimeExpiredErrors),
-            ("Fire Obstacle Avoidance", ErrorTracker.Instance.evacuationFireObstacleErrors),
-            ("Oxygen Management", ErrorTracker.Instance.evacuationOxygenErrors),
-            ("NPC Rescue", ErrorTracker.Instance.evacuationNPCLeftBehindErrors + ErrorTracker.Instance.evacuationNPCNotRescuedErrors),
-            ("Wet Cloth Usage", ErrorTracker.Instance.evacuationNoWetClothErrors)
-        };
+        var errors = BuildSavedErrorBreakdown(allLevels);
 
         errors.Sort((a, b) => b.count.CompareTo(a.count));
 
@@ -354,6 +401,193 @@ public class FinalEvaluationScreen : MonoBehaviour
         }
 
         return feedback;
+    }
+
+    private string GetImprovementFeedbackForSinglePhase(ScoreDataManager.LevelScoreData level)
+    {
+        var errors = BuildSavedErrorBreakdown(new List<ScoreDataManager.LevelScoreData> { level });
+        errors.Sort((a, b) => b.count.CompareTo(a.count));
+
+        string feedback = "";
+        int feedbackCount = 0;
+
+        for (int i = 0; i < errors.Count && feedbackCount < 3; i++)
+        {
+            if (errors[i].count > 0)
+            {
+                if (feedbackCount > 0) feedback += "\n";
+                feedback += GetDetailedErrorFeedback(errors[i].type, errors[i].count);
+                feedbackCount++;
+            }
+        }
+
+        if (feedbackCount == 0)
+        {
+            return "<b>Excellent work!</b> No significant errors detected. Keep maintaining this level of performance!";
+        }
+
+        return feedback;
+    }
+
+    private List<(string type, int count)> BuildSavedErrorBreakdown(List<ScoreDataManager.LevelScoreData> allLevels)
+    {
+        int disposal = 0;
+        int maintenance = 0;
+        int storage = 0;
+        int fireNpc = 0;
+        int fireLever = 0;
+        int fireSmokeDoor = 0;
+        int fireExtinguisher = 0;
+        int fireWrongExtinguisher = 0;
+        int evacTimeExpired = 0;
+        int evacFireObstacle = 0;
+        int evacOxygen = 0;
+        int evacNpcLeftBehind = 0;
+        int evacNpcNotRescued = 0;
+        int evacNoWetCloth = 0;
+
+        foreach (var level in allLevels)
+        {
+            disposal += level.disposalErrors;
+            maintenance += level.maintenanceErrors;
+            storage += level.storageErrors;
+            fireNpc += level.fireNPCErrors;
+            fireLever += level.fireLeverErrors;
+            fireSmokeDoor += level.fireSmokeDoorErrors;
+            fireExtinguisher += level.fireExtinguisherErrors;
+            fireWrongExtinguisher += level.fireWrongExtinguisherErrors;
+            evacTimeExpired += level.evacuationTimeExpiredErrors;
+            evacFireObstacle += level.evacuationFireObstacleErrors;
+            evacOxygen += level.evacuationOxygenErrors;
+            evacNpcLeftBehind += level.evacuationNPCLeftBehindErrors;
+            evacNpcNotRescued += level.evacuationNPCNotRescuedErrors;
+            evacNoWetCloth += level.evacuationNoWetClothErrors;
+        }
+
+        return new List<(string type, int count)>
+        {
+            ("Disposal", disposal),
+            ("Maintenance", maintenance),
+            ("Storage", storage),
+            ("Fire NPC Evacuation", fireNpc),
+            ("Fire Alarm Activation", fireLever),
+            ("Smoke Door Closure", fireSmokeDoor),
+            ("Fire Extinguisher Usage", fireExtinguisher + fireWrongExtinguisher),
+            ("Evacuation Time Management", evacTimeExpired),
+            ("Fire Obstacle Avoidance", evacFireObstacle),
+            ("Oxygen Management", evacOxygen),
+            ("NPC Rescue", evacNpcLeftBehind + evacNpcNotRescued),
+            ("Wet Cloth Usage", evacNoWetCloth)
+        };
+    }
+
+    private int GetTotalSavedErrors(List<ScoreDataManager.LevelScoreData> allLevels)
+    {
+        int total = 0;
+        foreach (var level in allLevels)
+        {
+            total += GetSavedErrorCount(level);
+        }
+
+        return total;
+    }
+
+    private int GetSavedErrorCount(ScoreDataManager.LevelScoreData level)
+    {
+        return level.storageErrors + level.maintenanceErrors + level.disposalErrors +
+               level.fireNPCErrors + level.fireLeverErrors + level.fireSmokeDoorErrors +
+               level.fireExtinguisherErrors + level.fireWrongExtinguisherErrors +
+               level.evacuationTimeExpiredErrors + level.evacuationFireObstacleErrors +
+               level.evacuationOxygenErrors + level.evacuationNPCLeftBehindErrors +
+               level.evacuationNPCNotRescuedErrors + level.evacuationNoWetClothErrors;
+    }
+
+    private int GetLevelPerfectScore(ScoreDataManager.LevelScoreData level)
+    {
+        if (level.perfectScore > 0)
+        {
+            return level.perfectScore;
+        }
+
+        if (level.levelType == "Fire")
+        {
+            return level.totalTasks * 10;
+        }
+
+        if (level.levelType == "Fire Evacuation")
+        {
+            return level.totalTasks * 15;
+        }
+
+        return level.totalTasks * 10;
+    }
+
+    private string GetPhaseTitle(string levelType)
+    {
+        if (levelType == "Standard") return "PHASE 1: RISK IDENTIFICATION";
+        if (levelType == "Fire") return "PHASE 2: FIRE RESPONSE";
+        if (levelType == "Fire Evacuation") return "PHASE 3: HOSPITAL-WIDE EVACUATION";
+        return "TRAINING EVALUATION";
+    }
+
+    private string GetPhaseEvaluationStatement(ScoreDataManager.LevelScoreData level, float percentage)
+    {
+        if (level.levelType == "Fire Evacuation")
+        {
+            if (percentage >= EXPERT_THRESHOLD)
+            {
+                return "<b>Exceptional performance.</b> You evacuated under the 2-minute target, maintained a safe oxygen meter using a wet cloth, and successfully followed the compass to the exit.";
+            }
+
+            if (percentage >= PROFICIENT_THRESHOLD)
+            {
+                return "<b>Minor improvements needed.</b> You reached the exit safely, but could improve your score by initiating the evacuation faster or assisting colleagues more efficiently.";
+            }
+
+            if (percentage >= INTERMEDIATE_THRESHOLD)
+            {
+                return "<b>Critical errors identified.</b> Safety violations occurred. You may have ignored your oxygen meter or failed to avoid burning debris, leading to health depletion.";
+            }
+
+            return "<b>Unsatisfactory.</b> You failed to evacuate safely. Ensure you use a wet cloth for breathing and avoid obstacles to prevent loss of consciousness in future attempts.";
+        }
+
+        if (level.levelType == "Fire")
+        {
+            if (percentage >= EXPERT_THRESHOLD)
+            {
+                return "<b>Exceptional performance.</b> You reacted instantly, activated the fire alarm and shutter levers, and extinguished the fire using the correct PASS technique within the target time.";
+            }
+
+            if (percentage >= PROFICIENT_THRESHOLD)
+            {
+                return "<b>Minor improvements needed.</b> Good response, but your speed in suppressing the fire or communicating with civilians to evacuate could be faster to maximize efficiency points.";
+            }
+
+            if (percentage >= INTERMEDIATE_THRESHOLD)
+            {
+                return "<b>Critical errors identified.</b> You missed critical safety steps such as closing doors or failed to identify the correct extinguisher type, leading to a significant score reduction.";
+            }
+
+            return "<b>Unsatisfactory.</b> Failure to follow fire protocols. You likely engaged hazards or failed to activate the alarm system promptly, compromising the safety of the department.";
+        }
+
+        if (percentage >= EXPERT_THRESHOLD)
+        {
+            return "<b>Exceptional performance.</b> You demonstrated mastery in identifying hazards, checking equipment conditions, and segregating materials into their correct locations.";
+        }
+
+        if (percentage >= PROFICIENT_THRESHOLD)
+        {
+            return "<b>Minor improvements needed.</b> Accuracy was high, but ensure all items are handled correctly every time to avoid minor point deductions.";
+        }
+
+        if (percentage >= INTERMEDIATE_THRESHOLD)
+        {
+            return "<b>Critical errors identified.</b> You did not correctly evaluate equipment condition or incorrectly handled safety materials, resulting in breaches of protocol.";
+        }
+
+        return "<b>Unsatisfactory.</b> Significant failure in protocol. Review the training instructions before proceeding.";
     }
 
     private string GetDetailedErrorFeedback(string errorType, int count)

@@ -145,7 +145,11 @@ public class ScoreDataManager : MonoBehaviour
             completedTasks = FireScoreTracker.Instance.GetCompletedTasks(),
             totalTasks = FireScoreTracker.Instance.GetTotalTasks(),
             finalScore = FireScoreTracker.Instance.GetCurrentScore(),
+            perfectScore = FireScoreTracker.Instance.GetTotalTasks() * 10,
             completionPercentage = FireScoreTracker.Instance.GetCompletionPercentage(),
+            accuracyPercentage = FireScoreTracker.Instance.GetTotalTasks() > 0
+                ? (float)FireScoreTracker.Instance.GetCurrentScore() / (FireScoreTracker.Instance.GetTotalTasks() * 10) * 100f
+                : 0f,
             timeRemaining = timer != null ? timer.GetTimeRemaining() : 0f,
             fireExtinguisherUsed = FireScoreTracker.Instance.WasFireExtinguisherUsed(),
             fireAlarmPulled = FireScoreTracker.Instance.WasFireAlarmPulled(),
@@ -185,7 +189,11 @@ public class ScoreDataManager : MonoBehaviour
             completedTasks = scoreTracker.GetCompletedTasks(),
             totalTasks = scoreTracker.GetTotalTasks(),
             finalScore = scoreTracker.GetCurrentScore(),
+            perfectScore = scoreTracker.GetTotalTasks() * 15,
             completionPercentage = scoreTracker.GetCompletionPercentage(),
+            accuracyPercentage = scoreTracker.GetTotalTasks() > 0
+                ? (float)scoreTracker.GetCurrentScore() / (scoreTracker.GetTotalTasks() * 15) * 100f
+                : 0f,
             timeRemaining = timer != null ? timer.GetTimeRemaining() : 0f,
             usedWetCloth = scoreTracker.HasUsedWetCloth(),
             rescuedNPC = scoreTracker.HasRescuedNPC(),

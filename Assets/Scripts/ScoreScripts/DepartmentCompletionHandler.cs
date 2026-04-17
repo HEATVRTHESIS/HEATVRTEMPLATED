@@ -88,19 +88,7 @@ public class DepartmentCompletionHandler : MonoBehaviour
             completedTasks += level.completedTasks;
             totalTasks += level.totalTasks;
             
-            // Calculate perfect score based on level type
-            if (level.levelType == "Standard")
-            {
-                totalPerfectScore += level.perfectScore;
-            }
-            else if (level.levelType == "Fire")
-            {
-                totalPerfectScore += level.completedTasks * 10; // Fire levels: 10 points per task
-            }
-            else if (level.levelType == "Fire Evacuation")
-            {
-                totalPerfectScore += 45; // Fire evacuation has max 45 points
-            }
+            totalPerfectScore += GetLevelPerfectScore(level);
         }
 
         // Calculate percentages
@@ -136,6 +124,26 @@ public class DepartmentCompletionHandler : MonoBehaviour
         {
             Debug.Log($"Keep trying! Complete with higher score/completion to unlock {departmentName} Simulation.");
         }
+    }
+
+    private int GetLevelPerfectScore(ScoreDataManager.LevelScoreData level)
+    {
+        if (level.perfectScore > 0)
+        {
+            return level.perfectScore;
+        }
+
+        if (level.levelType == "Fire")
+        {
+            return level.totalTasks * 10;
+        }
+
+        if (level.levelType == "Fire Evacuation")
+        {
+            return level.totalTasks * 15;
+        }
+
+        return level.totalTasks * 10;
     }
 
     /// <summary>
