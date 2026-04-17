@@ -6,6 +6,9 @@ public class IKFootSolver : MonoBehaviour
 {
     public bool isMovingForward;
 
+    [Header("Mode")]
+    [SerializeField] bool useGenericWalkCycle = true;
+
     [SerializeField] LayerMask terrainLayer = default;
     [SerializeField] Transform body = default;
     [SerializeField] IKFootSolver otherFoot = default;
@@ -21,6 +24,13 @@ public class IKFootSolver : MonoBehaviour
     [SerializeField] float strafeTriggerDistanceMultiplier = 0.72f;
     [SerializeField] float strafeForcedCatchUpDistance = 0.24f;
     [SerializeField] float bodySpeedSmoothing = 10f;
+
+    [Header("Generic Walk Cycle")]
+    [SerializeField] float minMoveSpeedForCycle = 0.06f;
+    [SerializeField] float cycleSpeedAtUnitVelocity = 1.7f;
+    [SerializeField] float genericStrideLength = 0.24f;
+    [SerializeField] float genericStepHeight = 0.08f;
+    [SerializeField] float genericPositionLerpSpeed = 16f;
 
     [SerializeField] float stepHeight = .3f;
     [SerializeField] float stepHeightVariation = .08f;
@@ -43,6 +53,7 @@ public class IKFootSolver : MonoBehaviour
     float smoothedBodyHorizontalSpeed;
     float activeStepHeight;
     Quaternion currentFootRotation;
+    float gaitPhase;
 
     private void Start()
     {
@@ -54,6 +65,7 @@ public class IKFootSolver : MonoBehaviour
         smoothedBodyHorizontalSpeed = 0f;
         activeStepHeight = stepHeight;
         currentFootRotation = transform.rotation;
+        gaitPhase = footSpacing < 0f ? 0f : 0.5f;
     }
 
     // Update is called once per frame
@@ -78,6 +90,12 @@ public class IKFootSolver : MonoBehaviour
         bodyHorizontalSpeed = bodyDelta.magnitude / Mathf.Max(0.0001f, Time.deltaTime);
         smoothedBodyHorizontalSpeed = Mathf.Lerp(smoothedBodyHorizontalSpeed, bodyHorizontalSpeed, Time.deltaTime * bodySpeedSmoothing);
         previousBodyPosition = body.position;
+
+        if (useGenericWalkCycle)
+        {
+            UpdateGenericWalkCycle();
+            return;
+        }
 
         Ray ray = new Ray(body.position + (body.right * footSpacing) + Vector3.up * rayStartYOffset, Vector3.down);
 
@@ -172,6 +190,42 @@ public class IKFootSolver : MonoBehaviour
             oldPosition = newPosition;
             oldNormal = newNormal;
         }
+    }
+
+    void UpdateGenericWalkCycle()
+    {
+        if (smoothedBodyHorizontalSpeed > minMoveSpeedForCycle)
+        {
+            gaitPhase += Time.deltaTime * smoothedBodyHorizontalSpeed * cycleSpeedAtUnitVelocity;
+            if (gaitPhase > 1f)
+            {
+                gaitPhase -= Mathf.Floor(gaitPhase);
+            }
+        }
+
+        float theta = gaitPhase * Mathf.PI * 2f;
+        float forwardOffset = Mathf.Sin(theta) * genericStrideLength;
+        float lift = Mathf.Max(0f, Mathf.Sin(theta)) * genericStepHeight;
+
+        Vector3 anchor = body.position + (body.right * footSpacing) + (body.forward * forwardOffset) + footOffset;
+        Vector3 rayOrigin = anchor + Vector3.up * rayStartYOffset;
+
+        Vector3 targetPos = anchor;
+        Vector3 targetNormal = Vector3.up;
+
+        if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit info, rayLength, terrainLayer.value))
+        {
+            targetPos = info.point + footOffset;
+            targetNormal = info.normal;
+        }
+
+        targetPos.y += lift;
+
+        currentPosition = Vector3.Lerp(currentPosition, targetPos, Time.deltaTime * genericPositionLerpSpeed);
+        currentNormal = Vector3.Slerp(currentNormal, targetNormal, Time.deltaTime * footRotationSmoothSpeed);
+
+        isMovingForward = true;
+        lerp = 1f;
     }
 
     private void OnDrawGizmos()
